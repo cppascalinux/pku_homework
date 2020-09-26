@@ -14,6 +14,52 @@ int ts(char ch)
 {
 	return ch>='0'&&ch<='9';
 }
+int isop(char ch)
+{
+	return ch=='+'||ch=='-'||ch=='*'||ch=='/';
+}
+int isle(char ch)
+{
+	return ts(ch)||isop(ch)||ch=='('||ch==')'||ch=='.'||ch==' ';
+}
+int tm(int id,int pos)
+{
+	switch(id)
+	{
+		case 1:printf("格式错误：非法字符%c在位置%d",s[pos],pos);break;
+		case 2:printf("格式错误：括号不匹配！在位置%d",pos);break;
+		case 3:printf("格式错误：操作数格式错误！在位置%d",pos);break;
+		case 4:printf("数学错误：除以0！");break;
+		case 5:printf("格式错误：运算符格式错误！在位置%d",pos);break;
+		default:printf("????");
+	}
+	fflush(stdout);
+	exit(0);
+}
+void judge()
+{
+	int sm=0;
+	for(int i=1;i<=n;i++)
+	{
+		if(!isle(s[i]))
+			tm(1,i);
+		if(s[i]=='(')
+			sm++;
+		else if(s[i]==')')
+			sm--;
+		if(sm<0)
+			tm(2,i);
+		if(isop(s[i]))
+		{
+			if((s[i]!='-'||s[i-1]!='(')&&s[i-1]!=')'&&!ts(s[i-1]))
+				tm(5,i);
+			if(s[i+1]!='('&&!ts(s[i+1]))
+				tm(5,i);
+		}
+	}
+	if(sm!=0)
+		tm(2,n);
+}
 void init()
 {
 	int fg=0;
@@ -22,6 +68,8 @@ void init()
 		v[++m]=0;
 	for(int i=1;i<=n;i++)
 	{
+		if(s[i]==' ')
+			continue;
 		if(ts(s[i]))
 		{
 			if(fg)
@@ -30,16 +78,25 @@ void init()
 				cv=cv*10+(s[i]-'0');
 			if(!ts(s[i+1])&&s[i+1]!='.')
 				fg=0,ps=1,v[++m]=cv,cv=0;
+			if(s[i+1]=='(')
+				v[++m]=-'*';
 		}
 		else if(s[i]=='.')
+		{
+			if(fg||!ts(s[i-1])||!ts(s[i+1]))
+				tm(3,i);
 			fg=1;
+		}
 		else
 		{
 			v[++m]=-s[i];
 			if(s[i]=='('&&s[i+1]=='-')
 				v[++m]=0;
+			if(s[i]==')'&&(ts(s[i+1])||s[i+1]=='('))
+				v[++m]=-'*';
 		}
 	}
+	// printf("m:%d\n",m),fflush(stdout);
 }
 DB cal(DB a,DB b,char op)
 {
@@ -48,13 +105,15 @@ DB cal(DB a,DB b,char op)
 		case '+':return a+b;
 		case '-':return a-b;
 		case '*':return a*b;
-		case '/':return a/b;
+		case '/':if(b==0)tm(4,0);return a/b;
 	}
 }
 void solve()
 {
+	// printf("qwq"),fflush(stdout);
 	static DB st1[1000009];
-	int st2[1000009],tp1=0,tp2=0;
+	static int st2[1000009];
+	int tp1=0,tp2=0;
 	for(int i=m;i>=1;i--)
 		if(v[i]>=0)
 			st1[++tp1]=v[i];
@@ -95,8 +154,10 @@ int main()
 	freopen("a.in","r",stdin);
 	freopen("a.out","w",stdout);
 #endif
-	scanf("%s",s+1);
+	gets(s+1);
 	n=strlen(s+1);
+	// printf("n:%d\n",n),fflush(stdout);
+	judge();
 	init();
 	solve();
 	return 0;
