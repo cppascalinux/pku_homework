@@ -32,8 +32,8 @@ int tm(int id,int op)
 		case 1:printf("格式错误：非法字符'%c'在位置%d",s[op],pos);break;
 		case 2:printf("格式错误：括号不匹配！在位置%d",pos);break;
 		case 3:printf("格式错误：操作数格式错误！在位置%d",pos);break;
-		case 4:printf("数学错误：除以0！在位置%d",pos);break;
-		case 5:printf("格式错误：运算符格式错误！在位置%d",pos);break;
+		case 4:printf("格式错误：运算符格式错误！在位置%d",pos);break;
+		case 5:printf("数学错误：除以0！在位置%d",pos);break;
 		default:printf("????");
 	}
 	fflush(stdout);
@@ -65,9 +65,9 @@ void judge()
 		if(isop(s[i]))
 		{
 			if((s[i]!='-'||s[i-1]!='(')&&s[i-1]!=')'&&!ts(s[i-1]))
-				tm(5,i);
+				tm(4,i);
 			if(s[i+1]!='('&&!ts(s[i+1]))
-				tm(5,i);
+				tm(4,i);
 		}
 	}
 	if(sm!=0)
@@ -118,7 +118,7 @@ DB cal(DB a,DB b,char op,int ps)
 		case '+':return a+b;
 		case '-':return a-b;
 		case '*':return a*b;
-		case '/':if(b==0)tm(4,ps);return a/b;
+		case '/':if(b==0)tm(5,ps);return a/b;
 	}
 }
 void solve()
