@@ -1,3 +1,4 @@
+//this file is encoded with utf-8
 //2020.09.25
 //计概实验班第一周作业 算数表达式的计算 实际上建表达式树就是按优先级从低到高建笛卡尔树..那么只需要用单调栈去模拟建立笛卡尔树的过程即可
 #include<iostream>
@@ -8,6 +9,7 @@
 #define DB double
 using namespace std;
 int n,m;
+int org[1000009],orp[1000009];
 char s[1000009];
 double v[1000009];
 int ts(char ch)
@@ -22,14 +24,15 @@ int isle(char ch)
 {
 	return ts(ch)||isop(ch)||ch=='('||ch==')'||ch=='.'||ch==' ';
 }
-int tm(int id,int pos)
+int tm(int id,int op)
 {
+	int pos=org[op];
 	switch(id)
 	{
-		case 1:printf("格式错误：非法字符%c在位置%d",s[pos],pos);break;
+		case 1:printf("格式错误：非法字符'%c'在位置%d",s[op],pos);break;
 		case 2:printf("格式错误：括号不匹配！在位置%d",pos);break;
 		case 3:printf("格式错误：操作数格式错误！在位置%d",pos);break;
-		case 4:printf("数学错误：除以0！");break;
+		case 4:printf("数学错误：除以0！在位置%d",pos);break;
 		case 5:printf("格式错误：运算符格式错误！在位置%d",pos);break;
 		default:printf("????");
 	}
@@ -38,7 +41,17 @@ int tm(int id,int pos)
 }
 void judge()
 {
+	static char tpp[1000009];
+	memcpy(tpp,s,n+1);
+	memset(s,0,n+1);
+	int tn=0;
+	for(int i=1;i<=n;i++)
+		if(tpp[i]!=' ')
+			s[++tn]=tpp[i],org[tn]=i;
+	n=tn;
 	int sm=0;
+	if(s[1]=='-')
+		s[0]='(';
 	for(int i=1;i<=n;i++)
 	{
 		if(!isle(s[i]))
@@ -90,29 +103,29 @@ void init()
 		else
 		{
 			v[++m]=-s[i];
+			orp[m]=i;
 			if(s[i]=='('&&s[i+1]=='-')
 				v[++m]=0;
 			if(s[i]==')'&&(ts(s[i+1])||s[i+1]=='('))
 				v[++m]=-'*';
 		}
 	}
-	// printf("m:%d\n",m),fflush(stdout);
 }
-DB cal(DB a,DB b,char op)
+DB cal(DB a,DB b,char op,int ps)
 {
 	switch(op)
 	{
 		case '+':return a+b;
 		case '-':return a-b;
 		case '*':return a*b;
-		case '/':if(b==0)tm(4,0);return a/b;
+		case '/':if(b==0)tm(4,ps);return a/b;
 	}
 }
 void solve()
 {
-	// printf("qwq"),fflush(stdout);
 	static DB st1[1000009];
 	static int st2[1000009];
+	static int st3[1000009];
 	int tp1=0,tp2=0;
 	for(int i=m;i>=1;i--)
 		if(v[i]>=0)
@@ -121,21 +134,23 @@ void solve()
 		{
 			char t=-v[i];
 			if(t=='*'||t=='/'||t==')')
-				st2[++tp2]=t;
+				st2[++tp2]=t,st3[tp2]=orp[i];
 			else if(t=='+'||t=='-')
 			{
 				while(st2[tp2]=='*'||st2[tp2]=='/')
 				{
-					DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2--]);
+					DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2],st3[tp2]);
+					tp2--;
 					st1[--tp1]=nv;
 				}
-				st2[++tp2]=t;
+				st2[++tp2]=t,st3[tp2]=orp[i];
 			}
 			else if(t=='(')
 			{
 				while(st2[tp2]!=')')
 				{
-					DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2--]);
+					DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2],st3[tp2]);
+					tp2--;
 					st1[--tp1]=nv;
 				}
 				tp2--;
@@ -143,20 +158,16 @@ void solve()
 		}
 	while(tp2)
 	{
-		DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2--]);
+		DB nv=cal(st1[tp1],st1[tp1-1],st2[tp2],st3[tp2]);
+		tp2--;
 		st1[--tp1]=nv;
 	}
 	printf("%.2lf",st1[tp1]);
 }
 int main()
 {
-#ifdef I_LOVE_KTY
-	freopen("a.in","r",stdin);
-	freopen("a.out","w",stdout);
-#endif
 	gets(s+1);
 	n=strlen(s+1);
-	// printf("n:%d\n",n),fflush(stdout);
 	judge();
 	init();
 	solve();
