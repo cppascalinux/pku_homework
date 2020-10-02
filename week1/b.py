@@ -1,0 +1,1 @@
+print("%.2f"%eval(input()))
