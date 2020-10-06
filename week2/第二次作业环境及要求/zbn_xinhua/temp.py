@@ -1,5 +1,5 @@
-def qwq(s,num):
-	return s[num]
-s='1'*1000000
-for i in range(len(s)):
-	qwq(s,i)
+fin=open('solve.out','rt',encoding='utf-8')
+s=fin.read()
+fin.close()
+fout=open('solve.out','wt',encoding='utf-8')
+fout.write(s[:100000])
