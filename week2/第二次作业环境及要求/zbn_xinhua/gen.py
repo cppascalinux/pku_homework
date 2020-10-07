@@ -5,7 +5,7 @@ def readin():
 	ansl=[]
 	for i in range(len(lists)):
 		nl=lists[i].split(' ')
-		if len(nl[0])>=2 and int(nl[1])>=400:
+		if len(nl[0])>=2 and int(nl[1])>=1000:
 			ansl+=[nl[0]]
 	return ansl
 def qry(lists):

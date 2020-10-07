@@ -44,6 +44,8 @@ def getfreq(s):
 							ndw[nw].append(i+1)
 						else:
 							ndw[nw]=[i+1]
+			elif len(st)==1:
+				ansd[st]=ls
 		dw=ndw
 	return ansd
 def getpmi(freqd,ftrd):

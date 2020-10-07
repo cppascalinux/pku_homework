@@ -1,65 +1,62 @@
-import math,numpy
-from sklearn.ensemble import RandomForestClassifier
+import math,gc
 def readin():
-	ftrain=open('train.out','rt',encoding='utf-8')
-	fdict=open('dict.out','rt',encoding='utf-8')
-	fcop=open('copora.out','rt',encoding='utf-8')
-	s=fcop.read()
+	sin=open('copora.out','rt',encoding='utf-8')
+	din=open('dict.out','rt',encoding='utf-8')
+	qin=open('getq.out','rt',encoding='utf-8')
+	s=sin.read()
 	d={}
-	for ts in fdict.readlines():
-		templ=ts.split(' ')
-		# print(templ)
-		d[templ[0]]=[float(x) for x in templ[1:-1]]
-	lstr=[x.split(' ')[0:2] for x in ftrain.readlines()]
-	return s,d,lstr
-def initrfc(d,lstr):
-	lx=[d[x[0]][1:] for x in lstr]
-	ly=[x[1] for x in lstr]
-	rfc=RandomForestClassifier(n_jobs=-1)
-	rfc.fit(lx,ly)
-	return rfc
-def getq(rfc,d):
-	lsd=[x for x in d.items() if len(x[0])>1]
-	qrx=[x[1][1:] for x in lsd]
-	qry=rfc.predict_proba(qrx);
-	dictq={}
-	for i in range(len(lsd)):
-		dictq[lsd[i][0]]=qry[i][1]
-	return dictq
+	while True:
+		temps=din.readline()
+		if temps!='':
+			templ=temps.split(' ')
+			d[templ[0]]=[int(templ[1]),1]
+		else:
+			break
+	while True:
+		temps=qin.readline()
+		if temps!='':
+			templ=temps.split(' ')
+			d[templ[0]][1]=max(0.01,float(templ[1]))
+		else:
+			break
+	return s,d;
 def getfreq(d):
 	sm=[0]*100
-	freq={}
 	for st,ls in d.items():
 		sm[len(st)]+=ls[0]
 	for st,ls in d.items():
-		freq[st]=ls[0]/sm[len(st)]
-	return freq
-def dp(s,dictq,freq,alpha):
+		d[st]+=[ls[0]/sm[len(st)]]
+def dp(s,d,alpha,autorl=True):
 	MAXL=50
 	n=len(s)
-	f=[1]+[-1]*n
+	f=[0]+[-math.inf]*n
 	g=[0]*(n+1)
 	for i in range(1,n):
-		if i%10000==0:
+		if i%100000==0:
 			print(i)
 		if s[i]==' ':
 			f[i]=f[i-1]
-			g[i]=g[i-1]
-			continue;
-		for j in range(1,MAXL):
+			g[i]=i-1
+			continue
+		for j in range(1,min(MAXL,i+1)):
 			p,k=0,i-j
 			wd=s[k+1:i+1]
-			if j==1:
-				p=freq[wd] if wd in freq else 2/n
-			elif not wd in dictq:
-				p=0
-				break
+			if wd in d:
+				ls=d[wd]
+				p=alpha**(1-j)*ls[1]*ls[2]
+				if p<=0:
+					continue
+				p=math.log2(p)
 			else:
-				p=alpha**(1-j)*freq[wd]*dictq[wd]
-			if f[i]<f[k]*p:
-				f[i],g[i]=f[k]*p,k
+				break
+			if f[i]<f[k]+p:
+				f[i],g[i]=f[k]+p,k
 			if s[k]==' ':
 				break
+	tf=f[n-1]
+	del f
+	if autorl:
+		gc.collect()
 	ansl=[]
 	ptr=n-1
 	while ptr>0:
@@ -68,19 +65,73 @@ def dp(s,dictq,freq,alpha):
 			ansl+=[s[g[ptr]+1:ptr+1]]
 		ptr=g[ptr]
 	ansl.reverse()
-	return ansl
+	return ansl,tf
+def vt(s,d,alpha):
+	for times in range(5):
+		print('-------------------------------------------{}------------------------------------------'.format(times))
+		sm=[0]*100
+		ns=dp(s,d,alpha)[0]
+		tempd={}
+		for wd in d:
+			d[wd][0]=0
+		for wd in ns:
+			sm[len(wd)]+=1
+			if wd in tempd:
+				tempd[wd]+=1
+			else:
+				tempd[wd]=1
+		for wd in ns:
+			d[wd][2]=tempd[wd]/sm[len(wd)]
+		del sm,ns,tempd
+		gc.collect()
+def getalpha(s,d,rate0):
+	ftrain=open('train.out','rt',encoding='utf-8')
+	ls=[x.split(' ')[0] for x in ftrain.readlines() if x.split(' ')[1]=='1']
+	n=len(ls)
+	l,r=0,200
+	for times in range(20):
+		alpha=(l+r)/2
+		rm=int(rate0*n)
+		vt(s,d,alpha)
+		for wd in ls:
+			if len(dp(wd,d,alpha,False)[0])==1:
+				rm-=1
+		if rm>=0:
+			r=alpha
+		else:
+			l=alpha
+	return (l+r)/2
+def solve(s,d):
+	alpha=3
+	sout=open('cuts.out','wt',encoding='utf-8')
+	wout=open('words.out','wt',encoding='utf-8')
+	fout=open('features.out','wt',encoding='utf-8')
+	alpha=getalpha(s,d,0.95)
+	# vt(s,d,1)
+	ansl=dp(s,d,alpha)[0]
+	for wd in ansl:
+		sout.write(wd+' ')
+	tempd={}
+	for wd in ansl:
+		if wd in tempd:
+			tempd[wd]+=1
+		else:
+			tempd[wd]=1
+	wordls=list(tempd.items())
+	cmp=lambda x:x[1]
+	wordls.sort(key=cmp,reverse=True)
+	for wd,q in wordls:
+		if len(wd)>1:
+			wout.write(wd+' '+str(q)+'\n')
+	for wd,ls in d.items():
+		p0=alpha**(1-len(wd))*ls[1]*ls[2]
+		p1=2**(dp(wd,d,alpha,False)[1])
+		va=math.log2(p0/p1) if p0>0 else -math.nan
+		vb=p0*va
+		fout.write(wd+' '+str(va)+' '+str(vb)+'\n')
 def main():
-	fout=open('solve.out','wt',encoding='utf-8')
-	s,d,lstr=readin()
-	print('train rfc')
-	rfc=initrfc(d,lstr);
-	print('rfc classify')
-	dictq=getq(rfc,d)
-	print('get theta')
-	freq=getfreq(d)
-	print('dp')
-	ansl=dp(s,dictq,freq,1.5)
-	print('output')
-	for i in ansl:
-		print(i,end=' ',file=fout)
+	print('readin')
+	s,d=readin()
+	getfreq(d)
+	solve(s,d)
 main()
