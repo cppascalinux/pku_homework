@@ -13,7 +13,7 @@
 #define FI first
 #define SE second
 #define DB double
-#define R0 0.95
+#define R0 0.99
 using namespace std;
 struct node
 {
@@ -296,9 +296,9 @@ int main()
 		inith(mds[i],mdhs[i],t);
 	}
 	gett();
-	dp(s,hs,n);
-	// vt(1);
-	// bin();
+	// dp(s,hs,n);
+	// vt();
+	bin();
 	// vt(50);
 	// vt(-50);
 	// vt(-50);

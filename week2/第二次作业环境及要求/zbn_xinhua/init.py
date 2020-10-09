@@ -107,7 +107,7 @@ def main():
 	fout=open('dict.out','wt',encoding='utf-8')
 	sout=open('copora.out','wt',encoding='utf-8')
 	print('readin')
-	lists=readin('xin')
+	lists=readin('zbn')
 	alls=''.join(lists)
 	sout.write(alls)
 	print('getfreq')
