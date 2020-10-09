@@ -12,6 +12,7 @@ def qry(lists):
 	fout=open('train.out','wt',encoding='utf-8')
 	smt,smf=0,0
 	while smt<200 or smf<200:
+		print('smt:',smt,"smf:",smf)
 		s=choice(lists)
 		ans=input(s)
 		if ans!='':

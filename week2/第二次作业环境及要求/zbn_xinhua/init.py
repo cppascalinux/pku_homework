@@ -1,4 +1,4 @@
-import math
+import math,gc
 def ishanzi(s):
 	return '\u4e00'<=s<='\u9fff'
 def precut(s):
@@ -95,6 +95,14 @@ def geth(s,freqd,ftrd):
 			p=num/sm
 			lh+=p*math.log2(p)
 		ftrd[st]+=[min(-lh,-rh)]
+
+def getde(ftrd):
+	for st,ls in ftrd.items():
+		sm=0
+		for wd in st:
+			if wd=='的':
+				sm+=1
+		ftrd[st]+=[sm]
 def main():
 	fout=open('dict.out','wt',encoding='utf-8')
 	sout=open('copora.out','wt',encoding='utf-8')
@@ -106,12 +114,18 @@ def main():
 	freqd=getfreq(alls)
 	print(len(freqd))
 	ftrd={}
+	gc.collect();
 	print('getpmi')
 	getpmi(freqd,ftrd)
+	gc.collect();
 	print('getidf')
 	getidf(lists,freqd,ftrd)
+	gc.collect();
 	print('geth')
 	geth(alls,freqd,ftrd)
+	gc.collect();
+	print('getde')
+	getde(ftrd)
 	print('output')
 	for st,ls in ftrd.items():
 		print(st,end=' ',file=fout)

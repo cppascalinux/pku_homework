@@ -9,7 +9,7 @@ def readin():
 	for ts in fdict.readlines():
 		templ=ts.split(' ')
 		# print(templ)
-		d[templ[0]]=[float(x) for x in templ[1:-1]]
+		d[templ[0]]=[float(x) if math.isfinite(float(x)) else -100.0 for x in templ[1:-1]]
 	lstr=[x.split(' ')[0:2] for x in ftrain.readlines()]
 	return s,d,lstr
 def initrfc(d,lstr):

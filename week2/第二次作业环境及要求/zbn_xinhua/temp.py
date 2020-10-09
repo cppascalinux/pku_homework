@@ -1,8 +1,8 @@
 import random
-fin=open('train.out','rt',encoding='utf-8')
-s=fin.readlines()
+fin=open('words.out','rt',encoding='utf-8')
+lst=fin.readlines()
 fin.close()
-random.shuffle(s)
-fout=open('train.out','wt',encoding='utf-8')
-for i in s:
-	fout.write(i)
+fout=open('words_temp.out','wt',encoding='utf-8')
+for s in lst:
+	if not '的' in s:
+		fout.write(s)
