@@ -94,7 +94,8 @@ def geth(s,freqd,ftrd):
 		for lst,num in ld.items():
 			p=num/sm
 			lh+=p*math.log2(p)
-		ftrd[st]+=[min(-lh,-rh)]
+		# ftrd[st]+=[min(-lh,-rh)]
+		ftrd[st]+=[0]
 
 def getde(ftrd):
 	for st,ls in ftrd.items():
@@ -107,7 +108,7 @@ def main():
 	fout=open('dict.out','wt',encoding='utf-8')
 	sout=open('copora.out','wt',encoding='utf-8')
 	print('readin')
-	lists=readin('zbn')
+	lists=readin('xin')
 	alls=''.join(lists)
 	sout.write(alls)
 	print('getfreq')
@@ -124,8 +125,8 @@ def main():
 	print('geth')
 	geth(alls,freqd,ftrd)
 	gc.collect();
-	print('getde')
-	getde(ftrd)
+	# print('getde')
+	# getde(ftrd)
 	print('output')
 	for st,ls in ftrd.items():
 		print(st,end=' ',file=fout)

@@ -23,7 +23,7 @@ struct node
 	bool operator <(const node &p)const{return r>p.r;}
 };
 int n,m,w,tot;
-DB al;
+DB al=0.001;
 short s[34000009];
 ULL hs[34000009],mul[109];
 int hd[10000019],nxt[6000009];
@@ -92,7 +92,7 @@ void dp(short *s,ULL *hs,int n)
 	memset(g,0,(n+1)<<2);
 	for(int i=1;i<=n;i++)
 	{
-		if(s[i]<=1)
+		if(s[i]<=0)
 		{
 			f[i]=f[i-1];
 			g[i]=i-1;
@@ -112,7 +112,7 @@ void dp(short *s,ULL *hs,int n)
 			p=t.q+t.t+al*(1-j);
 			if(f[i]<f[k]+p)
 				f[i]=f[k]+p,g[i]=k;
-			if(s[k]<=1)
+			if(s[k]<=0)
 				break;
 		}
 	}
@@ -297,8 +297,8 @@ int main()
 	}
 	gett();
 	// dp(s,hs,n);
-	// vt();
-	bin();
+	vt();
+	// bin();
 	// vt(50);
 	// vt(-50);
 	// vt(-50);
