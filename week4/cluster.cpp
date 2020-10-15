@@ -122,8 +122,8 @@ void grade()//计算纯度和F值
 }
 int main()
 {
-	freopen("solve.in","r",stdin);
-	freopen("solve.out","w",stdout);
+	freopen("data.txt","r",stdin);
+	freopen("cluster.out","w",stdout);
 	map<string,int> mp;
 	cin>>n>>m>>k;
 	m--;

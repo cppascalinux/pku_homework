@@ -106,10 +106,9 @@ int predict(DB *v,int fg)//对样本预测,fg为0表示只用一棵决策树,否
 }
 void initmk()//将样本分为K部分
 {
-	int len=(n-1)/MK+1;
-	printf("len:%d\n",len);
+	int len=n/MK;
 	for(int i=1;i<=n;i++)
-		num[i]=(i-1)/len+1,printf("i:%d num:%d\n",i,num[i]);
+		num[i]=(i-1)/len+1;
 }
 DB cart()//建立单一决策树
 {

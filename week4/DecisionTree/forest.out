@@ -1,1 +1,5413 @@
-Accuracy:0.817308
+len:21
+i:1 num:1
+i:2 num:1
+i:3 num:1
+i:4 num:1
+i:5 num:1
+i:6 num:1
+i:7 num:1
+i:8 num:1
+i:9 num:1
+i:10 num:1
+i:11 num:1
+i:12 num:1
+i:13 num:1
+i:14 num:1
+i:15 num:1
+i:16 num:1
+i:17 num:1
+i:18 num:1
+i:19 num:1
+i:20 num:1
+i:21 num:1
+i:22 num:2
+i:23 num:2
+i:24 num:2
+i:25 num:2
+i:26 num:2
+i:27 num:2
+i:28 num:2
+i:29 num:2
+i:30 num:2
+i:31 num:2
+i:32 num:2
+i:33 num:2
+i:34 num:2
+i:35 num:2
+i:36 num:2
+i:37 num:2
+i:38 num:2
+i:39 num:2
+i:40 num:2
+i:41 num:2
+i:42 num:2
+i:43 num:3
+i:44 num:3
+i:45 num:3
+i:46 num:3
+i:47 num:3
+i:48 num:3
+i:49 num:3
+i:50 num:3
+i:51 num:3
+i:52 num:3
+i:53 num:3
+i:54 num:3
+i:55 num:3
+i:56 num:3
+i:57 num:3
+i:58 num:3
+i:59 num:3
+i:60 num:3
+i:61 num:3
+i:62 num:3
+i:63 num:3
+i:64 num:4
+i:65 num:4
+i:66 num:4
+i:67 num:4
+i:68 num:4
+i:69 num:4
+i:70 num:4
+i:71 num:4
+i:72 num:4
+i:73 num:4
+i:74 num:4
+i:75 num:4
+i:76 num:4
+i:77 num:4
+i:78 num:4
+i:79 num:4
+i:80 num:4
+i:81 num:4
+i:82 num:4
+i:83 num:4
+i:84 num:4
+i:85 num:5
+i:86 num:5
+i:87 num:5
+i:88 num:5
+i:89 num:5
+i:90 num:5
+i:91 num:5
+i:92 num:5
+i:93 num:5
+i:94 num:5
+i:95 num:5
+i:96 num:5
+i:97 num:5
+i:98 num:5
+i:99 num:5
+i:100 num:5
+i:101 num:5
+i:102 num:5
+i:103 num:5
+i:104 num:5
+i:105 num:5
+i:106 num:6
+i:107 num:6
+i:108 num:6
+i:109 num:6
+i:110 num:6
+i:111 num:6
+i:112 num:6
+i:113 num:6
+i:114 num:6
+i:115 num:6
+i:116 num:6
+i:117 num:6
+i:118 num:6
+i:119 num:6
+i:120 num:6
+i:121 num:6
+i:122 num:6
+i:123 num:6
+i:124 num:6
+i:125 num:6
+i:126 num:6
+i:127 num:7
+i:128 num:7
+i:129 num:7
+i:130 num:7
+i:131 num:7
+i:132 num:7
+i:133 num:7
+i:134 num:7
+i:135 num:7
+i:136 num:7
+i:137 num:7
+i:138 num:7
+i:139 num:7
+i:140 num:7
+i:141 num:7
+i:142 num:7
+i:143 num:7
+i:144 num:7
+i:145 num:7
+i:146 num:7
+i:147 num:7
+i:148 num:8
+i:149 num:8
+i:150 num:8
+i:151 num:8
+i:152 num:8
+i:153 num:8
+i:154 num:8
+i:155 num:8
+i:156 num:8
+i:157 num:8
+i:158 num:8
+i:159 num:8
+i:160 num:8
+i:161 num:8
+i:162 num:8
+i:163 num:8
+i:164 num:8
+i:165 num:8
+i:166 num:8
+i:167 num:8
+i:168 num:8
+i:169 num:9
+i:170 num:9
+i:171 num:9
+i:172 num:9
+i:173 num:9
+i:174 num:9
+i:175 num:9
+i:176 num:9
+i:177 num:9
+i:178 num:9
+i:179 num:9
+i:180 num:9
+i:181 num:9
+i:182 num:9
+i:183 num:9
+i:184 num:9
+i:185 num:9
+i:186 num:9
+i:187 num:9
+i:188 num:9
+i:189 num:9
+i:190 num:10
+i:191 num:10
+i:192 num:10
+i:193 num:10
+i:194 num:10
+i:195 num:10
+i:196 num:10
+i:197 num:10
+i:198 num:10
+i:199 num:10
+i:200 num:10
+i:201 num:10
+i:202 num:10
+i:203 num:10
+i:204 num:10
+i:205 num:10
+i:206 num:10
+i:207 num:10
+i:208 num:10
+Single Tree
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.631579
+Average Accuracy:0.629808
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.884615
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.855769
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.631579
+Average Accuracy:0.625000
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.380952
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.947368
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.631579
+Average Accuracy:0.721154
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.789474
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.473684
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.631579
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:1.000000
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:1.000000
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.802885
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.428571
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.526316
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.631579
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.798077
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.736842
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.571429
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.789474
+Average Accuracy:0.668269
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.473684
+Average Accuracy:0.697115
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.802885
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.947368
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.380952
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.473684
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.947368
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.428571
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.476190
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.842105
+Average Accuracy:0.576923
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.817308
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:1.000000
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.789474
+Average Accuracy:0.692308
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.865385
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.736842
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.263158
+Average Accuracy:0.581731
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.789474
+Average Accuracy:0.687500
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.802885
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:1.000000
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.421053
+Average Accuracy:0.725962
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.523810
+Accuracy:0.809524
+Accuracy:0.736842
+Average Accuracy:0.634615
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.476190
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.894737
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.736842
+Average Accuracy:0.725962
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.428571
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.473684
+Average Accuracy:0.600962
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.730769
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.857143
+Accuracy:0.736842
+Average Accuracy:0.711538
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.476190
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.789474
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Single Tree
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.578947
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.789474
+Average Accuracy:0.884615
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.736842
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.476190
+Accuracy:0.736842
+Average Accuracy:0.687500
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Single Tree
+Accuracy:0.428571
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.684211
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.684211
+Average Accuracy:0.687500
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.476190
+Accuracy:0.428571
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.684211
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.789474
+Average Accuracy:0.721154
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:1.000000
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.736842
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.736842
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.736842
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.578947
+Average Accuracy:0.697115
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:1.000000
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.578947
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.428571
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.631579
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.692308
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.428571
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.473684
+Average Accuracy:0.615385
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.631579
+Average Accuracy:0.692308
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.855769
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.684211
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.736842
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.476190
+Accuracy:0.631579
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.684211
+Average Accuracy:0.610577
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.812500
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.578947
+Average Accuracy:0.668269
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.736842
+Average Accuracy:0.668269
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.473684
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.807692
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.736842
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.578947
+Average Accuracy:0.716346
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.368421
+Average Accuracy:0.591346
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.526316
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.822115
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.476190
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.789474
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.684211
+Average Accuracy:0.692308
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.884615
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.788462
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.526316
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.428571
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.476190
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.526316
+Average Accuracy:0.615385
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.368421
+Average Accuracy:0.605769
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.578947
+Average Accuracy:0.649038
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.428571
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.904762
+Accuracy:0.631579
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.855769
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.684211
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.578947
+Average Accuracy:0.615385
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.802885
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.315789
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.706731
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.523810
+Accuracy:0.842105
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.802885
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.526316
+Average Accuracy:0.629808
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.380952
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.684211
+Average Accuracy:0.658654
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.855769
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.631579
+Average Accuracy:0.615385
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.947368
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.842105
+Average Accuracy:0.798077
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.578947
+Average Accuracy:0.692308
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.684211
+Average Accuracy:0.687500
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.947368
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.711538
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.812500
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.875000
+
+Random Forest
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Single Tree
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.523810
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.684211
+Average Accuracy:0.682692
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.619048
+Accuracy:0.578947
+Average Accuracy:0.706731
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.523810
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.631579
+Average Accuracy:0.625000
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.789474
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.904762
+Accuracy:0.578947
+Average Accuracy:0.725962
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.736842
+Average Accuracy:0.822115
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.476190
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.684211
+Average Accuracy:0.634615
+
+Bagging Tree Forest
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.841346
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:1.000000
+Accuracy:0.857143
+Accuracy:0.619048
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.842105
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.523810
+Accuracy:0.428571
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.526316
+Average Accuracy:0.658654
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.473684
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.798077
+
+Random Feature Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.684211
+Average Accuracy:0.687500
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.789474
+Average Accuracy:0.855769
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.842105
+Average Accuracy:0.716346
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.947368
+Average Accuracy:0.879808
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.631579
+Average Accuracy:0.639423
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.571429
+Accuracy:0.380952
+Accuracy:0.619048
+Accuracy:0.631579
+Average Accuracy:0.649038
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.884615
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.822115
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.421053
+Average Accuracy:0.649038
+
+Bagging Tree Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Random Feature Forest
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.736842
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.793269
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.865385
+
+Single Tree
+Accuracy:0.380952
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.629808
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.783654
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.428571
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.526316
+Average Accuracy:0.658654
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.578947
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.807692
+
+Single Tree
+Accuracy:0.857143
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.631579
+Average Accuracy:0.701923
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.798077
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.380952
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.571429
+Accuracy:0.526316
+Average Accuracy:0.634615
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.826923
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.879808
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.841346
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.789474
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.788462
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.631579
+Average Accuracy:0.615385
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Single Tree
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.473684
+Average Accuracy:0.673077
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.523810
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.761905
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.578947
+Average Accuracy:0.644231
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Feature Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:1.000000
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.428571
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.809524
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.631579
+Average Accuracy:0.653846
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.817308
+
+Random Feature Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.894737
+Average Accuracy:0.870192
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.428571
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.571429
+Accuracy:0.476190
+Accuracy:0.714286
+Accuracy:0.523810
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.605769
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.714286
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.812500
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.817308
+
+Single Tree
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.473684
+Average Accuracy:0.625000
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.822115
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.860577
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.333333
+Accuracy:0.857143
+Accuracy:0.476190
+Accuracy:0.619048
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.666667
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.368421
+Average Accuracy:0.596154
+
+Bagging Tree Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.952381
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.798077
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.714286
+Accuracy:0.809524
+Accuracy:0.619048
+Accuracy:0.809524
+Accuracy:0.666667
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.619048
+Accuracy:0.631579
+Average Accuracy:0.677885
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.836538
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.857143
+Accuracy:0.894737
+Average Accuracy:0.865385
+
+Random Forest
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.842105
+Average Accuracy:0.826923
+
+Single Tree
+Accuracy:0.476190
+Accuracy:0.809524
+Accuracy:0.523810
+Accuracy:0.619048
+Accuracy:0.714286
+Accuracy:0.619048
+Accuracy:0.761905
+Accuracy:0.619048
+Accuracy:0.571429
+Accuracy:0.631579
+Average Accuracy:0.634615
+
+Bagging Tree Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:1.000000
+Accuracy:0.857143
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.904762
+Accuracy:0.842105
+Average Accuracy:0.850962
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Forest
+Accuracy:0.761905
+Accuracy:0.904762
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.666667
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.809524
+Accuracy:0.789474
+Average Accuracy:0.831731
+
+Single Tree
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.666667
+Accuracy:0.857143
+Accuracy:0.714286
+Accuracy:0.476190
+Accuracy:0.761905
+Accuracy:0.571429
+Accuracy:0.666667
+Accuracy:0.684211
+Average Accuracy:0.663462
+
+Bagging Tree Forest
+Accuracy:0.809524
+Accuracy:0.952381
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.809524
+Accuracy:0.857143
+Accuracy:0.857143
+Accuracy:0.761905
+Accuracy:0.894737
+Average Accuracy:0.846154
+
+Random Feature Forest
+Accuracy:0.857143
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.714286
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.809524
+Accuracy:0.842105
+Average Accuracy:0.855769
+
+Random Forest
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:0.904762
+Accuracy:1.000000
+Accuracy:0.761905
+Accuracy:0.714286
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.761905
+Accuracy:0.842105
+Average Accuracy:0.831731
+
+Single Tree:66.153846
+Bagging Tree Forest:82.927885
+Random Feature Forest:85.379808
+Random Forest:83.105769
