@@ -1,0 +1,9 @@
+constraint
+consistency
+set
+algorithm
+linear
+problem
+elimination
+variable
+inequality

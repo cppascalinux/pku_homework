@@ -1,0 +1,8 @@
+constraint
+program
+nonlinear
+semidefinite
+variable
+algorithm
+function
+inequality

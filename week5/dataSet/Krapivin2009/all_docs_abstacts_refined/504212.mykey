@@ -1,0 +1,11 @@
+solver
+superlu
+matrix
+mumps
+sparse
+algorithm
+parallel
+t3e
+large
+main
+cray

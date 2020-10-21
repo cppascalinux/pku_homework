@@ -1,0 +1,10 @@
+theory
+example
+use
+training
+revision
+set
+method
+accuracy
+flaw
+positive

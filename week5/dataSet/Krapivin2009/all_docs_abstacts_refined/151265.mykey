@@ -1,0 +1,6 @@
+set
+rule
+inference
+relation
+decidable
+time

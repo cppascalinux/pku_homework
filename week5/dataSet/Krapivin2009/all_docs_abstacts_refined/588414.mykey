@@ -1,0 +1,9 @@
+preconditioners
+toeplitz
+matrix
+circulant
+system
+zero
+order
+function
+ill-conditioned

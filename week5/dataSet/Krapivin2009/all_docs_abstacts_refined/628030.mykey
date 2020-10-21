@@ -1,0 +1,10 @@
+operation
+transaction
+copy
+read
+weak
+write
+access
+value
+support
+consistency

@@ -1,0 +1,14 @@
+model
+group
+matrix
+parameter
+equal
+estimate
+distribution
+shape
+probability
+mixture
+uncertainty
+factor
+real
+example

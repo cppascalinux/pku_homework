@@ -1,0 +1,15 @@
+model
+set
+state
+data
+variable
+time
+series
+markov
+hidden
+factorial
+observation
+algorithm
+hmm
+parameter
+probability

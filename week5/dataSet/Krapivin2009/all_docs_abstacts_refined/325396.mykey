@@ -1,0 +1,6 @@
+system
+leader
+service
+partitionable
+local
+election

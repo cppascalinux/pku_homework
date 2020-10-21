@@ -1,0 +1,7 @@
+type
+theory
+use
+proof
+system
+reduction
+lego

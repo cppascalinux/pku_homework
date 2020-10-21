@@ -1,0 +1,14 @@
+service
+reservation
+resource
+plan
+session
+qos
+level
+multi-resource
+rate
+algorithm
+end-to-end
+success
+requirement
+individual

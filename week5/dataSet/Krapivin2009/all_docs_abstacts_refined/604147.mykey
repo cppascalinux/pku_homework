@@ -1,0 +1,12 @@
+type
+layout
+memory
+data
+context
+value
+theory
+ordered
+location
+allocation
+pointer
+property
