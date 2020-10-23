@@ -1,3 +1,12 @@
 {
-	"python.pythonPath": "/usr/bin/python3"
+	"python.pythonPath": "C:\\Users\\20782\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+	"files.associations": {
+		"cstring": "cpp",
+		"map": "cpp",
+		"cassert": "cpp",
+		"cmath": "cpp",
+		"cstdio": "cpp",
+		"algorithm": "cpp",
+		"random": "cpp"
+	}
 }
