@@ -1,4 +1,4 @@
-import nltk,math,os,pke
+import nltk,math,os
 MAXL=5
 WORDCOUNT=25
 RATE=0.85
@@ -49,7 +49,7 @@ def solve(fl):
 		if wp[i][0] in d:
 			for j in range(i+1,min(i+MAXL+1,len(wp))):
 				if wp[j][0] in d:
-					mat[d[wp[i][0]]][d[wp[j][0]]]+=100/(i-j)/(i-j)
+					mat[d[wp[i][0]]][d[wp[j][0]]]+=100/(i-j)**3
 				elif wp[j][0] in PUNC:
 					break
 	for i in range(tp):
