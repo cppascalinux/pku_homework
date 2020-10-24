@@ -1,4 +1,4 @@
-import nltk,math,os
+import nltk,math,os,pke,string,random
 MAXL=5
 WORDCOUNT=25
 RATE=0.85
@@ -49,7 +49,7 @@ def solve(fl):
 		if wp[i][0] in d:
 			for j in range(i+1,min(i+MAXL+1,len(wp))):
 				if wp[j][0] in d:
-					mat[d[wp[i][0]]][d[wp[j][0]]]+=100/(i-j)**3
+					mat[d[wp[i][0]]][d[wp[j][0]]]+=100/(i-j)**2
 				elif wp[j][0] in PUNC:
 					break
 	for i in range(tp):
@@ -78,9 +78,7 @@ def solve(fl):
 			if pd[wd2]>=WORDREP:
 				fout.write(wd1+' '+wd2+'\n')
 	# for wd,num in words:
-		# fout.write(wd+'\n')
-		# if vec[0][num]>=THRES:
-		# 	fout.write(wd+'\n')
+		# f0.037084	fout.write(wd+'\n')
 	# st=set(list(zip(*words[:15]))[0])
 	# vis=set()
 	# phrases=[]
@@ -99,6 +97,77 @@ def solve(fl):
 	# 			lst=j
 	# for pr in phrases:
 	# 	fout.write(pr+'\n')
+def solvetxt(fl):#TextRank
+	# fin=open(fl,'rt',encoding='utf8')
+	pketxt=pke.unsupervised.TextRank()
+	pos={'NOUN','ADJ'}
+	pketxt.load_document(input=fl,language='en',normalization=None)
+	# pketxt.candidate_selection(pos=pos)
+	pketxt.candidate_weighting(pos=pos,top_percent=0.01)
+	phrases=pketxt.get_n_best(n=10)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
+def solvesgl(fl):#SingleRank
+	pos={'NOUN','PROPN','ADJ'}
+	pkesgl=pke.unsupervised.SingleRank()
+	pkesgl.load_document(input=fl,language='en',normalization=None)
+	pkesgl.candidate_selection(pos=pos)
+	pkesgl.candidate_weighting(window=10,pos=pos)
+	phrases=pkesgl.get_n_best(n=5)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
+def solvetpc(fl):#TopicRank
+	pketpc=pke.unsupervised.TopicRank()
+	pketpc.load_document(input=fl)
+	pos={'NOUN','PROPN','ADJ'}
+	stoplist=list(string.punctuation)
+	stoplist+=['-lrb-','-rrb-','-lcb-','-rcb-','-lsb-','-rsb-']
+	stoplist+=nltk.corpus.stopwords.words('english')
+	pketpc.candidate_selection(pos=pos, stoplist=stoplist)
+	pketpc.candidate_weighting(threshold=0.74, method='average')
+	phrases=pketpc.get_n_best(n=5)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
+def solvepst(fl):#PositionRank
+	pos={'NOUN','PROPN','ADJ'}
+	grammar='NP: {<ADJ>*<NOUN|PROPN>+}'
+	pkepst=pke.unsupervised.PositionRank()
+	pkepst.load_document(input=fl,language='en',normalization=None)
+	pkepst.candidate_selection(grammar=grammar,maximum_word_number=3)
+	pkepst.candidate_weighting(window=10,pos=pos)
+	phrases=pkepst.get_n_best(n=5)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
+def solvemtp(fl):
+	pkemtp=pke.unsupervised.MultipartiteRank()
+	pkemtp.load_document(input=fl)
+	pos={'NOUN','PROPN','ADJ'}
+	stoplist=list(string.punctuation)
+	stoplist+=['-lrb-','-rrb-','-lcb-','-rcb-','-lsb-','-rsb-']
+	stoplist+=nltk.corpus.stopwords.words('english')
+	pkemtp.candidate_selection(pos=pos, stoplist=stoplist)
+	pkemtp.candidate_weighting(alpha=1.1,threshold=0.74,method='average')
+	phrases=pkemtp.get_n_best(n=5)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
+def initdf():
+	stoplist=list(string.punctuation)
+	pke.compute_document_frequency(input_dir='all_docs_abstacts_refined',output_file='output.tsv.gz',extension='txt',language='en',normalization="stemming",stoplist=stoplist)
+def solvetfidf(fl):
+	pketf=pke.unsupervised.TfIdf()
+	pketf.load_document(input=fl,language='en',normalization=None)
+	pketf.candidate_selection(n=3, stoplist=list(string.punctuation))
+	df=pke.load_document_frequency_file(input_file='output.tsv.gz')
+	pketf.candidate_weighting(df=df)
+	phrases=pketf.get_n_best(n=5)
+	fout=open(fl[:-4]+'.mykey','wt',encoding='utf8')
+	for wd,scr in phrases:
+		fout.write(wd+'\n')
 def judge(fl):
 	key=open(fl[:-4]+'.key','rt',encoding='utf8')
 	mykey=open(fl[:-4]+'.mykey','rt',encoding='utf8')
@@ -110,6 +179,7 @@ def judge(fl):
 		stk.add(' '.join([lemmaer(x[0],pos=getty(x[1])) for x in tager(tokener(wd.lower()))]))
 	for wd in skm:
 		stmk.add(' '.join([lemmaer(x[0],pos=getty(x[1])) for x in tager(tokener(wd.lower()))]))
+	# print(stk,stmk)
 	l1=len(stk)
 	l2=len(stmk)
 	if l1==0 or l2==0:
@@ -118,14 +188,20 @@ def judge(fl):
 	# print(l1,l2,l3)
 	return l3/l2,l3/l1,2*l3/(l1+l2)
 def main():
-	ls=getfiles()
-	# ls=['.\\all_docs_abstacts_refined\\qwq.txt']
+	initdf()
+	ls=getfiles()[:100]
+	# ls=['all_docs_abstacts_refined/1040296.txt']
 	res=open('result.txt','wt',encoding='utf8')
 	ta,tb,tc=0,0,0
 	for fl in ls:
 		print(fl)
-		solve(fl)
-		# solvepke(fl)
+		# solve(fl)
+		# solvetxt(fl)
+		# solvetpc(fl)
+		# solvesgl(fl)
+		# solvepst(fl)
+		# solvemtp(fl)
+		solvetfidf(fl)
 		a,b,c=judge(fl)
 		ta+=a/len(ls)
 		tb+=b/len(ls)
