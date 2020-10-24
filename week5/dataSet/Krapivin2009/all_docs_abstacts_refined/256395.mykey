@@ -1,6 +1,10 @@
+multistage bus
 bus network
+shared memory
+conventional min
 interconnection network
 bidirectional min
+execution time
 memory request
 mbn switch
 bmin switch

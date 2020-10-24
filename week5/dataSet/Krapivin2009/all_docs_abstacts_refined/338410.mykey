@@ -1,8 +1,11 @@
 logic program
+three-valued setting
+target concept
 negative example
 negative concept
+well-founded semantics
 explicit negation
 default negation
-general solution
 training set
+least general
 positive example

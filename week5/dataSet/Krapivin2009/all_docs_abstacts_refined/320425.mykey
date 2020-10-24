@@ -7,5 +7,6 @@ young object
 collection algorithm
 collection cost
 write barrier
+collected region
 heap object
 copy cost

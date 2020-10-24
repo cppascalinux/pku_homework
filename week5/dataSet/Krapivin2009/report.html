@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>TextRank提取关键词作业的报告</title>
+        <style>
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="textrank提取关键词作业的报告">TextRank提取关键词作业的报告</h1>
+<h2 id="1-总括">1. 总括</h2>
+<p>这次作业中实现了TextRank算法,并根据自己的思路进行(负)优化,同时调用了pke库中的TF-IDF,TextRank,TopicRank,SingleRank等算法,计算了Purity,Recall,F-score等参数,并进行了比较.</p>
+<h2 id="2-关于数据的预处理">2. 关于数据的预处理</h2>
+<p>这部分主要调用了nltk库.首先将所有字母转换为小写,然后使用tokenize函数对摘要分词,再使用pos_tag函数为每个单词标注词性,并提取出名词,形容词作为可能的关键词(原论文中说,仅对名词,形容词建图能显著提高结果).最后使用lemmatize函数提取词干(将名词复数转化为单数,将比较级,最高级的形容词还原为原型).再利用整个文本对可能的关键词建图连边,迭代100次后,选出权重排名前WORDCOUNT(经过手动调参,取25)的单词,再找出文本中所有在这WORDCOUNT个单词中,两个词都有出现的二字词组,取出现次数&gt;=WORDREP(经过手动调参,取8)的词组输出</p>
+<h2 id="3-我对textrank的负优化">3. 我对TextRank的(负)优化</h2>
+<p>原TextRank算法中,单词之间的边权为它们在长度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>的窗口中共现次数.但显然,单词之间距离越近,他们的关联性越强,连边的边权应该越大.于是每次当两个单词<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><msub><mi>d</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">wd_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><msub><mi>d</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">wd_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>在长为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>的窗口中共现时,就将他们之间的边权<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mi>j</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">+=\frac1{(i-j)^2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.365108em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>(距离的平方反比),最后再对每个点的出边边权归一化,但实测中效果一般.关于其他的连边方式(如边权为距离反比,立方反比,以及边权都相同),在后文中给出了对比</p>
+<h2 id="4-对输出结果的评分">4. 对输出结果的评分</h2>
+<p>将.key文件中的词组都转换为小写,并提取词干,再与.mykey中的词组进行对比,计算每一组文件的P,R,F值,并取平均值,最后输出到result.txt中</p>
+<h2 id="5-不同方法与参数的结果对比所有文件平均值">5. 不同方法与参数的结果对比(所有文件平均值)</h2>
+<p>注:除了TextRank之外,其他算法均只随机取100个文本文件(跑得太慢了qwq,没时间全跑一遍)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">Purity</th>
+<th style="text-align:center">Recall</th>
+<th style="text-align:center">F-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">TextRank 距离立方反比</td>
+<td style="text-align:center">0.193301</td>
+<td style="text-align:center">0.176643</td>
+<td style="text-align:center">0.165552</td>
+</tr>
+<tr>
+<td style="text-align:center">TextRank 距离平方反比</td>
+<td style="text-align:center">0.193770</td>
+<td style="text-align:center">0.186584</td>
+<td style="text-align:center">0.169610</td>
+</tr>
+<tr>
+<td style="text-align:center">TextRank 距离反比</td>
+<td style="text-align:center">0.207835</td>
+<td style="text-align:center">0.162047</td>
+<td style="text-align:center">0.164199</td>
+</tr>
+<tr>
+<td style="text-align:center">TextRank 常数</td>
+<td style="text-align:center">0.191727</td>
+<td style="text-align:center">0.189273</td>
+<td style="text-align:center">0.169965</td>
+</tr>
+<tr>
+<td style="text-align:center">TextRank pke</td>
+<td style="text-align:center">0.030336</td>
+<td style="text-align:center">0.050972</td>
+<td style="text-align:center">0.035996</td>
+</tr>
+<tr>
+<td style="text-align:center">SingleRank pke</td>
+<td style="text-align:center">0.014000</td>
+<td style="text-align:center">0.012028</td>
+<td style="text-align:center">0.012199</td>
+</tr>
+<tr>
+<td style="text-align:center">TopicRank pke</td>
+<td style="text-align:center">0.094000</td>
+<td style="text-align:center">0.108290</td>
+<td style="text-align:center">0.096826</td>
+</tr>
+<tr>
+<td style="text-align:center">PositionRank pke</td>
+<td style="text-align:center">0.055000</td>
+<td style="text-align:center">0.057806</td>
+<td style="text-align:center">0.053952</td>
+</tr>
+<tr>
+<td style="text-align:center">MultipartiteRank pke</td>
+<td style="text-align:center">0.110000</td>
+<td style="text-align:center">0.125885</td>
+<td style="text-align:center">0.112738</td>
+</tr>
+<tr>
+<td style="text-align:center">TF-IDF pke</td>
+<td style="text-align:center">0.053500</td>
+<td style="text-align:center">0.055040</td>
+<td style="text-align:center">0.053138</td>
+</tr>
+</tbody>
+</table>
+
+    </body>
+    </html>

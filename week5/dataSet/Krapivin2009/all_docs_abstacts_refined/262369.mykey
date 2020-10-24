@@ -4,5 +4,6 @@ duration measure
 duration constraint
 time automaton
 timed automaton
+final state
 duration-bounded reachability
 reachability problem

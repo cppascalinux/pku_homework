@@ -1,6 +1,10 @@
+minimum degree
 sparse matrix
+gaussian elimination
 partial pivoting
 row degree
-column ordering
+nonzero pattern
 symmetric matrix
+cholesky factorization
+column ordering
 ordering time
