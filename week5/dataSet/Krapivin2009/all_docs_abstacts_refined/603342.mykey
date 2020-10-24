@@ -1,10 +1,4 @@
-reduction
-mechanism
-language
-mpi
-zpl
-construct
-programmer
-fortran
-performance
-parallel
+high performance
+zpl language
+zpl implementation
+parallel language

@@ -1,13 +1,7 @@
-simulation
-event
-execution
-time
-state
-warp
-checkpoint
-model
-granularity
-position
-technique
-checkpointing
-simulator
+checkpoint position
+time warp
+checkpointing technique
+event execution
+event granularity
+simulation execution
+simulation event

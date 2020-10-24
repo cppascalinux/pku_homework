@@ -1,5 +1,5 @@
-convex
-cut
-plane
-point
-method
+volumetric cut
+cut plane
+plane method
+plane algorithm
+central cut

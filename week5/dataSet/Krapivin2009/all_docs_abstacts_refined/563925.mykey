@@ -1,11 +1,8 @@
-node
-r-tree
-structure
-store
-partial
-information
-data
-side
-o-tree
-more
-box
+r-tree node
+partial r-tree
+partial r-trees
+partial o-tree
+search time
+minimum bounding
+bounding box
+line data

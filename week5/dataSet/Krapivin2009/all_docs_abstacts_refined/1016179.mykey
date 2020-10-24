@@ -1,12 +1,2 @@
-bound
-delay
-rate
-wfq
-session
-server
-end-to-end
-cedf
-small
-network
-packet
-hop
+end-to-end delay
+delay bound

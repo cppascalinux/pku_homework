@@ -1,11 +1,12 @@
-control
-car
-elevator
-arrival
-algorithm
-space
-problem
-state
-group
-agent
-date
+elevator group
+elevator car
+elevator control
+group control
+reinforcement learning
+reinforcement signal
+rl algorithm
+rl agent
+state space
+other agent
+other car
+multi-agent rl

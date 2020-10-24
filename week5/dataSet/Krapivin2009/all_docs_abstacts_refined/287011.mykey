@@ -1,9 +1,6 @@
-measure
-similarity
-convex
-polygon
-symmetry
-invariant
-shape
-rotation
-computation
+symmetry measure
+convex polygon
+minkowski addition
+affine transformation
+mixed volume
+similarity measure

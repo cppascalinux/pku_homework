@@ -1,10 +1,8 @@
-loss
-function
-sequence
-expert
-bound
-segment
-algorithm
-trial
-example
-prediction
+best expert
+best partition
+relative weight
+loss bound
+loss function
+additional loss
+trial sequence
+prediction function

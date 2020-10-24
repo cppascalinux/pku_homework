@@ -1,7 +1,7 @@
-assignment
-register
-algorithm
-loop
-code
-generation
-memory
+optimal register
+optimal assignment
+register assignment
+code generation
+loop body
+loop algorithm
+spill code

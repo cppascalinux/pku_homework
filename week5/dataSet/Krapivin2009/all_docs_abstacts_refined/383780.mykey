@@ -1,4 +1,5 @@
-action
-sense
-program
-knowledge
+knowledge-based program
+golog interpreter
+sense action
+closed-world assumption
+on-line execution

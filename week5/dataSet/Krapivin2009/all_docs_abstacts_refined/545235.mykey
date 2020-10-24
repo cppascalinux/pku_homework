@@ -1,9 +1,10 @@
-prefetching
-algorithm
-processor
-memory
-cache
-table
-chip
-main
-controller
+memory controller
+memory processor
+correlation prefetching
+correlation table
+main memory
+main processor
+dram chip
+l2 cache
+data structure
+prefetching algorithm

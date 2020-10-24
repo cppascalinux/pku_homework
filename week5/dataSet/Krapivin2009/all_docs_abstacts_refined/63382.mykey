@@ -1,8 +1,4 @@
-system
-copy
-host
-model
-file
-witness
-failure
-repair
+stochastic petri
+petri net
+file system
+current copy

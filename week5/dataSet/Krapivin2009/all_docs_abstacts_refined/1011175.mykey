@@ -1,13 +1,9 @@
-theory
-category
-type
-set
-space
-relation
-domain
-equivalence
-functionals
-lattice
-mapping
-cartesian
-continuous
+equilogical space
+partial equivalence
+equivalence relation
+category equ
+algebraic lattice
+domain theory
+countable functionals
+modest set
+type theory

@@ -1,12 +1,11 @@
-vector
-matrix
-length
-supernode
-optimal
-time
-schedule
-linear
-transformation
-algorithm
-direction
-side
+optimal supernode
+optimal linear
+supernode shape
+supernode transformation
+relative side
+side length
+linear schedule
+schedule vector
+schedule length
+direction matrix
+dependence vector

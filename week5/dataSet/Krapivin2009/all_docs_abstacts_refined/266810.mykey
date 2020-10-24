@@ -1,12 +1,5 @@
-flow
-control
-time
-predication
-code
-schedule
-balance
-framework
-execution
-if-conversion
-use
-characteristic
+control flow
+predicated execution
+predicated code
+compilation framework
+schedule time

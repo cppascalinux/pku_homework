@@ -1,11 +1,12 @@
-join
-heuristic
-sequence
-execution
-time
-scheme
-allocation
-processor
-query
-issue
-system
+multi-join query
+execution dependency
+execution time
+join operation
+join sequence
+join method
+general join
+bushy tree
+sequential join
+processor allocation
+sequence heuristic
+query execution

@@ -1,11 +1,9 @@
-surface
-reconstruction
-use
-method
-model
-subdivision
-such
-procedure
-smooth
-crease
-type
+piecewise smooth
+smooth surface
+smooth subdivision
+surface reconstruction
+range data
+arbitrary topological
+topological type
+sharp feature
+subdivision surface

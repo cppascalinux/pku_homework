@@ -1,10 +1,11 @@
-type
-semantics
-inference
-preorders
--models
-intersection-types
-system
-interpretation
-relation
-assignment
+complete intersection-type
+intersection-type preorders
+type preorders
+type assignment
+type interpretation
+type preorder
+assignment system
+inference semantics
+simple semantics
+applicative structure
+interpretation function

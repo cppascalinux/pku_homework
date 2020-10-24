@@ -1,11 +1,5 @@
-sparse
-code
-matrix
-data
-distribution
-computation
-such
-language
-feature
-machine
-parallel
+data distribution
+sparse data
+sparse code
+sparse matrix
+sparse representation

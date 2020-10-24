@@ -1,10 +1,6 @@
-cc
-mod
-incomparable
-pp
-inclusion
-class
-regard
-argument
-bound
-complexity
+communication complexity
+communication protocol
+complexity class
+low bound
+acceptance mode
+pp cc

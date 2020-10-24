@@ -1,9 +1,9 @@
-actor
-construct
-time
-iteration
-data-dependent
-processor
-scheduling
-such
-dynamic
+compile-time scheduling
+compile-time profile
+dynamic construct
+dataflow graph
+compile time
+execution time
+data-dependent iteration
+data-dependent actor
+iteration actor

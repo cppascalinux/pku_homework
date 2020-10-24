@@ -1,8 +1,4 @@
-point
-method
-noise
-position
-contour
-model
-weight
-such
+local weight
+binary contour
+contour point
+deviation angle

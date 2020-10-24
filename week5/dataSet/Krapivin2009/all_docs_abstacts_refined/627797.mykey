@@ -1,9 +1,5 @@
-set
-algorithm
-candidate
-count
-mining
-dma
-rule
-exchange
-site
+association rule
+distributed database
+candidate set
+support count
+count exchange

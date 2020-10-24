@@ -1,16 +1,12 @@
-bank
-time
-model
-memory
-reference
-system
-cycle
-stream
-simulation
-vector
-efficiency
-performance
-processor
-logical
-number
-buffer
+logical bank
+cycle time
+bank cycle
+bank model
+interconnection network
+interconnection cost
+vector simulation
+vector register
+reference stream
+memory system
+memory bank
+queue size

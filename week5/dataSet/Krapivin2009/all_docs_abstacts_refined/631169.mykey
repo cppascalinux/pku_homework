@@ -1,14 +1,17 @@
-analysis
-time
-execution
-cache
-program
-construct
-information
-timing
-path
-memory
-such
-case
-bound
-processor
+bad case
+case time
+case execution
+time analysis
+time information
+risc processor
+execution time
+execution path
+program construct
+pipelined execution
+pipelined processor
+cache memory
+cache time
+timing schema
+timing information
+timing analysis
+wcet bound

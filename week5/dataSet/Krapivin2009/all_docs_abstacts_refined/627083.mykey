@@ -1,10 +1,8 @@
-algorithm
-model
-access
-data
-performance
-slowdown
-object
-time
-concurrent
-lock-free
+lock-free algorithm
+concurrency control
+execution time
+lock algorithm
+concurrent object
+concurrent data
+transient slowdown
+slowdown model

@@ -1,13 +1,3 @@
-performance
-application
-control
-criterion
-scheduler
-system
-class
-rate
-admission
-result
-service
-cpu
-inheritance
+admission control
+service class
+priority inheritance

@@ -1,11 +1,7 @@
-service
-system
-communication
-application
-such
-real-time
-component
-architecture
-use
-armada
-guarantee
+armada project
+communication service
+communication subsystem
+real-time application
+real-time communication
+middleware service
+group communication

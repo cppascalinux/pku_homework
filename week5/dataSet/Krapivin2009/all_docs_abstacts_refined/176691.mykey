@@ -1,5 +1,4 @@
-algorithm
-time
-element
-poset
-transposition
+linear extension
+constant amortized
+amortized time
+combinatorial object

@@ -1,9 +1,2 @@
-preconditioner
-markov
-chain
-method
-problem
-parallel
-matrix
-krylov
-inverse
+markov chain
+generalized inverse

@@ -1,5 +1,3 @@
-algorithm
-monotonic
-system
-scheduling
-rate
+deadline monotonic
+time time
+scheduling algorithm

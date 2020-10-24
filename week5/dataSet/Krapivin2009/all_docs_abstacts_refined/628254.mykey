@@ -1,9 +1,9 @@
-time
-hashing
-scheme
-query
-t.
-set
-evolution
-temporal
-s.
+hashing scheme
+dynamic hashing
+membership query
+temporal hashing
+temporal membership
+ephemeral hashing
+persistent hashing
+linear hashing
+total number

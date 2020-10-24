@@ -1,9 +1,3 @@
-processor
-task
-time
-order
-available
-policy
-interval
-varies
-profile
+available processor
+random variable
+exponential distribution

@@ -1,7 +1,6 @@
-power
-circuit
-delay
-model
-estimate
-peak
-gate
+delay model
+peak power
+sequential circuit
+power estimate
+gate delay
+combinational circuit

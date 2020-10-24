@@ -1,10 +1,8 @@
-constraint
-search
-programming
-framework
-local
-problem
-method
-window
-algorithm
-time
+constraint programming
+local search
+local move
+search method
+search algorithm
+combinatorial optimization
+salesman problem
+time window

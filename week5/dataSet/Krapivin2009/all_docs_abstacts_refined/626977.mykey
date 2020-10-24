@@ -1,13 +1,5 @@
-state
-method
-time
-failure
-rshw
-tmr
-system
-fault
-increase
-probability
-rhwr
-detection
-cost
+tmr failure
+tmr system
+possible state
+fault state
+system state

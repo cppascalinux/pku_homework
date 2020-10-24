@@ -1,6 +1,3 @@
-graph
-group
-action
-map
-automorphisms
-theory
+action graph
+action digraph
+group action

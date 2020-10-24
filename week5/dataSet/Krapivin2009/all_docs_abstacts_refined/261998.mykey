@@ -1,5 +1,6 @@
-algorithm
-selection
-balancing
-load
-parallel
+parallel selection
+randomized algorithm
+randomized selection
+load balancing
+selection algorithm
+deterministic algorithm

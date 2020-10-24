@@ -1,5 +1,4 @@
-aa
-matrix
-factorization
-update
-sparse
+cholesky factorization
+rank-1 update
+a. davis
+w. hager

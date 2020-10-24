@@ -1,10 +1,5 @@
-page
-code
-encoding
-size
-rescheduling
-fault
-dynamic
-rsi
-list
-invariance
+dynamic rescheduling
+page fault
+page size
+list encoding
+acyclic code

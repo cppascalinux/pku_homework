@@ -1,7 +1,4 @@
-route
-recovery
-length
-protocol
-mechanism
-increase
-error
+error recovery
+local error
+reactive protocol
+route length

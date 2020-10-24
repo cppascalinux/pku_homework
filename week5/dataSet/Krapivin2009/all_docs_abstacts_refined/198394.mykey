@@ -1,12 +1,9 @@
-atm
-network
-pvm
-interface
-local
-call
-sun
-switch
-communication
-layer
-mode
-remote
+distributed network
+distributed application
+local atm
+atm network
+atm switch
+atm api
+communication performance
+different protocol
+socket interface

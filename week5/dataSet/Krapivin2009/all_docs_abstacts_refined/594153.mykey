@@ -1,9 +1,5 @@
-literal
-formula
-set
-path
-anti-links
-form
-problem
-operation
-occurrence
+subsumption check
+subsumed path
+normal form
+nnf formula
+anti-link operation

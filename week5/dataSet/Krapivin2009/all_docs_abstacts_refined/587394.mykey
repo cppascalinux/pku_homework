@@ -1,7 +1,5 @@
-method
-algorithm
-elimination
-sparse
-procedure
-use
-general
+algebraic multilevel
+gaussian elimination
+minimum degree
+degree algorithm
+multigrid method

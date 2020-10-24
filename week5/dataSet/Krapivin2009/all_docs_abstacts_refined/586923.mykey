@@ -1,8 +1,4 @@
-graph
-algorithm
-operation
-interval
-problem
-representation
-proper
-time
+dynamic algorithm
+proper interval
+interval graph
+incremental algorithm

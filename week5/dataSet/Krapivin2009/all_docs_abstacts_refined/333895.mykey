@@ -1,10 +1,9 @@
-method
-time
-average
-field
-symplectic
-map
-vector
-system
-numerical
-hamiltonian
+backward error
+error analysis
+numerical method
+hamiltonian system
+symplectic method
+modified vector
+vector field
+flow map
+time average

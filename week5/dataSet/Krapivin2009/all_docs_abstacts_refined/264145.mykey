@@ -1,6 +1,7 @@
-type
-view
-cluster
-procedure
-generic
-data
+generic procedure
+concrete data
+concrete type
+abstract type
+several view
+view cluster
+view type

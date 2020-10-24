@@ -1,9 +1,2 @@
-application
-size
-loop
-structure
-grain
-balancing
-load
-time
-parameter
+grain size
+load balancing

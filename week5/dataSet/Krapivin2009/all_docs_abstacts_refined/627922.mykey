@@ -1,11 +1,6 @@
-collection
-document
-simulation
-result
-algorithm
-size
-textual
-join
-attribute
-system
-file
+multidatabase system
+textual attribute
+i/o cost
+document collection
+inverted file
+simulation result

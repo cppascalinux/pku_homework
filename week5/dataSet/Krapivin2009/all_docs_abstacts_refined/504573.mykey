@@ -1,9 +1,7 @@
-constraint
-consistency
-set
-algorithm
-linear
-problem
-elimination
-variable
-inequality
+linear constraint
+variable elimination
+generalized linear
+temporal constraint
+ord-horn constraint
+global consistency
+algorithm consistency

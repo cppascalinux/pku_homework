@@ -1,7 +1,14 @@
-parallel
-image
-task
-operator
-processing
-application
-skeleton
+task parallel
+task graph
+parallel image
+image processing
+image operator
+processing operator
+processing application
+low-level image
+data parallel
+algorithmic skeleton
+application task
+multi-baseline stereo
+stereo vision
+vision application

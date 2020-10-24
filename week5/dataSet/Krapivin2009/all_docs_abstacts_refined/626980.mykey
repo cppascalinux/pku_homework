@@ -1,14 +1,7 @@
-fbdd
-boolean
-function
-obdd
-representation
-such
-test
-structure
-manipulation
-data
-provide
-type
-variable
-size
+boolean manipulation
+boolean function
+boolean synthesis
+data structure
+synthesis step
+variable ordering
+variable order

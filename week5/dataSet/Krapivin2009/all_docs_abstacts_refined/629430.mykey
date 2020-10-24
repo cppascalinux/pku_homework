@@ -1,9 +1,7 @@
-time
-retiming
-iteration
-algorithm
-factor
-graph
-unfolding
-dfg
-schedule
+data-flow graph
+retiming algorithm
+unfolding factor
+static schedule
+computation time
+original dfg
+unit-time dfg

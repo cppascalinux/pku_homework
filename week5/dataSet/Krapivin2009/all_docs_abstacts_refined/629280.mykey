@@ -1,4 +1,2 @@
-system
-structure
-object
-distributed
+persistent object
+distributed system

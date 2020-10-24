@@ -1,9 +1,4 @@
-constraint
-algorithm
-polytope
-linear
-program
-problem
-sphere
-quadratic
-function
+unequal sphere
+quadratic constraint
+simplicial branch-and-bound
+branch-and-bound algorithm

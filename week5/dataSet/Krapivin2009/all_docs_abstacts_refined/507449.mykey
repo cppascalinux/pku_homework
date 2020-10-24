@@ -1,10 +1,7 @@
-algorithm
-detector
-message
-qos
-failure
-delay
-behavior
-requirement
-loss
-probability
+failure detector
+qos metric
+qos requirement
+probabilistic behavior
+message delay
+message loss
+detector algorithm

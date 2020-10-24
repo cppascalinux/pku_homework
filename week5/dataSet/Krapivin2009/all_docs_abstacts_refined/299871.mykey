@@ -1,6 +1,5 @@
-set
-approximation
-p-measure
-polynomial-time
-concept
-unsafe
+polynomial-time safe
+polynomial-time unsafe
+unsafe approximation
+optimal polynomial-time
+safe approximation

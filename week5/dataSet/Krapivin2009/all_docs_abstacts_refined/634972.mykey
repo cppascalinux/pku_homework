@@ -1,9 +1,8 @@
-type
-safety
-code
-policy
-proof
-language
-framework
-annotation
-checker
+mobile code
+safety policy
+explicit proof
+proof-carrying code
+type annotation
+typed intermediate
+intermediate language
+logical framework

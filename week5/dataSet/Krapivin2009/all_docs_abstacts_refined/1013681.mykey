@@ -1,9 +1,3 @@
-target
-problem
-version
-probability
-player
-job
-ratio
-time
-on-line
+on-line player
+target probability
+competitive ratio

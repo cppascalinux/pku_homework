@@ -1,4 +1,2 @@
-language
-reducible
-context-free
-unambiguous
+context-free language
+complexity class

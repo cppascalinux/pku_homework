@@ -1,9 +1,6 @@
-object
-update
-notification
-algorithm
-propagation
-model
-commit
-application
-view
+view notification
+view object
+groupware application
+optimistic view
+update notification
+model object

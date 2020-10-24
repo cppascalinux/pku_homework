@@ -1,5 +1,2 @@
-matrix
-function
-order
-pole
-inverse
+analytic matrix
+laurent series

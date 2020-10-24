@@ -1,13 +1,7 @@
-model
-three-phase
-flow
-equation
-region
-hyperbolicity
-condition
-strict
-such
-point
-medium
-stability
-pressure
+capillary pressure
+three-phase flow
+porous medium
+strict hyperbolicity
+instability region
+majda-pego stability
+stability condition

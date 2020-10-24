@@ -1,8 +1,4 @@
-merge
-object
-matrix
-framework
-policy
-control
-version
-merging
+object merge
+merge framework
+merge policy
+merge matrix

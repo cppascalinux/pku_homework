@@ -1,7 +1,5 @@
-pattern
-inverse
-approximate
-sparse
-matrix
-sparsity
-problem
+priori pattern
+sparsity pattern
+sparse approximate
+sparse matrix
+approximate inverse

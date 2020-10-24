@@ -1,13 +1,4 @@
-surface
-implicit
-function
-constraint
-method
-such
-data
-technique
-creation
-interpolation
-point
-location
-object
+implicit surface
+implicit function
+normal constraint
+interior constraint

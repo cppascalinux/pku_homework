@@ -1,5 +1,7 @@
-diagnosis
-fault
-technique
-match
-stuck-at
+single stuck-at
+stuck-at fault
+failure recovery
+fault diagnosis
+byzantine general
+general problem
+match restriction

@@ -1,13 +1,7 @@
-circuit
-load
-algorithm
-machine
-routing
-factor
-case
-network
-problem
-competitive
-virtual
-balancing
-ratio
+on-line algorithm
+virtual circuit
+load balancing
+competitive ratio
+result load
+machine case
+maximum load

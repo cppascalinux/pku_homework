@@ -1,12 +1,10 @@
-load
-system
-host
-task
-heavy-tailed
-workload
-slowdown
-mean
-respect
-policy
-size
-server
+task assignment
+task size
+server system
+server expansion
+assignment policy
+mean slowdown
+system load
+distributed server
+host system
+service time

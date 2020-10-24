@@ -1,11 +1,5 @@
-program
-datalog
-constraint
-problem
-semantics
-different
-priority
-disjunctive
-level
-theory
-complexity
+disjunctive datalog
+weak constraint
+datalog program
+optimization problem
+complexity result

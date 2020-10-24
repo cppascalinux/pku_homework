@@ -1,6 +1,8 @@
-point
-observation
-control
-problem
-system
-boundary
+optimal control
+boundary control
+point observation
+stokes system
+optimality condition
+decomposition formula
+observation point
+lqr problem

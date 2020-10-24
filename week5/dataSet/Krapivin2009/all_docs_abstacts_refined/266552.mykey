@@ -1,12 +1,5 @@
-fault
-time
-procedure
-graph
-simulation
-diagnosis
-bridging
-circuit
-line
-average
-dictionary
-result
+bridge fault
+intersection graph
+fault simulation
+bridging fault
+diagnosis procedure

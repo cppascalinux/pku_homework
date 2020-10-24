@@ -1,9 +1,8 @@
-coalescing
-heuristic
-node
-conservative
-spill
-graph
-register
-allocator
-optimistic
+optimistic coalescing
+optimistic allocator
+register allocator
+interference graph
+aggressive coalescing
+conservative coalescing
+positive impact
+coalesced node

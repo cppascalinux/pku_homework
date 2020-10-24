@@ -1,10 +1,4 @@
-algorithm
-attribute
-search
-tree
-set
-function
-relieff
-myopic
-dependency
-induction
+conditional dependency
+impurity function
+decision tree
+data set

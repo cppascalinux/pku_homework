@@ -1,10 +1,5 @@
-flow
-router
-time
-link
-design
-size
-congestion
-buffer
-network
-rule-of-thumb
+congestion control
+control algorithm
+backbone router
+tcp flow
+long-lived flow

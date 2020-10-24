@@ -1,6 +1,4 @@
-query
-sql
-template
-mode
-xslt
-xml
+xslt program
+sql query
+xml view
+relational database

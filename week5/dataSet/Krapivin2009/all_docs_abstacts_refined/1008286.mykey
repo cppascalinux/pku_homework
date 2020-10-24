@@ -1,11 +1,7 @@
-system
-transition
-state
-property
-logic
-real-time
-time
-formula
-dc
-specification
-model
+temporal logic
+temporal formula
+state transition
+real-time system
+time transition
+duration formula
+transition system

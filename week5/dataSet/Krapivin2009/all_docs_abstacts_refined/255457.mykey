@@ -1,6 +1,5 @@
-automaton
-time
-polynomial
-cover
-walk
-state
+cover time
+finite automaton
+target automaton
+equivalence query
+random walk

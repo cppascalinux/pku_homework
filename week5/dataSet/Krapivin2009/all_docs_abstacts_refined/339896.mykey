@@ -1,10 +1,10 @@
-system
-method
-projection
-linear
-matrix
-side
-multiple
-right-hand
-computation
-seed
+projection method
+multiple linear
+linear system
+right-hand side
+seed system
+krylov subspace
+coefficient matrix
+image restoration
+recursive least
+least square

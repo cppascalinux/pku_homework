@@ -1,8 +1,4 @@
-model
-tree
-leaf
-evolution
-markov
-restriction
-probability
-evolutionary
+evolutionary tree
+general markov
+markov model
+markov evolutionary

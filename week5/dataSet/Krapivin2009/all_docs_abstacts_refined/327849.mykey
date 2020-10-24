@@ -1,7 +1,5 @@
-entry
-method
-large
-diagonal
-matrix
-value
-use
+large entry
+sparse matrix
+absolute value
+iterative method
+diagonal entry

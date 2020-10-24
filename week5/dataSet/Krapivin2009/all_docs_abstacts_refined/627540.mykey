@@ -1,7 +1,7 @@
-system
-transaction
-processing
-database
-activity
-recovery
-memory
+incremental restart
+memory database
+database system
+database page
+transaction processing
+restart processing
+high-level recovery

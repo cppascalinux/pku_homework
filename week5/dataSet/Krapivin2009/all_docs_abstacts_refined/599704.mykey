@@ -1,15 +1,9 @@
-problem
-criterion
-control
-split
-space
-function
-state
-study
-policy
-reinforcement
-resolution
-learning
-value
-markov
-dynamic
+variable resolution
+optimal control
+reinforcement learning
+control problem
+value function
+splitting criterion
+split criterion
+markov chain
+state space

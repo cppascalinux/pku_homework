@@ -1,6 +1,6 @@
-set
-rule
-inference
-relation
-decidable
-time
+inference relation
+inference rule
+polynomial time
+time decidable
+congruence closure
+rule set

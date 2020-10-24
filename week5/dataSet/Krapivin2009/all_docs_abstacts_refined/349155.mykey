@@ -1,10 +1,5 @@
-convolution
-function
-condition
-boundary
-term
-derivative
-transform
-error
-order
-logarithmic
+nonreflecting boundary
+boundary condition
+wave equation
+logarithmic derivative
+hankel function

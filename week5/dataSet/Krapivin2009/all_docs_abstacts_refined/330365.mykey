@@ -1,7 +1,4 @@
-weight
-graph
-vertex
-cut
-planar
-algorithm
-cost
+planar graph
+b-balanced cut
+vertex weight
+sparse cut

@@ -1,10 +1,4 @@
-block
-poset
-lattice
-partition
-nontrivial
-size
-homology
-cohen-macaulay
-representation
-equal
+partition lattice
+homotopy equivalent
+unique nontrivial
+nontrivial block

@@ -1,5 +1,7 @@
-matrix
-eigenvalue
-toeplitz
-symmetric
-bound
+real symmetric
+symmetric toeplitz
+toeplitz matrix
+polynomial approximation
+odd eigenvalue
+small eigenvalue
+rational approximation

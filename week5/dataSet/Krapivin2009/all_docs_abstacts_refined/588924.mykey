@@ -1,6 +1,3 @@
-function
-transformation
-scheme
-conformation
-molecular
-energy
+energy function
+global optimization
+molecular conformation

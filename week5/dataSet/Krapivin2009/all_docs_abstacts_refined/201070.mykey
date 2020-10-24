@@ -1,8 +1,4 @@
-specification
-semantics
-language
-nondeterministic
-nondeterminism
-system
-operator
-term
+algebraic specification
+specification language
+nondeterministic operator
+multialgebraic semantics

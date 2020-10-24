@@ -1,10 +1,6 @@
-performance
-algorithm
-graph
-phase
-characteristic
-component
-connected
-cm-5
-machine
-cost
+connected component
+connected phase
+component algorithm
+global phase
+hybrid algorithm
+local phase

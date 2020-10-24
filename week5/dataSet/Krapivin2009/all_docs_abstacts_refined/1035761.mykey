@@ -1,4 +1,3 @@
-protocol
-constraint
-different
-function
+composite protocol
+component protocol
+liveness property

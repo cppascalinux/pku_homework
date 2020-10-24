@@ -1,6 +1,2 @@
-grammar
-program
-input
-set
-deforestation
-termination
+dag grammar
+process tree

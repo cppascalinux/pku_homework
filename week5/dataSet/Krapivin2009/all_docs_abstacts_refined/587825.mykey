@@ -1,11 +1,6 @@
-use
-matrix
-system
-distributed
-memory
-dynamic
-sparse
-computer
-asynchronous
-algorithm
-linear
+distributed memory
+sparse matrix
+linear system
+memory computer
+numerical pivoting
+ibm sp2

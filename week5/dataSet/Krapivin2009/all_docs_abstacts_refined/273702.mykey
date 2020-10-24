@@ -1,10 +1,8 @@
-equation
-method
-case
-element
-finite
-flow
-mixed
-coefficient
-nondegenerate
-order
+finite element
+element method
+flow formulation
+saturation equation
+mixed finite
+diffusion coefficient
+optimal order
+boundary condition

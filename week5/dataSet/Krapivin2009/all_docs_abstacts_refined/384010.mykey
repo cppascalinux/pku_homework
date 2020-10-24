@@ -1,14 +1,12 @@
-failure
-detector
-member
-algorithm
-load
-group
-network
-protocol
-message
-size
-requirement
-limit
-detection
-completeness
+distributed failure
+failure detector
+failure detection
+network load
+worst-case network
+detector algorithm
+detector protocol
+group member
+group size
+large group
+member failure
+accuracy requirement

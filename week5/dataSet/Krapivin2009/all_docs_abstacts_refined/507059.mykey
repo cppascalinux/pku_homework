@@ -1,9 +1,9 @@
-memory
-address
-impulse
-controller
-change
-cache
-physical
-system
-performance
+impulse memory
+memory controller
+memory system
+memory performance
+data structure
+physical page
+physical address
+physical memory
+indirection vector

@@ -1,10 +1,6 @@
-constraint
-graph
-resource
-algorithm
-problem
-acyclic
-retiming
-edge
-dependence
-amount
+software pipelining
+resource constraint
+dependence constraint
+dependence graph
+acyclic graph
+long path

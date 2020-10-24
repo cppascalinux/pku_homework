@@ -1,10 +1,5 @@
-tcp
-model
-result
-traffic
-present
-protocol
-range
-probability
-mechanism
-structure
+tcp protocol
+correlation structure
+congestion avoidance
+loss probability
+avoidance mechanism

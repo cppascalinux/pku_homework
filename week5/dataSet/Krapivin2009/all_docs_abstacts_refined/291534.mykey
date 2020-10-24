@@ -1,5 +1,4 @@
-equation
-scheme
-transport
-limit
-asymptotic-induced
+asymptotic-induced scheme
+transport equation
+diffusion limit
+diffusion equation

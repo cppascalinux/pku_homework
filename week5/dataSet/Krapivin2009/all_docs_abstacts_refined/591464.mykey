@@ -1,9 +1,4 @@
-data
-frame
-model
-scan
-registration
-measurement
-error
-robot
-environment
+sensor data
+odometry error
+odometry measurement
+scan data

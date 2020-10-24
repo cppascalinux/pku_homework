@@ -1,8 +1,8 @@
-degree
-algorithm
-matrix
-sparse
-symmetric
-minimum
-bound
-factorization
+approximate minimum
+approximate degree
+minimum degree
+sparse matrix
+quotient graph
+degree algorithm
+degree bound
+amd algorithm

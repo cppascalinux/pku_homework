@@ -1,12 +1,9 @@
-state
-protocol
-model
-verification
-space
-system
-cache
-memory
-network
-coherence
-problem
-multiprocessor
+coherence protocol
+state enumeration
+state space
+cache coherence
+cache state
+system model
+system state
+non-fifo network
+memory state

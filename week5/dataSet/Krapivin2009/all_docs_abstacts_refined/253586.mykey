@@ -1,5 +1,4 @@
-algorithm
-refinement
-mesh
-time
-adaptive
+parallel algorithm
+adaptive mesh
+mesh refinement
+refinement algorithm

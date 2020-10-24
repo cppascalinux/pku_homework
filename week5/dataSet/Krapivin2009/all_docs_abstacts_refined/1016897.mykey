@@ -1,9 +1,7 @@
-problem
-set
-routing
-weight
-ospf
-path
-optimal
-heuristic
-flow
+short path
+set problem
+ospf weight
+ospf routing
+search heuristic
+routing problem
+weight set

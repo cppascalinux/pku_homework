@@ -1,7 +1,13 @@
-test
-core
-path
-port
-time
-bypass
-data
+bypass mode
+bypass data
+bypass schedule
+core input
+input port
+input test
+output port
+test data
+test pattern
+test time
+test path
+short path
+fault coverage

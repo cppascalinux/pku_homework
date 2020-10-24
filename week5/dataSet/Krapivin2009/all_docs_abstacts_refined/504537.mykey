@@ -1,8 +1,4 @@
-grammar
-expression
-forest
-regular
-transformation
-context-free
-form
-algorithm
+normal form
+context-free grammar
+regular expression
+expression forest

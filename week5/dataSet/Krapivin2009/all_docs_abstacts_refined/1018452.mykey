@@ -1,14 +1,7 @@
-algorithm
-processor
-model
-failure
-do-all
-simulation
-use
-analysis
-work
-complexity
-computation
-problem
-step
-load-balancing
+parallel algorithm
+do-all algorithm
+do-all problem
+work complexity
+perfect load-balancing
+complete analysis
+shared-memory model

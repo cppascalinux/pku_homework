@@ -1,8 +1,13 @@
-method
-matrix
-system
-linear
-inverse
-factorization
-preconditioner
-approximate
+sparse approximate
+sparse linear
+sparse matrix
+approximate inverse
+inverse preconditioner
+inverse factorization
+linear system
+incomplete factorization
+incomplete inverse
+explicit preconditioner
+conjugate gradient
+numerical experiment
+gradient method

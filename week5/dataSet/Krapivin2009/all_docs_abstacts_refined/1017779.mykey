@@ -1,7 +1,5 @@
-event
-detection
-expression
-semantics
-algebra
-mechanism
-composite
+event detection
+event algebra
+event expression
+composite event
+algebra semantics

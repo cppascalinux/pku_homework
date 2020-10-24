@@ -1,4 +1,5 @@
-model
-system
-machine
-state
+discrete event
+event system
+correct model
+finite state
+state machine

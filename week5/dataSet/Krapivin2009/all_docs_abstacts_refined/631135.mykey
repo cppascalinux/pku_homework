@@ -1,8 +1,3 @@
-net
-petri
-stochastic
-spn
-solution
-method
-class
-distribution
+stochastic petri
+petri net
+time distribution

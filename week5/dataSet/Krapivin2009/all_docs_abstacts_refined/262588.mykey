@@ -1,9 +1,4 @@
-element
-finite
-discretizations
-respect
-problem
-triangulation
-mixed
-approximation
-nonconforming
+mixed finite
+finite element
+elliptic boundary
+error estimator

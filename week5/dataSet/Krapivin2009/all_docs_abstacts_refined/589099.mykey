@@ -1,6 +1,7 @@
-cut
-plane
-method
-center
-direction
-analytic
+multiple cut
+analytic center
+center cut
+cut plane
+plane method
+dual direction
+newton step

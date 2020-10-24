@@ -1,8 +1,6 @@
-clock
-drift
-model
-system
-process
-message
-delay
-service
+system model
+asynchronous system
+distributed system
+hardware clock
+clock drift
+time-free model

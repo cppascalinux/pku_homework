@@ -1,11 +1,3 @@
-estimate
-data
-half
-selection
-function
-model
-error
-penalty
-penalization
-loss
-complexity
+model selection
+empirical loss
+error estimate

@@ -1,9 +1,5 @@
-wavelet
-coefficient
-daubechies
-processing
-real
-analysis
-image
-complex
-symmetric
+complex wavelet
+daubechies wavelet
+symmetric daubechies
+multiresolution analysis
+wavelet coefficient

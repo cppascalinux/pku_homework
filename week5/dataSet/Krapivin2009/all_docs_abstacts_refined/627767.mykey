@@ -1,9 +1,4 @@
-search
-size
-text
-trie
-method
-match
-large
-pattern
-document
+approximate search
+trie method
+trie search
+regular expression

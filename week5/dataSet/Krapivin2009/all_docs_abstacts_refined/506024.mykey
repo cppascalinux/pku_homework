@@ -1,7 +1,7 @@
-system
-quorum
-server
-failure
-read
-operation
-value
+byzantine quorum
+quorum system
+server failure
+read operation
+read quorum
+faulty server
+write quorum

@@ -1,11 +1,5 @@
-use
-point
-method
-linear
-view
-result
-combination
-number
-plane
-solution
-trilinear
+perspective view
+epipolar geometry
+epipolar intersection
+linear solution
+linear combination

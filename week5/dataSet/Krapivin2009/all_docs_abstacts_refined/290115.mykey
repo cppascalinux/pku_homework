@@ -1,9 +1,7 @@
-task
-set
-fault
-schedule
-system
-utilization
-processor
-factor
-time
+minimum achievable
+achievable utilization
+periodic task
+task set
+feasible schedule
+utilization factor
+priority task

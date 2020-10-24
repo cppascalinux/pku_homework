@@ -1,9 +1,12 @@
-solution
-algorithm
-heuristic
-quality
-search
-greedy
-instance
-problem
-local
+local search
+search heuristic
+search algorithm
+binary quadratic
+quadratic programming
+greedy heuristic
+1-opt local
+k-opt local
+programming problem
+problem instance
+best-known solution
+solution quality

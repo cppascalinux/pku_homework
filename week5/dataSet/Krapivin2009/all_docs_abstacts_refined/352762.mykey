@@ -1,11 +1,8 @@
-class
-complexity
-such
-set
-space
-input
-separation
-time
-autoreducible
-exponential
-separate
+complexity class
+turing machine
+exponential space
+exponential time
+complete set
+polynomial time
+oracle turing
+oracle query

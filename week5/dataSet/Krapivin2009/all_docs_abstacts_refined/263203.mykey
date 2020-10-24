@@ -1,5 +1,5 @@
-sign
-function
-method
-matrix
-subspace
+matrix sign
+sign function
+invariant subspace
+stable invariant
+newton iteration

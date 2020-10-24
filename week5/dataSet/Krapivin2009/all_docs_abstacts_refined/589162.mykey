@@ -1,11 +1,9 @@
-algorithm
-sdp
-programming
-path
-point
-solution
-convergence
-linear
-step
-center
-central
+superlinear convergence
+semidefinite programming
+optimal solution
+central path
+interior point
+linear programming
+predictor step
+analytic center
+algorithm sdp

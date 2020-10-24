@@ -1,11 +1,5 @@
-function
-architecture
-control
-vehicle
-task
-skill
-real-time
-system
-motion
-robot
-autonomous
+control architecture
+control skill
+car-like vehicle
+motion task
+trajectory planning

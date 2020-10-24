@@ -1,8 +1,4 @@
-problem
-grid
-redistribution
-cyclic
-distribution
-message
-parameter
-instance
+processor grid
+communication step
+communication grid
+redistribution problem

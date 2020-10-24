@@ -1,11 +1,8 @@
-query
-optimization
-language
-object
-update
-calculus
-extension
-framework
-oodb
-database
-comprehension
+object identity
+object query
+oodb query
+query optimization
+monoid comprehension
+monoid calculus
+comprehension calculus
+database update

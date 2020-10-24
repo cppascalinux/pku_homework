@@ -1,9 +1,4 @@
-kn
-kernel
-system
-toeplitz
-positive
-function
-preconditioners
-zero
-order
+toeplitz system
+reproducing kernel
+kernel kn
+iteration step

@@ -1,7 +1,5 @@
-bound
-subject
-problem
-convergence
-method
-global
-property
+reflective newton
+newton method
+quadratic function
+low bound
+upper bound

@@ -1,8 +1,7 @@
-matrix
-wavelet
-transform
-norm
-operator
-series
-value
-condition
+discrete wavelet
+block-toeplitz operator
+block circulant
+circulant matrix
+singular value
+condition number
+biorthogonal wavelet

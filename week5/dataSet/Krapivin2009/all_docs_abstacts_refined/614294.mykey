@@ -1,9 +1,8 @@
-data
-set
-feature
-vector
-function
-analysis
-gabor
-wavelet
-decomposition
+range data
+range image
+gabor wavelet
+gabor function
+principal component
+data set
+data feature
+feature vector

@@ -1,4 +1,3 @@
-vertex
-weight
-less
-edge
+minimum cut
+upper bound
+weight less

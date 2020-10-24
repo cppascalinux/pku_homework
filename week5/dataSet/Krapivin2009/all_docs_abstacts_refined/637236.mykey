@@ -1,13 +1,3 @@
-lsas
-network
-router
-traffic
-area
-ospf
-lsa
-topology
-configuration
-information
-dynamic
-due
-duplicate
+enterprise network
+lsa traffic
+duplicate lsas

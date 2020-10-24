@@ -1,18 +1,7 @@
-instruction
-time
-predicate
-issue
-dependence
-reduction
-parallelism
-scheduling
-path
-information
-optimization
-execution
-control
-code
-height
-wide
-architecture
-need
+path information
+predicated execution
+predicated code
+control height
+control path
+height reduction
+execution time

@@ -1,11 +1,10 @@
-supernode
-size
-communication
-time
-optimal
-transformation
-space
-length
-parameter
-cost
-iteration
+supernode transformation
+supernode size
+supernode relative
+supernode index
+optimal supernode
+relative side
+relative length
+side length
+iteration index
+index space

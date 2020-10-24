@@ -1,6 +1,4 @@
-nonlinear
-system
-equation
-method
-parallel
-additive
+inexact newton
+newton algorithm
+nonlinear system
+reynolds number

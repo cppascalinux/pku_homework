@@ -1,7 +1,6 @@
-profile
-value
-instruction
-time
-optimization
-profiling
-invariance
+value profiling
+value profile
+code generation
+compiler optimization
+dynamic compilation
+adaptive execution

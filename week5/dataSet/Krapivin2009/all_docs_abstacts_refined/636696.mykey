@@ -1,7 +1,4 @@
-protocol
-key
-entity
-agreement
-group
-suitable
-environment
+key agreement
+key confirmation
+elliptic curve
+agreement protocol

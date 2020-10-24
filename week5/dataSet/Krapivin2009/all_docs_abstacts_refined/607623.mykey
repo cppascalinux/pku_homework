@@ -1,15 +1,3 @@
-page
-classification
-document
-classifier
-text
-accuracy
-model
-multi-page
-categorization
-isolated
-information
-sequence
-system
-content
-account
+markov model
+text categorization
+isolated page

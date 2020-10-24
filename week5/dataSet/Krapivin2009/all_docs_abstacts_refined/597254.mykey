@@ -1,8 +1,5 @@
-video
-model
-annotation
-sequence
-operator
-structuration
-data
-level
+video structuration
+video annotation
+video data
+data model
+composition operator

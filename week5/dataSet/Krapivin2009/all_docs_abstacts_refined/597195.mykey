@@ -1,5 +1,9 @@
-server
-algorithm
-scheduling
-request
-video
+parallel cbr
+parallel video
+cbr video
+video server
+video stream
+scheduling problem
+scheduling algorithm
+conflict-free scheduling
+request relocation

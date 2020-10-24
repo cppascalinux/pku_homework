@@ -1,9 +1,3 @@
-language
-collector
-type
-system
-lgc
-garbage
-use
-interface
-program
+garbage collector
+type system
+constructor level

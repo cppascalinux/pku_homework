@@ -1,10 +1,7 @@
-value
-connection
-minimal
-set
-parameter
-traffic
-bucket
-regulation
-network
-delay
+traffic regulation
+atm network
+hard real-time
+leaky bucket
+burst parameter
+search space
+connection set

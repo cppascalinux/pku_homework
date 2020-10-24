@@ -1,7 +1,3 @@
-method
-grid
-decomposition
-domain
-refinement
-finite
-difference
+domain decomposition
+decomposition method
+finite difference

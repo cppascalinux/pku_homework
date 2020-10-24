@@ -1,6 +1,3 @@
-set
-evaluator
-use
-rule
-time
-crew
+partial evaluator
+rule set
+set evaluator

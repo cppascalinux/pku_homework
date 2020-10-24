@@ -1,14 +1,9 @@
-formula
-error
-size
-step
-euler
-implicit
-method
-selection
-partitioning
-present
-result
-decoupled
-integration
-order
+decoupled implicit
+decoupled bdf2
+implicit euler
+integration method
+euler formula
+error bound
+error expansion
+step size
+bdf2 formula

@@ -1,6 +1,8 @@
-bound
-error
-radiosity
-estimate
-algorithm
-solution
+error estimate
+error bound
+total error
+radiosity algorithm
+radiosity function
+hierarchical radiosity
+upper bound
+exact radiosity

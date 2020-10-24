@@ -1,8 +1,4 @@
-logic
-preference
-grammar
-rule
-program
-semantics
-standardization
-data
+preference logic
+logic grammar
+logic program
+logic programming

@@ -1,11 +1,8 @@
-algorithm
-optimization
-predicate
-plan
-join
-query
-number
-cost
-heuristic
-relation
-user-defined
+user-defined predicate
+optimal plan
+execution space
+optimization algorithm
+conservative local
+local heuristic
+expensive predicate
+query optimization

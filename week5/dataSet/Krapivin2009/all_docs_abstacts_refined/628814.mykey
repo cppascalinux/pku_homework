@@ -1,12 +1,6 @@
-model
-problem
-target
-such
-parameter
-data
-recognition
-bound
-performance
-detection
-sensor
-hypothesis
+target recognition
+target detection
+nuisance parameter
+sensor data
+sensor noise
+detection problem

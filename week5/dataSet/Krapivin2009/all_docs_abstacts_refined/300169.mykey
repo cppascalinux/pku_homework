@@ -1,9 +1,7 @@
-method
-equation
-problem
-differential
-order
-stiff
-large
-system
-krylov
+exponential integrator
+exponential method
+differential equation
+stiff problem
+krylov subspace
+linear system
+linear differential

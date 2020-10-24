@@ -1,8 +1,6 @@
-block
-preconditioners
-matrix
-type
-structure
-such
-framework
-data
+object-oriented block
+linear system
+data structure
+block relaxation
+block type
+block matrix

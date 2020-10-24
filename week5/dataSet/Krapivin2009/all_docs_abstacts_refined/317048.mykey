@@ -1,7 +1,5 @@
-measure
-similarity
-model
-use
-feature
-contrast
-fuzzy
+similarity measure
+fuzzy feature
+fuzzy measure
+feature contrast
+contrast model

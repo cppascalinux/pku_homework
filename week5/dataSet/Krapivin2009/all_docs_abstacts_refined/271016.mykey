@@ -1,6 +1,8 @@
-task
-model
-bound
-time
-execution
-improvement
+multiframe task
+real-time task
+periodic task
+task model
+execution time
+priority task
+scheduling policy
+utilization bound

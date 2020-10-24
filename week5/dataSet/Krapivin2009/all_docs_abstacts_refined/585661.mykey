@@ -1,5 +1,6 @@
-solution
-algorithm
-model
-search
-space
+probabilistic model
+search space
+promising solution
+evolutionary computation
+genetic algorithm
+distribution algorithm

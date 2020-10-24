@@ -1,7 +1,9 @@
-hamiltonian
-path
-graph
-problem
-cycle
-algorithm
-time
+linear time
+time algorithm
+hamiltonian problem
+hamiltonian path
+hamiltonian cycle
+claw-free graph
+induced dominating
+induced path
+dominating path

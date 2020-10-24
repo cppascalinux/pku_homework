@@ -1,7 +1,3 @@
-data
-rule
-correspondence
-model
-format
-language
-integration
+data model
+correspondence rule
+translation rule

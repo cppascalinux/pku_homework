@@ -1,8 +1,8 @@
-miss
-algorithm
-rate
-cache
-conflict
-placement
-procedure
-information
+procedure placement
+instruction cache
+cache performance
+cache miss
+cache conflict
+miss rate
+conflict miss
+procedure-placement algorithm

@@ -1,11 +1,11 @@
-page
-request
-sequence
-process
-algorithm
-fault
-ratio
-cache
-application
-competitive
-decision
+application process
+future page
+page request
+page fault
+page replacement
+caching algorithm
+caching problem
+low bound
+competitive ratio
+replacement decision
+request sequence

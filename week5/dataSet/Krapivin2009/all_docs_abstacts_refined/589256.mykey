@@ -1,6 +1,4 @@
-method
-problem
-large
-region
-structure
-trust
+trust-region subproblem
+trust-region method
+trust region
+gradient method

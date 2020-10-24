@@ -1,11 +1,9 @@
-algorithm
-lg
-size
-bucket
-hash
-function
-hashing
-time
-set
-parallel
-memory
+parallel hashing
+hash table
+hash function
+hash algorithm
+data structure
+lg lg
+memory block
+constant time
+hashing algorithm

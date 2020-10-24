@@ -1,14 +1,12 @@
-cache
-switch
-access
-time
-data
-performance
-memory
-request
-latency
-read
-improvement
-module
-multiprocessor
-network
+switch cache
+cc-numa multiprocessor
+memory access
+memory multiprocessor
+memory read
+access latency
+access time
+cache access
+cache module
+read request
+execution time
+network cache

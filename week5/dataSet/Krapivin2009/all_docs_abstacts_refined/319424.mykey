@@ -1,7 +1,3 @@
-sprite
-render
-image
-technique
-frame
-geometry
-model
+lod-sprite technique
+image sprite
+scene geometry

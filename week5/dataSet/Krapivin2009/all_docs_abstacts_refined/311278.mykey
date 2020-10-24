@@ -1,11 +1,10 @@
-rate
-receiver
-algorithm
-control
-network
-bandwidth
-resource
-feedback
-availability
-video
-transmission
+rate control
+control algorithm
+transmission rate
+video stream
+video coder
+network resource
+network bandwidth
+output rate
+feedback rate
+loss rate

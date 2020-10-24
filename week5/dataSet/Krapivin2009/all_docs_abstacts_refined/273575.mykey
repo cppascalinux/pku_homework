@@ -1,5 +1,3 @@
-matrix
-eigenvectors
-definite
-positive
-bound
+perturbation bound
+positive definite
+definite matrix

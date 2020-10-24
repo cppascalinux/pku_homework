@@ -1,7 +1,5 @@
-language
-base
-transformation
-xslt
-value
-tree
-rule
+formal model
+data value
+template rule
+xml query
+query language

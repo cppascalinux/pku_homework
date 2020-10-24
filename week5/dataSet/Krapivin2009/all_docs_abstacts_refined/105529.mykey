@@ -1,13 +1,5 @@
-use
-algorithm
-model
-texture
-segmentation
-parameter
-pixel
-classification
-field
-image
-estimation
-criterion
-resolution
+image segmentation
+texture model
+segmentation algorithm
+random field
+parameter estimation

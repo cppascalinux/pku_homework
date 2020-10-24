@@ -1,7 +1,6 @@
-program
-java
-concurrent
-slicing
-algorithm
-graph
-slice
+slice algorithm
+concurrent java
+java program
+program slicing
+dependence graph
+static slice

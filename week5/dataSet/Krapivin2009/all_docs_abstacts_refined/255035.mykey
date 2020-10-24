@@ -1,5 +1,2 @@
-multigrid
-method
-eigenvalue
-shift
-equation
+multigrid method
+rayleigh quotient

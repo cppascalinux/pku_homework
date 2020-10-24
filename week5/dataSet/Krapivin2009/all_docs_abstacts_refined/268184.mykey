@@ -1,8 +1,2 @@
-relation
-description
-circuit
-system
-vhdl
-design
-t-ruby
-convolution
+t-ruby system
+2-dimensional convolution

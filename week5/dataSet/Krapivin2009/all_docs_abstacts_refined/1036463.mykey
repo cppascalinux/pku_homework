@@ -1,3 +1,4 @@
-number
-crossing
-edge
+pair-crossing number
+low bound
+bisection width
+crossing number

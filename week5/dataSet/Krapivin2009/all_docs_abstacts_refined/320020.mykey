@@ -1,9 +1,8 @@
-data
-item
-transaction
-read
-system
-update
-consistency
-fresh
-timeliness
+real-time database
+database system
+base data
+base item
+data item
+derive data
+transaction read
+temporal consistency

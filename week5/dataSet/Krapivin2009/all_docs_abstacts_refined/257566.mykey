@@ -1,6 +1,5 @@
-delay
-uncertainty
-message
-algorithm
-clock
-synchronization
+probabilistic clock
+clock synchronization
+synchronization algorithm
+remote clock
+message delay

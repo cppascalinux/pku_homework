@@ -1,8 +1,6 @@
-matrix
-aa
-entry
-definite
-nonzero
-positive
-sparse
-factorization
+sparse matrix
+cholesky factorization
+symmetric positive
+positive definite
+definite matrix
+nonzero entry

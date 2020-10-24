@@ -1,10 +1,4 @@
-matcher
-string
-pattern
-program
-yield
-evaluation
-kmp
-partial
-state
-linear
+string matcher
+partial evaluation
+residual program
+time complexity

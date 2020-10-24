@@ -1,5 +1,5 @@
-constraint
-system
-feat
-record
-problem
+feature tree
+constraint system
+satisfiability problem
+weak subsumption
+subsumption constraint

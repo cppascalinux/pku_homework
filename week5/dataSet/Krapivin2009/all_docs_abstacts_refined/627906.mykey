@@ -1,12 +1,10 @@
-mining
-pattern
-sequence
-traversal
-reference
-algorithm
-scan
-database
-technique
-hashing
-access
-path
+data mining
+traversal pattern
+traversal path
+maximal forward
+forward reference
+user access
+large reference
+reference sequence
+reference path
+database scan

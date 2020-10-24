@@ -1,9 +1,13 @@
-model
-retrieval
-method
-parameter
-use
-language
-query
-information
-smoothing
+two-stage language
+two-stage smoothing
+language model
+information retrieval
+retrieval parameter
+retrieval performance
+retrieval model
+document language
+query background
+query model
+background model
+single smoothing
+smoothing method

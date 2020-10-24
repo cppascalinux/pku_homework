@@ -1,12 +1,9 @@
-matrix
-algorithm
-subroutine
-inversion
-performance
-system
-multiplication
-decomposition
-parallel
-model
-cm-5
-machine
+distributed memory
+memory parallel
+parallel computer
+qr algorithm
+qr decomposition
+linear algebra
+matrix multiplication
+matrix inversion
+delta system

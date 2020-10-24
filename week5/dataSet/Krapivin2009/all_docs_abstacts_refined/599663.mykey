@@ -1,5 +1,4 @@
-error
-estimate
-machine
-parameter
-vector
+support vector
+vector machine
+generalization error
+gradient descent

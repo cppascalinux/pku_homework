@@ -1,11 +1,3 @@
-use
-selection
-such
-method
-instruction
-processor
-architecture
-generation
-node
-code
-dag
+instruction selection
+code generation
+data transfer

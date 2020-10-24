@@ -1,7 +1,5 @@
-analysis
-domain
-abstract
-program
-groundness
-logic
-interpretation
+groundness analysis
+abstract interpretation
+abstract domain
+logic program
+concrete domain

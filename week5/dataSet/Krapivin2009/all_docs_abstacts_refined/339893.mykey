@@ -1,6 +1,3 @@
-symmetry
-model
-edge
-graph
-state
-technique
+on-the-fly model
+state space
+state symmetry

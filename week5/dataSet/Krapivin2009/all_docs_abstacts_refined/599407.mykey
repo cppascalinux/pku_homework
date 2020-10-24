@@ -1,6 +1,5 @@
-variable
-distribution
-network
-continuous
-marginal
-computation
+conditional distribution
+gaussian distribution
+propagation scheme
+bayesian network
+continuous variable

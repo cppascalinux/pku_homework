@@ -1,11 +1,8 @@
-algorithm
-schedule
-bound
-method
-branch
-such
-scheduling
-operation
-space
-time
-low
+low bound
+schedule algorithm
+lower-bound performance
+search space
+completion time
+partial schedule
+conditional branch
+scheduling algorithm

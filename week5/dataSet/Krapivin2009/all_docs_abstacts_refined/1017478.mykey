@@ -1,8 +1,7 @@
-type
-dynamic
-plugins
-code
-haskell
-plugin
-source
-language
+source code
+dynamic loading
+dynamic type
+extension language
+haskell plugins
+plugin source
+plugin infrastructure

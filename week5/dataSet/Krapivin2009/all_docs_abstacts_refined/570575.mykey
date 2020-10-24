@@ -1,6 +1,6 @@
-signal
-structure
-logic
-order
-variable
-monadic
+monadic logic
+continuous time
+continuous signal
+continuous interpretation
+variable signal
+signal structure

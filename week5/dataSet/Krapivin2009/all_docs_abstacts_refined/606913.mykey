@@ -1,9 +1,7 @@
-logic
-tree
-width
-guarded
-property
-model
-theory
-modal
-graph
+point logic
+point formula
+guarded logic
+modal logic
+tree model
+tree width
+model property

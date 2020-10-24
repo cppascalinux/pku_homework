@@ -1,13 +1,7 @@
-sequence
-bound
-example
-algorithm
-disjunction
-mistake
-schedule
-update
-show
-number
-weight
-winnow
-trial
+deterministic algorithm
+learning algorithm
+mistake bound
+low bound
+target schedule
+example sequence
+theoretical bound

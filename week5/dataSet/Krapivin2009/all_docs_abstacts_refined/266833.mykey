@@ -1,7 +1,6 @@
-schedule
-instruction
-memory
-scheme
-time
-operation
-due
+memory instruction
+memory operation
+spill code
+stall time
+schedule memory
+compute time

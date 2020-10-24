@@ -1,7 +1,5 @@
-sensor
-deployment
-network
-target
-detection
-performance
-region
+sensor network
+sensor deployment
+target detection
+target activity
+variable speed

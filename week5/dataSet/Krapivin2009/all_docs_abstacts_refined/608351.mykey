@@ -1,7 +1,7 @@
-algorithm
-learning
-bound
-temporal-difference
-loss
-regression
-linear
+relative loss
+loss bound
+temporal-difference learning
+linear regression
+total loss
+future reinforcement
+reinforcement signal

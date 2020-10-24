@@ -1,10 +1,2 @@
-service
-subscription
-use
-vendor
-transaction
-protocol
-application
-unlinkable
-termination
-serial
+unlinkable serial
+serial transaction

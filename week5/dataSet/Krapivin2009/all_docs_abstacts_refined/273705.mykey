@@ -1,7 +1,4 @@
-coefficient
-oscillatory
-equation
-elliptic
-method
-operator
-multigrid
+multigrid method
+oscillatory coefficient
+coarse grid
+grid operator

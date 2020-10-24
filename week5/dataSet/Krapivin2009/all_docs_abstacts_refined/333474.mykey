@@ -1,7 +1,5 @@
-matrix
-cauchy-like
-solution
-system
-algorithm
-problem
-linear
+ill-posed problem
+toeplitz matrix
+conjugate gradient
+cauchy-like matrix
+singular value

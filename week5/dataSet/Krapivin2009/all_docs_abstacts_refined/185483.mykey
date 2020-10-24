@@ -1,5 +1,2 @@
-interface
-task
-participant
-item
-time
+stable interface
+expand/contract interface

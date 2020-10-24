@@ -1,11 +1,4 @@
-mining
-itemsets
-rule
-association
-method
-base
-algorithm
-concept
-frequent
-use
-database
+frequent itemsets
+association rule
+association mining
+closure operator

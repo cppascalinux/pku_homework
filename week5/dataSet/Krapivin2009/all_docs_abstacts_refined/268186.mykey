@@ -1,7 +1,7 @@
-net
-petri
-csp
-program
-analysis
-time
-problem
+time analysis
+csp program
+safe petri
+petri net
+timing analysis
+communication action
+separation analysis

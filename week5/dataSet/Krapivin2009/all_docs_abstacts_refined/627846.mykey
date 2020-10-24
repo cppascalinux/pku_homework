@@ -1,8 +1,8 @@
-query
-language
-dql
-database
-default
-logic
-rule
-such
+query language
+relational database
+database query
+default logic
+default rule
+second-order logic
+stable model
+dql query

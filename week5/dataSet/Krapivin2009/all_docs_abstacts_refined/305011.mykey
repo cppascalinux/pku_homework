@@ -1,6 +1,5 @@
-network
-use
-size
-sorting
-i/o
-element
+fixed i/o
+i/o size
+sorting network
+data memory
+memory access

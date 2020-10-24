@@ -1,10 +1,7 @@
-data
-cache
-use
-access
-prefetching
-relocation
-miss
-operation
-pattern
-loop
+data relocation
+data cache
+data access
+cache line
+cache performance
+cache miss
+array data

@@ -1,6 +1,7 @@
-influence
-network
-sign
-qualitative
-probabilistic
-variable
+qualitative probabilistic
+qualitative network
+qualitative influence
+probabilistic network
+basic sign
+context-specific information
+context-specific sign

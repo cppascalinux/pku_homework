@@ -1,8 +1,7 @@
-lock
-operation
-queue
-pointer
-algorithm
-time
-spin
-process
+spin lock
+lock holder
+lock operation
+lock queue
+mutual exclusion
+priority queue
+priority process

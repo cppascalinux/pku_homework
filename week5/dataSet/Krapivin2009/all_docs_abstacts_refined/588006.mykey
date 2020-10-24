@@ -1,5 +1,5 @@
-graph
-bipartite
-weakly
-circuit
-clutter
+binary clutter
+binary matroid
+odd circuit
+ideal binary
+weakly bipartite

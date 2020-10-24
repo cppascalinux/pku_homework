@@ -1,8 +1,8 @@
-line
-correspondence
-motion
-camera
-algorithm
-affine
-view
-point
+line correspondence
+line direction
+uncalibrated affine
+affine camera
+linear algorithm
+projective camera
+projective reconstruction
+image line

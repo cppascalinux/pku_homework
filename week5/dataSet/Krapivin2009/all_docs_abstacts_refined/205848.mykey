@@ -1,6 +1,3 @@
-parameter
-system
-scheme
-approximation
-use
-problem
+costate method
+costate approximation
+gradient approximation

@@ -1,6 +1,6 @@
-analysis
-program
-location
-information
-access
-procedure
+light-weight context
+context recovery
+program analysis
+program information
+memory location
+specific callsite

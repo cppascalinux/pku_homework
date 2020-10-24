@@ -1,13 +1,7 @@
-log
-problem
-matrix
-row
-item
-mn
-minimum
-processor
-size
-search
-bound
-mesh
-time
+row minimum
+reconfigurable mesh
+monotone matrix
+low bound
+log log
+time low
+first row

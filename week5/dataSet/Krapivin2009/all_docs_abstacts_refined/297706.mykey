@@ -1,12 +1,10 @@
-cache
-instruction
-fetch
-trace
-prediction
-performance
-mechanism
-branch
-accuracy
-due
-bandwidth
-cycle
+trace cache
+trace prediction
+instruction fetch
+instruction cache
+superscalar processor
+fetch multiple
+fetch mechanism
+basic block
+control flow
+branch prediction

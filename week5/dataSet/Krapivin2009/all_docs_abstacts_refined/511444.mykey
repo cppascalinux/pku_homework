@@ -1,7 +1,5 @@
-algorithm
-problem
-cut
-vector
-probability
-distribution
-partition
+maximal cut
+partition problem
+cut problem
+random cut
+random vector

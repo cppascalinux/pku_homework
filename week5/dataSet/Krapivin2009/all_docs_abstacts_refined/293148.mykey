@@ -1,13 +1,4 @@
-representation
-solid
-cell
-modeling
-parametric
-boundary
-collapse
-family
-model
-br-deforming
-condition
-naming
-deformation
+boundary representation
+parametric family
+solid modeling
+solid model

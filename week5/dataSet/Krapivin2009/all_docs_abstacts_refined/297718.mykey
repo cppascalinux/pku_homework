@@ -1,15 +1,9 @@
-system
-ilp
-performance
-multiprocessor
-miss
-latency
-load
-contention
-technique
-processor
-resource
-shared-memory
-due
-memory
-time
+shared-memory multiprocessor
+ilp technique
+ilp processor
+ilp system
+memory stall
+memory ilp
+stall time
+load miss
+miss latency

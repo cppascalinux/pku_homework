@@ -1,9 +1,9 @@
-scheme
-shock
-profile
-discrete
-function
-existence
-flux
-stability
-law
+discrete shock
+finite difference
+conservation law
+difference scheme
+stationary discrete
+numerical flux
+flux function
+continuous discrete
+shock profile

@@ -1,6 +1,4 @@
-checkpointing
-system
-diskless
-failure
-variant
-application
+diskless checkpointing
+stable storage
+checkpointing system
+disk-based checkpointing

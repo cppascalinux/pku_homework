@@ -1,13 +1,5 @@
-function
-algorithm
-space
-cost
-problem
-classification
-weak
-misclassification
-lp
-solution
-error
-bound
-learning
+column generation
+learning algorithm
+misclassification cost
+lp formulation
+cost function

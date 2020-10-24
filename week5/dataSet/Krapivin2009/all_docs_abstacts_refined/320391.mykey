@@ -1,7 +1,3 @@
-visitor
-program
-traversal
-pattern
-specification
-recursive
-language
+object structure
+visitor pattern
+traversal specification

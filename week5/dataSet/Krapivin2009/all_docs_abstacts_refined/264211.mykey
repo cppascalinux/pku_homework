@@ -1,13 +1,7 @@
-table
-predictor
-aliasing
-branch
-size
-prediction
-history
-effect
-accuracy
-miss
-cache
-conflict
-result
+branch predictor
+branch prediction
+branch history
+branch address
+conflict aliasing
+predictor table
+prediction accuracy

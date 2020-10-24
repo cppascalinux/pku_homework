@@ -1,8 +1,6 @@
-analysis
-abstract
-value
-program
-check
-function
-type
-time
+type analysis
+type check
+run time
+time type
+demand-driven analysis
+abstract value

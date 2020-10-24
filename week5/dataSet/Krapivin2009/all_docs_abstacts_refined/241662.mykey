@@ -1,9 +1,10 @@
-availability
-protocol
-overhead
-system
-message
-analysis
-node
-case
-control
+average message
+average case
+message overhead
+replica control
+control protocol
+bad case
+best case
+case message
+system availability
+node availability

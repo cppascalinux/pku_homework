@@ -1,3 +1,4 @@
-security
-oaep
-result
+chosen-ciphertext attack
+semantic security
+random oracle
+partial-domain one-wayness

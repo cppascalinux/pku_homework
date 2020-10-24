@@ -1,10 +1,8 @@
-entailment
-conditional
-base
-knowledge
-constraint
-property
-classical
-probabilistic
-notion
-reasoning
+conditional constraint
+conditional knowledge
+conditional entailment
+probabilistic knowledge
+knowledge base
+lexicographic entailment
+classical notion
+logical entailment

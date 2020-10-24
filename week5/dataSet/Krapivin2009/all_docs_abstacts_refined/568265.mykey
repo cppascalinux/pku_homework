@@ -1,5 +1,3 @@
-authentication
-primitive
-protocol
-name
-message
+message authentication
+partner authentication
+authentication primitive

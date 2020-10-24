@@ -1,11 +1,5 @@
-hardware
-ray
-tracing
-pipeline
-programmable
-graphic
-architecture
-implementation
-triangle
-stream
-processor
+programmable graphic
+graphic hardware
+graphic pipeline
+graphic processor
+ray tracing

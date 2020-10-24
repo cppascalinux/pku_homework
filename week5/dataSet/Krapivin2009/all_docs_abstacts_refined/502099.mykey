@@ -1,6 +1,4 @@
-construction
-generator
-extractor
-distribution
-pseudorandom
-uniform
+pseudorandom generator
+uniform distribution
+generator construction
+error-correcting code

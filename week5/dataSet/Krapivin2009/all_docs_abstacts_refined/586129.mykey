@@ -1,8 +1,4 @@
-use
-sensor
-detection
-information
-intrusion
-protocol
-configuration
-signature
+intrusion detection
+network topology
+routing protocol
+sensor configuration

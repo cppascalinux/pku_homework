@@ -1,9 +1,6 @@
-simulation
-system
-performance
-trap
-cache
-memory
-address
-trace
-kernel
+trap-driven simulation
+operating system
+kernel trap
+system performance
+memory system
+cache performance

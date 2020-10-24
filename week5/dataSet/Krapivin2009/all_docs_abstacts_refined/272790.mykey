@@ -1,9 +1,6 @@
-matrix
-factorization
-preconditioner
-approximate
-sparse
-preconditioners
-technique
-inverse
-system
+approximate inverse
+approximate solution
+inverse technique
+sparse approximate
+lu factorization
+linear system

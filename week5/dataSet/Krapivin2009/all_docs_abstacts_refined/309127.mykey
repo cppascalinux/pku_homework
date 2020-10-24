@@ -1,4 +1,11 @@
-system
-control
-feedback
-stabilization
+bifurcation stabilization
+output feedback
+feedback stabilization
+feedback control
+nonlinear system
+nonlinear control
+linearized system
+critical eigenvalue
+critical mode
+stabilizability condition
+control system

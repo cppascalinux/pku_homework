@@ -1,6 +1,9 @@
-residual
-method
-replacement
-step
-strategy
-subspace
+residual replacement
+replacement strategy
+replacement step
+krylov subspace
+true residual
+computed residual
+finite precision
+recurrence relation
+iteration step

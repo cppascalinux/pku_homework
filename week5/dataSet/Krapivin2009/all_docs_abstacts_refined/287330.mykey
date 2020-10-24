@@ -1,8 +1,6 @@
-distribution
-source
-size
-processor
-algorithm
-machine
-dimension
-message
+machine dimension
+machine size
+source processor
+source distribution
+ideal distribution
+message size

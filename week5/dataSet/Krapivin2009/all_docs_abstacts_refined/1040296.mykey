@@ -1,8 +1,4 @@
-type
-analysis
-operation
-define
-polymorphism
-new
-class
-instance
+ad-hoc polymorphism
+type analysis
+new type
+user-defined type

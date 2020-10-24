@@ -1,8 +1,6 @@
-exception
-function
-language
-object
-handler
-functional
-construct
-handling
+exception handling
+exception object
+functional language
+terminate exception
+resume exception
+handler function

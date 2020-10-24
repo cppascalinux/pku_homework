@@ -1,14 +1,17 @@
-recognition
-au
-feature
-face
-combination
-expression
-rate
-system
-model
-facial
-unit
-lip
-analysis
-action
+action unit
+facial expression
+facial feature
+facial action
+facial component
+expression recognition
+face au
+face feature
+face action
+image sequence
+component model
+upper face
+low face
+recognition rate
+au combination
+au recognition
+unit recognition

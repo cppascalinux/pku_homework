@@ -1,10 +1,5 @@
-matrix
-sparse
-model
-cache
-transposition
-access
-pattern
-miss
-code
-product
+cache behavior
+access pattern
+sparse matrix
+sparse matrix-vector
+matrix-vector product

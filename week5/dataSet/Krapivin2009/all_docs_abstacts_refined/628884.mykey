@@ -1,11 +1,8 @@
-use
-image
-function
-harmonic
-object
-space
-light
-lie
-recognition
-linear
-method
+lambertian object
+linear subspace
+reflectance function
+surface normal
+spherical harmonic
+lighting function
+lighting condition
+harmonic image

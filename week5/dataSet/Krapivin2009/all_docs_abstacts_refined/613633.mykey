@@ -1,5 +1,7 @@
-name
-resource
-service
-use
-dns
+resource name
+name system
+name resolution
+name service
+web resource
+location service
+dns name

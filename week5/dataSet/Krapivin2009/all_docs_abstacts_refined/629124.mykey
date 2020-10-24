@@ -1,8 +1,10 @@
-policy
-performance
-page
-placement
-result
-model
-memory
-analysis
+numa memory
+dynamic page
+dynamic policy
+page placement
+placement policy
+experimental data
+experimental result
+system model
+bbn gp1000
+error policy

@@ -1,6 +1,6 @@
-problem
-flow
-cost
-algorithm
-context
-minimum
+global update
+maximum flow
+minimum cost
+flow problem
+bipartite matching
+assignment problem

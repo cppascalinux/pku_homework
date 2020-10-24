@@ -1,16 +1,2 @@
-system
-model
-load
-chain
-use
-requirement
-task
-resource
-constraint
-rate
-delay
-end-to-end
-design
-distribution
-output
-performance
+performance requirement
+output rate

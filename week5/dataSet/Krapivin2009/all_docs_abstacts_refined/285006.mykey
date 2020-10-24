@@ -1,10 +1,7 @@
-automaton
-state
-language
-complexity
-model
-probability
-xy
-matrix
-bound
-finite
+finite automaton
+finite state
+1-tiling complexity
+hankel matrix
+state automaton
+nondeterministic state
+tile complexity

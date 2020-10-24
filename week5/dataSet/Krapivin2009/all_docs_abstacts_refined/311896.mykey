@@ -1,7 +1,8 @@
-checkpoint
-process
-state
-consistent
-storage
-logical
-require
+consistent checkpointing
+consistent logical
+stable storage
+checkpoint overhead
+logical checkpoint
+logical checkpointing
+physical checkpoint
+process state

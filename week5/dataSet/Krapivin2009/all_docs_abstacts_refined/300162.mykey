@@ -1,8 +1,8 @@
-system
-dynamic
-method
-iteration
-convergence
-multibody
-numerical
-solution
+numerical solution
+numerical method
+multibody system
+mechanical system
+newton iteration
+newton convergence
+c iteration
+cm iteration

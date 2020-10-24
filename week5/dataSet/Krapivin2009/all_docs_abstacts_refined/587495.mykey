@@ -1,9 +1,4 @@
-trajectory
-curve
-integral
-approach
-state
-vector
-system
-smooth
-control
+integral curve
+state trajectory
+mode control
+mode controller

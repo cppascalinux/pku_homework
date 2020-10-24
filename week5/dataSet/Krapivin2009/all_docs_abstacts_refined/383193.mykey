@@ -1,9 +1,7 @@
-itemsets
-algorithm
-parallel
-data
-large
-candidate
-partition
-processor
-rule
+parallel algorithm
+association rule
+candidate itemsets
+large itemsets
+transaction database
+transaction data
+hpa hpa-eld

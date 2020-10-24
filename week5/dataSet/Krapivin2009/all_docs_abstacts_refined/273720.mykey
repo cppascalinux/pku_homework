@@ -1,6 +1,5 @@
-mask
-scheme
-spline
-subdivision
-construction
-interpolatory
+multidimensional interpolatory
+interpolatory subdivision
+subdivision scheme
+box spline
+refinement mask

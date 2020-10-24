@@ -1,10 +1,12 @@
-level
-model
-demand
-state
-information
-flow
-case
-up-to
-order
-capacity
+supply chain
+information flow
+end-item demand
+demand distribution
+order up-to
+up-to policy
+up-to level
+average cost
+inventory level
+inventory model
+optimal policy
+optimal order

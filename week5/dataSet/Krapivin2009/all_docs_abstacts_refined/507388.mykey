@@ -1,8 +1,7 @@
-theorem
-logic
-modal
-bisimulation
-second-order
-guarded
-gf
-available
+modal logic
+guarded fragment
+guarded logic
+guarded bisimulation
+second-order logic
+monadic second-order
+point logic

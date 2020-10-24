@@ -1,8 +1,4 @@
-order
-diagram
-state
-function
-obdds
-decision
-machine
-binary
+finite state
+state machine
+decision diagram
+variable order

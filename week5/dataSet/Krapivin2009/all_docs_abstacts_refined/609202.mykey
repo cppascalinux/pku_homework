@@ -1,5 +1,4 @@
-specialization
-strategy
-program
-specializer
-data
+data specialization
+early computation
+program specialization
+specialization strategy

@@ -1,8 +1,10 @@
-net
-reduction
-method
-analysis
-deadlock
-state
-ada
-rule
+petri net
+net reduction
+net model
+deadlock analysis
+deadlock state
+reduction rule
+reduction process
+reduction method
+ada net
+reduced net

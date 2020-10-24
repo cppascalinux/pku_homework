@@ -1,11 +1,4 @@
-object
-arrive
-rank
-order
-set
-random
-first
-relative
-depend
-probability
-problem
+expected sum
+expected rank
+best object
+object arrive

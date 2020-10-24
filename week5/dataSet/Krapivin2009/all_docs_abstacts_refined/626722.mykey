@@ -1,7 +1,6 @@
-precision
-network
-error
-learning
-neural
-algorithm
-single
+finite precision
+precision error
+precision computation
+neural network
+forward retrieving
+back-propagation learning

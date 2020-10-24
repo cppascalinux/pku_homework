@@ -1,8 +1,7 @@
-network
-link
-election
-failure
-complete
-graph
-direction
-optimal
+loop network
+circulant graph
+leader election
+link failure
+arbitrary network
+election protocol
+election problem

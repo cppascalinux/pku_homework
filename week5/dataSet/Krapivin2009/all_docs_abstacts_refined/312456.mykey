@@ -1,8 +1,4 @@
-algorithm
-space
-wavelet
-grid
-interpolation
-order
-sparse
-function
+spline wavelet
+sparse grid
+boolean sum
+sample space

@@ -1,12 +1,6 @@
-occlusion
-cost
-edge
-use
-image
-solution
-intensity
-match
-detection
-point
-pixel
-stereo
+occlusion edge
+occlusion pixel
+occlusion cost
+stereo match
+dynamic programming
+intensity edge

@@ -1,6 +1,2 @@
-agent
-router
-message
-protocol
-mobile
-loss
+mobile agent
+current router

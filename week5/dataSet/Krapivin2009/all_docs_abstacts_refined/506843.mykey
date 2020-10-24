@@ -1,6 +1,3 @@
-mobility
-algorithm
-node
-hoc
-distributed
-exclusion
+mutual exclusion
+exclusion algorithm
+ad hoc

@@ -1,9 +1,6 @@
-object
-box
-intersection
-pair
-bound
-polyhedron
-heuristic
-convex
-small
+bound box
+object pair
+aspect ratio
+small object
+box heuristic
+convex polyhedron

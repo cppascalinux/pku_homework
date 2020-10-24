@@ -1,11 +1,3 @@
-time
-service
-customer
-state
-system
-information
-probability
-balk
-mean
-arrival
-model
+service time
+system state
+random variable

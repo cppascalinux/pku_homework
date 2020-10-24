@@ -1,8 +1,5 @@
-variable
-mode
-such
-language
-predicate
-program
-definition
-constraint
+mode declaration
+mode inference
+logic program
+program variable
+constraint variable

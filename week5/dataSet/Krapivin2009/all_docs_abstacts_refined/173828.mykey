@@ -1,6 +1,11 @@
-algorithm
-routing
-design
-network
-performance
-adaptive
+deadlock-free adaptive
+deadlock-free routing
+adaptive routing
+adaptive algorithm
+wormhole network
+wormhole routing
+channel dependency
+dependency graph
+physical channel
+routing algorithm
+design methodology

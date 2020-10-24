@@ -1,8 +1,10 @@
-data
-redistribution
-element
-mapping
-processor
-technique
-block
-pattern
+data redistribution
+data exchange
+data element
+data distribution
+data block
+processor mapping
+distribution pattern
+logical processor
+mapping technique
+traditional mapping

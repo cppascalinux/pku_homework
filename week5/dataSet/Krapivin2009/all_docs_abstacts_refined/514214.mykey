@@ -1,5 +1,7 @@
-prediction
-pattern
-i/o
-model
-algorithm
+markov model
+model prediction
+i/o request
+i/o trace
+i/o pattern
+i/o access
+access pattern

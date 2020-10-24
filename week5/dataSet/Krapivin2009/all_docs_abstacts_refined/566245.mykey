@@ -1,6 +1,3 @@
-piece
-model
-heap
-schedule
-optimal
-pile
+heap model
+optimal schedule
+growth rate

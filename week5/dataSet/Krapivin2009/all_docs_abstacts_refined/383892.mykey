@@ -1,5 +1,6 @@
-query
-temporal
-logic
-database
-atsql
+atsql database
+atsql query
+temporal logic
+temporal database
+temporal query
+logic query

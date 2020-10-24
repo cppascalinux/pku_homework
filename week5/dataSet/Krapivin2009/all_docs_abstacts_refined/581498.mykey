@@ -1,10 +1,10 @@
-variable
-type
-object
-expression
-system
-constructor
-term
-code
-name
-program
+object program
+object term
+object expression
+modal type
+modal logic
+type constructor
+type system
+free variable
+run-time code
+expression variable

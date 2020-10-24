@@ -1,12 +1,5 @@
-basin
-size
-local
-optimum
-estimate
-search
-attraction
-space
-sample
-number
-point
-landscape
+local search
+local optimum
+search space
+attraction basin
+random sample

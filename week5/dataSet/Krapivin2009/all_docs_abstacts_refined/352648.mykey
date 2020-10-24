@@ -1,10 +1,9 @@
-algorithm
-time
-training
-rate
-median
-tree
-error
-mean
-rank
-split
+classification accuracy
+decision tree
+training time
+mean error
+mean rank
+error rate
+other algorithm
+tree algorithm
+median training

@@ -1,8 +1,2 @@
-protocol
-buffer
-use
-space
-procedure
-refinement
-message
-rendezvous
+asynchronous protocol
+rendezvous protocol

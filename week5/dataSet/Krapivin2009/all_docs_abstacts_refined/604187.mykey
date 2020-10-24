@@ -1,10 +1,6 @@
-datatypes
-interpretation
-type
-datatype
-sml
-transparent
-call
-coercion
-constructor
-overhead
+datatype declaration
+datatype constructor
+function call
+transparent interpretation
+abstract type
+coercion interpretation

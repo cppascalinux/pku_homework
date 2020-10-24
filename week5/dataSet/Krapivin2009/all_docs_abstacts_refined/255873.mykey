@@ -1,6 +1,3 @@
-condition
-orbit
-boundary
-segment
-subject
-homoclinic
+homoclinic orbit
+boundary condition
+finite orbit

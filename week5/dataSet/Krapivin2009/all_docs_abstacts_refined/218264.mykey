@@ -1,8 +1,9 @@
-problem
-assembly
-fragment
-sequence
-algorithm
-operator
-genetic
-representation
+genetic algorithm
+dna sequence
+fragment assembly
+permutation representation
+parent sequence
+base pair
+building block
+assembly problem
+crossover operator

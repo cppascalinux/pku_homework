@@ -1,9 +1,4 @@
-density
-bin
-point
-data
-estimate
-em
-volume
-iteration
-mixture
+mixture density
+data point
+hemoglobin concentration
+blood cell

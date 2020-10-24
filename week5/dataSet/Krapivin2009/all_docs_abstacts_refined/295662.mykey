@@ -1,5 +1,4 @@
-type
-system
-analysis
-equivalent
-recursive
+recursive type
+control-flow analysis
+type system
+function type

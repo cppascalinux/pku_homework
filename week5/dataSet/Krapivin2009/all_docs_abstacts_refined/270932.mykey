@@ -1,7 +1,5 @@
-sequence
-edge
-path
-polytope
-short
-algorithm
-superset
+convex polytope
+edge sequence
+short path
+geodesic diameter
+path edge

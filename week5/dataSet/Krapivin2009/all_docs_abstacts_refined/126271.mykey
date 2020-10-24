@@ -1,6 +1,3 @@
-program
-behavior
-environment
-token
-base
-adaptive
+adaptive program
+sequential program
+distributed program

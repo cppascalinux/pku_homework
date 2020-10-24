@@ -1,11 +1,5 @@
-analysis
-net
-reachability
-approach
-transition
-marking
-graph
-generation
-large
-representation
-petri
+reachability graph
+reachability analysis
+petri net
+reachable marking
+kronecker representation

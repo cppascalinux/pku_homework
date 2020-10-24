@@ -1,16 +1,8 @@
-power
-synthesis
-selection
-task
-consumption
-behavioral
-clock
-path
-module
-period
-data
-due
-space
-low
-level
-voltage
+low power
+power consumption
+data path
+behavioral synthesis
+module selection
+clock selection
+clock period
+supply voltage

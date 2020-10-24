@@ -1,9 +1,8 @@
-protocol
-quorum
-consensus
-size
-failure
-availability
-data
-management
-partition
+diamond quorum
+diamond protocol
+quorum consensus
+quorum size
+database system
+read quorum
+partition failure
+tree quorum

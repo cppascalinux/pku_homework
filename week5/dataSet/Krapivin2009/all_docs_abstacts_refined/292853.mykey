@@ -1,10 +1,4 @@
-environment
-program
-migration
-workstation
-task
-hector
-support
-structure
-allocation
-code
+task migration
+resource allocation
+fault tolerance
+mpi program

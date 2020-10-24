@@ -1,9 +1,11 @@
-resolution
-proof
-size
-refutation
-bound
-circuit
-complexity
-low
-monotone
+exponential low
+exponential separation
+low bound
+resolution refutation
+resolution proof
+tree-like resolution
+monotone real
+regular resolution
+ordered resolution
+unrestricted resolution
+real circuit

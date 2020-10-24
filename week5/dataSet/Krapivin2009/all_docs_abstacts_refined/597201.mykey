@@ -1,14 +1,4 @@
-data
-system
-use
-transcription
-indexation
-error
-word
-modeling
-retrieval
-acoustic
-set
-broadcast
-mixture
-language
+broadcast data
+data indexation
+speech segment
+word error

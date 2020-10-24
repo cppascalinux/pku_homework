@@ -1,11 +1,6 @@
-code
-analysis
-assembly
-dependence
-compiler
-system
-memory
-value
-optimizing
-algorithm
-today
+data dependence
+dependence analysis
+assembly code
+memory reference
+memory access
+symbolic value

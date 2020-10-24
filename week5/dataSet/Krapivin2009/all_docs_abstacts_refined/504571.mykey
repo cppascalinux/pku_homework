@@ -1,10 +1,10 @@
-context
-term
-calculus
-system
-variable
-type
-hole
-property
-application
-lambda
+context calculus
+context application
+lambda term
+lambda calculus
+free variable
+free hole
+type system
+bound variable
+reduction system
+open term

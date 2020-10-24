@@ -1,8 +1,7 @@
-size
-configuration
-protocol
-system
-growth
-execution
-bound
-self-stabilizing
+self-stabilizing protocol
+self-stabilizing system
+message-driven protocol
+configuration size
+low bound
+time-out mechanism
+communication deadlock

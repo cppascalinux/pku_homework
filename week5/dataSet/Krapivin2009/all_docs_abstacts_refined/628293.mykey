@@ -1,7 +1,4 @@
-query
-engine
-search
-document
-similarity
-method
-usefulness
+search engine
+user query
+estimation method
+similar document

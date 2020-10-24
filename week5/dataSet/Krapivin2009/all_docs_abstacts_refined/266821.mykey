@@ -1,8 +1,7 @@
-instruction
-load
-time
-value
-data
-memory
-speculation
-dependence
+memory renaming
+memory dependence
+processor pipeline
+load instruction
+load value
+effective address
+store instruction

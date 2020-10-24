@@ -1,7 +1,10 @@
-filter
-bank
-wavelet
-frame
-framelet
-symmetry
-tight
+laurent polynomial
+symmetric framelet
+symmetric tight
+symmetric laurent
+framelet filter
+filter bank
+tight wavelet
+wavelet frame
+high-pass filter
+low-pass filter

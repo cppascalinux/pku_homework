@@ -1,8 +1,5 @@
-system
-number
-representation
-ring
-complex
-integer
-radix
-element
+radix representation
+finite number
+complex number
+number system
+gaussian integer

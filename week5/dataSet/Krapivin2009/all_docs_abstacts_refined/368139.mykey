@@ -1,7 +1,3 @@
-mechanism
-vhdl
-passing
-message
-objective
-protocol
-language
+message passing
+passing mechanism
+objective vhdl

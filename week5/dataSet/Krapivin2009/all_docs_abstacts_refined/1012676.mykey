@@ -1,9 +1,7 @@
-scheme
-structure
-server
-secret
-sharing
-client
-access
-frame
-time
+metering scheme
+audit agency
+time frame
+access structure
+linear secret
+secret sharing
+sharing scheme

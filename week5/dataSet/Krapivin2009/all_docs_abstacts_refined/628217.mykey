@@ -1,16 +1,15 @@
-system
-level
-node
-heterogeneity
-request
-server
-web
-capacity
-load
-information
-address
-adns
-domain
-client
-ttl
-algorithm
+web server
+web site
+web node
+server system
+client request
+client distribution
+name server
+adns control
+node capacity
+node heterogeneity
+ttl value
+ttl algorithm
+system heterogeneity
+address request
+heterogeneity level

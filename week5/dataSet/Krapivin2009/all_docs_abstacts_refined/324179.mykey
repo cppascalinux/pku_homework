@@ -1,5 +1,6 @@
-log
-size
-bucket
-bound
-set
+linear transformation
+hash function
+vector space
+large bucket
+bucket size
+log log

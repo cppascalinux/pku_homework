@@ -1,8 +1,4 @@
-type
-subtyping
-relation
-language
-useful
-moby
-accounting
-object
+inheritance-based subtyping
+object type
+subtyping relation
+structural subtyping

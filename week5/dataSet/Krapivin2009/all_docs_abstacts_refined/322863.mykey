@@ -1,8 +1,4 @@
-efficiency
-protocol
-effectiveness
-multicast
-path
-performs
-router
-tree
+multicast communication
+cbt protocol
+backup path
+runtime overhead

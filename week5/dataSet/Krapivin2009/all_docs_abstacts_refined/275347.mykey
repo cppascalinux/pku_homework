@@ -1,11 +1,5 @@
-query
-network
-algorithm
-structure
-similar
-tree
-parse
-probability
-sensitivity
-grammar
-approach
+context-free grammar
+parse tree
+bayesian network
+context sensitivity
+pcfg algorithm

@@ -1,8 +1,11 @@
-cache
-program
-hit
-function
-symbolic
-system
-unknown
-recurrence
+symbolic cache
+symbolic tracefile
+symbolic evaluation
+symbolic expression
+real-time system
+execution time
+cache behavior
+cache hit
+cache evaluation
+memory reference
+hit function

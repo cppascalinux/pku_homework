@@ -1,6 +1,6 @@
-graph
-query
-language
-database
-expression
-path
+regular simple
+regular expression
+regular path
+simple path
+query language
+polynomial time

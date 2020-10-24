@@ -1,11 +1,8 @@
-model
-fit
-outlier
-surface
-data
-discontinuity
-estimator
-bias
-robust
-distribution
-transforms
+multiple structure
+fit surface
+robust estimator
+gross outlier
+pseudo outlier
+outlier bias
+outlier distribution
+bias fit

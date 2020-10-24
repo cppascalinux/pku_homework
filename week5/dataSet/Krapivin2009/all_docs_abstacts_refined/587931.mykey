@@ -1,9 +1,8 @@
-lp
-relaxation
-machine
-job
-algorithm
-time
-date
-variable
-release
+approximation algorithm
+parallel machine
+completion time
+release date
+lp relaxation
+identical parallel
+performance guarantee
+algorithm lp

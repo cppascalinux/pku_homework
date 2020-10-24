@@ -1,5 +1,4 @@
-analysis
-program
-language
-embedded
-result
+embedded language
+embedded program
+partial evaluation
+host language

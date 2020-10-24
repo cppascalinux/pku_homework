@@ -1,10 +1,9 @@
-register
-memory
-vector
-latency
-problem
-renaming
-issue
-instruction
-spill
-cycle
+register renaming
+instruction issue
+vector processor
+vector machine
+vector register
+vector instruction
+physical register
+physical vector
+memory latency

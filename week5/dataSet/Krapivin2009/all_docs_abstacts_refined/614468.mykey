@@ -1,15 +1,13 @@
-real
-illumination
-scene
-texture
-light
-modification
-source
-shadow
-intensity
-virtual
-object
-such
-change
-system
-effect
+real scene
+real light
+real object
+real shadow
+common illumination
+virtual object
+virtual light
+virtual source
+light source
+radiosity system
+radiosity solution
+illumination texture
+correction factor

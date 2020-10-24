@@ -1,5 +1,2 @@
-system
-recursive
-channel
-time
-primitive
+lossy channel
+channel system

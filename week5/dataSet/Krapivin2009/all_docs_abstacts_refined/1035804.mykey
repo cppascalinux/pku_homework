@@ -1,5 +1,4 @@
-direction
-sense
-election
-protocol
-leader
+leader election
+complete network
+message complexity
+time complexity

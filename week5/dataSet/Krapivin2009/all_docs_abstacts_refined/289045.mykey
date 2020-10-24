@@ -1,15 +1,8 @@
-use
-equation
-problem
-gmres
-result
-model
-method
-reactor
-level
-preconditioner
-system
-time
-core
-solution
-solver
+linear system
+inner level
+level gmres
+preconditioner equation
+direct solution
+direct solver
+execution time
+core problem

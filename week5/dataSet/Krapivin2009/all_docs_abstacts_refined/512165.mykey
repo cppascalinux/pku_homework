@@ -1,8 +1,11 @@
-boundary
-spatial
-fuzzy
-predicate
-system
-region
-topological
-object
+fuzzy topological
+fuzzy region
+fuzzy spatial
+topological predicate
+topological relationship
+query language
+spatial object
+spatial data
+spatial database
+spatial query
+database system

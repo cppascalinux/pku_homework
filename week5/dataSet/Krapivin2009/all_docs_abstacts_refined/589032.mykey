@@ -1,8 +1,7 @@
-method
-reconstruction
-use
-problem
-algorithm
-tomography
-likelihood
-gradient
+primal-dual method
+primal-dual matrix
+image reconstruction
+emission tomography
+reconstruction problem
+conjugate gradient
+barrier method

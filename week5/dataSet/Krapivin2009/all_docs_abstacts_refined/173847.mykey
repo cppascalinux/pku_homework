@@ -1,7 +1,8 @@
-size
-set
-vector
-training
-codebook
-image
-quantizer
+training set
+training distortion
+vector quantizer
+set size
+test distortion
+test image
+codebook size
+block size

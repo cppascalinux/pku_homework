@@ -1,14 +1,7 @@
-algorithm
-assignment
-bank
-register
-architecture
-memory
-code
-graph
-generation
-tree
-asips
-processor
-coloring
-spanning
+memory bank
+code generation
+heterogeneous register
+spanning tree
+bank assignment
+data memory
+register assignment

@@ -1,14 +1,7 @@
-register
-factor
-traffic
-loop
-software
-time
-iteration
-technique
-schedule
-requirement
-candidate
-pipelining
-modulo
-set
+software pipelining
+register requirement
+register pressure
+modulo schedule
+processor configuration
+memory traffic
+traffic factor

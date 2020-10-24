@@ -1,12 +1,7 @@
-pattern
-automaton
-time
-matching
-such
-complexity
-order
-set
-term
-traversal
-construction
-adaptive
+adaptive automaton
+adaptive traversal
+pattern matching
+matching time
+input term
+traversal order
+dag automaton

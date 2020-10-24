@@ -1,9 +1,4 @@
-locality
-loop
-scheduling
-data
-multiprocessor
-cost
-algorithm
-distributed-memory
-high
+dynamic scheduling
+parallel loop
+data locality
+static scheduling

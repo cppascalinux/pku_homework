@@ -1,5 +1,3 @@
-automaton
-involve
-blow-up
-determinization
-weak
+weak alternating
+alternating automaton
+nondeterministic automaton

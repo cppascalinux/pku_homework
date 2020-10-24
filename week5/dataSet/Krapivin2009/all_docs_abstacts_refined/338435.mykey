@@ -1,5 +1,5 @@
-theory
-scale-space
-structure
-image
-point
+scale-space image
+scale-space theory
+catastrophe theory
+coordinate system
+critical point

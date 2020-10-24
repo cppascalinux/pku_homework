@@ -1,10 +1,4 @@
-case
-rotation
-given
-real
-time
-complex
-code
-blas
-slartg
-reference
+given rotation
+real given
+complex given
+new clartg

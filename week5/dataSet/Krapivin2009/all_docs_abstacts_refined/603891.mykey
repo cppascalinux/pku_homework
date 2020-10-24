@@ -1,6 +1,11 @@
-estimator
-kernel
-point
-density
-estimation
-bandwidth
+density estimation
+density estimator
+bandwidth kernel
+bandwidth estimator
+kernel density
+kernel estimator
+balloon estimator
+point estimator
+smoothing matrix
+data point
+fixed bandwidth

@@ -1,5 +1,7 @@
-environment
-complexity
-planning
-motion
-robot
+motion planning
+bounded-reach robot
+small simple-cover
+simple-cover complexity
+maximum complexity
+free space
+free-space complexity

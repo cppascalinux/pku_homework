@@ -1,7 +1,8 @@
-automaton
-time
-state
-such
-run
-duration
-predicate
+real-time system
+duration property
+duration measure
+duration constraint
+time automaton
+timed automaton
+duration-bounded reachability
+reachability problem

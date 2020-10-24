@@ -1,9 +1,5 @@
-analysis
-bondorf
-interpretation
-abstract
-closure
-equivalent
-flow
-system
-constraint
+closure analysis
+flow analysis
+abstract interpretation
+constraint system
+program analysis

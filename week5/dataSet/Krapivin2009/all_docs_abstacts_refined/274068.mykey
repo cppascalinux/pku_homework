@@ -1,6 +1,4 @@
-model
-learning
-on-line
-sequence
-element
-example
+on-line learning
+learning model
+concept class
+mistake bound

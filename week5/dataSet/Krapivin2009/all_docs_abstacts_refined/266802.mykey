@@ -1,9 +1,10 @@
-prediction
-predictor
-branch
-accuracy
-history
-table
-trace
-rate
-performance
+trace prediction
+trace cache
+trace predictor
+multiple branch
+prediction accuracy
+prediction table
+history misprediction
+misprediction rate
+branch predictor
+branch prediction

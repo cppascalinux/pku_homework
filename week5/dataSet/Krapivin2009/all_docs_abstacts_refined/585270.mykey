@@ -1,17 +1,10 @@
-formula
-atl
-system
-model
-logic
-ctl
-quantifier
-path
-temporal
-component
-specification
-state
-game
-open
-structure
-length
-complexity
+temporal logic
+temporal operator
+open system
+path quantifier
+logic atl
+atl formula
+state formula
+synchronous atl
+synchronous structure
+structure complexity

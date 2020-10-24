@@ -1,19 +1,12 @@
-algorithm
-pre
-analysis
-code
-motion
-present
-restructuring
-benefit
-transformation
-optimization
-elimination
-cost
-frequency
-loop
-complete
-framework
-data-flow
-flow
-redundancy
+partial redundancy
+redundancy elimination
+code motion
+code growth
+complete pre
+flow restructuring
+flow analysis
+data-flow analysis
+frequency analysis
+pre algorithm
+speculative code
+speculative pre

@@ -1,10 +1,9 @@
-condition
-order
-second
-problem
-constraint
-solution
-set
-directional
-qualification
-optimal
+optimization problem
+second order
+order regularity
+order sufficient
+order expansion
+optimal solution
+constraint qualification
+sufficient condition
+metric projection

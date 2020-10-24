@@ -1,5 +1,6 @@
-site
-data
-network
-local
-variable
+bayesian network
+heterogeneous data
+local site
+local model
+local variable
+central site

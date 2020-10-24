@@ -1,5 +1,3 @@
-shell
-method
-element
-model
-finite
+finite element
+element formulation
+element method

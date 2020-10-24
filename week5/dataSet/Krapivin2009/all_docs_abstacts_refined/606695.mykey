@@ -1,5 +1,4 @@
-system
-stability
-analysis
-condition
-function
+stability analysis
+stability condition
+homogeneous system
+lyapunov function

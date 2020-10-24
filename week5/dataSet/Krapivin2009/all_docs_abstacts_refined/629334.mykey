@@ -1,9 +1,4 @@
-time
-network
-processor
-delay
-rate
-processing
-random
-variable
-transmission
+random variable
+processing time
+transmission delay
+computational step

@@ -1,8 +1,7 @@
-role
-rule
-activation
-model
-use
-appointment
-service
-condition
+role-based access
+access control
+role activation
+role membership
+membership rule
+membership condition
+activation rule

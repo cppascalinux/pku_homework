@@ -1,6 +1,4 @@
-matrix
-unitary
-problem
-eigenvalue
-theory
-theorem
+unitary matrix
+eigenvalue problem
+hermitian matrix
+hessenberg matrix

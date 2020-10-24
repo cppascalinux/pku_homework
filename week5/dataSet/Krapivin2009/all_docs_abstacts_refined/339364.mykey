@@ -1,11 +1,7 @@
-use
-sensor
-image
-catadioptric
-system
-mirror
-camera
-viewpoint
-shape
-single
-blur
+catadioptric image
+catadioptric sensor
+catadioptric system
+single effective
+single viewpoint
+effective viewpoint
+mirror shape

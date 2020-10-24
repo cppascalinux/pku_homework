@@ -1,11 +1,13 @@
-projection
-cell
-time
-boundary
-algorithm
-classification
-set
-data
-rendering
-volume
-procedure
+object boundary
+image plane
+boundary cell
+cell projection
+projection time
+projection template
+projection procedure
+interactive classification
+ray traversal
+traversal procedure
+traversal time
+data set
+volume data

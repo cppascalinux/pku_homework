@@ -1,7 +1,1 @@
-constraint
-instance
-number
-exponential
-tsplib
-bound
-problem
+violated constraint

@@ -1,6 +1,4 @@
-algorithm
-optimization
-point
-global
-search
-function
+global optimization
+global minimizer
+coordinate search
+local search

@@ -1,9 +1,7 @@
-congruence
-calculus
-semantics
-bisimulation
-transition
-fragment
-term
-reduction
-rule
+rewrite rule
+bisimulation congruence
+reduction semantics
+operational congruence
+operational semantics
+labelled transition
+term rewriting

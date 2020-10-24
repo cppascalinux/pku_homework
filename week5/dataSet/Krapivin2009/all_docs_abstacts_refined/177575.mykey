@@ -1,8 +1,7 @@
-spill
-allocator
-code
-cost
-heuristic
-coloring
-graph
-register
+register allocator
+optimistic coloring
+optimistic allocator
+interference graph
+spill code
+spill cost
+graph coloring

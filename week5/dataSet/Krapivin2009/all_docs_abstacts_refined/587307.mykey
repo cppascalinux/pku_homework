@@ -1,9 +1,9 @@
-matrix
-block
-complement
-system
-schur
-method
-elimination
-solution
-property
+schur complement
+complement system
+complement matrix
+discretization parameter
+conjugate gradient
+gradient method
+spectral property
+matrix block
+system matrix

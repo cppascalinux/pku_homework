@@ -1,7 +1,4 @@
-graph
-color
-use
-3-colorable
-theorem
-result
-hardness
+3-colorable graph
+graph use
+pcp theorem
+hardness result

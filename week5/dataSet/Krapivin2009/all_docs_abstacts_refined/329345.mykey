@@ -1,10 +1,7 @@
-guarantee
-request
-stream
-level
-throughput
-service
-different
-allocation
-disk
-bandwidth
+performance guarantee
+bandwidth allocation
+stream throughput
+statistical guarantee
+deterministic guarantee
+deterministic service
+i/o system

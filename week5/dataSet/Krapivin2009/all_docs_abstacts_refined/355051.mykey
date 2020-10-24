@@ -1,10 +1,3 @@
-event
-service
-logic
-input
-such
-interface
-set
-application
-language
-data
+service logic
+user interface
+input event

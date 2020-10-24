@@ -1,10 +1,6 @@
-theory
-example
-use
-training
-revision
-set
-method
-accuracy
-flaw
-positive
+theory revision
+training example
+training set
+classification accuracy
+flawed theory
+flaw theory

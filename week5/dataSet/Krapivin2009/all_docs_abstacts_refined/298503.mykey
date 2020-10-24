@@ -1,7 +1,10 @@
-set
-l-printable
-complexity
-class
-length
-n.
-string
+l-printable set
+length n.
+p-printable set
+kolmogorov complexity
+context-free language
+l-rankable set
+sparse set
+sparse regular
+regular language
+complexity class

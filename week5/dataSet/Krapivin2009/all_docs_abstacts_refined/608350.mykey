@@ -1,5 +1,4 @@
-guarantee
-model
-selection
-distribution
-posterior
+stochastic model
+model selection
+posterior distribution
+performance guarantee

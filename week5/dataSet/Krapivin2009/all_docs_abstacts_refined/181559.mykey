@@ -1,6 +1,14 @@
-locality
-line
-exploitation
-scheme
-spatial
-cache
+virtual line
+spatial locality
+numerical code
+large cache
+large virtual
+large physical
+cache line
+cache pollution
+line scheme
+physical line
+temporal locality
+memory access
+memory traffic
+access time

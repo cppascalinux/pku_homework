@@ -1,8 +1,8 @@
-iteration
-tolerance
-value
-accuracy
-chebyshev
-equation
-constant
-inner
+outer iteration
+chebyshev iteration
+linear system
+inner iteration
+asymptotic convergence
+convergence rate
+tolerance value
+numerical calculation

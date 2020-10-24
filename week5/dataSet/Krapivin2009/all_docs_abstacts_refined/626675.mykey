@@ -1,4 +1,5 @@
-slot
-branch
-insertion
-target
+inline target
+target insertion
+branch slot
+branch target
+insertion slot

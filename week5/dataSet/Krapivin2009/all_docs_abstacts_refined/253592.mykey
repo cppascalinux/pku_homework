@@ -1,10 +1,6 @@
-inverse
-approximate
-sparse
-system
-entry
-preconditioner
-problem
-value
-product
-parallel
+sparse approximate
+approximate inverse
+linear system
+iterative method
+sparsity pattern
+nonzero entry

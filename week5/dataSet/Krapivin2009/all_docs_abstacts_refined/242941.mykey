@@ -1,9 +1,6 @@
-matrix
-eigenvalue
-algorithm
-decomposition
-approach
-block
-diagonal
-problem
-reduction
+symmetric matrix
+distinct eigenvalue
+block diagonal
+diagonal block
+eigenvalue decomposition
+band reduction

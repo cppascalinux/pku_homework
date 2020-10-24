@@ -1,8 +1,6 @@
-block
-allocation
-loop
-result
-program
-boundary
-energy
-register
+register allocation
+energy consumption
+allocation result
+allocation problem
+low energy
+loop block

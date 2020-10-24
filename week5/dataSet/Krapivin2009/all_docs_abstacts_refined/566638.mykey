@@ -1,8 +1,4 @@
-buffer
-sample
-filter
-hardware
-system
-video
-output
-rate
+high quality
+video output
+sample buffer
+reconstruction filter

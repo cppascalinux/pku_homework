@@ -1,12 +1,3 @@
-method
-time
-system
-problem
-integration
-step
-numerical
-use
-reparameterization
-scheme
-explicit
-field
+verlet method
+vector field
+n-body problem

@@ -1,13 +1,10 @@
-pool
-buffer
-scheme
-performance
-simulation
-message
-application
-sender
-memory
-multiprocessor
-degradation
-mechanism
-protocol
+buffer management
+buffer memory
+buffer pool
+message buffer
+shared-memory multiprocessor
+sender pool
+receiver pool
+pool approach
+pool scheme
+performance degradation

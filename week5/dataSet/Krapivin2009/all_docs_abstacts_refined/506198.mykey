@@ -1,12 +1,7 @@
-cache
-version
-hit
-order
-create
-memory
-latency
-speculative
-dependence
-buffer
-versioning
-program
+speculative versioning
+speculative version
+versioning cache
+memory dependence
+program order
+hit latency
+level memory

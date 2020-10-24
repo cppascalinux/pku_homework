@@ -1,8 +1,5 @@
-automaton
-model
-alphabet
-variant
-pebble
-infinite
-register
-logic
+infinite alphabet
+finite alphabet
+pebble automaton
+decision problem
+register automaton

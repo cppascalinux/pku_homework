@@ -1,8 +1,14 @@
-instruction
-design
-window
-issue
-queue
-miss
-size
-time
+instruction window
+cache miss
+window size
+large instruction
+large window
+clock cycle
+cycle time
+latency operation
+issue queue
+issue window
+load cache
+load miss
+dependent instruction
+wib design

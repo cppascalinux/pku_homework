@@ -1,10 +1,6 @@
-period
-voice
-loss
-measurement
-instability
-quality
-packet
-service
-traffic
-network
+link failure
+passive measurement
+ip backbone
+backbone network
+loss period
+packet loss

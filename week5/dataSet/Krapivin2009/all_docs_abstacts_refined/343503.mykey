@@ -1,7 +1,2 @@
-path
-routing
-node
-table
-interval
-graph
-compact
+compact routing
+short path

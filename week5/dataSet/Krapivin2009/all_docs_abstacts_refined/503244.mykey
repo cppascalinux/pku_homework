@@ -1,10 +1,14 @@
-test
-event
-coverage
-criterion
-gui
-sequence
-component
-case
-study
-suite
+coverage criterion
+gui testing
+gui component
+gui test
+gui event
+user interface
+event sequence
+event coverage
+total number
+test suite
+test case
+case study
+event-based coverage
+statement coverage

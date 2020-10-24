@@ -1,6 +1,1 @@
-block
-property
-relative
-partitioning
-matrix
-reduction
+cyclic reduction

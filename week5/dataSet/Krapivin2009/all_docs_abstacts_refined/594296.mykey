@@ -1,6 +1,5 @@
-formula
-algorithm
-bound
-upper
-clause
-literal
+worst-case upper
+upper bound
+input formula
+transformation rule
+pure literal

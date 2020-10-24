@@ -1,9 +1,4 @@
-model
-function
-discontinuity
-adaptive
-mrf
-equation
-solution
-problem
-interaction
+euler equation
+interaction function
+da model
+da solution

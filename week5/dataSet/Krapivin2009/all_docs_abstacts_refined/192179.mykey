@@ -1,12 +1,11 @@
-illumination
-algorithm
-error
-global
-equation
-bound
-method
-surface
-function
-factor
-form
-transfer
+global illumination
+illumination algorithm
+reflectance function
+emission function
+discretization error
+radiative transfer
+linear system
+boundary element
+projection method
+form factor
+error bound

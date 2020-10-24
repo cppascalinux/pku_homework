@@ -1,8 +1,8 @@
-schema
-xml
-stereotype
-diagram
-level
-class
-model
-uml
+xml schema
+conceptual level
+class diagram
+uml class
+logical level
+level uml
+level model
+level diagram

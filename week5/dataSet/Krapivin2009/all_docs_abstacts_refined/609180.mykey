@@ -1,7 +1,4 @@
-binding
-dynamic
-function
-strategy
-technique
-circumstance
-program
+dynamic binding
+evaluation function
+deep binding
+parallel evaluation

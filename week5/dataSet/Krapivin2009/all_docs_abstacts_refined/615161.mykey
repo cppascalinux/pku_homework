@@ -1,10 +1,8 @@
-transaction
-lock
-hierarchy
-mode
-control
-inheritance
-nested
-object
-downward
-concurrency
+concurrency control
+nested transaction
+downward inheritance
+control downward
+lock mode
+deadlock detection
+transaction hierarchy
+object hierarchy

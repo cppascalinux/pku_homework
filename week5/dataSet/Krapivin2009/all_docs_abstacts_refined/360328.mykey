@@ -1,13 +1,6 @@
-instruction
-configuration
-rfu
-onechip
-size
-architecture
-unit
-processor
-application
-data
-simulator
-reconfigurable
-pipeline
+reconfigurable unit
+reconfigurable processor
+reconfigurable instruction
+onechip architecture
+performance improvement
+rfu instruction

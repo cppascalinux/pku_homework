@@ -1,8 +1,4 @@
-system
-specification
-logic
-real-time
-time
-language
-temporal
-tptl
+temporal logic
+real-time system
+freeze quantifier
+decision procedure

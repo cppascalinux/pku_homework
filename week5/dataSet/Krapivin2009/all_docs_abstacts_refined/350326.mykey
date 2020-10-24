@@ -1,6 +1,7 @@
-overflow
-detection
-method
-multiplication
-bit
-delay
+integer multiplication
+overflow detection
+overflow flag
+significant product
+complement multiplication
+conventional method
+product bit

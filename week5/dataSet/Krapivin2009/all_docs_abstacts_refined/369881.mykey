@@ -1,13 +1,10 @@
-classifier
-algorithm
-generalization
-base
-attribute
-model
-bayes
-level
-class
-tree
-set
-distribution
-cascade
+cascade generalization
+cascade algorithm
+new attribute
+probability class
+class distribution
+base classifier
+level classifier
+decision tree
+naive bayes
+data set

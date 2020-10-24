@@ -1,4 +1,7 @@
-value
-image
-algorithm
-disparity
+stereo algorithm
+stereo image
+disparity map
+disparity space
+disparity value
+match value
+image pair

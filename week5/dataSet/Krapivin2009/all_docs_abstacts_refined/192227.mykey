@@ -1,8 +1,3 @@
-surface
-particle
-motion
-change
-move
-radius
-point
-repulsion
+control point
+implicit surface
+repulsion radius

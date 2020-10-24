@@ -1,9 +1,8 @@
-function
-time
-step
-solution
-base
-initial
-scheme
-discretization
-problem
+piecewise self-similar
+piecewise constant
+self-similar solution
+numerical scheme
+conservation law
+riemann problem
+initial discretization
+base function

@@ -1,9 +1,4 @@
-protocol
-crash
-network
-processor
-link
-number
-dynamic
-message
-communication
+dynamic network
+end-to-end protocol
+sequence number
+intermediate processor

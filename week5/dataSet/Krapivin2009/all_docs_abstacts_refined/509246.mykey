@@ -1,7 +1,6 @@
-array
-architecture
-memory
-transform
-2-d
-linear
-separable
+parallel architecture
+linear array
+2-d separable
+separable transforms
+intermediate result
+fourier transform

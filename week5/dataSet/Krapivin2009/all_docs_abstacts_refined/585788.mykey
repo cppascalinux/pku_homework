@@ -1,8 +1,4 @@
-part
-push
-orientation
-plane
-orient
-fence
-plate
-jaw
+polyhedral part
+initial orientation
+three-dimensional part
+possible orientation

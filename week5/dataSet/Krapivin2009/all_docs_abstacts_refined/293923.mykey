@@ -1,6 +1,9 @@
-transformation
-group
-affine
-quasi-invariant
-invariant
-parameterisation
+quasi-invariant parameterisations
+quasi-invariant parameterisation
+group transformation
+order derivative
+affine quasi-invariant
+affine transformation
+general affine
+second order
+bilateral symmetry

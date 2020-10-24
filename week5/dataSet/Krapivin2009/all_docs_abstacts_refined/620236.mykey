@@ -1,9 +1,9 @@
-system
-designer
-such
-real-time
-algorithm
-scheduling
-task
-constraint
-result
+classical scheduling
+scheduling algorithm
+real-time system
+real-time scheduling
+real-time task
+release time
+precedence constraint
+static scheduling
+dynamic scheduling

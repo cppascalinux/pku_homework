@@ -1,7 +1,5 @@
-type
-group
-walk
-weyl
-chamber
-representation
-such
+random walk
+weyl chamber
+weyl group
+tensor power
+lie group

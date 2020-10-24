@@ -1,8 +1,6 @@
-variable
-stack
-cell
-optimization
-slot
-store
-load
-size
+stack frame
+stack slot
+stack optimization
+data structure
+cell variable
+slot optimization

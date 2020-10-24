@@ -1,6 +1,11 @@
-task
-time
-part
-optional
-error
-component
+real-time task
+input error
+composite task
+component task
+mandatory part
+mandatory processing
+optional part
+optional processing
+processing time
+output error
+processor time

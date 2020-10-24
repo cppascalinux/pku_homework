@@ -1,8 +1,7 @@
-communication
-pattern
-such
-algorithm
-topology
-group
-fault
-failure
+error-detecting algorithm
+fault tolerance
+fault index
+fault distribution
+local fault
+communication pattern
+processor group

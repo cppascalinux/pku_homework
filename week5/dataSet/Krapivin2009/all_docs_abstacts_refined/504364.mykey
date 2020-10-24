@@ -1,5 +1,9 @@
-type
-object
-reuse
-language
-function
+object reuse
+object class
+object type
+object kind
+object-oriented language
+programming language
+class-is-type principle
+parameterized type
+generic function

@@ -1,8 +1,8 @@
-rule
-constraint
-system
-language
-architecture
-temporal
-integrity
-specification
+temporal integrity
+temporal constraint
+temporal logic
+integrity constraint
+active dbms
+active rule
+specification language
+rule system

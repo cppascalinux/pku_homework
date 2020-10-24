@@ -1,7 +1,6 @@
-language
-type
-inductive
-program
-tag
-elimination
-system
+type system
+type safety
+type language
+tag elimination
+program language
+dependent type

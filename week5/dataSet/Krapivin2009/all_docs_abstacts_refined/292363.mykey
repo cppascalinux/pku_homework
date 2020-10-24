@@ -1,10 +1,10 @@
-method
-equation
-finite
-element
-velocity
-pressure
-system
-level
-problem
-displacement
+pressure velocity
+miscible displacement
+porous medium
+mixed finite
+finite element
+element method
+linear system
+velocity pressure
+iteration velocity
+numerical experiment

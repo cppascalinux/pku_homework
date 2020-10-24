@@ -1,12 +1,11 @@
-feature
-selection
-measure
-database
-learning
-case
-cluster
-relevance
-unsupervised
-relevant
-process
-membership
+unsupervised learning
+conditional gaussian
+gaussian network
+feature selection
+learning process
+relevant feature
+irrelevant feature
+explanatory model
+original database
+relevance threshold
+relevance measure

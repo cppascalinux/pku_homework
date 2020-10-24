@@ -1,12 +1,6 @@
-message
-protocol
-causal
-time
-broadcast
-process
-counter
-communication
-window
-vector
-channel
-order
+causal broadcast
+causal order
+causal window
+broadcast message
+broadcast protocol
+vector time

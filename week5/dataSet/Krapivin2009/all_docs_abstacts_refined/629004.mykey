@@ -1,15 +1,8 @@
-dependence
-test
-data
-distance
-time
-technique
-loop
-subscript
-index
-term
-method
-execution
-reference
-analysis
-algorithm
+data dependence
+dependence analysis
+dependence test
+dependence distance
+symbolic term
+array reference
+test method
+loop index

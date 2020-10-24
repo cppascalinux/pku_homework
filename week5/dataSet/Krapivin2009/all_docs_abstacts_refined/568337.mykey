@@ -1,7 +1,6 @@
-automaton
-process
-state
-deterministic
-expression
-partial
-hoare
+partial automaton
+finite nondeterministic
+process expression
+initial state
+deterministic process
+deterministic partial

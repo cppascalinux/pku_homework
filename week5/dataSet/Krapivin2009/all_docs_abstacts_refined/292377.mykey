@@ -1,12 +1,7 @@
-inverse
-approximate
-preconditioners
-sparse
-matrix
-iteration
-strategy
-dropping
-case
-such
-result
-problem
+approximate inverse
+inverse preconditioners
+sparse mode
+sparse matrix
+sparse approximate
+numerical dropping
+initial guess

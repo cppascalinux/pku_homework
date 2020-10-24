@@ -1,14 +1,7 @@
-scheme
-packet
-route
-odmrp
-latency
-transmission
-multicast
-protocol
-data
-acquisition
-network
-reliability
-on-demand
-mobility
+ad hoc
+hoc network
+topology change
+route acquisition
+stable route
+acquisition latency
+data packet

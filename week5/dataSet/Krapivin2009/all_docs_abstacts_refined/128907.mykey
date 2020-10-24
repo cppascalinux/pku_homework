@@ -1,8 +1,15 @@
-method
-weight
-signature
-assignment
-block
-term
-table
-lookup
+optimal weight
+weight assignment
+signature weight
+text block
+same number
+query frequency
+fsb method
+term signature
+term weight
+assignment method
+block signature
+fwb method
+fwb approach
+lookup table
+occurrence frequency

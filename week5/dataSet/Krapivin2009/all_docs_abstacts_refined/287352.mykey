@@ -1,8 +1,7 @@
-protocol
-multicast
-class
-send
-receiver
-reliable
-naks
-acks
+reliable multicast
+multicast protocol
+multicast transport
+transport protocol
+tree-based protocol
+ring-based protocol
+protocol class

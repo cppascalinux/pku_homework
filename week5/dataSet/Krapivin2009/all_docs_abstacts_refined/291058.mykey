@@ -1,9 +1,9 @@
-value
-prediction
-instruction
-hardware
-speculation
-technique
-predictor
-scheme
-code
+value speculation
+value prediction
+value predictor
+static load
+dependent instruction
+prediction hardware
+patch-up code
+load instruction
+data value

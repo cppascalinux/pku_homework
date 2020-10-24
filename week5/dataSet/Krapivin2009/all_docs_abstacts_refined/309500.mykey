@@ -1,11 +1,11 @@
-word
-model
-unseen
-estimate
-bigram
-task
-similarity
-probability
-method
-language
-disambiguation
+similarity-based model
+similarity-based method
+language processing
+language model
+word similarity
+word sense
+unseen word
+unseen bigram
+probability estimate
+sense disambiguation
+similarity model

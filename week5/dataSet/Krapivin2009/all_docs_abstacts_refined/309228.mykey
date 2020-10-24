@@ -1,7 +1,4 @@
-method
-linear
-program
-infeasible-interior-point
-system
-interior-point
-direction
+linear program
+linear system
+search direction
+interior-point method

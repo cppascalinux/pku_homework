@@ -1,8 +1,5 @@
-decomposition
-condition
-algorithm
-interface
-domain
-rate
-convergence
-schwarz
+interface condition
+domain decomposition
+schwarz domain
+krylov subspace
+convergence rate

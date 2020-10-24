@@ -1,6 +1,5 @@
-view
-update
-paradigm
-model
-problem
-data
+view update
+data model
+sketch data
+update problem
+database state

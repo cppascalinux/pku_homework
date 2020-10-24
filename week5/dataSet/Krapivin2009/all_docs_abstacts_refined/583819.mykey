@@ -1,8 +1,6 @@
-array
-check
-bound
-indirection
-java
-access
-class
-elimination
+java array
+array bound
+array indirection
+bound check
+indirection array
+int length

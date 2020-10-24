@@ -1,5 +1,6 @@
-matrix
-approximation
-toeplitz
-product
-problem
+kronecker product
+product approximation
+toeplitz matrix
+image restoration
+approximate svd
+svd preconditioner

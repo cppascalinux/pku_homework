@@ -1,6 +1,2 @@
-rule
-specification
-coverage
-metric
-style
-design
+coverage metric
+style rule

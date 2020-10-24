@@ -1,7 +1,8 @@
-distribution
-model
-variational
-regression
-observation
-parameter
-logistic
+logistic regression
+variational transformation
+variational parameter
+variational approximation
+variational distribution
+closed form
+posterior distribution
+latent variable

@@ -1,8 +1,3 @@
-query
-language
-description
-capability
-source
-plan
-algorithm
-wrapper
+information source
+query capability
+data source

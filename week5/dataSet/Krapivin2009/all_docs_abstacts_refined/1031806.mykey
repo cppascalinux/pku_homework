@@ -1,11 +1,6 @@
-problem
-element
-domain
-mhd
-mixed
-finite
-incompressible
-approximation
-result
-method
-stationary
+mixed finite
+finite element
+element approximation
+element method
+incompressible mhd
+mhd problem

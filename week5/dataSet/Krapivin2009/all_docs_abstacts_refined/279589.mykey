@@ -1,9 +1,11 @@
-task
-preemption
-time
-technique
-analysis
-cost
-delay
-case
-execution
+cache-related preemption
+preemption delay
+preemption cost
+execution time
+execution point
+bad case
+case response
+case cache-related
+case preemption
+response time
+analysis technique

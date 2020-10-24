@@ -1,6 +1,8 @@
-process
-loss
-congestion
-signal
-poisson
-model
+congestion control
+congestion signal
+flow control
+poisson process
+transmission rate
+m/g/1 queue
+service time
+loss process

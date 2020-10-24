@@ -1,8 +1,5 @@
-vertex
-compression
-tin
-method
-edge
-algorithm
-progressive
-structure
+irregular network
+compression method
+compression rate
+compression algorithm
+connectivity information

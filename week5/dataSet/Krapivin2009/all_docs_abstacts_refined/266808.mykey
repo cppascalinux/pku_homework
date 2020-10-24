@@ -1,7 +1,2 @@
-cache
-memory
-hierarchy
-performance
-ratio
-architecture
-miss
+conflict miss
+miss ratio

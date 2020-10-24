@@ -1,8 +1,5 @@
-simulation
-algorithm
-fault
-set
-test
-parallel
-processor
-circuit
+asynchronous algorithm
+parallel algorithm
+parallel fault
+test set
+fault simulation

@@ -1,11 +1,4 @@
-cluster
-partition
-analysis
-problem
-graph
-data
-weight
-algorithm
-matrix
-edge
-method
+bipartite graph
+data object
+edge weight
+cluster analysis

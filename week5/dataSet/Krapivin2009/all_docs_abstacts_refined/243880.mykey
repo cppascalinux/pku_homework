@@ -1,7 +1,14 @@
-prediction
-branch
-method
-confidence
-dynamic
-accuracy
-set
+conditional branch
+branch prediction
+high confidence
+confidence set
+confidence method
+confidence mechanism
+low confidence
+dynamic branch
+dynamic confidence
+dynamic method
+static branch
+static method
+level method
+prediction accuracy

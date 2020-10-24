@@ -1,9 +1,7 @@
-hypothesis
-problem
-base
-space
-algorithm
-regression
-consisting
-number
-set
+regression problem
+hypothesis space
+hypothesis set
+linear program
+linear combination
+base hypothesis
+barrier algorithm

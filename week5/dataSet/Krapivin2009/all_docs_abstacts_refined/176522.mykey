@@ -1,4 +1,5 @@
-language
-clp
-constraint
-semantics
+constraint logic
+logic programming
+declarative semantics
+clp language
+operational semantics

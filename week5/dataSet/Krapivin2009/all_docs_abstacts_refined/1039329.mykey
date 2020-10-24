@@ -1,14 +1,11 @@
-query
-bound
-scheme
-complexity
-low
-pir
-ldcs
-quantum
-bit
-code
-retrieval
-classical
-information
-communication
+exponential low
+low bound
+classical 2-server
+quantum query
+quantum pir
+private information
+information retrieval
+2-server pir
+pir scheme
+communication complexity
+2-query ldcs

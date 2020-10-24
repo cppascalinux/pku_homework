@@ -1,12 +1,5 @@
-location
-problem
-salesman
-instance
-sale
-present
-territory
-model
-alignment
-method
-subproblem
-subproblems
+salesman location
+sale territory
+territory alignment
+function value
+problem instance

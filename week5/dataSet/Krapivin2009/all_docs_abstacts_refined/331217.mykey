@@ -1,16 +1,18 @@
-time
-algorithm
-transfer
-redistribution
-communication
-data
-step
-scheme
-cost
-computation
-schedule
-size
-total
-bipartite
-array
-message
+array redistribution
+data transfer
+data redistribution
+communication schedule
+communication step
+index computation
+computation cost
+computation time
+transfer time
+transfer cost
+schedule computation
+bipartite matching
+matching scheme
+total redistribution
+total array
+redistribution time
+message size
+algorithm total

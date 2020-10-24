@@ -1,5 +1,7 @@
-disturbance
-bound
-parameter
-dynamic
-unmodeled
+indirect adaptive
+unmodeled dynamic
+pole-zero placement
+adaptive controller
+parameter estimator
+parameter variation
+bound disturbance

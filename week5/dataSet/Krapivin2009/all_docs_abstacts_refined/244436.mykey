@@ -1,5 +1,7 @@
-expression
-group
-lattice
-distributive
-ordering
+commutative element
+coxeter group
+reduced expression
+braid relation
+parabolic quotient
+distributive lattice
+weak ordering

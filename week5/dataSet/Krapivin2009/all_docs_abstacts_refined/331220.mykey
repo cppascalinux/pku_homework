@@ -1,12 +1,2 @@
-algorithm
-disk
-buffer
-block
-management
-i/o
-system
-parallel
-use
-prefetching
-p-lru
-access
+buffer management
+parallel i/o

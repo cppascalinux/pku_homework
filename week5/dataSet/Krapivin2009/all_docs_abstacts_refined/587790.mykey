@@ -1,9 +1,5 @@
-problem
-matrix
-minres-l
-method
-algorithm
-linear
-system
-solution
-application
+iterative method
+wls problem
+linear programming
+linear system
+least-squares problem

@@ -1,6 +1,8 @@
-system
-time-triggered
-algorithm
-verification
-fault-tolerant
-program
+systematic formal
+formal verification
+time-triggered algorithm
+time-triggered system
+time-triggered implementation
+functional program
+untimed synchronous
+synchronous system

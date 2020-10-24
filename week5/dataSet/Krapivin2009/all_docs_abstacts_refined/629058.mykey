@@ -1,8 +1,6 @@
-array
-loop
-data
-access
-technique
-partition
-transformation
-partitioning
+distributed memory
+memory machine
+array access
+parallel loop
+communication-free partitioning
+communication-free partition

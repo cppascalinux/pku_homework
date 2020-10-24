@@ -1,8 +1,3 @@
-parser
-skip
-word
-behavior
-sentence
-experience
-grammar
-control
+skip parser
+skip word
+past successful

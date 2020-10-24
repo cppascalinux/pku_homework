@@ -1,9 +1,5 @@
-scenario
-model
-system
-state
-tool
-checker
-problem
-generation
-such
+scenario generation
+scenario generator
+reactive system
+model checker
+case study

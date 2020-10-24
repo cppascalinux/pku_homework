@@ -1,7 +1,5 @@
-multigrid
-algorithm
-use
-iteration
-gmres
-level
-number
+helmholtz equation
+helmholtz problem
+multigrid algorithm
+out iteration
+wave number

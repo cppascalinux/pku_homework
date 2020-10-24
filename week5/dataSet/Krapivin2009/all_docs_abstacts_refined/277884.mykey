@@ -1,7 +1,10 @@
-loss
-process
-measure
-performance
-transient
-state
-system
+transient loss
+transient state
+loss performance
+loss measure
+loss behavior
+steady state
+performance measure
+markov process
+steady-state loss
+arrival process

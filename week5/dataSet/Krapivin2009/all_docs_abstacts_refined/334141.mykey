@@ -1,10 +1,2 @@
-path
-routing
-interval
-short
-bound
-edge
-node
-graph
-compactness
-address
+short path
+low bound

@@ -1,7 +1,10 @@
-data
-node
-value
-query
-model
-database
-language
+logical data
+logical query
+data model
+data value
+database logic
+query language
+query node
+algebraic query
+relational model
+object name

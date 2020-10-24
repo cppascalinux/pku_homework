@@ -1,6 +1,2 @@
-equation
-discretizations
-solver
-grid
-domain
-complex
+integral equation
+poisson solver

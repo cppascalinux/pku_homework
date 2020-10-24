@@ -1,13 +1,9 @@
-problem
-data
-program
-strategy
-size
-system
-mapping
-model
-distribution
-movement
-cost
-information
-alignment
+data mapping
+data movement
+data distribution
+cost path
+cost model
+integer program
+mapping strategy
+mapping problem
+path problem

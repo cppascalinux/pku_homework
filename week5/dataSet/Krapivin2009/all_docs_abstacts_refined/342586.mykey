@@ -1,11 +1,7 @@
-network
-optical
-use
-link
-cluster
-architecture
-latency
-control
-processor
-protocol
-interconnection
+scalable optical
+optical crossbar
+optical fiber
+optical implementation
+interconnection network
+crossbar network
+access control

@@ -1,8 +1,6 @@
-graph
-problem
-color
-algorithm
-coloring
-chromatic
-semidefinite
-program
+graph coloring
+k-colorable graph
+polynomial time
+maximum degree
+approximation algorithm
+semidefinite program

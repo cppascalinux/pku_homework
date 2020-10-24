@@ -1,7 +1,3 @@
-heap
-memory
-input
-algorithm
-large
-4-ary
-cache
+external memory
+binary heap
+4-ary heap

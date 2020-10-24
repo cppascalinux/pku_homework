@@ -1,7 +1,6 @@
-problem
-nonlinear
-point
-method
-square
-least
-weight
+least square
+newton method
+square problem
+large weight
+convergence rate
+kkt point

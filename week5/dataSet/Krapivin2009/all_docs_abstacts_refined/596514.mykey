@@ -1,4 +1,4 @@
-control
-network
-code
-resource
+network control
+virtual network
+loadable code
+active network

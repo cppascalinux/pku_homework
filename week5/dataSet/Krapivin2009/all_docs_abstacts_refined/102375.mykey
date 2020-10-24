@@ -1,6 +1,4 @@
-specification
-language
-lp
-obligation
-lsl
-proof
+interface specification
+lsl specification
+proof obligation
+theory containment

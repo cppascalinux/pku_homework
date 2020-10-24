@@ -1,8 +1,4 @@
-system
-action
-time
-transition
-one
-formula
-value
-such
+transition system
+quantitative temporal
+time action
+time value

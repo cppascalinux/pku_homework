@@ -1,8 +1,5 @@
-instruction
-algorithm
-architecture
-tree
-register
-allocation
-scheduling
-expression
+dsp architecture
+dsp processor
+register allocation
+register architecture
+expression tree

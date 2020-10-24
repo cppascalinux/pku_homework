@@ -1,8 +1,4 @@
-method
-optimization
-ode
-convergence
-algorithm
-gradient
-theory
-region
+trust region
+gradient ode
+superlinear convergence
+local convergence

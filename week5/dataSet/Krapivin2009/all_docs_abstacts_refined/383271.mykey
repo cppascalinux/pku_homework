@@ -1,13 +1,9 @@
-coefficient
-light
-field
-lighting
-brdf
-inverse
-image
-problem
-rendering
-reflected
-algorithm
-method
-model
+inverse rendering
+inverse problem
+inverse light
+real photograph
+reflected light
+light field
+spherical harmonic
+harmonic coefficient
+lighting coefficient

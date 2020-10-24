@@ -1,7 +1,6 @@
-algorithm
-edge
-dsatur
-graph
-variant
-problem
-instance
+evolutionary algorithm
+order-based representation
+graph coloring
+genetic algorithm
+problem instance
+dsatur gga

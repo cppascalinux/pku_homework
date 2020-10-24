@@ -1,8 +1,4 @@
-scheme
-signature
-escrow
-identity
-authentication
-group
-protocol
-user
+anonymous authentication
+identity escrow
+authentication protocol
+group signature

@@ -1,8 +1,7 @@
-problem
-control
-solution
-nonlinear
-equation
-sensitivity
-result
-optimal
+control problem
+second-order sufficient
+second-order sensitivity
+sufficient condition
+optimal solution
+optimal control
+sensitivity result

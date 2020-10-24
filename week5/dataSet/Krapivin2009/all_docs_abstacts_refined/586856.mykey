@@ -1,10 +1,8 @@
-process
-algorithm
-name
-range
-agreement
-lattice
-adaptive
-distinct
-register
-complexity
+lattice agreement
+distinct name
+step complexity
+active process
+atomic snapshot
+multi-reader register
+adaptive algorithm
+adaptive lattice

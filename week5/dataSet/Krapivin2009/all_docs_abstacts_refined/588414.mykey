@@ -1,9 +1,9 @@
-preconditioners
-toeplitz
-matrix
-circulant
-system
-zero
-order
-function
-ill-conditioned
+circulant preconditioners
+toeplitz system
+toeplitz matrix
+ill-conditioned toeplitz
+condition number
+positive definite
+preconditioned matrix
+conjugate gradient
+gradient method

@@ -1,10 +1,7 @@
-system
-channel
-information
-real-time
-secure
-security
-database
-covert
-requirement
-transaction
+real-time requirement
+real-time database
+covert channel
+database system
+mutual information
+secure database
+upper bound

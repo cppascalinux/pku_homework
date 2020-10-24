@@ -1,13 +1,4 @@
-rate
-control
-flow
-scheme
-non-adaptable
-congestion
-application
-level
-tcp-friendly
-tcp
-network
-behaves
-quality
+congestion control
+tcp-friendly rate
+control scheme
+network condition

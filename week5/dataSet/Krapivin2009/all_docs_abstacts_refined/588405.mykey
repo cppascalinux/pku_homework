@@ -1,9 +1,10 @@
-space
-method
-mortar
-multiplier
-element
-lagrange
-dual
-finite
-function
+mortar finite
+mortar approach
+mortar method
+finite element
+element method
+dual space
+dual basis
+lagrange multiplier
+multiplier space
+basis function

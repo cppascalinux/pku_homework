@@ -1,11 +1,8 @@
-algorithm
-page
-migration
-problem
-distance
-adversary
-processor
-graph
-edge
-on-line
-uniform
+page migration
+migration problem
+deterministic algorithm
+on-line algorithm
+on-line adversary
+arbitrary edge
+oblivious adversary
+coin-flipping algorithm

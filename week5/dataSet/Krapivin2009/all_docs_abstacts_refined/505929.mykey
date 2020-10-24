@@ -1,8 +1,4 @@
-search
-clause
-unsatisfied
-local
-method
-re-weighting
-procedure
-problem
+local search
+search method
+search procedure
+unsatisfied clause

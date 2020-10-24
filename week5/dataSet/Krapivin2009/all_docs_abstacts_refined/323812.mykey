@@ -1,11 +1,15 @@
-scheme
-cache
-block
-performance
-decision
-accuracy
-nt
-pseudo-opt
-management
-usage
-allocation
+data cache
+data access
+access time
+block allocation
+block usage
+replacement decision
+allocation decision
+tour length
+cache management
+cache scheme
+cache block
+management scheme
+prediction accuracy
+pseudo-opt scheme
+memory access

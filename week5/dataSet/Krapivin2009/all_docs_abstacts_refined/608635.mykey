@@ -1,7 +1,4 @@
-protocol
-system
-commitment
-specification
-agent
-multiagent
-open
+commitment protocol
+autonomous agent
+multiagent system
+temporal logic

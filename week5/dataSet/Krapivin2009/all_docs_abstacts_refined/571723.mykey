@@ -1,12 +1,6 @@
-connection
-congestion
-control
-scheme
-such
-rate
-policy
-user
-behaviour
-discipline
-scheduler
-management
+congestion control
+service discipline
+management policy
+dws scheduler
+dws scheduling
+fair rate

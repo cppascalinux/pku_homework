@@ -1,6 +1,4 @@
-region
-algorithm
-convex
-problem
-trust
-feasible
+structured trust
+trust region
+region algorithm
+global convergence

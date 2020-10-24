@@ -1,10 +1,6 @@
-tree
-protocol
-communication
-product
-input
-decision
-direct
-assertion
-complexity
-strong
+strong direct
+direct product
+product assertion
+decision tree
+communication protocol
+communication complexity

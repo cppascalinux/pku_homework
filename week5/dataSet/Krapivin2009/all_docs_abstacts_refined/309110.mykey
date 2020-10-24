@@ -1,10 +1,7 @@
-policy
-iteration
-cost
-space
-assumption
-state
-vector
-game
-stationary
-achievable
+short path
+path game
+path problem
+terminal state
+cost vector
+equilibrium cost
+stationary policy

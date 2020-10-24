@@ -1,7 +1,3 @@
-problem
-method
-relaxation
-variable
-factorization
-block
-existence
+relaxed block
+block incomplete
+incomplete factorization

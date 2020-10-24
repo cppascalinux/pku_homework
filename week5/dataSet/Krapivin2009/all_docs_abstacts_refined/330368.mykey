@@ -1,9 +1,6 @@
-boundedness
-program
-proof
-rule
-machine
-problem
-uniform
-method
-undecidable
+datalog program
+syntactical restriction
+uniform boundedness
+single rule
+rule program
+program boundedness

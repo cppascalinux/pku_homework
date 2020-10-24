@@ -1,9 +1,2 @@
-model
-parameter
-estimation
-data
-image
-template
-recognition
-result
-object
+template model
+training data

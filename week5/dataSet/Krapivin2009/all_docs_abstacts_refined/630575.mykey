@@ -1,3 +1,5 @@
-rule
-mining
-association
+association rule
+rule mining
+interesting rule
+unexpected rule
+discovered rule

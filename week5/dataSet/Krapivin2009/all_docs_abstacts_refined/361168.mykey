@@ -1,19 +1,9 @@
-motion
-parameter
-camera
-constraint
-critical
-length
-calibration
-intrinsic
-matrix
-auto-calibration
-focal
-only
-structure
-case
-unknown
-condition
-value
-euclidean
-centre
+critical motion
+intrinsic parameter
+camera motion
+camera centre
+focal length
+unknown focal
+optical axis
+auto-calibration constraint
+euclidean structure

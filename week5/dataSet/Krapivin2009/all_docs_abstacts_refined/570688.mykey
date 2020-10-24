@@ -1,7 +1,6 @@
-alarm
-false
-probability
-sensor
-network
-system
-propagation
+wireless sensor
+sensor network
+false alarm
+low false
+alarm probability
+alarm propagation

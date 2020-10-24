@@ -1,8 +1,6 @@
-problem
-abstract
-concrete
-constraint
-solution
-abstraction
-soft
-algorithm
+abstract problem
+soft constraint
+constraint problem
+concrete problem
+optimal solution
+abstraction scheme

@@ -1,9 +1,6 @@
-miss
-technique
-latency
-profiling
-cache
-tolerance
-context
-reference
-overhead
+cache miss
+correlation profiling
+latency tolerance
+miss latency
+summary profiling
+memory reference

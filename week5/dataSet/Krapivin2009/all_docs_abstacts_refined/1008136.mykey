@@ -1,7 +1,10 @@
-value
-matrix
-ritz
-use
-harmonic
-lanczos
-singular
+small singular
+singular triplet
+singular vector
+singular value
+lanczos bidiagonalization
+lanczos factorization
+sparse matrix
+harmonic ritz
+ritz value
+large sparse

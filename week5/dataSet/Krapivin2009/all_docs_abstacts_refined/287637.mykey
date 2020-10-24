@@ -1,9 +1,8 @@
-algorithm
-factorization
-rrqr
-matrix
-column
-qr
-ipsen
-chandrasekaran
-rank
+qr factorization
+block algorithm
+block qr
+rrqr factorization
+rrqr algorithm
+condition estimation
+triangular matrix
+factorization algorithm

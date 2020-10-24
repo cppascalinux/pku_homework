@@ -1,11 +1,5 @@
-table
-value
-prediction
-instruction
-resource
-most
-mechanism
-benchmark
-information
-program
-profiling
+value prediction
+value predictability
+program profiling
+prediction table
+hardware mechanism

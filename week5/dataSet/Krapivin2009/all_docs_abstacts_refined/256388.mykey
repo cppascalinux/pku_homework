@@ -1,11 +1,4 @@
-matrix
-\theta
-size
-processor
-query
-item
-broadcasting
-mesh
-per
-multiple
-column
+sorted matrix
+per processor
+multiple broadcasting
+first column

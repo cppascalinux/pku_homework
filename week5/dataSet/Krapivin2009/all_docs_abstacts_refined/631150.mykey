@@ -1,6 +1,5 @@
-system
-failure
-standby
-warm
-possible
-scheme
+warm standby
+standby scheme
+standby system
+hot standby
+batch reactor

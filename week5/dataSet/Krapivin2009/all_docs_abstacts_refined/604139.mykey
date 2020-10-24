@@ -1,18 +1,9 @@
-algorithm
-register
-analysis
-variable
-section
-bit
-use
-allocation
-packing
-data
-graph
-coalescing
-node
-requirement
-support
-live
-set
-application
+register allocation
+register requirement
+instruction set
+bit section
+program point
+interference graph
+node coalescing
+variable packing
+section analysis

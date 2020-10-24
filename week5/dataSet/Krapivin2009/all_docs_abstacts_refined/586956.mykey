@@ -1,9 +1,5 @@
-color
-hypergraph
-such
-result
-problem
-proof
-4-uniform
-2-colorable
-np-hard
+inapproximability result
+color 2-colorable
+2-colorable 4-uniform
+4-uniform hypergraph
+hardness result

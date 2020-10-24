@@ -1,7 +1,4 @@
-convergence
-step
-matrix
-algorithm
-direction
-assumption
-corrector
+semidefinite programming
+predictor-corrector algorithm
+scaling matrix
+corrector step

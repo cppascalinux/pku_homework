@@ -1,5 +1,3 @@
-system
-matrix
-eigenvectors
-form
-linear
+linear system
+minimum polynomial
+krylov subspace

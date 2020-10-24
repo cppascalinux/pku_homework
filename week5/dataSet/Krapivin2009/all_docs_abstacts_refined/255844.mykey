@@ -1,8 +1,5 @@
-rule
-problem
-algorithm
-time
-optimization
-class
-test
-evaluation
+global optimization
+model algorithm
+test problem
+cpu time
+derivative evaluation

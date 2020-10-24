@@ -1,11 +1,8 @@
-scheme
-relation
-set
-nested
-mvds
-database
-nnf
-form
-design
-conflict-free
-normal
+normal form
+database scheme
+nested relation
+nested database
+data value
+relation scheme
+acyclic database
+conflict-free set

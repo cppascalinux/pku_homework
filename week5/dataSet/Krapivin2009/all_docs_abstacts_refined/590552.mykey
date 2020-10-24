@@ -1,9 +1,6 @@
-object
-request
-miss
-cache
-freshness
-hit
-copy
-such
-time
+content miss
+content hit
+origin server
+cache copy
+freshness miss
+freshness hit

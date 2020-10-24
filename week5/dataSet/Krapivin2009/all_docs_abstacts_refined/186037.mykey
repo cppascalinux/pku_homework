@@ -1,7 +1,4 @@
-analysis
-program
-abstract
-higher-order
-polyvariant
-algorithm
-applicative
+polyvariant static
+static analysis
+abstract description
+abstract domain

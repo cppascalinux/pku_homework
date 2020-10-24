@@ -1,12 +1,7 @@
-algorithm
-generic
-method
-verification
-type
-program
-data
-analysis
-use
-such
-parameter
-c++
+dynamic verification
+generic algorithm
+formal verification
+symbolic execution
+symbolic value
+data type
+analysis database

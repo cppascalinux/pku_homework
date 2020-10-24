@@ -1,5 +1,6 @@
-model
-algorithm
-linear
-program
-todd
+infeasible-interior-point algorithm
+finite termination
+linear program
+optimal solution
+exact optimal
+point algorithm

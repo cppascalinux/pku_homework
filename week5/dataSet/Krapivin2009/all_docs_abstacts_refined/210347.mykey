@@ -1,4 +1,8 @@
-network
-constraint
-consistency
-algorithm
+constraint network
+minimal network
+local consistency
+binary constraint
+row convexity
+path consistency
+path consistent
+consistency algorithm

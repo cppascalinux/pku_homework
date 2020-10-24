@@ -1,9 +1,9 @@
-requirement
-cost
-function
-link
-tree
-problem
-multicast
-qos
-path
+qos requirement
+unicast path
+multicast tree
+optimal solution
+resource allocation
+end-to-end qos
+cost function
+link cost
+allocation problem

@@ -1,9 +1,5 @@
-weight
-edge
-such
-function
-integer
-diagram
-fevbdds
-decision
-binary
+edge-valued binary
+binary decision
+decision diagram
+edge weight
+complement edge

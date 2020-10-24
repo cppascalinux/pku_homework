@@ -1,10 +1,9 @@
-use
-distribution
-transition
-method
-tempered
-importance
-chain
-estimate
-constant
-markov
+importance sampling
+importance weight
+markov chain
+chain sampler
+chain transition
+annealed importance
+tempered transition
+normalizing constant
+distribution use

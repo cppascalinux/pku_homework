@@ -1,7 +1,3 @@
-system
-link
-node
-faulty
-message
-mesh
-path
+faulty link
+hexagonal mesh
+link faulty

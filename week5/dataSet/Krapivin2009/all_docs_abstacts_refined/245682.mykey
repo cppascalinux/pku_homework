@@ -1,5 +1,8 @@
-test
-path
-fault
-delay
-generation
+high quality
+path delay
+delay fault
+delay test
+test generation
+functional sensitizable
+sensitizable path
+testable path

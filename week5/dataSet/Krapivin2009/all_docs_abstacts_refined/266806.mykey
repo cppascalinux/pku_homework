@@ -1,9 +1,13 @@
-block
-size
-cache
-access
-data
-miss
-fetch
-locality
-spatial
+spatial locality
+locality detection
+memory latency
+data cache
+cache miss
+cache block
+cache performance
+fetch size
+large fetch
+large size
+block size
+size block
+performance improvement

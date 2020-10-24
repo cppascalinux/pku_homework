@@ -1,6 +1,4 @@
-matrix
-method
-toeplitz
-multigrid
-such
-function
+multigrid method
+toeplitz system
+toeplitz matrix
+convergence factor

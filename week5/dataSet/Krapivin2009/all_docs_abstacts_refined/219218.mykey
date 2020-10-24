@@ -1,8 +1,4 @@
-unit
-id3
-code
-output
-share
-backpropagation
-hidden
-performance
+training data
+share hidden
+hidden unit
+phoneme stress

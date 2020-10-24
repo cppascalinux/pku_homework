@@ -1,12 +1,8 @@
-h/sub
-decomposition
-circuit
-gate
-implementation
-function
-method
-signal
-speed-independent
-mapping
-approach
-insertion
+technology mapping
+speed-independent circuit
+boolean relation
+boolean function
+new signal
+complex gate
+logic decomposition
+signal insertion

@@ -1,6 +1,4 @@
-method
-matrix
-error
-system
-factor
-problem
+null-space method
+kkt system
+residual error
+error growth

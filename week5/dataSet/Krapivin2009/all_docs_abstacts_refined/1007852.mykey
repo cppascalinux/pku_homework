@@ -1,10 +1,6 @@
-mesh
-element
-function
-procedure
-method
-valid
-such
-optimization
-set
-untangling
+feasible set
+objective function
+valid element
+optimization procedure
+set method
+set approach

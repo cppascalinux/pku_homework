@@ -1,10 +1,8 @@
-lease
-algorithm
-server
-consistency
-volume
-object
-load
-provide
-performance
-protocol
+volume lease
+cache consistency
+object lease
+file system
+lease algorithm
+consistency algorithm
+strong consistency
+server load

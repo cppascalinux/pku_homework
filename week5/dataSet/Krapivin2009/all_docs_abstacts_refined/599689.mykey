@@ -1,6 +1,5 @@
-algorithm
-problem
-regression
-logistic
-proof
-adaboost
+logistic regression
+bregman distance
+new algorithm
+convergence proof
+iterative scaling

@@ -1,7 +1,3 @@
-scheme
-constraint
-model
-jvm
-loading
-implementation
-bytecode
+loading constraint
+constraint scheme
+findclass scheme

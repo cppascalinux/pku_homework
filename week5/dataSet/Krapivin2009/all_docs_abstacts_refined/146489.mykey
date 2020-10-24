@@ -1,15 +1,3 @@
-do
-interface
-user
-tool
-button
-gui
-observation
-suit
-builder
-toolkit
-set
-application
-model
-programmer
-control
+user interface
+interface builder
+interactive tool

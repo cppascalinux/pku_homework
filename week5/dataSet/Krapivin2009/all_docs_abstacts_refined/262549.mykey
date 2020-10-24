@@ -1,7 +1,3 @@
-operation
-singular
-specification
-plural
-argument
-nondeterministic
-parameter
+plural nondeterministic
+plural argument
+nondeterministic operation

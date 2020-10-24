@@ -1,8 +1,6 @@
-graph
-heuristic
-quality
-solution
-algorithm
-size
-cut
-bisection
+cut size
+graph bisection
+bisection heuristic
+heuristic algorithm
+random graph
+mean cut

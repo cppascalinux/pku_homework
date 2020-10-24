@@ -1,11 +1,6 @@
-use
-model
-image
-segmentation
-parameter
-training
-tsbn
-network
-result
-mixture
-conditional
+neural network
+label image
+pixelwise prediction
+posterior marginal
+marginal entropy
+tsbn model

@@ -1,5 +1,6 @@
-problem
-grid
-elliptic
-cartesian
-method
+local discontinuous
+discontinuous galerkin
+elliptic problem
+cartesian grid
+numerical flux
+ldg method

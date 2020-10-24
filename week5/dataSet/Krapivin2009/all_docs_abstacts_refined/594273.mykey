@@ -1,7 +1,2 @@
-type
-theory
-use
-proof
-system
-reduction
-lego
+type theory
+type system

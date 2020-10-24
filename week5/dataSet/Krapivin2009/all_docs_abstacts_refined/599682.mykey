@@ -1,10 +1,9 @@
-set
-data
-regularization
-task
-learning
-parameter
-hypothesis
-unlabeled
-error
-method
+model selection
+unlabeled data
+supervised learning
+selection strategy
+training data
+training error
+training set
+regularization parameter
+prediction error

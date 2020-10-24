@@ -1,18 +1,8 @@
-power
-system
-channel
-consumption
-image
-constraint
-amplifier
-algorithm
-energy
-response
-performance
-transmission
-parameter
-rate
-average
-rake
-receiver
-configuration
+image transmission
+transmission system
+power consumption
+power amplifier
+joint source-channel
+rake receiver
+optimization algorithm
+energy consumption

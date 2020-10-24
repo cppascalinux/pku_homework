@@ -1,14 +1,7 @@
-algorithm
-disk
-dimension
-space
-problem
-cluster
-radius
-approximation
-network
-vector
-set
-factor
-norm
-piercing
+approximation algorithm
+approximation factor
+mobile piercing
+piercing set
+piercing disk
+set problem
+ad-hoc network

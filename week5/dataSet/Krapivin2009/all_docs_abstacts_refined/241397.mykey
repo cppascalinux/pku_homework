@@ -1,7 +1,11 @@
-buffer
-routing
-edge
-central
-algorithm
-deadlock-free
-dependency
+sufficient condition
+deadlock-free routing
+deadlock-free adaptive
+store-and-forward switching
+adaptive routing
+routing algorithm
+virtual cut-through
+edge buffer
+design methodology
+wormhole switching
+resource dependency

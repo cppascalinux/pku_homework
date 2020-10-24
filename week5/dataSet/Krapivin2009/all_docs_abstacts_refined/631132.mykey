@@ -1,9 +1,5 @@
-model
-usage
-component
-certification
-reliability
-reuse
-profile
-software
-system
+software component
+usage model
+usage profile
+hypothesis certification
+certification model

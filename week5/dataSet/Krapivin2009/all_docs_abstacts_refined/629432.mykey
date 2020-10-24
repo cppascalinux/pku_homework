@@ -1,13 +1,9 @@
-point
-curve
-control
-surface
-computation
-architecture
-b-spline
-function
-array
-value
-number
-basis
-vector
+b-spline curve
+basis function
+function value
+function evaluation
+function computation
+nurbs curve
+nurbs surface
+control point
+clock cycle

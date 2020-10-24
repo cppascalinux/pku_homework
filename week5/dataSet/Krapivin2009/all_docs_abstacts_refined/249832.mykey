@@ -1,8 +1,9 @@
-nfs
-use
-wireless
-client
-performance
-link
-time
-retransmissions
+nfs performance
+nfs client
+wireless link
+file access
+error rate
+mobile host
+high error
+link-level retransmissions
+response time

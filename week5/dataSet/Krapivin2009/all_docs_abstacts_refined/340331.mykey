@@ -1,10 +1,5 @@
-domain
-map
-problem
-exterior
-strip
-polygon
-approximation
-half-plane
-axis
-real
+real axis
+conformal map
+upper half-plane
+polynomial approximation
+approximation problem

@@ -1,14 +1,7 @@
-path
-optimization
-network
-resource
-load
-process
-handoff
-function
-station
-base
-extension
-decision
-policy
-problem
+path optimization
+path extension
+inter-switch handoff
+network resource
+semi-markov decision
+decision process
+cost function

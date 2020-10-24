@@ -1,4 +1,5 @@
-l.
-language
-finite
-automaton
+finite language
+finite automaton
+minimal dfca
+cover automaton
+language l.

@@ -1,12 +1,7 @@
-call
-method
-compiler
-such
-overhead
-cache
-inline
-self
-java
-feedback
-type
-virtual
+virtual call
+virtual method
+method call
+inline cache
+type feedback
+target method
+jit compiler

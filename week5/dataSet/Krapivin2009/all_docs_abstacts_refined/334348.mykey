@@ -1,9 +1,7 @@
-circuit
-test
-set
-fault
-input
-output
-coverage
-esop
-realization
+universal test
+test set
+single stuck-at
+stuck-at fault
+fault coverage
+esop circuit
+primary input

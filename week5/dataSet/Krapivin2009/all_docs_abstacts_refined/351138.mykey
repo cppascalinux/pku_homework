@@ -1,13 +1,14 @@
-failure
-reliability
-scheme
-server
-disk
-cost
-distribution
-component
-data
-stream
-group
-granularity
-dependent
+video server
+disk array
+disk failure
+node failure
+server reliability
+server disk
+distribution granularity
+redundant data
+reliability scheme
+stream cost
+dependent component
+component failure
+high server
+group size

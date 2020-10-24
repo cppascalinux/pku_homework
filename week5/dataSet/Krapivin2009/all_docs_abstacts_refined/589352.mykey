@@ -1,6 +1,7 @@
-algorithm
-factorization
-sparse
-unsymmetric
-matrix
-pivoting
+factorization algorithm
+unsymmetric sparse
+sparse matrix
+symbolic factorization
+multifrontal factorization
+multifrontal algorithm
+matrix factorization

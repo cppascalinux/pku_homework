@@ -1,12 +1,7 @@
-problem
-constraint
-quadratic
-relaxation
-approximate
-equivalent
-semidefinite
-matrix
-eigenvalue
-duality
-qqp
-xxt=i
+lagrangian relaxation
+lagrangian dual
+quadratic program
+quadratic constraint
+quadratic assignment
+duality gap
+assignment problem

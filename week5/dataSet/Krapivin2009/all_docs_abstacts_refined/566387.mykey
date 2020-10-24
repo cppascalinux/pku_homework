@@ -1,4 +1,6 @@
-set
-rule
-inference
-local
+local inference
+local rule
+inference rule
+rule set
+polynomial time
+polynomial-time predicate

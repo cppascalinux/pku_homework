@@ -1,8 +1,4 @@
-matrix
-sparse
-frontal
-method
-solution
-code
-column
-row
+sparse matrix
+frontal matrix
+multifrontal method
+pivot row

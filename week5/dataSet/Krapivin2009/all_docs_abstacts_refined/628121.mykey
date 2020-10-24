@@ -1,10 +1,5 @@
-error
-tree
-input
-height
-dimension
-algorithm
-deal
-vc
-real
-learning
+distribution independent
+empirical error
+real error
+learning algorithm
+input tree

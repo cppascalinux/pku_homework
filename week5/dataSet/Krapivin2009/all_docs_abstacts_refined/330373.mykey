@@ -1,9 +1,7 @@
-measure
-probability
-class
-martingale
-complexity
-reduction
-proof
-bias
-length
+complexity class
+resource-bounded measure
+probability measure
+uniform probability
+positive bias
+positive probability
+bias reduction

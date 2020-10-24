@@ -1,5 +1,4 @@
-method
-minimizer
-interpretation
-matrix
-problem
+procrustes problem
+stiefel matrix
+stiefel manifold
+relaxation method

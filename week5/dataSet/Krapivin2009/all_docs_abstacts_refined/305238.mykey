@@ -1,7 +1,5 @@
-algorithm
-gmres
-method
-system
-matrix
-arnoldi
-eigenvalue
+restarted gmres
+gmres algorithm
+iterative method
+linear system
+arnoldi process

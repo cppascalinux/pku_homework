@@ -1,14 +1,7 @@
-proxy
-hint
-management
-node
-web
-accelerator
-cache
-overhead
-ratio
-implementation
-several
-content
-hit
-choice
+web proxy
+web server
+proxy cache
+proxy accelerator
+proxy node
+hit ratio
+hint management

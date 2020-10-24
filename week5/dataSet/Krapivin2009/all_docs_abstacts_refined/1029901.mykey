@@ -1,6 +1,5 @@
-invariant
-detection
-algorithm
-program
-size
-optimization
+incremental algorithm
+dynamic invariant
+likely invariant
+program size
+invariant detection

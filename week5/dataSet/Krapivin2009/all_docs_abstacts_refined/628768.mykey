@@ -1,6 +1,5 @@
-object
-feature
-value
-class
-surface
-invariant
+scene condition
+invariant feature
+thermophysical property
+object class
+feature value

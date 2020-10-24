@@ -1,8 +1,4 @@
-s
-symmetry
-method
-set
-exclusion
-constraint
-proof
-correctness
+search strategy
+symmetry exclusion
+symmetry s
+symmetry set

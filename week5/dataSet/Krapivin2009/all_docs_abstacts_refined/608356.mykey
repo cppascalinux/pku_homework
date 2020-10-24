@@ -1,12 +1,5 @@
-stochastic
-reduction
-scenario
-algorithm
-probability
-tree
-measure
-program
-respect
-model
-perturbation
-stable
+scenario reduction
+scenario tree
+reduction algorithm
+probability measure
+backward reduction

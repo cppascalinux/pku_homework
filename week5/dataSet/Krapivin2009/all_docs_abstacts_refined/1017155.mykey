@@ -1,5 +1,8 @@
-logic
-observation
-default
-rule
-defeasible
+observation logic
+default logic
+default rule
+defeasible observation
+normal free
+free default
+sensor fusion
+refined evidence

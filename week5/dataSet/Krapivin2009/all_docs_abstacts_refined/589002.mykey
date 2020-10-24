@@ -1,6 +1,5 @@
-condition
-quadratic
-program
-programming
-nonlinear
-convergence
+quadratic growth
+nonlinear program
+superlinear convergence
+growth condition
+stationary point

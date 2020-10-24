@@ -1,7 +1,6 @@
-file
-size
-scheme
-distribution
-memory
-node
-large
+file distribution
+file size
+distribution scheme
+memory size
+low bound
+network graph

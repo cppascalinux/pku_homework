@@ -1,8 +1,7 @@
-scale
-effect
-movement
-function
-control
-performance
-input
-gain
+scale effect
+input device
+control gain
+control movement
+movement scale
+steering law
+u-shaped function

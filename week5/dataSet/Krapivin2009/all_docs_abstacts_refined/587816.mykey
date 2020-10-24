@@ -1,9 +1,8 @@
-algorithm
-reduction
-bidiagonal
-matrix
-value
-decomposition
-singular
-bound
-method
+bidiagonal reduction
+bidiagonal matrix
+singular value
+value decomposition
+error bound
+reduction algorithm
+orthogonal transformation
+householder transformation

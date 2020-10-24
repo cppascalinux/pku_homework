@@ -1,10 +1,9 @@
-matrix
-blurring
-function
-condition
-boundary
-use
-symmetric
-blur
-problem
-toeplitz-plus-hankel
+neumann boundary
+boundary condition
+blur matrix
+blur function
+blurring matrix
+blurring function
+toeplitz matrix
+transform matrix
+cosine transform

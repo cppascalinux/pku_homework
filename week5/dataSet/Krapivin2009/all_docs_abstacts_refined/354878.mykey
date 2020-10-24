@@ -1,5 +1,7 @@
-model
-control
-access
-role
-administrative
+role-based access
+access control
+discretionary access
+control model
+mandatory access
+rbac96 model
+administrative role

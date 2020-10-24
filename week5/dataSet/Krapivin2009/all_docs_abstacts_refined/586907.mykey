@@ -1,4 +1,4 @@
-task
-solvable
-wait-free
-solvability
+wait-free solvable
+wait-free solvability
+necessary condition
+k-set consensus

@@ -1,8 +1,6 @@
-use
-algorithm
-reduction
-protocol
-in-stack
-order
-check
-twophase
+partial order
+order reduction
+reduction algorithm
+twophase algorithm
+in-stack check
+check algorithm

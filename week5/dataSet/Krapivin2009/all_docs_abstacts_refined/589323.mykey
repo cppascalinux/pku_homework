@@ -1,9 +1,4 @@
-method
-direction
-problem
-barrier
-result
-subproblem
-newton
-extension
-algorithm
+interior-point method
+truncated-newton method
+newton direction
+barrier subproblem

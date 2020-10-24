@@ -1,15 +1,9 @@
-tape
-system
-storage
-disk
-buffer
-require
-space
-library
-object
-multimedia
-response
-throughput
-less
-cartridge
-server
+multimedia storage
+multimedia object
+storage server
+storage system
+disk buffer
+robotic tape
+tape library
+tape cartridge
+buffer space

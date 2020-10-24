@@ -1,7 +1,8 @@
-inequality
-equation
-system
-radius
-matrix
-stability
-riccati
+stability radius
+output feedback
+dynamic output
+linear matrix
+riccati equation
+riccati inequality
+matrix inequality
+stochastic system

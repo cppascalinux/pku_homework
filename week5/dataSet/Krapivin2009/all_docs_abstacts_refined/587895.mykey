@@ -1,5 +1,4 @@
-matrix
-inverse
-problem
-nonnegative
-eigenvalue
+inverse eigenvalue
+eigenvalue problem
+nonnegative matrix
+stieltjes matrix

@@ -1,11 +1,11 @@
-size
-loss
-connection
-probability
-window
-segment
-model
-maximum
-rate
-congestion
-timeout
+stochastic petri
+petri net
+maximum congestion
+congestion window
+window size
+connection release
+connection setup
+release timeout
+packet loss
+setup rate
+workload model

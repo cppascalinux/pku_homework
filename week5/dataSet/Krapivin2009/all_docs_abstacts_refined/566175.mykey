@@ -1,4 +1,6 @@
-model
-checker
-heuristic
-search
+structural heuristic
+heuristic search
+heuristic model
+model checker
+branch coverage
+experimental result

@@ -1,5 +1,4 @@
-operator
-continuation
-call-by-value
-uniformity
-axiom
+uniformity principle
+uniformity axiom
+uniform call-by-value
+uniform iterator

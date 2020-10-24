@@ -1,6 +1,5 @@
-smoother
-inverse
-approximate
-multigrid
-yield
-iteration
+sparse approximate
+approximate inverse
+algebraic multigrid
+multigrid method
+multigrid iteration

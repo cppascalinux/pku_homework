@@ -1,8 +1,10 @@
-machine
-job
-weight
-algorithm
-schedule
-problem
-scheduling
-unrelated
+scheduling problem
+approximation algorithm
+approximation factor
+unrelated machine
+identical machine
+job weight
+greedy algorithm
+arbitrary job
+arbitrary input
+single machine

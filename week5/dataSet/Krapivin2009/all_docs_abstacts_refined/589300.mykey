@@ -1,7 +1,4 @@
-linear
-system
-inequality
-bound
-convex
-programming
-problem
+error bound
+convex conic
+convex cone
+condition number

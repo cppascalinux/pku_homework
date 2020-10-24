@@ -1,12 +1,7 @@
-pose
-system
-model
-parameter
-style
-motion
-ik
-character
-data
-set
-capture
-application
+training data
+gaussian process
+process latent
+motion capture
+latent space
+model parameter
+data set

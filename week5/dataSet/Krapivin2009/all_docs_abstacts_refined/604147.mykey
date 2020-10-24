@@ -1,12 +1,6 @@
-type
-layout
-memory
-data
-context
-value
-theory
-ordered
-location
-allocation
-pointer
-property
+type theory
+data layout
+ordered context
+linear logic
+allocation pointer
+heap value

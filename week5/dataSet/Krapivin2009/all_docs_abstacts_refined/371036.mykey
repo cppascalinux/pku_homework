@@ -1,7 +1,4 @@
-model
-use
-checking
-system
-state/event
-analysis
-efficiency
+state/event system
+state/event model
+symbolic model
+model checking

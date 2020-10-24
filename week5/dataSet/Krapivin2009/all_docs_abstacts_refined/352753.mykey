@@ -1,5 +1,5 @@
-rectangle
-object
-size
-orthogonal
-partition
+binary space
+space partition
+aspect ratio
+big-oh term
+orthogonal rectangle

@@ -1,6 +1,11 @@
-solution
-wiresizing
-property
-optimal
-delay
-model
+optimal wiresizing
+optimal solution
+wiresizing problem
+wiresizing solution
+wiresizing algorithm
+delay model
+lst monotone
+monotone property
+local monotone
+local refinement
+refinement property

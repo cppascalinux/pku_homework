@@ -1,9 +1,5 @@
-measure
-criterion
-cut
-problem
-segmentation
-image
-graph
-partitioning
-similarity
+normalized cut
+image segmentation
+image sequence
+graph partitioning
+cut criterion

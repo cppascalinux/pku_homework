@@ -1,12 +1,4 @@
-equation
-method
-stokes
-element
-estimate
-least-squares
-finite
-norm
-problem
-result
-general
-functional
+stokes equation
+linear elasticity
+finite element
+element method

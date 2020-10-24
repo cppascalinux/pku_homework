@@ -1,7 +1,5 @@
-program
-test
-tool
-testing
-parallel
-criterion
-data
+parallel program
+software test
+sequential program
+test data
+della pasta

@@ -1,17 +1,9 @@
-specification
-monitor
-language
-such
-program
-action
-variable
-number
-class
-java
-concurrent
-implementation
-process
-model
-pattern
-state
-system
+concurrent program
+action language
+language specification
+java monitor
+specific notification
+notification pattern
+monitor class
+monitor specification
+traffic control

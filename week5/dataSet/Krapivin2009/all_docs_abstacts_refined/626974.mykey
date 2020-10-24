@@ -1,14 +1,10 @@
-memory
-cache
-processor
-access
-architecture
-performance
-latency
-system
-decoupled
-effect
-execute
-study
-locality
-data
+memory latency
+memory access
+latency effect
+decoupled architecture
+decoupled system
+access processor
+execute processor
+data cache
+data memory
+bandwidth requirement

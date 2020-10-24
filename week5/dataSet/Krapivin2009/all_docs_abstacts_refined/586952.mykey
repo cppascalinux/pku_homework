@@ -1,4 +1,7 @@
-algorithm
-work
-linear
-time
+parallel algorithm
+minimum spanning
+logarithmic time
+linear work
+processor allocation
+erew pram
+pram algorithm

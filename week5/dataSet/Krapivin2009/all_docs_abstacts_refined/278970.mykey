@@ -1,14 +1,5 @@
-application
-quality
-network
-time
-model
-service
-response
-network-aware
-resource
-bandwidth
-system
-parameter
-dynamic
-measure
+network-aware application
+network service
+network resource
+service quality
+service model

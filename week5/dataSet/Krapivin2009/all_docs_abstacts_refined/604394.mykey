@@ -1,8 +1,4 @@
-tolerance
-technique
-fault
-system
-software
-reliability
-application-level
-benchmark
+application-level fault
+fault tolerance
+system-level fault
+abf benchmark

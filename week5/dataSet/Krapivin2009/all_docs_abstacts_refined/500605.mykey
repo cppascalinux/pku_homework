@@ -1,10 +1,8 @@
-pattern
-language
-algorithm
-time
-string
-learner
-descriptive
-length
-polynomial
-query
+one-variable pattern
+pattern language
+update time
+total learning
+learning time
+descriptive pattern
+sample string
+probability distribution

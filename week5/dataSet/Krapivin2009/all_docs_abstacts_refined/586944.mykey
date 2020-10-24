@@ -1,11 +1,2 @@
-weighted
-automaton
-wfas
-weight
-finite-state
-size
-asr
-topology
-dependence
-algorithm
-weighting
+asr wfas
+deterministic wfa

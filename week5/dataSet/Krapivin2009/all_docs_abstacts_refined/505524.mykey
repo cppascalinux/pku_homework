@@ -1,5 +1,6 @@
-path
-ip
-model
-circuit
-delay
+ip circuit
+ip path
+ip model
+bdd size
+path delay
+path model

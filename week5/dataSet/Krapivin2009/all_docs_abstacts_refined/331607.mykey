@@ -1,11 +1,9 @@
-time
-language
-deterministic
-context-free
-processor
-space
-parallel
-log
-machine
-number
-height
+global memory
+deterministic context-free
+context-free language
+parallel random
+random access
+access machine
+memory location
+polynomial time
+processor number

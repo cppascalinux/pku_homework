@@ -1,6 +1,3 @@
-logic
-object
-use
-specification
-calculus
-method
+object calculus
+object specification
+denotational semantics

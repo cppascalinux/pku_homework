@@ -1,6 +1,5 @@
-model
-noise
-parameter
-level
-misfit
-data
+model misfit
+model parameter
+noise model
+noise level
+data noise

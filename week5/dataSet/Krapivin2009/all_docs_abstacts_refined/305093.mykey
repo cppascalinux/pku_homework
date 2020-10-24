@@ -1,5 +1,3 @@
-operation
-associative
-prefix
-binary
-problem
+prefix problem
+average-case latency
+log log

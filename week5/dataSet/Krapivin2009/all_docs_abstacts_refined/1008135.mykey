@@ -1,7 +1,8 @@
-method
-cgls
-system
-implementation
-problem
-matrix
-multishift
+shifted system
+linear system
+least square
+square problem
+multishift cgls
+cgls method
+lanczos part
+lanczos method

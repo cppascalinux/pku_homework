@@ -1,10 +1,7 @@
-method
-derivative
-model
-distribution
-time
-measure
-process
-function
-class
-semi-markov
+likelihood ratio
+ratio derivative
+ratio method
+performance measure
+generalized semi-markov
+semi-markov process
+reliability model

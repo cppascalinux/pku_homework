@@ -1,6 +1,4 @@
-slice
-algorithm
-produce
-executable
-interprocedural
-program
+executable slice
+interprocedural slice
+procedure call
+call statement

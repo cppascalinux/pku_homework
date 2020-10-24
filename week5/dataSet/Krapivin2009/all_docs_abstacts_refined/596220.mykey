@@ -1,6 +1,5 @@
-method
-problem
-order
-bundle-newton
-optimization
-inequality
+bundle method
+hemivariational inequality
+bundle-newton method
+objective function
+second order

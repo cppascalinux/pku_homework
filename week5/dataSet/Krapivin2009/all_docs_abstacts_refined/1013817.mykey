@@ -1,5 +1,3 @@
-point
-hull
-set
-algorithm
-convex
+planar convex
+convex hull
+hull algorithm

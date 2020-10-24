@@ -1,12 +1,7 @@
-adaboost
-algorithm
-distribution
-margin
-noise
-pattern
-data
-case
-function
-error
-generalization
-similar
+low noise
+margin distribution
+error function
+noisy data
+original adaboost
+adaboost algorithm
+generalization error

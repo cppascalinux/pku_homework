@@ -1,7 +1,10 @@
-set
-test
-criterion
-error
-program
-all-edges
-adequate
+all-edges adequate
+test data
+test set
+adequacy criterion
+software test
+subject program
+definition-use association
+all-uses adequate
+adequate test
+adequate set

@@ -1,9 +1,8 @@
-stream
-data
-window
-value
-time
-algorithm
-item
-use
-space
+sliding window
+data stream
+single stream
+case time
+deterministic algorithm
+distributed stream
+memory word
+distinct value

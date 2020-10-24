@@ -1,4 +1,6 @@
-matrix
-positive
-definite
-algorithm
+cholesky algorithm
+cholesky factorization
+symmetric indefinite
+symmetric matrix
+indefinite factorization
+positive definite

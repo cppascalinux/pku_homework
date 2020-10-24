@@ -1,12 +1,9 @@
-node
-packet
-network
-drop
-protocol
-path
-weight
-hoc
-link
-destination
-ad
-failure
+ad hoc
+hoc wireless
+hoc network
+wireless network
+intermediate node
+routing protocol
+route discovery
+discovery protocol
+link weight

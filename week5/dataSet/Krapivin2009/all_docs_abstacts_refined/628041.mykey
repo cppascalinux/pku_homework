@@ -1,6 +1,2 @@
-performance
-access
-query
-model
-node
-r-trees
+disk access
+buffer model

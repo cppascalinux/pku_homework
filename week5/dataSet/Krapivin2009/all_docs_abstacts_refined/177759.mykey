@@ -1,6 +1,9 @@
-grammar
-tree
-parser
-pair
-parse
-ambiguous
+lr technique
+lr parser
+large class
+ambiguous grammar
+linear time
+finite set
+parse tree
+time parser
+tree pair

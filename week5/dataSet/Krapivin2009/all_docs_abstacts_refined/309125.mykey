@@ -1,5 +1,7 @@
-system
-control
-feedback
-piecewise-constant
-stabilization
+piecewise-constant feedback
+necessary condition
+continuous stabilization
+continuous feedback
+discrete-time system
+closed loop
+loop system

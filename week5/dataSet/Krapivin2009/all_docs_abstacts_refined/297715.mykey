@@ -1,8 +1,5 @@
-cache
-miss
-ratio
-conflict
-index
-function
-time
-access
+cache conflict
+cache index
+conflict miss
+index function
+miss ratio

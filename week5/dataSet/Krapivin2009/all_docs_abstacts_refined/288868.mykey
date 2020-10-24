@@ -1,3 +1,4 @@
-graph
-vertex
-ranking
+vertex ranking
+vertex t-ranking
+polynomial time
+edge ranking

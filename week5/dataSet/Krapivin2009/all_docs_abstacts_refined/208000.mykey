@@ -1,7 +1,3 @@
-language
-theory
-complexity
-use
-kolmogorov
-characterization
-regular
+kolmogorov complexity
+regular language
+context-free language

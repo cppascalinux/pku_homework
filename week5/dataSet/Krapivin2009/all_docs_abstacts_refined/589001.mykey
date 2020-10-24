@@ -1,4 +1,4 @@
-algorithm
-cut
-plane
-center
+analytic center
+center cut
+cut plane
+approximate analytic

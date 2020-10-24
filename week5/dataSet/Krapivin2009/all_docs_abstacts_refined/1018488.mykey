@@ -1,2 +1,3 @@
-bccsp
-finite
+language bccsp
+finite equational
+equational axiomatizations

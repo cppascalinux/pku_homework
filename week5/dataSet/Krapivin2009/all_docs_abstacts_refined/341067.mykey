@@ -1,11 +1,6 @@
-equation
-iterative
-convergence
-method
-analysis
-differential
-collocation
-matrix
-partial
-elliptic
-linear
+line cubic
+spline collocation
+linear system
+boundary condition
+cubic spline
+jacobi matrix

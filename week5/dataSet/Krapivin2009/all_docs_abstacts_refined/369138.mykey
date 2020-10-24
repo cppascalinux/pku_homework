@@ -1,9 +1,6 @@
-system
-model
-program
-checking
-logic
-temporal
-linear
-software
-slicing
+finite-state verification
+program slicing
+transition system
+model checking
+temporal logic
+software system

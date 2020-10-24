@@ -1,5 +1,3 @@
-notification
-model
-request
-job
-immediate
+immediate notification
+job request
+notification model

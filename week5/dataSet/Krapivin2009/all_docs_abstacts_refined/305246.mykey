@@ -1,16 +1,6 @@
-method
-equation
-system
-solver
-integral
-processor
-problem
-matrix
-t3d
-boundary
-dense
-result
-cray
-hierarchical
-parallel
-linear
+hierarchical method
+integral equation
+linear system
+large number
+iterative solver
+cray t3d

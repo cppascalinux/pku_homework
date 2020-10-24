@@ -1,14 +1,7 @@
-step
-time
-linear
-parallel
-system
-solver
-newton
-first
-problem
-iteration
-set
-implementation
-equation
-performance
+parallel implementation
+parallel performance
+time step
+newton iteration
+newton step
+linear system
+linear solver

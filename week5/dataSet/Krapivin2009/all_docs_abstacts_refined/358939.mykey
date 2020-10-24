@@ -1,15 +1,9 @@
-prefetching
-data
-memory
-cache
-strategy
-prefetch
-miss
-performance
-system
-issue
-diverse
-use
-fetch
-pattern
-technique
+data prefetching
+memory access
+memory system
+memory reference
+memory hierarchy
+memory latency
+cache miss
+access pattern
+prefetching technique

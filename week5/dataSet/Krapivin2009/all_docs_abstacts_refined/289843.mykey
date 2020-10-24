@@ -1,9 +1,10 @@
-method
-system
-nonlinear
-problem
-linear
-scheme
-gmres
-iteration
-gmresr
+inexact newton
+newton scheme
+newton method
+iteration scheme
+linear system
+krylov subspace
+subspace method
+nonlinear problem
+acceleration technique
+ain scheme

@@ -1,8 +1,4 @@
-matrix
-use
-kernel
-loop
-dense
-factorization
-algorithm
-innermost
+unsymmetric-pattern multifrontal
+multifrontal method
+sparse matrix
+frontal matrix

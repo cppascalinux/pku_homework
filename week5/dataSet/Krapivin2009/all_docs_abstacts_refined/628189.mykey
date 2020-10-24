@@ -1,7 +1,11 @@
-attribute
-set
-rule
-categorical
-instantiation
-problem
-numeric
+association rule
+numeric attribute
+uninstantiated attribute
+optimized association
+optimized confidence
+optimized support
+optimized set
+rule problem
+confidence set
+support set
+search algorithm

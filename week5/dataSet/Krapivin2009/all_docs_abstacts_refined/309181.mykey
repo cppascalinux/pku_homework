@@ -1,6 +1,6 @@
-problem
-class
-operator
-algorithm
-method
-convex
+variable metric
+metric proximal
+proximal point
+point algorithm
+monotone operator
+convex program

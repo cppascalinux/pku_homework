@@ -1,7 +1,4 @@
-frame
-motion
-structure
-brightness
-multiple
-image
-scene
+multiple frame
+multiple epipoles
+planar surface
+scene structure

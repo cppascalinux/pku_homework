@@ -1,8 +1,8 @@
-algorithm
-result
-path
-compression
-use
-dominators
-microtrees
-vertex
+simple linear-time
+linear-time dominators
+linear-time algorithm
+dominators algorithm
+immediate dominators
+data structure
+path compression
+use memoization

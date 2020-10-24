@@ -1,8 +1,6 @@
-checkpoint
-protocol
-local
-such
-checkpointing
-distributed
-property
-detection
+useless checkpoint
+local checkpoint
+consistent global
+global checkpoint
+communication-induced checkpointing
+checkpointing protocol

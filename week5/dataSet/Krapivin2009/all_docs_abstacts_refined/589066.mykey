@@ -1,5 +1,4 @@
-method
-search
-pattern
-optimization
-step
+pattern search
+pattern step
+search method
+global convergence

@@ -1,6 +1,4 @@
-operator
-response
-curve
-image
-condition
-l/l
+image curve
+linear operator
+l/l operator
+normal condition

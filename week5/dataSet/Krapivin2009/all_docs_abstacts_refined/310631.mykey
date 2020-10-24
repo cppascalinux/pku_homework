@@ -1,6 +1,4 @@
-error
-euclidean
-structure
-projective
-algorithm
-reconstruction
+projective structure
+projective reconstruction
+euclidean reconstruction
+euclidean algorithm

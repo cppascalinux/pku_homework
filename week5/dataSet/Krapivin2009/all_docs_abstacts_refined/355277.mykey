@@ -1,9 +1,7 @@
-fuzzy
-object
-spatial
-region
-operation
-model
-data
-line
-type
+metric operation
+fuzzy spatial
+fuzzy region
+fuzzy line
+spatial object
+spatial data
+data type

@@ -1,4 +1,5 @@
-point
-set
-triangulation
-delaunay
+point set
+delaunay triangulation
+delaunay complexity
+smooth surface
+sample point

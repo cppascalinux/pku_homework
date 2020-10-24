@@ -1,8 +1,7 @@
-mask
-matrix
-function
-size
-support
-dilation
-symmetry
-algorithm
+smoothness exponent
+refinable function
+sobolev smoothness
+numerical computation
+dilation matrix
+interpolatory mask
+support mask

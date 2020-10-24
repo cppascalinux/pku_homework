@@ -1,9 +1,7 @@
-allocation
-buffer
-system
-load
-performance
-decision
-query
-database
-management
+adaptable buffer
+buffer management
+buffer allocation
+access pattern
+marginal gain
+page fault
+page access

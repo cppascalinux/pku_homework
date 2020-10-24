@@ -1,8 +1,4 @@
-constraint
-rcl
-property
-language
-element
-role-based
-control
-many
+role-based authorization
+role-based access
+authorization constraint
+access control

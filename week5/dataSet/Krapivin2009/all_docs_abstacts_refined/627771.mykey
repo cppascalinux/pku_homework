@@ -1,7 +1,9 @@
-rule
-system
-execution
-processing
-starburst
-semantics
-language
+starburst rule
+active database
+active rule
+database rule
+database system
+rule system
+rule language
+rule processing
+rule execution

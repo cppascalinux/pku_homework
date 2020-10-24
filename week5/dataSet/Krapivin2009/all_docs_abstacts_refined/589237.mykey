@@ -1,7 +1,6 @@
-method
-terminate
-search
-problem
-line
-exact
-step
+limited-memory bfgs
+quasi-newton method
+exact line
+line search
+quadratic function
+broyden family

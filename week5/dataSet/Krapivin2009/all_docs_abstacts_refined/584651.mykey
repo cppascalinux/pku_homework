@@ -1,8 +1,6 @@
-data
-model
-bns
-component
-knowledge
-tree
-decision
-network
+constructive induction
+bayesian network
+decision tree
+component bns
+closed form
+marginal likelihood

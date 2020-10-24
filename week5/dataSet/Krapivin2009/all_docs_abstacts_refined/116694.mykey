@@ -1,9 +1,3 @@
-parameter
-model
-image
-problem
-measurement
-method
-feature
-object
-solution
+model-based vision
+model parameter
+image feature

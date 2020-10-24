@@ -1,7 +1,5 @@
-nge
-algorithm
-fwmi
-performance
-rectangle
-weight
-knn
+near neighbor
+bnge fwmi
+neighbor algorithm
+feature weight
+nge algorithm

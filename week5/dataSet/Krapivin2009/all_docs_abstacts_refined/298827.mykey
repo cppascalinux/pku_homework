@@ -1,9 +1,4 @@
-protocol
-network
-performance
-routing
-control
-mechanism
-flow
-message
-fault
+flow control
+routing protocol
+control mechanism
+two-phase routing

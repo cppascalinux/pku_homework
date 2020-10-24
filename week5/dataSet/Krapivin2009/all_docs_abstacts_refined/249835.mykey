@@ -1,10 +1,6 @@
-path
-protocol
-dqdb
-bridge
-network
-migration
-slot
-setup
-cluster
-dqdbs
+path migration
+path selection
+path establishment
+path setup
+dqdb slot
+source dqdb

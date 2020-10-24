@@ -1,8 +1,6 @@
-scale-space
-fingerprint
-approach
-scale
-signal
-feature
-multiscale
-dilation-erosion
+scale-space fingerprint
+multiscale dilation-erosion
+monotonic property
+signal feature
+scale parameter
+reduced fingerprint

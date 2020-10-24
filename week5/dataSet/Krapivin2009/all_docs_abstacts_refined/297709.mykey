@@ -1,9 +1,4 @@
-prefetching
-scheme
-data
-structure
-performance
-multiprocessor
-compiler-inserted
-greedy
-memory
+compiler-inserted prefetching
+data structure
+prefetching scheme
+greedy prefetching

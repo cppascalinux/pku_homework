@@ -1,13 +1,4 @@
-cell
-control
-algorithm
-network
-system
-utilization
-qos
-model
-admission
-resource
-mobile
-scheme
-user
+admission control
+control algorithm
+virtual bottleneck
+bottleneck cell

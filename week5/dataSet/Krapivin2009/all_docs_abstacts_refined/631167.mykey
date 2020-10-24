@@ -1,6 +1,5 @@
-set
-constraint
-task
-input
-application
-system
+real-time system
+end-to-end constraint
+timing constraint
+intermediate constraint
+output task

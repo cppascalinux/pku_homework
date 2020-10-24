@@ -1,10 +1,7 @@
-object
-mark
-speed-up
-stack
-processor
-gc
-enterprise
-parallel
-time
-collection
+garbage collector
+garbage collection
+boehm gc
+large object
+mark stack
+gc speed-up
+processor speed-up

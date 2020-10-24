@@ -1,8 +1,9 @@
-image
-color
-algorithm
-map
-analysis
-level
-structure
-topographic
+grey level
+level line
+level image
+level set
+topographic map
+contrast invariant
+contrast change
+color channel
+color image

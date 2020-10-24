@@ -1,12 +1,2 @@
-algorithm
-volume
-constraint
-primitive
-energy
-design
-function
-continuity
-solid
-preservation
-model
-modeling
+volume preservation
+continuity constraint

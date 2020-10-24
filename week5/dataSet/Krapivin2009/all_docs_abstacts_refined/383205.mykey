@@ -1,5 +1,8 @@
-view
-maintenance
-relation
-data
-base
+data warehouse
+data source
+base data
+base relation
+auxiliary view
+referential integrity
+integrity constraint
+view maintenance

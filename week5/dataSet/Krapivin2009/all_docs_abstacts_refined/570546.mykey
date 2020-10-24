@@ -1,9 +1,9 @@
-specification
-protocol
-action
-state
-cache
-event
-methodology
-network
-controller
+cache coherence
+cache controller
+coherence protocol
+specification methodology
+memory controller
+memory model
+data network
+address network
+table-based specification

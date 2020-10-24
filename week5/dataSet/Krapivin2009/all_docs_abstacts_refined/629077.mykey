@@ -1,9 +1,5 @@
-scheme
-data
-distribution
-program
-partitioning
-time
-various
-constraint
-picture
+automatic data
+data partitioning
+data distribution
+distribution scheme
+execution time

@@ -1,8 +1,7 @@
-point
-algorithm
-scan
-correspondence
-new
-pose
-environment
-data
+range scan
+data point
+second algorithm
+scan point
+reference scan
+point correspondence
+correspondence point

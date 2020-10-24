@@ -1,14 +1,7 @@
-time
-algorithm
-allocation
-benefit
-way
-resource
-function
-arrival
-real-time
-interval
-workload
-rba
-application
-model
+application benefit
+resource allocation
+asynchronous real-time
+adaptation function
+deadline ratio
+scheduling algorithm
+arrival time

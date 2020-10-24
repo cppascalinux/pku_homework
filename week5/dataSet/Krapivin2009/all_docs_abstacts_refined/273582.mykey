@@ -1,12 +1,4 @@
-problem
-a.
-solution
-vector
-method
-perturbation
-bound
-value
-parameter
-residual
-structure
-robustness
+worst-case residual
+worst-case perturbation
+regularization method
+optimal worst-case

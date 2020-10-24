@@ -1,8 +1,5 @@
-cluster
-search
-space
-similarity
-clindex
-recall
-structure
-near
+approximate similarity
+similarity search
+high-dimensional space
+high recall
+index structure

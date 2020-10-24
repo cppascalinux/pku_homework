@@ -1,9 +1,12 @@
-node
-source
-sensor
-sink
-data
-dissemination
-ttdd
-mobility
-grid
+data dissemination
+data delivery
+data source
+wireless sensor
+mobile sink
+sensor node
+grid structure
+stationary sink
+dissemination node
+sink move
+sink mobility
+source source

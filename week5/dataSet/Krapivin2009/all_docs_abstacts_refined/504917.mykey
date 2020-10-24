@@ -1,10 +1,10 @@
-register
-constraint
-performance
-prefetching
-wrapper
-core
-bus
-heuristic
-penalty
-prefetch
+bus wrapper
+wrapper performance
+performance penalty
+internal register
+internal bus
+prefetching heuristic
+real-time prefetching
+prefetch register
+core internals
+core internal

@@ -1,8 +1,4 @@
-partition
-model
-ada
-system
-consistent
-replication
-distributed
-execution
+semi-active replication
+piecewise deterministic
+deterministic computation
+computation model

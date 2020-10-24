@@ -1,9 +1,4 @@
-backup
-update
-repository
-service
-transmission
-constraint
-application
-primary
-replication
+window-consistent replication
+window-consistent backup
+replication service
+update transmission

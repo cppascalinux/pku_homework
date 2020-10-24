@@ -1,13 +1,13 @@
-degree
-polynomial
-bound
-less
-response
-result
-primitive
-irreducible
-test
-circuit
-fault
-bit
-case
+test sequence
+feedback polynomial
+irreducible polynomial
+irreducible case
+least degree
+degree less
+primitive polynomial
+primitive case
+expected bound
+expected number
+expected complexity
+zero-aliasing polynomial
+case complexity

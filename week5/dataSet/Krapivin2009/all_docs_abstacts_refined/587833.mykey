@@ -1,11 +1,14 @@
-matrix
-hamiltonian
-algorithm
-symplectic
-orthogonal
-eigenproblems
-factorization
-structured
-qr
-problem
-symmetric
+structured hamiltonian
+structured backward
+backward error
+symplectic quasi-qr
+symplectic orthogonal
+quasi-qr factorization
+orthogonal matrix
+symmetric hamiltonian
+skew-symmetric hamiltonian
+skew-symmetric skew-hamiltonian
+qr algorithm
+skew-hamiltonian matrix
+hamiltonian eigenproblems
+hamiltonian matrix

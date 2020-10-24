@@ -1,10 +1,7 @@
-queue
-flow
-service
-tcp
-simulation
-result
-network
-drop
-analysis
-red
+red queue
+ns simulation
+tail drop
+tcp flow
+drop queue
+average queue
+udp flow

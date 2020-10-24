@@ -1,9 +1,7 @@
-schema
-cube
-design
-problem
-data
-query
-system
-cmp
-time
+data cube
+cube schema
+schema design
+response time
+olap system
+design problem
+algorithm cmp

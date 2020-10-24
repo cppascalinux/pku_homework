@@ -1,8 +1,3 @@
-system
-method
-factorization
-linear
-incomplete
-reordering
-preconditioners
-nonsymmetric
+incomplete factorization
+subspace method
+linear system

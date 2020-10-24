@@ -1,9 +1,5 @@
-property
-termination
-type
-program
-verification
-language
-system
-ml
-programming
+dependent type
+program termination
+termination verification
+programming language
+type system

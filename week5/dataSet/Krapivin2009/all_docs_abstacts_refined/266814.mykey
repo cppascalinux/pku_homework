@@ -1,11 +1,6 @@
-prediction
-processor
-trace
-instruction
-value
-performance
-result
-data
-improvement
-control
-parallelism
+trace processor
+control flow
+data prediction
+data dependence
+superscalar processor
+value prediction

@@ -1,6 +1,8 @@
-increase
-size
-problem
-constraint
-value
-variable
+random binary
+random constraint
+constraint satisfaction
+constraint tightness
+constraint graph
+satisfaction problem
+problem size
+crossover point

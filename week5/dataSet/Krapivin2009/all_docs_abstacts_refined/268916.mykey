@@ -1,6 +1,3 @@
-simulation
-parallel
-event
-algorithm
-system
-model
+parallel simulation
+bsp algorithm
+ising-spin model

@@ -1,7 +1,2 @@
-interval
-method
-box
-problem
-system
-technique
-algorithm
+interval method
+branch-and-prune algorithm

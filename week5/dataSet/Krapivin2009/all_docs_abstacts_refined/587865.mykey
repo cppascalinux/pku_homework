@@ -1,8 +1,4 @@
-matrix
-method
-residual
-system
-minres
-gmres
-example
-numerical
+linear system
+lanczos process
+krylov subspace
+minres residual

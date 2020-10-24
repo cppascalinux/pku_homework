@@ -1,6 +1,2 @@
-probe
-order
-clone
-spacing
-map
-data
+physical map
+probe order

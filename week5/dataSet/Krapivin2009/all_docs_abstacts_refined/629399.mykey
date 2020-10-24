@@ -1,8 +1,3 @@
-mesh
-size
-broadcasting
-algorithm
-multiple
-computation
-semigroup
-fast
+convex hull
+hull algorithm
+multiple broadcasting

@@ -1,12 +1,10 @@
-space
-hyperplane
-data
-multicomputers
-communication
-partition
-loop
-statement-iteration
-statement
-interprocessor
-vector
-variable
+communication-free hyperplane
+iteration space
+data space
+data hyperplane
+hyperplane partition
+array reference
+array variable
+statement-iteration space
+statement-iteration hyperplane
+reference function

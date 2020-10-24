@@ -1,12 +1,10 @@
-prediction
-value
-instruction
-predictor
-type
-model
-context
-data
-accuracy
-due
-table
-static
+data value
+computational predictor
+previous value
+stride prediction
+stride predictor
+value prediction
+value predictor
+correct prediction
+static instruction
+instruction type

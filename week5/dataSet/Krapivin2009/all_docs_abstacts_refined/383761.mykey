@@ -1,11 +1,6 @@
-level
-channel
-access
-power
-utilization
-consumption
-mechanism
-network
-transmission
-scheme
-protocol
+channel utilization
+congestion level
+power consumption
+access scheme
+frame transmission
+contention level

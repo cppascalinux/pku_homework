@@ -1,14 +1,13 @@
-use
-task
-preemption
-delay
-cache
-block
-increase
-set
-time
-due
-technique
-system
-memory
-cache-related
+cache-related preemption
+preemption delay
+real-time system
+memory block
+linear programming
+task set
+time prediction
+time increase
+cache refill
+cache memory
+cache block
+refill time
+block use

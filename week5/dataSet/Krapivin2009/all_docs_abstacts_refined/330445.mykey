@@ -1,11 +1,9 @@
-network
-size
-scheme
-protocol
-performance
-reservation
-degree
-forward
-throughput
-parameter
-multiplexing
+multiplexed network
+reservation protocol
+reservation scheme
+forward reservation
+forward scheme
+backward reservation
+backward scheme
+multiplexing degree
+network size

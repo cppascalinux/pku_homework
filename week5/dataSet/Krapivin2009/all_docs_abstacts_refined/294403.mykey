@@ -1,4 +1,9 @@
-completion
-matrix
-rank
-inertia
+block band
+band matrix
+hermitian completion
+hermitian matrix
+bordered matrix
+completion rank
+possible inertia
+maximal submatrices
+rank completion

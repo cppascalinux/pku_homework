@@ -1,9 +1,6 @@
-parameter
-example
-class
-sample
-algorithm
-noise
-model
-accuracy
-adversary
+nasty noise
+nasty sample
+noise model
+pac model
+learning algorithm
+concept class

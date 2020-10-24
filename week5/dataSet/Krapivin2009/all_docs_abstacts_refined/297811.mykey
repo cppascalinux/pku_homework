@@ -1,11 +1,6 @@
-problem
-function
-integral
-intractable
-sample
-scheme
-mcmc
-order
-performance
-estimation
-unknown
+bayesian function
+noisy sample
+monte carlo
+unknown function
+deconvolution problem
+mcmc scheme

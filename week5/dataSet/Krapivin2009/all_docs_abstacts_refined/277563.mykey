@@ -1,10 +1,11 @@
-model
-cost
-computer
-mobile
-method
-database
-allocation
-online
-access
-message
+mobile computer
+data allocation
+data message
+allocation method
+stationary computer
+cost model
+bad case
+static allocation
+static method
+connection model
+message cost

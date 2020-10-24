@@ -1,8 +1,5 @@
-function
-process
-curve
-bound
-covariance
-level
-noise
-learning
+low bound
+learning curve
+covariance function
+noise level
+upper bound

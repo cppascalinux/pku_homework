@@ -1,5 +1,3 @@
-episode
-sequence
-use
-rule
-event
+frequent episode
+event sequence
+episode rule

@@ -1,8 +1,8 @@
-type
-program
-constraint
-predicate
-error
-system
-logic
-prolog
+type constraint
+type system
+type checking
+type inference
+type substitution
+constraint logic
+logic program
+logic programming

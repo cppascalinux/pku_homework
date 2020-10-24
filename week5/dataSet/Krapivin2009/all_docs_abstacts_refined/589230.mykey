@@ -1,8 +1,8 @@
-problem
-method
-optimization
-tensor
-unconstrained
-sparse
-hessian
-model
+tensor method
+tensor model
+sparse unconstrained
+unconstrained optimization
+test result
+test problem
+standard method
+large sparse

@@ -1,9 +1,9 @@
-test
-pattern
-circuit
-generation
-time
-sequence
-overhead
-application
-code
+pattern generation
+sequential circuit
+test sequence
+test pattern
+test application
+primary input
+comma code
+fault coverage
+application time

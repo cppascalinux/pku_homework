@@ -1,11 +1,4 @@
-array
-pattern
-reference
-time
-loop
-data
-access
-support
-distributed
-compile
-irregular
+array reference
+compile time
+distributed memory
+distributed array

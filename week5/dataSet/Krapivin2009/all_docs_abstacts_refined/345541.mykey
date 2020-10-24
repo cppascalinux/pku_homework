@@ -1,9 +1,6 @@
-query
-plan
-performance
-system
-boolean
-method
-capable
-searcher
-elementary
+boolean query
+inclusive query
+query plan
+elementary query
+optimal query
+case experiment

@@ -1,6 +1,4 @@
-probability
-process
-gaussian
-loss
-pl
-approximation
+loss probability
+input process
+gaussian process
+tail probability

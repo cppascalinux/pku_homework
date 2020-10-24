@@ -1,8 +1,3 @@
-implementation
-thread
-debugger
-interface
-debugging
-thread-aware
-extension
-application
+thread implementation
+active debugging
+kernel thread

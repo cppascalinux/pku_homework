@@ -1,8 +1,9 @@
-fault
-process
-sequence
-test
-evaluation
-injection
-architecture
-coverage
+fault injection
+fault tolerance
+fault occurrence
+dependability evaluation
+experimental evaluation
+tolerance process
+occurrence process
+injection test
+test sequence

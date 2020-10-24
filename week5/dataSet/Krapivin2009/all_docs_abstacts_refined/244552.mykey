@@ -1,9 +1,8 @@
-problem
-program
-sizing
-ch-posynomial
-model
-transistor
-property
-algorithm
-wire
+ch-posynomial program
+general ch-posynomial
+dominance property
+stis problem
+stis algorithm
+delay model
+wire sizing
+sizing problem

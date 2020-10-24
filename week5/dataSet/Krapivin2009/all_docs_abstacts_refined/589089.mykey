@@ -1,6 +1,4 @@
-algorithm
-method
-function
-set
-point
-convex
+bfgs interior
+interior point
+point algorithm
+analytic center

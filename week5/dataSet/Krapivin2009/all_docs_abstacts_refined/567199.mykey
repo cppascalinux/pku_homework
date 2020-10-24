@@ -1,6 +1,12 @@
-graph
-flow
-algorithm
-equivalent
-problem
-vertex
+sparse evaluation
+evaluation graph
+dataflow analysis
+dataflow solution
+linear time
+time algorithm
+analysis problem
+compact evaluation
+equivalent flow
+flow graph
+minimum number
+control-flow graph

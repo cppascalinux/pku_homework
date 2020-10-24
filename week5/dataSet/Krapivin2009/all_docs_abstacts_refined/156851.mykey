@@ -1,13 +1,5 @@
-space
-algorithm
-use
-feature
-value
-table
-instance
-weight
-distance
-domain
-show
-metric
-point
+near neighbor
+neighbor algorithm
+symbolic feature
+feature value
+classification accuracy

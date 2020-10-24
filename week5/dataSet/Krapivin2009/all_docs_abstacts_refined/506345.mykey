@@ -1,10 +1,4 @@
-operator
-term
-constant
-proof
-rule
-induction
-logical
-type
-encoding
-system
+proof system
+proof rule
+logical constant
+reduction rule

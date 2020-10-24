@@ -1,7 +1,5 @@
-correction
-shift
-result
-concurrent
-position
-adder
-lop
+leading-one position
+concurrent correction
+floating-point addition
+floating-point adder
+normalization shift

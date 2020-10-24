@@ -1,18 +1,10 @@
-time
-size
-program
-execution
-simulation
-large
-performance
-parallel
-task
-system
-estimate
-problem
-computation
-model
-simulator
-message
-code
-communication
+compiler analysis
+task graph
+task time
+execution time
+communication pattern
+parallel program
+parallel simulation
+problem size
+large system
+simulation time

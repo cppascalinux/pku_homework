@@ -1,9 +1,8 @@
-vector
-latency
-architecture
-memory
-increase
-queue
-program
-processor
-size
+decoupled vector
+decoupled architecture
+vector architecture
+vector processor
+benchmark program
+execution time
+memory latency
+memory port

@@ -1,13 +1,7 @@
-feature
-system
-use
-vector
-call
-detection
-intrusion
-data
-agent
-trace
-algorithm
-representation
-approach
+intrusion detection
+detection system
+system call
+feature vector
+feature selection
+genetic algorithm
+mobile agent

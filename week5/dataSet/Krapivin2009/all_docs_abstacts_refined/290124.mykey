@@ -1,19 +1,8 @@
-scale-space
-representation
-model
-scale
-design
-b-spline
-frame
-algorithm
-wavelet
-continuous
-visual
-kernel
-such
-efficient
-image
-edge
-feature
-vision
-b-splines
+scale-space representation
+scale-space frame
+scale-space filtering
+b-spline kernel
+continuous scale-space
+dyadic scale-space
+dyadic scale
+edge model

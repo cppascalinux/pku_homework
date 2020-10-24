@@ -1,14 +1,4 @@
-access
-order
-information
-technique
-race
-data
-instruction
-modification
-system
-code
-optimization
-synchronization
-application
-program
+memory access
+data race
+code modification
+synchronization order

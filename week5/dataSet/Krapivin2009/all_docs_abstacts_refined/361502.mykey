@@ -1,11 +1,6 @@
-circuit
-cfsm
-synchronous
-network
-gate
-program
-implementation
-implement
-constructive
-computation
-esterel
+constructive circuit
+synchronous program
+synchronous circuit
+fact propagation
+cfsm network
+gate cfsm

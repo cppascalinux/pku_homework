@@ -1,11 +1,5 @@
-schedule
-execution
-operation
-algorithm
-constraint
-result
-description
-performance
-speculative
-probability
-branch
+speculative execution
+control-flow intensive
+behavioral description
+resource constraint
+branch probability

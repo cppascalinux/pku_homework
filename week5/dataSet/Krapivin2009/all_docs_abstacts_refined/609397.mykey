@@ -1,9 +1,10 @@
-channel
-scheme
-cell
-region
-network
-assignment
-performance
-cellular
-analysis
+neighbor cell
+channel sharing
+channel assignment
+channel interference
+cellular network
+inner-cell region
+outer-cell region
+cochannel interference
+cochannel cell
+nccs scheme

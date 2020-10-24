@@ -1,8 +1,10 @@
-function
-class
-list
-extension
-problem
-read-once
-time
-such
+decision list
+boolean function
+1-decision list
+horn function
+read-once function
+nested difference
+extension problem
+linear time
+linear read-once
+polynomial time

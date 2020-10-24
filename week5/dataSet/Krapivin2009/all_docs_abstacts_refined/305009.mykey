@@ -1,8 +1,6 @@
-loop
-synchronization
-dependence
-redundant
-space
-iteration
-doacross
-execution
+redundant synchronization
+doacross loop
+data dependence
+data synchronization
+iteration space
+sufficient condition

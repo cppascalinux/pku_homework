@@ -1,5 +1,6 @@
--calculus
-rule
-calculus
-reduction
-classical
+strong normalizability
+catch/throw calculus
+catch/throw mechanism
+classical logic
+classical proof
+reduction rule

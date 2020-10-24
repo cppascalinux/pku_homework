@@ -1,6 +1,3 @@
-mesh
-result
-algorithm
-number
-quality
-present
+parallel algorithm
+mesh quality
+test case

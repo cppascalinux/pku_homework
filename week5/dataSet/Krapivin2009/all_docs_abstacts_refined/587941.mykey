@@ -1,6 +1,6 @@
-path
-tree
-bidirected
-edge
-problem
-direction
+edge-disjoint path
+path problem
+bidirected tree
+undirected tree
+polynomial time
+fixed edge

@@ -1,8 +1,6 @@
-rule
-extraction
-induction
-information
-wrapper
-source
-algorithm
-example
+hierarchical wrapper
+wrapper induction
+information source
+information extraction
+extraction rule
+training example

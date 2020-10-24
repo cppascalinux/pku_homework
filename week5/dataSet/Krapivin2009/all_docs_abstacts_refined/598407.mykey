@@ -1,7 +1,5 @@
-tensor
-diffusion
-method
-structure
-image
-filter
-scale-space
+flow-like structure
+nonlinear diffusion
+diffusion filter
+diffusion tensor
+structure tensor

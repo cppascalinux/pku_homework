@@ -1,6 +1,4 @@
-matrix
-space
-null
-basis
-rank
-positive
+null space
+eigenvalue problem
+backward error
+cholesky factorization

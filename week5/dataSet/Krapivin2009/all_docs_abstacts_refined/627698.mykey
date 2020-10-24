@@ -1,7 +1,9 @@
-model
-data
-database
-graph-based
-language
-hypernode
-set-based
+graph-based data
+data model
+relational model
+hypernode model
+hypernode database
+update language
+integrity constraint
+set-based data
+hypertext database

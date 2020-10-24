@@ -1,6 +1,4 @@
-network
-connection
-rule
-learning
-recurrent
-example
+explicit knowledge
+recurrent network
+automaton rule
+speech recognition

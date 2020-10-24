@@ -1,7 +1,5 @@
-model
-surface
-brightness
-reflection
-reflectance
-lambertian
-such
+reflectance model
+body reflectance
+computer graphic
+lambertian model
+rough surface

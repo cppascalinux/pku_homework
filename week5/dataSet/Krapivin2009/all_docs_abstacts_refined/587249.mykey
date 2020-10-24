@@ -1,7 +1,6 @@
-lattice
-sequence
-set
-discrepancy
-point
-method
-quadrature
+lattice sequence
+quasi-monte carlo
+integration lattice
+low discrepancy
+infinite lattice
+quadrature error

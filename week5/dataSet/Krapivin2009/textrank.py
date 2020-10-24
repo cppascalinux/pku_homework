@@ -1,8 +1,9 @@
-import nltk,math,os
+import nltk,math,os,pke
 MAXL=5
-WORDCOUNT=10
+WORDCOUNT=25
 RATE=0.85
 THRES=1.35
+WORDREP=8
 PUNC=set([',','.',':',';','?','(',')','[',']','&','!','*','@','#','$','%','"',"'",'+','-','/','|','<','>','{','}','_','^','`','~'])
 tokener=nltk.tokenize.word_tokenize
 lemmaer=nltk.stem.WordNetLemmatizer().lemmatize
@@ -12,8 +13,9 @@ def mul(mx,my):
 def add(mx,my):
 	return [[a+b for a,b in zip(rx,ry)] for rx,ry in zip(mx,my)]
 def getfiles():
-	dir='.\\all_docs_abstacts_refined'
-	return [dir+'\\'+x for x in list(os.walk(dir))[0][2] if 'txt' in x]
+	dir='all_docs_abstacts_refined'
+	# print(list(os.walk(dir)))
+	return [dir+'/'+x for x in list(os.walk(dir))[0][2] if 'txt' in x]
 def islegal(s):
 	return s[0]=='N' or s[0]=='J'
 def getty(s):
@@ -60,9 +62,23 @@ def solve(fl):
 	ad=[[1-RATE]*tp]
 	for i in range(100):
 		vec=add(mul(vec,mat),ad)
-	words=sorted(list(d.items()),key=lambda x:vec[0][x[1]],reverse=True)
-	for wd,num in words:
-		fout.write(wd+' '+str(vec[0][num])+'\n')
+	words=set(next(zip(*(sorted(list(d.items()),key=lambda x:vec[0][x[1]],reverse=True)[:int(WORDCOUNT)]))))
+	nd={}
+	print(len(wp))
+	for i in range(len(wp)-1):
+		wd1,wd2=wp[i][0],wp[i+1][0]
+		if wd1 in words and wd2 in words:
+			if not wd1 in nd:
+				nd[wd1]={}
+			if not wd2 in nd[wd1]:
+				nd[wd1][wd2]=0
+			nd[wd1][wd2]+=1
+	for wd1,pd in nd.items():
+		for wd2 in pd:
+			if pd[wd2]>=WORDREP:
+				fout.write(wd1+' '+wd2+'\n')
+	# for wd,num in words:
+		# fout.write(wd+'\n')
 		# if vec[0][num]>=THRES:
 		# 	fout.write(wd+'\n')
 	# st=set(list(zip(*words[:15]))[0])
@@ -91,10 +107,9 @@ def judge(fl):
 	# print(sk,skm)
 	stk,stmk=set(),set()
 	for wd in sk:
-		list(stk.add(lemmaer(x[0],pos=getty(x[1]))) for x in tager(tokener(wd.lower())))
+		stk.add(' '.join([lemmaer(x[0],pos=getty(x[1])) for x in tager(tokener(wd.lower()))]))
 	for wd in skm:
-		s=wd.split(' ')
-		list(stmk.add(x) for x in s)
+		stmk.add(' '.join([lemmaer(x[0],pos=getty(x[1])) for x in tager(tokener(wd.lower()))]))
 	l1=len(stk)
 	l2=len(stmk)
 	if l1==0 or l2==0:
@@ -104,18 +119,19 @@ def judge(fl):
 	return l3/l2,l3/l1,2*l3/(l1+l2)
 def main():
 	ls=getfiles()
-	ls=['.\\all_docs_abstacts_refined\\qwq.txt']
+	# ls=['.\\all_docs_abstacts_refined\\qwq.txt']
 	res=open('result.txt','wt',encoding='utf8')
 	ta,tb,tc=0,0,0
 	for fl in ls:
 		print(fl)
 		solve(fl)
+		# solvepke(fl)
 		a,b,c=judge(fl)
 		ta+=a/len(ls)
 		tb+=b/len(ls)
 		tc+=c/len(ls)
-		res.write(fl[28:]+' P:%.6f R:%.6f F:%.6f\n'%(a,b,c))
-		print(fl[28:]+' P:%.6f R:%.6f F:%.6f'%(a,b,c))
+		res.write(fl[26:]+' P:%.6f R:%.6f F:%.6f\n'%(a,b,c))
+		print(fl[26:]+' P:%.6f R:%.6f F:%.6f'%(a,b,c))
 	res.write('Average: P:%.6f R:%.6f F:%.6f\n'%(ta,tb,tc))
 	print('Average: P:%.6f R:%.6f F:%.6f'%(ta,tb,tc))
 main()

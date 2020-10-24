@@ -1,16 +1,8 @@
-member
-group
-path
-size
-low
-overhead
-protocol
-experiment
-stress
-data
-control
-result
-multicast
-link
-recovery
-present
+multicast protocol
+multicast group
+link stress
+failure recovery
+group member
+group size
+control overhead
+data path

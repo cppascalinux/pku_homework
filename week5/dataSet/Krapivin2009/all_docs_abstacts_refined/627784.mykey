@@ -1,11 +1,8 @@
-model
-semantics
-program
-stable
-query
-computation
-evaluation
-literal
-body
-well-founded
-logic
+stable model
+well-founded semantics
+model computation
+logic program
+query evaluation
+ground atom
+ground program
+ground literal

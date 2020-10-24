@@ -1,9 +1,10 @@
-function
-parameter
-cost
-bound
-analysis
-program
-accurate
-cost-bound
-input
+cost-bound analysis
+cost-bound function
+input structure
+input size
+symbolic evaluation
+size parameter
+cost bound
+cost parameter
+cost function
+primitive cost

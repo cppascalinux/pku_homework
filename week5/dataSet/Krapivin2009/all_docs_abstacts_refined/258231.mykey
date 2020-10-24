@@ -1,8 +1,5 @@
-linear
-matrix
-program
-iteration
-factorization
-algorithm
-element
-system
+interior-point method
+interior-point algorithm
+linear program
+coefficient matrix
+diagonal element

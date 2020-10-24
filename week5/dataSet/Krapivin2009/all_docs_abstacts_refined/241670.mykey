@@ -1,8 +1,7 @@
-simulator
-application
-processor
-simulation
-code
-parallel
-network
-execution
+execution simulation
+parallel program
+parallel simulation
+application code
+application simulator
+relative speedup
+network simulator

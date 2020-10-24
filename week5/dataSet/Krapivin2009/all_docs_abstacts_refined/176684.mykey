@@ -1,6 +1,5 @@
-set
-class
-function
-reducible
-truth-table
-hierarchy
+advice function
+complexity class
+boolean hierarchy
+truth-table reducible
+truth-table reducibility

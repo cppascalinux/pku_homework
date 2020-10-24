@@ -1,7 +1,5 @@
-entry
-matrix
-value
-diagonal
-large
-method
-algorithm
+sparse matrix
+matching algorithm
+absolute value
+diagonal entry
+iterative method

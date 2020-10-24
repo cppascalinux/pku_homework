@@ -1,11 +1,8 @@
-use
-parameter
-object
-flow
-segmentation
-constraint
-motion
-algorithm
-field
-epipolar
-depth
+optical flow
+rigid object
+rigid motion
+flow field
+epipolar constraint
+epipolar geometry
+motion parameter
+affine flow

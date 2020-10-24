@@ -1,13 +1,13 @@
-rate
-client
-request
-technique
-bandwidth
-equal
-time
-stream
-increase
-server
-service
-delivery
-arrival
+immediate service
+immediate real-time
+client request
+bandwidth equal
+delivery technique
+request rate
+request arrival
+dynamic skyscraper
+skyscraper technique
+skyscraper delivery
+server bandwidth
+multicast stream
+stream merging

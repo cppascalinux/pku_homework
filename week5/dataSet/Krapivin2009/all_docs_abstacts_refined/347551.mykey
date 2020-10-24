@@ -1,13 +1,6 @@
-tcp
-traffic
-stream
-connection
-congestion
-self-similarity
-background
-control
-share
-measurement
-dependent
-long-range
-algorithm
+tcp congestion
+tcp connection
+tcp stream
+congestion control
+several timescales
+self-similar background

@@ -1,6 +1,3 @@
-database
-design
-state
-constraint
-support
-process
+design process
+transaction model
+constraint database

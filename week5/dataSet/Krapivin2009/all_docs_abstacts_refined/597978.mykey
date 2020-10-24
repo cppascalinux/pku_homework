@@ -1,7 +1,5 @@
-time
-distribution
-queue
-service
-customer
-fluid
-limit
+fluid approximation
+fluid limit
+service discipline
+service time
+time distribution

@@ -1,12 +1,6 @@
-feature
-matrix
-position
-method
-time
-series
-image
-shape
-sequence
-frame
-motion
-vector
+sequential factorization
+sequential method
+factorization method
+feature position
+original method
+image sequence

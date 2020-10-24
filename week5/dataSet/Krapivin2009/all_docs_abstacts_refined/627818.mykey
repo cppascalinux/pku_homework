@@ -1,9 +1,12 @@
-imprecision
-object
-technique
-accumulation
-consistency
-database
-method
-compatibility
-logical
+semantic locking
+real-time object-oriented
+real-time database
+concurrency control
+control technique
+object-oriented database
+logical consistency
+temporal consistency
+bound imprecision
+locking mechanism
+locking technique
+epsilon serializability

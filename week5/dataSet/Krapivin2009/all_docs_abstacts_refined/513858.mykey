@@ -1,13 +1,10 @@
-cache
-nest
-configuration
-loop
-reuse
-reference
-array
-access
-different
-space
-data
-pattern
-algorithm
+compiler-directed cache
+cache polymorphism
+cache configuration
+loop nest
+energy consumption
+data reuse
+data cache
+array reference
+reuse space
+near-optimal cache

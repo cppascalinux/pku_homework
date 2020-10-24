@@ -1,10 +1,8 @@
-algorithm
-bound
-learning
-complexity
-function
-sample
-such
-similar
-threshold
-perceptron
+linear threshold
+threshold function
+sample complexity
+complexity bound
+online p-norm
+p-norm algorithm
+learning algorithm
+weak learning

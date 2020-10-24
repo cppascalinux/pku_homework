@@ -1,6 +1,4 @@
-clause
-guard
-program
-ghc
-parlog
-language
+lingua franca
+parlog program
+parlog clause
+ghc clause

@@ -1,9 +1,8 @@
-matrix
-perturbation
-derivative
-error
-method
-chebyshev
-point
-collocation
-roundoff
+high derivative
+chebyshev collocation
+chebyshev method
+roundoff error
+collocation method
+collocation point
+mapped chebyshev
+derivative matrix

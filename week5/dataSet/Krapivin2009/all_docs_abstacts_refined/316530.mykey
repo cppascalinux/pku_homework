@@ -1,6 +1,8 @@
-matrix
-tridiagonal
-inverse
-definite
-sum
-positive
+decay rate
+irreducible tridiagonal
+symmetric positive
+tridiagonal matrix
+tridiagonal m-matrices
+tridiagonal m-matrix
+positive definite
+definite matrix

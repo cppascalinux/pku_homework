@@ -1,7 +1,7 @@
-algorithm
-matrix
-performs
-order
-decomposition
-miss
-lu
+lu decomposition
+new algorithm
+right-looking algorithm
+cache miss
+primary memory
+block size
+algorithm performs

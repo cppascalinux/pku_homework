@@ -1,13 +1,13 @@
-method
-constraint
-lagrangian
-region
-search
-trajectory
-function
-point
-feasible
-solution
-problem
-optimization
-oscillation
+lagrangian method
+lagrangian function
+lagrangian search
+optimization problem
+inequality constraint
+search method
+feasible region
+maxq method
+convergence speed
+solution quality
+saddle point
+local search
+local saddle

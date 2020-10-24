@@ -1,7 +1,5 @@
-method
-element
-order
-growth
-boundary
-galerkin
-size
+boundary element
+boundary integral
+nodal basis
+basis function
+condition number

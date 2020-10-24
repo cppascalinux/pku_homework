@@ -1,15 +1,13 @@
-model
-set
-state
-data
-variable
-time
-series
-markov
-hidden
-factorial
-observation
-algorithm
-hmm
-parameter
-probability
+factorial hidden
+factorial hmms
+factorial hmm
+hidden markov
+hidden state
+hidden variable
+markov model
+time series
+state variable
+state representation
+graphical model
+variational method
+variational approximation

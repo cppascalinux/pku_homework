@@ -1,10 +1,9 @@
-voltage
-result
-supply
-use
-schedule
-energy
-design
-multiple
-slack
-reduction
+multiple supply
+multiple voltage
+supply voltage
+voltage result
+energy dissipation
+energy saving
+control step
+power supply
+area penalty

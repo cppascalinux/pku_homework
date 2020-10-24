@@ -1,6 +1,3 @@
-party
-rsa
-share
-exponent
-key
-modulus
+rsa key
+rsa modulus
+private share

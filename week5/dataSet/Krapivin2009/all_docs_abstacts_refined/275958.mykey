@@ -1,13 +1,7 @@
-interface
-equation
-method
-condition
-number
-jump
-approach
-function
-elliptic
-iteration
-poisson
-grid
-coefficient
+elliptic equation
+interface method
+poisson solver
+poisson equation
+complement system
+grid function
+jump condition

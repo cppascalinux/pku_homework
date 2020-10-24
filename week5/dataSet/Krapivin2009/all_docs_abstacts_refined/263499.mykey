@@ -1,6 +1,6 @@
-network
-constraint
-consistency
-local
-condition
-base
+constraint network
+global consistency
+local consistency
+sufficient condition
+backtrack-free manner
+knowledge base

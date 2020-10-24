@@ -1,8 +1,5 @@
-tree
-oc1
-size
-data
-study
-margin
-error
-bound
+perceptron decision
+decision tree
+decision node
+generalization error
+large margin

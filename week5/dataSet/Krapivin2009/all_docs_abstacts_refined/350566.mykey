@@ -1,6 +1,6 @@
-scheme
-function
-secret
-share
-family
-such
+share scheme
+secret share
+broadcast channel
+broadcast scheme
+private channel
+t-out-of-n secret

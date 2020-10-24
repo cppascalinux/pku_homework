@@ -1,6 +1,3 @@
-query
-database
-language
-topological
-spatial
-first-order
+first-order topological
+topological query
+spatial database

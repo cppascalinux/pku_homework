@@ -1,6 +1,4 @@
-analysis
-program
-section
-interprocedural
-construct
-regular
+regular section
+section analysis
+parallel programming
+interprocedural analysis

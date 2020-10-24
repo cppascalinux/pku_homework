@@ -1,12 +1,8 @@
-symbol
-system
-name
-knowledge
-logic
-sort
-representation
-resolution
-order-sorted
-rule
-predicate
-terminological
+hierarchical representation
+hierarchical resolution
+order-sorted logic
+terminological knowledge
+label-based language
+sort predicate
+resolution system
+resolution rule

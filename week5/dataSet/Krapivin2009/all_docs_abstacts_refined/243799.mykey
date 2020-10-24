@@ -1,7 +1,12 @@
-level
-hierarchy
-size
-cache
-budget
-system
-simulation
+memory hierarchy
+system budget
+workload locality
+optimal size
+optimal configuration
+hierarchy level
+hierarchy simulation
+storage hierarchy
+processor-cache hierarchy
+cache level
+cache size
+cache hierarchy

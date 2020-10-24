@@ -1,9 +1,7 @@
-recognition
-face
-algorithm
-view
-line
-image
-rate
-segment
-rotation
+face recognition
+face image
+image view
+recognition algorithm
+recognition rate
+classification accuracy
+test line

@@ -1,6 +1,4 @@
-query
-formula
-algorithm
-membership
-read-once
-time
+arithmetic read-once
+read-once formula
+parallel algorithm
+membership query

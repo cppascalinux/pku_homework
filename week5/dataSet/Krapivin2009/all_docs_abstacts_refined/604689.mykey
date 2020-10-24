@@ -1,12 +1,3 @@
-segment
-rate
-function
-time
-client
-video
-scheme
-action
-ff
-process
-number
-support
+support vcr
+vcr function
+accumulation process

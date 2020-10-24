@@ -1,5 +1,2 @@
-system
-toeplitz
-preconditioners
-function
-circulant
+toeplitz system
+circulant preconditioners

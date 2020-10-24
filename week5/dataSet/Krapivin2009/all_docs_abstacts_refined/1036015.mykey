@@ -1,11 +1,7 @@
-algorithm
-multiplication
-memory
-matrix
-communication
-bound
-processor
-size
-local
-word
-low
+communication low
+low bound
+distributed-memory parallel
+matrix multiplication
+multiplication algorithm
+parallel computer
+local memory

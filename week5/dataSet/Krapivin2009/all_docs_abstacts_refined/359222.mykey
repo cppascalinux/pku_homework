@@ -1,9 +1,9 @@
-law
-conservation
-system
-convergence
-scheme
-approximation
-relaxation
-condition
-solution
+discrete kinetic
+kinetic approximation
+conservation law
+numerical scheme
+relaxation approximation
+scalar case
+scalar conservation
+entropy solution
+stability condition

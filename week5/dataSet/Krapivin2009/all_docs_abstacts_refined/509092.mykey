@@ -1,6 +1,7 @@
-sparse
-elimination
-gaussian
-solve
-pivoting
-structure
+sparse gaussian
+gaussian elimination
+partial pivoting
+data structure
+distributed memory
+parallel sparse
+triangular solve

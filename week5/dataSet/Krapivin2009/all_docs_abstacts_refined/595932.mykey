@@ -1,15 +1,5 @@
-structure
-group
-form
-expression
-rule
-computation
-element
-logic
-g-grammar
-rewriting
-product
-example
-inverse
-commutative
-string
+group computation
+logical form
+phonological string
+phonological element
+computation structure

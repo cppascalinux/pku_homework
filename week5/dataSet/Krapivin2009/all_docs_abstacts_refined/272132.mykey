@@ -1,8 +1,6 @@
-loop
-parallelization
-processor
-number
-program
-time
-parallel
-nest
+polynomial product
+loop nest
+loop parallelization
+space-time mapping
+parallel implementation
+execution time

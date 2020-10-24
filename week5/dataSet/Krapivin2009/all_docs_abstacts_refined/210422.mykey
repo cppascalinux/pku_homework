@@ -1,9 +1,6 @@
-channel
-speed
-message
-buffer
-policy
-input
-case
-length
-size
+service policy
+buffer storage
+buffer size
+input channel
+ltrb policy
+ltrb class

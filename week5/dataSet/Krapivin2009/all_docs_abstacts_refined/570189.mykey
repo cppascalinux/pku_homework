@@ -1,11 +1,8 @@
-termination
-rewrite
-system
-csr
-context-sensitive
-ordering
-such
-rewriting
-program
-simple
-language
+simple termination
+context-sensitive rewriting
+context-sensitive rewrite
+recursive path
+path ordering
+strategy annotation
+rewrite system
+term rewrite

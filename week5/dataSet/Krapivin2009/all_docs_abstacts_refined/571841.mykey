@@ -1,7 +1,7 @@
-channel
-protocol
-broadcast
-player
-secure
-computation
-quantum
+secure channel
+detectable broadcast
+quantum channel
+multi-party computation
+honest player
+broadcast protocol
+broadcast channel

@@ -1,12 +1,11 @@
-race
-program
-detection
-problem
-synchronization
-condition
-method
-np-hard
-parallel
-incapable
-exclusion
-explicit
+race condition
+race exist
+race detection
+parallel program
+explicit synchronization
+general race
+critical section
+data race
+feasible race
+mutual exclusion
+different type

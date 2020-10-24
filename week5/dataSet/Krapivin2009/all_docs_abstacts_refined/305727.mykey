@@ -1,4 +1,2 @@
-task
-solvable
-wait-free
-model
+comparison-based model
+distributed task

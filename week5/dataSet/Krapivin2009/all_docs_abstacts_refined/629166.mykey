@@ -1,8 +1,8 @@
-search
-algorithm
-parallel
-problem
-speedup
-node
-sequential
-backtracking
+parallel search
+average speedup
+backtrack search
+search algorithm
+simple backtracking
+superlinear speedup
+sequential search
+order heuristic

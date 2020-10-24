@@ -1,9 +1,4 @@
-message
-protocol
-goal
-isabelle
-session
-key
-tl
-logic
-assumption
+inductive analysis
+internet protocol
+session resumption
+session key

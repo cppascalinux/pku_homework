@@ -1,15 +1,6 @@
-path
-cost
-request
-computation
-processing
-pre-computation
-architecture
-performance
-algorithm
-traffic
-on-demand
-saving
-network
-routing
-due
+processing cost
+on-demand path
+path computation
+path pre-computation
+path caching
+routing performance

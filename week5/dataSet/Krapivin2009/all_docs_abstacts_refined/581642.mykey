@@ -1,10 +1,6 @@
-instruction
-arm
-section
-bit
-code
-data
-size
-function
-operation
-application
+bit section
+arm instruction
+arm code
+bsx instruction
+bsx arm
+code size

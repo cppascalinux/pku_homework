@@ -1,10 +1,9 @@
-loop
-iteration
-access
-algorithm
-block
-complexity
-subscript
-generation
-table
-stride
+address generation
+affine subscript
+data-parallel program
+access sequence
+access stride
+outer loop
+loop iteration
+block size
+array element

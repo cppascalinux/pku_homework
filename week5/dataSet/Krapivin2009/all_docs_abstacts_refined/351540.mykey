@@ -1,6 +1,3 @@
-problem
-multigrid
-method
-grid
-algebraic
-amg
+algebraic multigrid
+unstructured grid
+multigrid method

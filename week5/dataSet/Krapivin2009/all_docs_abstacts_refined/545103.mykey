@@ -1,5 +1,3 @@
-dialogue
-program
-agent
-system
-transformation
+agent dialogue
+agent program
+logic program

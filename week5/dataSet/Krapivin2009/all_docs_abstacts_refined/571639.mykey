@@ -1,10 +1,11 @@
-predictor
-branch
-prediction
-perceptron
-length
-history
-gshare
-budget
-accurate
-rate
+dynamic branch
+branch prediction
+branch predictor
+long history
+history length
+perceptron predictor
+hardware budget
+global history
+global perceptron
+more accurate
+hybrid predictor

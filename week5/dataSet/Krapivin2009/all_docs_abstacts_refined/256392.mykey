@@ -1,9 +1,8 @@
-loop
-algorithm
-execution
-affinity
-mechanism
-performance
-processor
-parallel
-application
+parallel loop
+load distribution
+load processor
+processor affinity
+adaptive scheduling
+adaptive algorithm
+adaptive affinity
+scheduling algorithm

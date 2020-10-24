@@ -1,9 +1,14 @@
-model
-scheme
-shape
-parameter
-global
-basis
-hybrid
-primitive
-deformable
+hybrid model
+shape model
+shape recovery
+fractal surface
+parameter model
+global shape
+global deformation
+global parameter
+model scheme
+deformable superquadric
+deformable model
+wavelet basis
+modeling scheme
+prior model

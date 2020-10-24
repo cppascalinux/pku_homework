@@ -1,6 +1,10 @@
-algorithm
-constraint
-propagation
-consistency
-function
-ordering
+constraint propagation
+propagation algorithm
+iteration algorithm
+partial ordering
+arc consistency
+path consistency
+path algorithm
+directional arc
+directional path
+consistency algorithm

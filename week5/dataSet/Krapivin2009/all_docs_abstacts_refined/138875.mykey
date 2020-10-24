@@ -1,7 +1,6 @@
-data
-session
-system
-rate
-file
-cmfs
-policy
+file system
+continuous medium
+write session
+data rate
+disk scheduling
+scheduling policy

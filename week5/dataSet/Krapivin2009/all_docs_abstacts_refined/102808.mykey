@@ -1,10 +1,7 @@
-object
-register
-such
-process
-operation
-implementation
-wait-free
-concurrent
-number
-protocol
+wait-free synchronization
+wait-free implementation
+concurrent object
+atomic read/write
+atomic register
+read/write register
+sequential execution

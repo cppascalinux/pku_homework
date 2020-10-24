@@ -1,6 +1,7 @@
-object
-type
-ownership
-encapsulation
-system
-class
+ownership type
+object encapsulation
+object store
+type system
+inner class
+support local
+persistent object

@@ -1,10 +1,8 @@
-parameter
-algorithm
-bound
-loss
-distribution
-family
-regression
-estimation
-exponential
-density
+relative loss
+loss bound
+on-line algorithm
+density estimation
+exponential family
+total loss
+bregman divergence
+linear regression

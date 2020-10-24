@@ -1,11 +1,10 @@
-instruction
-register
-reduction
-store
-load
-file
-dynamic
-creg
-operation
-cregs
-analysis
+aliased object
+instruction reduction
+register file
+register dynamic
+dynamic instruction
+memory operation
+load store
+alias analysis
+reduction register
+reduction load

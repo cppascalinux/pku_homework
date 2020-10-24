@@ -1,7 +1,4 @@
-program
-verification
-tool
-example
-lustre
-system
-design
+real-time system
+language lustre
+critical property
+lustre program

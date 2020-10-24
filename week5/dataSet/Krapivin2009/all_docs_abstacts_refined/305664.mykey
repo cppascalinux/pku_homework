@@ -1,7 +1,6 @@
-use
-grid
-interface
-refinement
-algorithm
-mesh
-form
+adaptive mesh
+mesh refinement
+wave-propagation algorithm
+conservation form
+curvilinear grid
+grid interface

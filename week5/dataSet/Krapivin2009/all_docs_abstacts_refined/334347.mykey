@@ -1,9 +1,6 @@
-placement
-network
-size
-load
-processor
-edge
-increase
-linear
-algorithm
+low bound
+optimal placement
+routing algorithm
+linear load
+linear placement
+maximum load

@@ -1,13 +1,9 @@
-system
-algebra
-delay
-process
-distribution
-transition
-action
-model
-performance
-probabilistic
-duration
-semantics
-igsmp
+process algebra
+probabilistic choice
+probabilistic transition
+general distribution
+operational semantics
+semantic model
+standard action
+transition system
+duration distribution

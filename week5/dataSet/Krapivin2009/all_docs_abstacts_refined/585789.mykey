@@ -1,8 +1,8 @@
-polygon
-decomposition
-algorithm
-sum
-method
-input
-convex
-simple
+minkowski sum
+convex subpolygons
+convex polygon
+convex decomposition
+decomposition algorithm
+decomposition method
+input polygon
+optimal decomposition

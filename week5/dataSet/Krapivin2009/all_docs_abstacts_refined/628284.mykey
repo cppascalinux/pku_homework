@@ -1,14 +1,7 @@
-query
-view
-model
-data
-site
-access
-relational
-page
-expression
-structure
-network
-web
-design
-constraint
+web site
+relational view
+network access
+data model
+navigational algebra
+link constraint
+cost model

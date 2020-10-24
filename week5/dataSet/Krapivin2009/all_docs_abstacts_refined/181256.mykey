@@ -1,4 +1,6 @@
-polynomial
-matrix
-real
-coefficient
+matrix polynomial
+symmetric matrix
+constant signature
+elementary divisor
+hermitian matrix
+selfadjoint matrix

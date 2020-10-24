@@ -1,5 +1,5 @@
-monad
-icon
-program
-semantics
-evaluation
+list monad
+continuation monad
+continuation semantics
+type-directed partial
+partial evaluation

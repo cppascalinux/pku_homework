@@ -1,7 +1,6 @@
-load
-algorithm
-balancing
-information
-tree
-processor
-scheduling
+load balancing
+load information
+parallel scheduling
+global information
+scheduling algorithm
+communication cost

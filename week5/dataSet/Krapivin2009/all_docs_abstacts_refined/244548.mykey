@@ -1,13 +1,12 @@
-power
-signal
-estimate
-input
-block
-technique
-activity
-model
-estimation
-rtl
-consumption
-circuit
-data
+estimation technique
+power consumption
+power estimation
+power estimate
+power model
+data path
+data input
+control signal
+path block
+rtl block
+rtl power
+rtl circuit

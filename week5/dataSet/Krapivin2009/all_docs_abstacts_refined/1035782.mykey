@@ -1,5 +1,2 @@
-system
-quorum
-failure
-server
-load
+byzantine quorum
+quorum system

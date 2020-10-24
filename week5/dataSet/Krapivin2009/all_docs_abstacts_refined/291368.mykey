@@ -1,6 +1,8 @@
-protocol
-rdt
-checkpoint
-property
-pattern
-condition
+local checkpoint
+strong condition
+forced checkpoint
+control information
+on-line protocol
+rdt protocol
+rdt property
+communication pattern

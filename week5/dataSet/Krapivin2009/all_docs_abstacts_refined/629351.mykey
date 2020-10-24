@@ -1,7 +1,6 @@
-problem
-processor
-system
-overhead
-simd
-machine
-mp-1
+asynchronous problem
+simd machine
+runtime support
+support system
+application problem
+system overhead

@@ -1,6 +1,5 @@
-time
-service
-arrival
-queue
-system
-writer
+reader/writer queue
+one-writer queue
+reader arrival
+writer arrival
+service time

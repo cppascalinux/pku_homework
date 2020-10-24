@@ -1,4 +1,5 @@
-matrix
-algorithm
-code
-transpose
+index transformation
+dimension permutation
+hypercube multiprocessor
+gray code
+permutation matrix

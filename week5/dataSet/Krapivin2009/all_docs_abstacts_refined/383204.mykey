@@ -1,9 +1,7 @@
-warehouse
-data
-view
-scenario
-update
-transaction
-source
-algorithm
-consistency
+strobe algorithm
+warehouse view
+data warehouse
+multiple source
+source data
+source update
+transaction scenario

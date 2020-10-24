@@ -1,8 +1,6 @@
-system
-number
-stage
-procedure
-variance
-use
-common
-random
+sequential procedure
+simulated system
+common random
+random number
+best system
+inferior system

@@ -1,7 +1,4 @@
-system
-message
-dsm
-workstation
-cluster
-level
-model
+memory system
+dsm system
+checkpointing scheme
+checkpointing algorithm

@@ -1,11 +1,10 @@
-algorithm
-share
-time
-traffic
-congestion
-control
-tcp
-resource
-multicast
-connection
-network
+tcp traffic
+tcp connection
+multicast session
+congestion control
+control algorithm
+equal round-trip
+round-trip time
+phase effect
+rla algorithm
+different round-trip

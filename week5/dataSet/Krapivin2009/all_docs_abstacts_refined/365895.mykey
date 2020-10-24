@@ -1,11 +1,8 @@
-feature
-image
-position
-uncertainty
-model
-match
-information
-object
-recognition
-transformation
-pairing
+object recognition
+probability distribution
+training image
+feature pairing
+feature position
+image feature
+model view
+model feature

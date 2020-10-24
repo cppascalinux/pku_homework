@@ -1,12 +1,5 @@
-schedule
-loop
-method
-time
-architecture
-software
-formulation
-problem
-scheduling
-space
-constraint
-linear
+compilation time
+solution space
+linear schedule
+resource constraint
+schedule method

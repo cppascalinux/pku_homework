@@ -1,6 +1,3 @@
-continuation
-mechanism
-thread
-subcontinuations
-one-shot
-concurrency
+traditional continuation
+one-shot subcontinuations
+one-shot continuation

@@ -1,13 +1,3 @@
-wavelet
-number
-shrinkage
-resolution
-function
-estimate
-size
-variance
-simulation
-moment
-data
-primary
-set
+wavelet shrinkage
+primary resolution
+walsh function

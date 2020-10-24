@@ -1,9 +1,7 @@
-packet
-drop
-session
-channel
-error
-guarantee
-delay
-wireless
-reservation
+delay guarantee
+channel error
+resource reservation
+packet drop
+packet delay
+admission control
+long term

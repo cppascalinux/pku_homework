@@ -1,9 +1,8 @@
-system
-signal
-language
-equation
-controller
-level
-polynomial
-synthesis
-dynamical
+power transformer
+transformer station
+station controller
+controller synthesis
+control objective
+polynomial dynamical
+dynamical system
+order relation

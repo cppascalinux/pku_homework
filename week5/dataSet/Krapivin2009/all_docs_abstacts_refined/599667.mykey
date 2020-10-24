@@ -1,7 +1,12 @@
-algorithm
-decomposition
-svm
-training
-direction
-vector
-rate
+feasible direction
+direction decomposition
+decomposition algorithm
+support vector
+vector machine
+pattern recognition
+recognition svm
+maximal inconsistency
+inconsistency algorithm
+regression svm
+convergence rate
+svm training

@@ -1,11 +1,8 @@
-match
-pixel
-feature
-dense
-algorithm
-stereo
-disparity
-map
-region
-error
-image
+dense feature
+dense stereo
+stereo pair
+stereo algorithm
+disparity map
+right image
+left image
+intensity edge

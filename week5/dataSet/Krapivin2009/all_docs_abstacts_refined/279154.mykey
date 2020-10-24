@@ -1,8 +1,12 @@
-fault
-circuit
-test
-coverage
-strategy
-system
-generation
-bridge
+bridge fault
+bridging fault
+test generation
+test pattern
+feedback bridging
+faulty circuit
+fault simulation
+fault atpg
+pattern generation
+single stuck-at
+stuck-at fault
+atpg system

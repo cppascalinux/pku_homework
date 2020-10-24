@@ -1,9 +1,6 @@
-problem
-graph
-label
-processor
-g.
-resource
-allocation
-algorithm
-preprocessing
+resource allocation
+label problem
+labeling problem
+allocation problem
+coloring problem
+distributed algorithm

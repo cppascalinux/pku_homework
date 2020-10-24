@@ -1,10 +1,4 @@
-transfer
-bound
-energy
-surface
-complexity
-environment
-error
-algorithm
-link
-radiosity
+hierarchical radiosity
+initial link
+initial surface
+energy transfer

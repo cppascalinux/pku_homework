@@ -1,10 +1,5 @@
-video
-query
-system
-language
-model
-data
-database
-sequence
-object
-constraint
+query language
+video data
+video sequence
+data model
+constraint query

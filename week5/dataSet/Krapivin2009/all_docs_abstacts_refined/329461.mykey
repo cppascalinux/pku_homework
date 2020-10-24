@@ -1,14 +1,7 @@
-motion
-code
-execution
-method
-conditional
-solution
-branch
-capability
-synthesis
-space
-length
-schedule
-speculative
-constraint
+pruning technique
+search space
+basic block
+code motion
+speculative execution
+branch capability
+schedule length

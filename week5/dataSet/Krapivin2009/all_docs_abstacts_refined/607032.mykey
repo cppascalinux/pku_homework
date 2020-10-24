@@ -1,8 +1,10 @@
-diagram
-editor
-model
-hypergraph
-language
-operation
-editing
-specific
+diagram editor
+diagram language
+diagram analysis
+hypergraph transformation
+hypergraph model
+specific diagram
+syntax-directed editing
+free-hand editing
+editing operation
+diagen editor

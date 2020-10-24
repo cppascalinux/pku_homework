@@ -1,6 +1,3 @@
-feature
-set
-example
-sequence
-algorithm
-data
+classification algorithm
+feature set
+data set

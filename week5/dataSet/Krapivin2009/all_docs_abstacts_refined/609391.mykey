@@ -1,13 +1,9 @@
-system
-user
-use
-channel
-bpsk
-scheme
-modulation
-parameter
-analysis
-simulation
-performance
-cancellation
-ic
+interference cancellation
+multiple access
+mixed modulation
+gaussian approximation
+ic scheme
+single bpsk
+bpsk user
+modulation system
+channel parameter

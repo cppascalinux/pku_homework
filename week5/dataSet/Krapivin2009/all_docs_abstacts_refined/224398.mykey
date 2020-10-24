@@ -1,10 +1,9 @@
-protocol
-processor
-write
-consistency
-release
-notice
-operation
-coherence
-system
-lazy
+lazy release
+lazy protocol
+lazy consistency
+release consistency
+eager release
+protocol processor
+write notice
+consistency protocol
+coherence protocol

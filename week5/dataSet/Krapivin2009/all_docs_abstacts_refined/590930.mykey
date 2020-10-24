@@ -1,12 +1,11 @@
-loop
-use
-operator
-control
-size
-inner
-run
-mutation
-problem
-step
-algorithm
-diversity
+genetic algorithm
+adaptive control
+mutation step
+mutation operator
+step size
+search space
+premature convergence
+population diversity
+inner loop
+restart operator
+size control

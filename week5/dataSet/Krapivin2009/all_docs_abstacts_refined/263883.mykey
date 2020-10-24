@@ -1,10 +1,8 @@
-protocol
-design
-converter
-interface
-user
-service
-information
-system
-nir
-method
+protocol converter
+nir system
+nir protocol
+nir service
+information service
+information retrieval
+user interface
+converter design

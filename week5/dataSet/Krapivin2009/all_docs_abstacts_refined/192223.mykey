@@ -1,5 +1,5 @@
-curve
-representation
-level
-point
-detail
+multiresolution curve
+scan conversion
+direct manipulation
+control point
+original curve

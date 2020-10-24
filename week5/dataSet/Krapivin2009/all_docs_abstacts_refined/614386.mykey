@@ -1,14 +1,5 @@
-mesh
-data
-different
-simplification
-resolution
-system
-visualization
-vertex
-model
-structure
-volume
-level
-technique
-method
+multiresolution model
+volume data
+tetrahedral mesh
+data simplification
+data structure

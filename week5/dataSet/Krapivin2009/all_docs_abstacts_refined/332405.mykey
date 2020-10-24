@@ -1,9 +1,4 @@
-device
-task
-hand
-scroll
-mouse
-pda
-time
-scroller
-button
+input device
+non-dominant hand
+scroll task
+button scroller

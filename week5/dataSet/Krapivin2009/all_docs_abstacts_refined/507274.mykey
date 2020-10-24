@@ -1,10 +1,6 @@
-complexity
-communication
-nfa
-automaton
-ambiguity
-measure
-problem
-nondeterminism
-size
-finite
+communication complexity
+finite automaton
+nondeterministic communication
+minimal nfa
+exponential gap
+polynomial ambiguity

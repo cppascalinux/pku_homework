@@ -1,12 +1,6 @@
-analysis
-time
-delay
-circuit
-exact
-algorithm
-model
-method
-cpu
-approximate
-technique
-timing
+timing analysis
+delay model
+sat solver
+cpu time
+time analysis
+exact analysis

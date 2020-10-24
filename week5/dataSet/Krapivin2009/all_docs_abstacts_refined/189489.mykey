@@ -1,7 +1,3 @@
-domain
-learning
-problem
-network
-algorithm
-query
-generalization
+active learning
+selective sampling
+neural network

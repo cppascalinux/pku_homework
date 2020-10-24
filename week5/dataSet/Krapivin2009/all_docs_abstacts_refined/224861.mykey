@@ -1,8 +1,6 @@
-skew
-delay
-tree
-model
-region
-routing
-point
-elmore
+elmore delay
+delay model
+delay skew
+interior point
+merging region
+ime algorithm

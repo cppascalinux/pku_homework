@@ -1,5 +1,7 @@
-matrix
-decomposition
-algorithm
-symmetric
-rank
+symmetric matrix
+rank-revealing decomposition
+triangular matrix
+vsv decomposition
+numerical rank
+orthogonal matrix
+ulv decomposition

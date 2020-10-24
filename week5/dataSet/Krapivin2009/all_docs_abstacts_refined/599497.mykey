@@ -1,6 +1,5 @@
-transaction
-rule
-database
-active
-equivalence
-semantics
+active database
+active rule
+new transaction
+transaction equivalence
+induced transaction

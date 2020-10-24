@@ -1,7 +1,6 @@
-graph
-problem
-subgraph
-biplanar
-algorithm
-large
-number
+linear arrangement
+arrangement problem
+bipartite graph
+polynomial time
+approximation algorithm
+biplanar subgraph

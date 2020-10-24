@@ -1,13 +1,9 @@
-memory
-efficiency
-computation
-graph
-management
-irregular
-time
-parallel
-space
-problem
-scheme
-sparse
-dependence
+parallel time
+irregular computation
+space efficiency
+task graph
+dependence graph
+active memory
+memory management
+management scheme
+sparse matrix

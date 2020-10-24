@@ -1,7 +1,12 @@
-matrix
-problem
-bound
-envelope
-size
-symmetric
-factorization
+spectral algorithm
+assignment problem
+symmetric matrix
+envelope size
+envelope parameter
+envelope work
+laplacian matrix
+2-sum problem
+permutation matrix
+orthogonal matrix
+finite element
+element mesh

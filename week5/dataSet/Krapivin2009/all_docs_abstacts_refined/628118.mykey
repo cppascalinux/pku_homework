@@ -1,12 +1,6 @@
-unit
-use
-such
-linear
-structure
-input
-threshold
-function
-weight
-rnn
-discrete-state
-network
+tree automaton
+recursive neural
+neural network
+rnn use
+discrete-state rnn
+activation function

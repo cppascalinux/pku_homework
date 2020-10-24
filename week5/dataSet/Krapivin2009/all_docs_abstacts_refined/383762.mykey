@@ -1,14 +1,7 @@
-protocol
-network
-star
-link
-routing
-tree
-dsr
-wireless
-source
-change
-node
-failure
-router
-neighbor
+wireless network
+packet-radio network
+on-demand routing
+routing protocol
+source tree
+neighbor protocol
+new source

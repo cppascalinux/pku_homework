@@ -1,9 +1,5 @@
-problem
-frequency
-assignment
-network
-algorithm
-instance
-radio
-mobile
-constraint
+tabu search
+frequency assignment
+frequency interference
+assignment problem
+interference constraint

@@ -1,11 +1,11 @@
-loop
-algorithm
-compaction
-constraint
-problem
-due
-pipelining
-resource
-dependence
-graph
-software
+loop compaction
+loop shifting
+loop independent
+loop body
+software pipelining
+scheduling problem
+resource constraint
+independent dependence
+critical path
+dependence constraint
+dependence graph

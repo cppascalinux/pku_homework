@@ -1,14 +1,10 @@
-service
-reservation
-resource
-plan
-session
-qos
-level
-multi-resource
-rate
-algorithm
-end-to-end
-success
-requirement
-individual
+multi-resource reservation
+distributed service
+end-to-end qos
+resource requirement
+resource availability
+resource reservation
+reservation plan
+reservation algorithm
+success rate
+qos level

@@ -1,9 +1,6 @@
-action
-system
-use
-type
-exception
-atomic
-ada
-support
-recovery
+atomic action
+programming language
+fault tolerance
+backward error
+error recovery
+forward error

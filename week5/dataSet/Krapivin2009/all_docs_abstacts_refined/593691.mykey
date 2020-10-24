@@ -1,4 +1,5 @@
-net
-petri
-transition
-supervisor
+acyclic petri
+petri net
+uncontrollable transition
+et al
+net supervisor

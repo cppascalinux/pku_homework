@@ -1,8 +1,6 @@
-search
-result
-category
-engine
-precision
-modification
-level
-machine
+query modification
+search engine
+support vector
+vector machine
+desired precision
+feature space

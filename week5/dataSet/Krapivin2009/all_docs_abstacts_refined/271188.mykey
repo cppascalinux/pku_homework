@@ -1,10 +1,9 @@
-cordic
-algorithm
-coordinate
-system
-error
-input
-arithmetic
-iteration
-operand
-architecture
+cordic algorithm
+cordic iteration
+angle computation
+hyperbolic coordinate
+coordinate system
+input operand
+input data
+redundant arithmetic
+circular coordinate

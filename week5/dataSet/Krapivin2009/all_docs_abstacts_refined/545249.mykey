@@ -1,10 +1,12 @@
-branch
-predictor
-history
-use
-prediction
-accuracy
-phase
-block
-constraint
-ev8
+alpha ev8
+branch predictor
+branch prediction
+branch history
+ev8 branch
+global history
+fetch block
+history branch
+index function
+prediction accuracy
+predictor use
+block old

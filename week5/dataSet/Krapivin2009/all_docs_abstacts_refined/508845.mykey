@@ -1,4 +1,4 @@
-protocol
-device
-communication
-system
+security protocol
+resource discovery
+device-to-proxy protocol
+public key

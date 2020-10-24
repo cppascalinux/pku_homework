@@ -1,7 +1,10 @@
-method
-pencil
-system
-linear
-hessenberg
-matrix
-transformation
+cayley transformation
+rational krylov
+krylov sequence
+krylov method
+sequence method
+matrix pencil
+rks method
+linear system
+iterative method
+shift-invert transformation

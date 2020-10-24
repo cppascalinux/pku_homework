@@ -1,9 +1,10 @@
-task
-algorithm
-parallelization
-scheduling
-resource
-system
-study
-real-time
-requirement
+scheduling algorithm
+multiprocessor system
+real-time system
+real-time task
+resource requirement
+computation time
+simulation study
+myopic algorithm
+task scheduling
+task parallelization

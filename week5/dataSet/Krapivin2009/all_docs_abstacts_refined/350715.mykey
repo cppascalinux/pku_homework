@@ -1,10 +1,10 @@
-proximal
-operator
-point
-algorithm
-method
-problem
-function
-monotone
-bregman
-inequality
+proximal point
+point algorithm
+point method
+bregman function
+generalized proximal
+variational inequality
+maximal monotone
+monotone operator
+paramonotone operator
+convergence consistency

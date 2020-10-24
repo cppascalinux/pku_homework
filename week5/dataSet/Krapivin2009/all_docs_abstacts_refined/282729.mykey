@@ -1,7 +1,5 @@
-program
-fault
-fail-stops
-process
-design
-state
-component
+nonmasking fault-tolerance
+nonmasking program
+fault-tolerant program
+byzantine fault
+byzantine agreement

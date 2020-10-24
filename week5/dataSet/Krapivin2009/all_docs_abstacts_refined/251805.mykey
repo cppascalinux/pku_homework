@@ -1,8 +1,7 @@
-metric
-measure
-point
-image
-object
-distance
-model
-feature
+image metric
+image point
+transformation metric
+closed-form solution
+model point
+affine transformation
+affine view

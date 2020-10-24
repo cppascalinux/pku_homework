@@ -1,8 +1,5 @@
-algorithm
-unit
-mobile
-delivery
-present
-message
-node
-location
+mobile unit
+message delivery
+home agent
+delivery algorithm
+maintenance algorithm

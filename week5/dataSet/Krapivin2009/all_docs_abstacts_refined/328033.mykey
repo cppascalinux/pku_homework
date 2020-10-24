@@ -1,9 +1,9 @@
-method
-rate
-parallel
-sor
-convergence
-paragon
-partition
-intel
-psor
+parallel sor
+parallel performance
+sor method
+psor method
+same asymptotic
+asymptotic rate
+block partition
+strip partition
+intel delta

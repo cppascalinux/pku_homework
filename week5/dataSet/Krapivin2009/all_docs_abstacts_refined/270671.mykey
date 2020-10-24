@@ -1,10 +1,5 @@
-method
-equation
-system
-approximation
-function
-matrix
-exponential
-krylov
-linear
-bound
+krylov subspace
+subspace approximation
+subspace method
+linear system
+differential equation

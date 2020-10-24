@@ -1,6 +1,7 @@
-group
-matrix
-condition
-system
-lie
-controllability
+right-invariant system
+lie group
+control system
+sufficient controllability
+controllability condition
+operator ad
+bilinear system

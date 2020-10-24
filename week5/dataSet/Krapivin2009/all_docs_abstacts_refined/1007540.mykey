@@ -1,8 +1,8 @@
-mode
-selector
-program
-steering
-technique
-behavior
-new
-system
+program steering
+new mode
+new environment
+mode selector
+original program
+original mode
+robot control
+control program

@@ -1,6 +1,8 @@
-system
-leader
-service
-partitionable
-local
-election
+available local
+local leader
+leader election
+leader service
+election service
+election problem
+election protocol
+partitionable system

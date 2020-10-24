@@ -1,6 +1,6 @@
-bandwidth
-space
-buffer
-disk
-scheme
-model
+buffer space
+disk bandwidth
+vbr scheme
+dynamic period
+period length
+static period

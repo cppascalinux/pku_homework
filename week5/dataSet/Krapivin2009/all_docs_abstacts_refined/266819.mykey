@@ -1,6 +1,6 @@
-instruction
-size
-program
-reduction
-sequence
-set
+instruction sequence
+instruction set
+single instruction
+compressed program
+code size
+program size

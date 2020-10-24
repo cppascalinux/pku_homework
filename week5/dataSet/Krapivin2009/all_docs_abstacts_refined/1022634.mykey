@@ -1,6 +1,6 @@
-graph
-disk
-network
-unit
-wireless
-coordinate
+unit disk
+disk graph
+ad hoc
+sensor network
+virtual coordinate
+d-quasi unit

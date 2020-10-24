@@ -1,10 +1,8 @@
-collection
-generation
-garbage
-thread
-object
-collector
-benchmark
-application
-time
-multiprocessor
+generational collector
+generational collection
+garbage collector
+garbage collection
+program thread
+young object
+young generation
+old generation

@@ -1,5 +1,7 @@
-quantum
-complexity
-algorithm
-query
-function
+quantum algorithm
+quantum query
+boolean function
+error probability
+bounded-error setting
+decision tree
+query complexity

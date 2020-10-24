@@ -1,10 +1,8 @@
-node
-color
-access
-memory
-tree
-array
-path
-bank
-conflict-free
-system
+conflict-free access
+bidimensional array
+circular list
+complete tree
+memory bank
+memory system
+same color
+access path

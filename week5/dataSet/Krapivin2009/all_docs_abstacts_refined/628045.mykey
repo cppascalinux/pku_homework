@@ -1,12 +1,7 @@
-application
-level
-resource
-execution
-system
-real-time
-manager
-support
-mechanism
-need
-soft
-abstraction
+soft real-time
+resource manager
+real-time application
+real-time system
+dynamic negotiation
+execution level
+negotiation mechanism

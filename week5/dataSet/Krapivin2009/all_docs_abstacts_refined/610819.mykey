@@ -1,7 +1,2 @@
-machine
-representation
-real
-one
-function
-type
-sequence
+gray code
+digit representation

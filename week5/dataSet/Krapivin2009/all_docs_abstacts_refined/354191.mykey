@@ -1,7 +1,5 @@
-point
-camera
-image
-method
-self-calibration
-correspondence
-calibration
+projective camera
+internal parameter
+trifocal tensor
+planar motion
+image point

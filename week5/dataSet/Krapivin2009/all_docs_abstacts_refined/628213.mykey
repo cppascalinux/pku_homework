@@ -1,10 +1,5 @@
-system
-rule
-failure
-negation
-production
-semantics
-example
-coincide
-such
-priority
+production system
+production rule
+classical production
+stable semantics
+general production

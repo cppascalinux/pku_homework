@@ -1,9 +1,4 @@
-algorithm
-db
-detection
-predicate
-ordering
-state
-po
-global
-clock
+global predicate
+global state
+detection algorithm
+po db

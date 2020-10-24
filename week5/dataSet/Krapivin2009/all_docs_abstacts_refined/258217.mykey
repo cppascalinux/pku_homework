@@ -1,5 +1,6 @@
-pivoting
-method
-partial
-system
-strategy
+diagonal pivoting
+pivoting method
+pivoting strategy
+partial pivoting
+linear system
+growth factor

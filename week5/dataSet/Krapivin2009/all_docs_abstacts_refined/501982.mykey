@@ -1,13 +1,6 @@
-key
-member
-use
-group
-service
-distribution
-policy
-protocol
-security
-system
-such
-ensemble
-trust
+group communication
+group member
+group key
+communication system
+authentication service
+trust policy

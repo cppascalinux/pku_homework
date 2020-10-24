@@ -1,6 +1,5 @@
-term
-transform
-lambda
-retraction
-form
-theorem
+cps transform
+computational transform
+retraction theorem
+lambda term
+lambda calculus

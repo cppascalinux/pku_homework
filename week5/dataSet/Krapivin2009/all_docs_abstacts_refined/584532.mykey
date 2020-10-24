@@ -1,8 +1,4 @@
-constraint
-program
-nonlinear
-semidefinite
-variable
-algorithm
-function
-inequality
+interior-point algorithm
+nonlinear program
+semidefinite program
+positive semidefinite

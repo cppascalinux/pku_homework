@@ -1,10 +1,10 @@
-query
-document
-method
-length
-language
-term
-describe
-relevant
-filter
-parameter
+language filter
+language document
+term-selection method
+target language
+target concept
+target document
+query length
+query parameter
+query-generation method
+initial document

@@ -1,7 +1,5 @@
-processor
-protocol
-fault
-token
-register
-time
-ring
+superstabilizing protocol
+mutual exclusion
+transient fault
+passage predicate
+exclusion protocol

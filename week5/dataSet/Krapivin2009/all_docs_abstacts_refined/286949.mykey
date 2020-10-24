@@ -1,10 +1,6 @@
-property
-class
-metaclass
-compatibility
-metaclasses
-model
-issue
-programming
-address
-specific
+class property
+compatibility issue
+compatibility model
+specific property
+property metaclasses
+property metaclass

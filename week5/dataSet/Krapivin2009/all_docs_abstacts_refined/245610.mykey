@@ -1,7 +1,4 @@
-global
-predicate
-sequence
-program
-consistent
-detection
-distributed
+distributed program
+global predicate
+global sequence
+consistent global

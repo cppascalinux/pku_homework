@@ -1,5 +1,12 @@
-channel
-capacity
-m-qam
-ber
-fading
+nakagami fading
+fading channel
+average ber
+rate adaptation
+rate adaptive
+rate m-qam
+nmf channel
+channel capacity
+spectral efficiency
+variable-rate m-qam
+time delay
+adaptive m-qam

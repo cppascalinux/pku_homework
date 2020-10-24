@@ -1,8 +1,7 @@
-hair
-model
-strand
-dynamic
-collision
-interaction
-simulation
-coordinate
+hair-hair interaction
+guide strand
+guide hair
+static link
+dense hair
+hair model
+hair strand

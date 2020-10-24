@@ -1,6 +1,5 @@
-translation
-machine
-binary
-framework
-code
-dynamic
+dynamic binary
+dynamic translation
+binary translation
+target machine
+translation framework

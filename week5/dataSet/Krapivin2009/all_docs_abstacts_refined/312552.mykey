@@ -1,6 +1,5 @@
-algorithm
-elimination
-parent
-vertex
-similar
-gaussian
+incomplete factorization
+multigraph algorithm
+sparse matrix
+gaussian elimination
+vertex parent

@@ -1,6 +1,12 @@
-block
-window
-database
-spatial
-query
-structure
+window block
+window query
+spatial database
+spatial data
+quadtree block
+underlying spatial
+underlying database
+data structure
+active border
+disk i/o
+i/o request
+query window

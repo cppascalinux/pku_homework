@@ -1,8 +1,2 @@
-variable
-partitioning
-synthesis
-technique
-model
-selection
-result
-temporal
+temporal partitioning
+variable selection

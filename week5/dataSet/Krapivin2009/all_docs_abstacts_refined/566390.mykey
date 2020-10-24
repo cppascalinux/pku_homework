@@ -1,12 +1,4 @@
-variable
-use
-satisfiability
-set
-ordering
-function
-formula
-clause
-assignment
-constraint
-boolean
-problem
+boolean satisfiability
+transitivity constraint
+relational variable
+uninterpreted function

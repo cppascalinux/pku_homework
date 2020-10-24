@@ -1,8 +1,4 @@
-rule
-xml
-document
-database
-language
-eca
-active
-such
+xml repository
+active database
+active rule
+eca rule

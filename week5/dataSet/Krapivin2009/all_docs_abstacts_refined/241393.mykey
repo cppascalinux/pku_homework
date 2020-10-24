@@ -1,5 +1,2 @@
-algorithm
-model
-problem
-data
-parallel
+parallel algorithm
+matrix multiplication

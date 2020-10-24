@@ -1,6 +1,9 @@
-token
-protocol
-property
-time
-node
-timing
+timed token
+timing property
+token protocol
+token arrival
+synchronous message
+message deadline
+upper bound
+elapse time
+th arrival

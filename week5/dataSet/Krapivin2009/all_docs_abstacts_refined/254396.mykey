@@ -1,7 +1,6 @@
-process
-allocation
-load
-fault
-problem
-occurrence
-system
+process allocation
+process load
+load-balancing process
+allocation problem
+primary process
+backup process

@@ -1,9 +1,5 @@
-server
-system
-vod
-service
-client
-bandwidth
-multicast
-network
-video
+vod service
+vod system
+vod server
+multicast vod
+open issue

@@ -1,8 +1,5 @@
-band
-ordering
-compression
-algorithm
-optimal
-data
-image
-result
+multispectral image
+optimal ordering
+optimal compression
+prediction band
+band ordering

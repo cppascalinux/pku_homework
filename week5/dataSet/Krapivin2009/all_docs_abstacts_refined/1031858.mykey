@@ -1,6 +1,8 @@
-structure
-data
-location
-point
-segment
-dynamic
+dynamic data
+planar point
+planar subdivision
+point location
+data structure
+external memory
+vertical ray-shooting
+ray-shooting query

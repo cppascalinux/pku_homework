@@ -1,10 +1,5 @@
-interface
-clock
-board
-instruction
-pci
-processing
-system
-element
-frequency
-image
+processing element
+image processing
+pci interface
+pci board
+hacre chip

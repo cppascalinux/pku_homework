@@ -1,10 +1,9 @@
-pattern
-propagation
-refinement
-mechanism
-specification
-change
-schema
-modification
-database
-object-oriented
+reuse mechanism
+schema evolution
+schema modification
+object-oriented database
+propagation pattern
+pattern refinement
+operational requirement
+requirement change
+refinement mechanism

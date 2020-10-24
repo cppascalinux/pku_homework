@@ -1,7 +1,3 @@
-clock
-value
-fault
-model
-processor
-protocol
-byzantine
+clock synchronization
+clock value
+byzantine fault

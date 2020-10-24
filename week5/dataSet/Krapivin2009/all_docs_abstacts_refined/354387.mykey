@@ -1,7 +1,4 @@
-algorithm
-estimate
-matrix
-1-norm
-number
-estimator
-estimation
+1-norm pseudospectra
+1-norm power
+power method
+complex matrix

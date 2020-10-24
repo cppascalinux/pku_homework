@@ -1,10 +1,6 @@
-algorithm
-detection
-collision
-tree
-test
-data
-structure
-overlap
-suite
-cad
+hierarchical collision
+collision detection
+bounding volume
+data structure
+bv hierarchy
+overlap test

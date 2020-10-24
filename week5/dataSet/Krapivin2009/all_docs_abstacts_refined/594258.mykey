@@ -1,8 +1,4 @@
-system
-semi-thue
-decidable
-rule
-inhibitor
-one-rule
-derivation
-result
+semi-thue system
+uniform halting
+halting problem
+one-rule semi-thue

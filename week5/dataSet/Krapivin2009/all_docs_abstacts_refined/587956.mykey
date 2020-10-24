@@ -1,9 +1,6 @@
-graph
-interval
-constraint
-order
-system
-problem
-length
-distance
-uco
+interval graph
+interval order
+distance graph
+uco graph
+difference constraint
+intersection graph

@@ -1,9 +1,5 @@
-problem
-path
-program
-sclp
-constraint
-short
-programming
-sp
-cost
+logic programming
+short path
+sp problem
+soft constraint
+sclp program

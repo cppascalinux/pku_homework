@@ -1,6 +1,14 @@
-test
-coverage
-sequence
-generation
-enhancement
-circuit
+sequential circuit
+circuit test
+test generation
+test enhancement
+test sequence
+high level
+high fault
+gate level
+stuck-at fault
+fault coverage
+benchmark circuit
+statement coverage
+path coverage
+sequence enhancement

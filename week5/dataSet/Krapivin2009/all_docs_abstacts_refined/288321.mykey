@@ -1,14 +1,11 @@
-function
-input
-use
-predicate
-variable
-path
-constraint
-evaluate
-such
-linear
-method
-elimination
-generation
-data
+test data
+data generation
+branch predicate
+program input
+linear constraint
+linear function
+input variable
+use gaussian
+gaussian elimination
+predicate function
+predicate evaluate

@@ -1,6 +1,4 @@
-general
-property
-problem
-formula
-selection
-mu
+cnf formula
+propositional formula
+mu selection
+selection problem

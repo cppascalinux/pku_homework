@@ -1,6 +1,9 @@
-algorithm
-information
-alias
-analysis
-use
-tool
+points-to analysis
+software engineering
+alias information
+large program
+analysis algorithm
+precise alias
+alias-analysis algorithm
+use alias
+pointer analysis

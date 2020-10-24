@@ -1,8 +1,4 @@
-max
-constraint
-problem
-cut
-gadget
-dicut
-one
-algorithm
+optimization problem
+max cut
+max dicut
+approximation algorithm

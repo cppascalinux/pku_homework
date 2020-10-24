@@ -1,11 +1,10 @@
-time
-algorithm
-computation
-probabilistic
-node
-graph
-schedule
-model
-length
-task
-retiming
+computation time
+probabilistic retiming
+probabilistic rotation
+probabilistic graph
+rotation scheduling
+rotation schedule
+long path
+path computation
+retiming algorithm
+schedule length

@@ -1,13 +1,13 @@
-schedule
-element
-step
-prefix
-processor
-time
-computation
-number
-parallel
-more
-operation
-circuit
-problem
+strict time-optimal
+strict optimal
+optimal schedule
+optimal time
+parallel prefix
+parallel schedule
+parallel step
+time-optimal schedule
+prefix computation
+prefix problem
+prefix circuit
+time step
+schedule element

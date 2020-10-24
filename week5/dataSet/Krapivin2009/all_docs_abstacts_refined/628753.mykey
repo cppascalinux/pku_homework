@@ -1,5 +1,5 @@
-symmetry
-distance
-shape
-point
-object
+symmetry distance
+original shape
+occluded shape
+symmetric region
+symmetric shape

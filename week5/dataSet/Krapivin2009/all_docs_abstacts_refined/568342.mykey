@@ -1,5 +1,2 @@
-monad
-construction
-comonad
-category
-semantics
+kleisli construction
+eilenberg-moore construction

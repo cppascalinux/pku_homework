@@ -1,6 +1,4 @@
-type
-tuples
-language
-design
-assembly
-proof
+typed assembly
+assembly language
+garbage collection
+talt type

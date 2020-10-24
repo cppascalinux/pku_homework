@@ -1,15 +1,4 @@
-architecture
-polynomial
-delay
-result
-processor
-multiplier
-path
-algorithm
-error-locator
-code
-computation
-array
-decoder
-structure
-critical
+reed-solomon decoder
+reed-solomon code
+critical path
+path delay

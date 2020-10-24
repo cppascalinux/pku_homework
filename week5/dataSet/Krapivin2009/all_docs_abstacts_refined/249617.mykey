@@ -1,11 +1,8 @@
-graph
-algorithm
-interconnection
-diagnosability
-degree
-diagnosis
-vertex
-partition
-parameter
-grid
-topology
+sequential diagnosis
+diagnosis algorithm
+interconnection graph
+partition algorithm
+maximum degree
+grid graph
+vertex degree
+time complexity

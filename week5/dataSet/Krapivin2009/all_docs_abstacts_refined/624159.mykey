@@ -1,11 +1,5 @@
-network
-system
-model
-error
-message
-application
-access
-performance
-communication
-delivery
-virtual
+virtual network
+communication system
+reliable message
+message delivery
+error model

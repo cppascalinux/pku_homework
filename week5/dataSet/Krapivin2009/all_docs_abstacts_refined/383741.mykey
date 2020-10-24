@@ -1,17 +1,9 @@
-performance
-matrix
-algorithm
-routine
-size
-storage
-parameter
-packed
-gemm
-graph
-computer
-show
-recursive
-format
-architecture
-improvement
-factorization
+cholesky factorization
+cholesky algorithm
+packed storage
+recursive packed
+rpc algorithm
+rpc factorization
+matrix size
+factorization algorithm
+factorization routine

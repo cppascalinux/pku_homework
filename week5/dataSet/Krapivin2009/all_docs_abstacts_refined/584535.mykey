@@ -1,11 +1,7 @@
-variable
-algorithm
-distribution
-parallel
-direction
-problem
-case
-approximate
-subproblems
-constraint
-set
+parallel variable
+parallel subproblems
+variable distribution
+secondary variable
+pvd algorithm
+feasible set
+gradient direction

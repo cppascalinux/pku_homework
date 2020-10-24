@@ -1,8 +1,5 @@
-matrix
-algorithm
-require
-operation
-few
-floating-point
-reduction
-use
+symmetric matrix
+full matrix
+full symmetric
+tridiagonal form
+banded matrix

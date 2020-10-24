@@ -1,7 +1,8 @@
-error
-rate
-relaxation
-law
-convergence
-scheme
-estimate
+convergence rate
+relaxation scheme
+relaxation error
+conservation law
+error estimate
+scalar conservation
+discretization error
+initial error

@@ -1,7 +1,9 @@
-module
-type
-element
-constructor
-xml
-language
-expression
+parametric module
+xml element
+xml document
+element type
+module expression
+module module
+validation function
+type constructor
+higher-order module

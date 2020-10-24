@@ -1,7 +1,4 @@
-flow
-method
-cell
-problem
-projection
-grid
-incompressible
+cartesian grid
+projection method
+compressible flow
+mixed cell

@@ -1,10 +1,6 @@
-language
-constraint
-real-time
-construct
-system
-model
-timing
-hard
-transformation
-programming
+language construct
+hard real-time
+real-time system
+real-time language
+timing constraint
+time constraint

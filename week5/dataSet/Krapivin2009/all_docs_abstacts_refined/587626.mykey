@@ -1,7 +1,4 @@
-disturbance
-input
-control
-set
-problem
-system
-uncertainty
+reachability set
+open-loop control
+open-loop reach
+reach set

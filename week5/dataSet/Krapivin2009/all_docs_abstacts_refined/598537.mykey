@@ -1,7 +1,5 @@
-segmentation
-image
-problem
-phase
-model
-level
-function
+image segmentation
+piecewise constant
+piecewise smooth
+active contour
+contour model

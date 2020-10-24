@@ -1,6 +1,5 @@
-cache
-instruction
-mechanism
-i-fetch
-fetch
-organization
+instruction fetch
+instruction word
+instruction cache
+compressed encoding
+silo cache

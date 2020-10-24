@@ -1,4 +1,3 @@
-monotone
-problem
-complexity
-cnf
+monotone cnf
+polynomial time
+limited nondeterminism

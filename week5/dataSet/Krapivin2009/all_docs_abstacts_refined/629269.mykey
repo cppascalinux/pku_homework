@@ -1,11 +1,6 @@
-predicate
-detection
-true
-global
-algorithm
-distributed
-message
-system
-process
-program
-conjunctive
+weak conjunctive
+unstable predicate
+distributed program
+distributed system
+global predicate
+conjunctive predicate

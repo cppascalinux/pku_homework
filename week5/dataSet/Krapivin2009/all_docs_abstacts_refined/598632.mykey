@@ -1,11 +1,7 @@
-energy
-interferers
-strong
-mean
-receiver
-significant
-system
-variability
-cancellation
-interference
-matrix
+interference cancellation
+ds-cdma system
+received signal
+received vector
+significant mean
+mean energy
+low variability

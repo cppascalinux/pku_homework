@@ -1,13 +1,8 @@
-algorithm
-assertion
-synthesis
-formal
-system
-property
-error
-task
-theorem
-fdls
-schedule
-invariant
-discover
+formal assertion
+high-level synthesis
+synthesis system
+fdls algorithm
+proof exercise
+schedule algorithm
+scheduling task
+scheduling algorithm

@@ -1,15 +1,6 @@
-method
-use
-standard
-form
-algorithm
-iteration
-jdqr
-matrix
-eigenproblem
-value
-eigenvalue
-eigenproblems
-jdqz
-schur
-subspace
+subspace method
+generalized eigenvalue
+generalized schur
+standard eigenproblem
+schur form
+target value

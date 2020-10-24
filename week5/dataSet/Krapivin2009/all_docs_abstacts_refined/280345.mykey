@@ -1,17 +1,7 @@
-image
-point
-data
-3-d
-algorithm
-merging
-scene
-8-point
-approach
-location
-distribution
-depth
-result
-view
-map
-camera
-stereo
+3-d data
+3-d point
+depth map
+image sequence
+image point
+camera location
+8-point algorithm

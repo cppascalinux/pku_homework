@@ -1,7 +1,6 @@
-algorithm
-cost
-routing
-bound
-afr
-route
-geometric
+geometric ad-hoc
+mobile ad-hoc
+ad-hoc routing
+routing algorithm
+transmission range
+low bound

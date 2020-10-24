@@ -1,10 +1,4 @@
-protocol
-model
-population
-computation
-probability
-predicate
-agent
-interaction
-computable
-high
+stable computation
+computable predicate
+high probability
+population protocol

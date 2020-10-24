@@ -1,11 +1,9 @@
-algorithm
-jitter
-guarantee
-sequence
-control
-b.
-space
-time
-packet
-arrival
-delay
+jitter control
+on-line algorithm
+control algorithm
+off-line algorithm
+arrival sequence
+delay jitter
+buffer space
+rate jitter
+time sequence

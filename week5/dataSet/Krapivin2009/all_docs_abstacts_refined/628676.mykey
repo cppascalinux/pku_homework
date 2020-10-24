@@ -1,10 +1,4 @@
-motion
-segmentation
-image
-sequence
-estimation
-method
-scene
-map
-object
-support
+robust estimation
+support map
+description length
+image sequence

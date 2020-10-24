@@ -1,6 +1,2 @@
-model
-speed
-link
-protocol
-network
-transport
+transport protocol
+three-dimensional model

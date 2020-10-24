@@ -1,14 +1,5 @@
-view
-graph
-constraint
-query
-time
-cost
-algorithm
-problem
-data
-set
-response
-solution
-total
-space
+data warehouse
+data cube
+view graph
+and-or view
+view-selection problem

@@ -1,7 +1,5 @@
-protocol
-node
-message
-topology
-stability
-detection
-network
+stability detection
+stability message
+logical hypercube
+detection protocol
+network topology

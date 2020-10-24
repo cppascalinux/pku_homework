@@ -1,10 +1,17 @@
-transaction
-management
-system
-global
-order
-multidatabase
-execution
-conflict
-serializability
-schedule
+multidatabase transaction
+multidatabase environment
+multidatabase system
+global serializability
+global scheduler
+global transaction
+local transaction
+local serializability
+local system
+local schedule
+local serialization
+transaction management
+transaction execution
+management system
+analogous execution
+serialization order
+execution order

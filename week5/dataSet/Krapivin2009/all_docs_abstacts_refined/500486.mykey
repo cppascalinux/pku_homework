@@ -1,7 +1,4 @@
-protocol
-network
-wireless
-layer
-power
-stack
-mobile
+network protocol
+wireless network
+protocol stack
+application layer

@@ -1,12 +1,8 @@
-model
-data
-mixture
-parameter
-point
-space
-set
-level
-algorithm
-visualization
-latent
-variable
+latent variable
+latent space
+variable model
+data space
+data set
+data point
+visualization algorithm
+mixture model

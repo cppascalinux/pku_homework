@@ -1,9 +1,6 @@
-analysis
-point
-pattern
-image
-texture
-method
-similarity
-dissimilarity
-clustering
+density-based clustering
+point pattern
+point separation
+clustering method
+texture analysis
+image texture

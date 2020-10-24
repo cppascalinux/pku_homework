@@ -1,9 +1,5 @@
-firmware
-esp
-memory
-overhead
-safety
-device
-scheme
-implementation
-process
+dynamic memory
+programmable device
+model checker
+vmmc firmware
+memory safety

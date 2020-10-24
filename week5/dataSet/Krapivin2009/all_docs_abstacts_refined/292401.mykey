@@ -1,5 +1,6 @@
-cholesky
-number
-condition
-perturbation
-result
+perturbation analysis
+perturbation bound
+cholesky factorization
+upper triangular
+condition number
+matrix equation

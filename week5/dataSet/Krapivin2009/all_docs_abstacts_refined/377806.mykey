@@ -1,6 +1,6 @@
-loop
-fusion
-array
-contraction
-technique
-memory
+data locality
+memory reduction
+memory requirement
+loop shifting
+loop fusion
+array contraction

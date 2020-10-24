@@ -1,8 +1,8 @@
-number
-condition
-difference
-finite
-matrix
-preconditioning
-collocation
-mesh
+finite difference
+orthogonal collocation
+collocation equation
+collocation matrix
+boundary value
+boundary condition
+value problem
+condition number

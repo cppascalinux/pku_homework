@@ -1,7 +1,10 @@
-matrix
-factorization
-diagonal
-ilu
-strategy
-technique
-element
+reordering strategy
+incomplete lu
+lu factorization
+indefinite matrix
+ilu factorization
+diagonal dominance
+diagonal element
+schur complement
+complement matrix
+small diagonal

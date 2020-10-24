@@ -1,9 +1,5 @@
-curve
-algorithm
-principal
-length
-point
-definition
-vertex
-data
-line
+principal curve
+smooth curve
+polygonal line
+data point
+line algorithm

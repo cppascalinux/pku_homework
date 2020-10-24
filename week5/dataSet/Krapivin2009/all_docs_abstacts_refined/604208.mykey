@@ -1,7 +1,3 @@
-community
-method
-numeric
-use
-csps
-constraint
-interval
+numeric csps
+filtering algorithm
+interval analysis

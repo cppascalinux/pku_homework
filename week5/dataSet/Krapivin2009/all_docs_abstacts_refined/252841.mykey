@@ -1,8 +1,6 @@
-view
-likelihood
-recognition
-object
-stability
-image
-algorithm
-measure
+view likelihood
+view stability
+camera orientation
+most stable
+most likely
+object recognition

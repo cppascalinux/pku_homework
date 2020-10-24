@@ -1,9 +1,5 @@
-model
-gaseous
-fuel
-flame
-hot
-product
-fire
-buoyancy
-rise
+hot gaseous
+gaseous product
+gaseous fuel
+solid fuel
+reaction zone

@@ -1,10 +1,6 @@
-failure
-recovery
-node
-link
-network
-use
-path
-loop-back
-algorithm
-ring
+loop-back recovery
+mesh network
+node failure
+generalized loop-back
+link failure
+network management

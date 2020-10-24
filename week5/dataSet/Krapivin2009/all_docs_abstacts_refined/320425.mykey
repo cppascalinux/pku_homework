@@ -1,12 +1,11 @@
-collection
-cost
-object
-copy
-garbage
-collector
-heap
-generational
-algorithm
-barrier
-implementation
-write
+garbage collection
+garbage collector
+generational garbage
+generational collector
+generational collection
+young object
+collection algorithm
+collection cost
+write barrier
+heap object
+copy cost

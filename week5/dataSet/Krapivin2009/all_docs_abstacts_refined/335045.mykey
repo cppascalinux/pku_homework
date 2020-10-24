@@ -1,11 +1,10 @@
-mapping
-depth
-algorithm
-result
-network
-decomposition
-gate
-solution
-area
-technology
-small
+structural gate
+gate decomposition
+depth-optimal technology
+technology mapping
+k-bounded network
+mapping depth
+mapping solution
+mapping area
+mapping approach
+decomposition algorithm

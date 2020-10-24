@@ -1,6 +1,4 @@
-model
-segmentation
-present
-image
-result
-surface
+parametric polynomial
+image segmentation
+polynomial surface
+range image

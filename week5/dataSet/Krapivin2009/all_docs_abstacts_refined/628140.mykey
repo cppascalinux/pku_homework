@@ -1,9 +1,10 @@
-transaction
-global
-system
-database
-flexible
-local
-schedule
-abort
-execution
+flexible transaction
+distributed database
+database system
+global transaction
+global concurrency
+global schedule
+global subtransactions
+local database
+local transaction
+concurrency control

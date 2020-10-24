@@ -1,7 +1,7 @@
-method
-problem
-elliptic
-analysis
-mesh
-discontinuous
-galerkin
+error analysis
+local discontinuous
+discontinuous galerkin
+galerkin method
+elliptic problem
+ldg method
+element method

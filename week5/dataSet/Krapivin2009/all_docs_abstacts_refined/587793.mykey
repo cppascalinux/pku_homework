@@ -1,6 +1,6 @@
-method
-problem
-regularization
-parameter
-projection
-solution
+regularization parameter
+regularization method
+iterative method
+ill-posed problem
+krylov subspace
+original problem

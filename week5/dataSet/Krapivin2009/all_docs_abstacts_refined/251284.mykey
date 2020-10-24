@@ -1,10 +1,5 @@
-problem
-polyhedron
-lp
-point
-condition
-form
-nondegeneracy
-feasible
-standard
-programming
+linear programming
+feasible polyhedron
+feasible point
+lp problem
+one point

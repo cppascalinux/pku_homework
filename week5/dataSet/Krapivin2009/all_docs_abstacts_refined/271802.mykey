@@ -1,11 +1,6 @@
-algorithm
-program
-test
-analysis
-coverage
-old
-selection
-information
-flow
-new
-control
+control flow
+regression test
+test selection
+more precise
+edge coverage
+path coverage

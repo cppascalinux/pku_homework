@@ -1,7 +1,3 @@
-graph
-array
-algorithm
-reconfiguration
-dynamic
-application
-fault-tolerant
+application graph
+dynamic graph
+redundant graph

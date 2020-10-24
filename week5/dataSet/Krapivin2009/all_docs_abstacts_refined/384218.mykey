@@ -1,9 +1,4 @@
-register
-allocator
-code
-processor
-generation
-embedded
-compiler
-feature
-mean
+network processor
+code generation
+register allocator
+assembly code

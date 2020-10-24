@@ -1,8 +1,5 @@
-language
-complexity
-core
-theorem
-np
-class
-time
-bound
+exponential time
+complexity class
+complexity core
+upper bound
+-hard language

@@ -1,9 +1,4 @@
-network
-sample
-sensor
-node
-data
-function
-model
-concept
-flow
+sensor network
+sensor data
+rate/distortion function
+source coding

@@ -1,11 +1,5 @@
-block
-scheduling
-super
-scheduler
-such
-problem
-information
-heuristic
-algorithm
-profile
-region
+instruction level
+super block
+level parallelism
+profile information
+code region

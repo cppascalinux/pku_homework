@@ -1,7 +1,12 @@
-log
-information
-access
-scheme
-logging
-data
-system
+shared memory
+logging scheme
+logging frequency
+data item
+data access
+writer process
+volatile storage
+volatile log
+access information
+stable storage
+stable logging
+stable log

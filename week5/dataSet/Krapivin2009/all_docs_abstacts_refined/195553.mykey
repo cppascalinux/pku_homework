@@ -1,10 +1,11 @@
-algorithm
-branch
-alignment
-architecture
-performance
-improvement
-model
-cost
-prediction
-block
+branch alignment
+branch prediction
+branch architecture
+basic block
+alignment algorithm
+instruction cache
+cost model
+prediction architecture
+alpha axp
+execution time
+static branch

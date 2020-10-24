@@ -1,11 +1,4 @@
-curve
-prime
-elliptic
-use
-order
-system
-cryptosystems
-point
-attack
-rsa
-algorithm
+elliptic curve
+elliptic curve-based
+strong prime
+cycling attack

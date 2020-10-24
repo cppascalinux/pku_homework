@@ -1,10 +1,8 @@
-miss
-analysis
-cache
-data
-time
-program
-prediction
-reference
-result
-use
+timing analysis
+data cache
+data reference
+cache performance
+cache miss
+time analysis
+execution time
+real-time system

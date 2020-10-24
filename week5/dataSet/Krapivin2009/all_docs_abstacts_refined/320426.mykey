@@ -1,11 +1,7 @@
-register
-file
-use
-size
-deallocation
-processor
-technique
-performance
-thread
-number
-instruction
+register deallocation
+register file
+simultaneous multithreading
+smt processor
+large register
+physical register
+last use

@@ -1,20 +1,7 @@
-method
-processor
-use
-data
-time
-cube
-sort
-computation
-algorithm
-partition
-order
-top-down
-different
-group-by
-balance
-memory
-parallel
-construction
-run
-sequential
+data cube
+cube construction
+construction method
+sort order
+top-down data
+parallel top-down
+run time

@@ -1,12 +1,10 @@
-link
-rate
-error
-cost
-path
-transmission
-algorithm
-packet
-hop
-energy
-number
-power
+energy cost
+transmission power
+transmission energy
+link cost
+link error
+link layer
+error rate
+reliable packet
+packet error
+power scenario

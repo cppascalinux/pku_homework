@@ -1,6 +1,7 @@
-language
-database
-method
-object-oriented
-semantics
-inheritance
+logical semantics
+deductive object-oriented
+object-oriented database
+database language
+rule-based method
+conflict resolution
+well-defined database

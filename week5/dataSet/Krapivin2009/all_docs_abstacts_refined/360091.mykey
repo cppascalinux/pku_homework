@@ -1,7 +1,2 @@
-layer
-separation
-image
-method
-kernel
-transparent
-estimation
+transparent layer
+blur kernel

@@ -1,7 +1,3 @@
-equation
-model
-mixing
-closure
-process
-rayleigh-taylor
-flow
+chunk mix
+mix model
+diffusion model

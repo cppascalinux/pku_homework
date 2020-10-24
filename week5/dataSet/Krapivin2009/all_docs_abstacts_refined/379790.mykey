@@ -1,10 +1,7 @@
-problem
-program
-decomposition
-method
-network
-parallel
-master
-multicommodity
-type
-subproblems
+block-angular linear
+linear program
+analytic center
+plane method
+master program
+parallel machine
+parallel computation

@@ -1,14 +1,7 @@
-miss
-graph
-procedure
-cache
-order
-rate
-line
-algorithm
-interaction
-model
-coloring
-conflict
-program
-temporal
+instruction cache
+cache line
+cache miss
+call graph
+temporal interaction
+conflict miss
+miss rate

@@ -1,13 +1,10 @@
-approximation
-image
-segmentation
-model
-function
-use
-texture
-field
-random
-partition
-parameter
-markov
-result
+markov random
+random field
+textured image
+textured region
+image segmentation
+selectionist relaxation
+texture segmentation
+texture parameter
+texture model
+partition function

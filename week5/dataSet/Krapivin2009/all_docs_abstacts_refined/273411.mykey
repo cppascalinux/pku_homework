@@ -1,6 +1,5 @@
-itrr
-region
-point
-trust
-function
-model
+initial trust
+trust region
+region radius
+region method
+objective function

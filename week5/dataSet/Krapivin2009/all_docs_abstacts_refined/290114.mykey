@@ -1,18 +1,10 @@
-packet
-traffic
-class
-requirement
-time-constrained
-router
-parameter
-network
-delay
-design
-buffer
-real-time
-latency
-bound
-performance
-share
-scheduling
-architecture
+router architecture
+real-time communication
+real-time router
+time-constrained traffic
+time-constrained packet
+best-effort packet
+best-effort traffic
+traffic class
+performance requirement
+delay bound

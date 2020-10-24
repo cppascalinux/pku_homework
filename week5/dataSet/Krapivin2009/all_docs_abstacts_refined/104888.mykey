@@ -1,7 +1,8 @@
-net
-subclass
-model
-persistent
-mean
-vector
-bound
+petri net
+unique consistent
+count vector
+marked graph
+marked net
+net subclass
+mono-t-semiflow net
+persistent net

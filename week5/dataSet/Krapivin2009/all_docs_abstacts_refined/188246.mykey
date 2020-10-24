@@ -1,11 +1,10 @@
-time
-slot
-switch
-network
-delay
-control
-sorter
-permuter
-optical
-system
-domain
+time slot
+time domain
+exchange switch
+space domain
+slot sorter
+slot permuter
+slot time
+bitonic decomposition
+control complexity
+frame delay

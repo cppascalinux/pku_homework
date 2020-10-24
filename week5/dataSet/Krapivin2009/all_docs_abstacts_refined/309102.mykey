@@ -1,7 +1,11 @@
-interior-point
-problem
-method
-trust-region
-constraint
-convergence
-algorithm
+global convergence
+trust-region interior-point
+trust-region algorithm
+trust-region method
+interior-point trust-region
+interior-point method
+optimal control
+control problem
+finite-dimensional problem
+convergence result
+bound constraint

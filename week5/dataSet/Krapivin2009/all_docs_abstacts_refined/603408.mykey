@@ -1,10 +1,9 @@
-attester
-undeniable
-tree
-algorithm
-hash
-attestation
-element
-digest
-triple
-certificate
+certificate management
+undeniable attester
+authenticated search
+search tree
+collision-resistant hash
+collision-resistant attester
+hash function
+hash tree
+tree attester

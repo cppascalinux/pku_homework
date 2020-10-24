@@ -1,5 +1,4 @@
-logic
-modal
-procedure
-decision
-giunchiglia
+sat-based decision
+decision procedure
+classical modal
+modal logic

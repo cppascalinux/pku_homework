@@ -1,7 +1,3 @@
-model
-weight
-regression
-method
-pcr
-prediction
-learned
+principal component
+learned model
+unique contribution

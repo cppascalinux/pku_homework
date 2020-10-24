@@ -1,6 +1,3 @@
-job
-utilization
-scheduler
-processor
-gang
-parallel
+parallel job
+system utilization
+gang scheduler

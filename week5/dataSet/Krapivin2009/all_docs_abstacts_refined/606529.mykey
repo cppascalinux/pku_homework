@@ -1,6 +1,6 @@
-graph
-alphabet
-size
-set
-subgraphs
-relation
+letter graph
+induced subgraph
+2-letter graph
+threshold graph
+unbounded-interval graph
+subgraph relation

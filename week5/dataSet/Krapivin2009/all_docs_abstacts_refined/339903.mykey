@@ -1,11 +1,3 @@
-ordering
-inverse
-approximate
-matrix
-computation
-preconditioner
-algorithm
-numerical
-sparse
-system
-preconditioners
+sparse approximate
+approximate inverse
+preconditioner computation

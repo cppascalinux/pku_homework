@@ -1,10 +1,7 @@
-protocol
-language
-control
-system
-problem
-supervisory
-converter
-conversion
-approach
-event
+discrete event
+event system
+protocol conversion
+protocol converter
+supervisory control
+converter language
+service specification

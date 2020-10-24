@@ -1,14 +1,11 @@
-task
-algorithm
-queue
-system
-resource
-schedule
-backup
-real-time
-such
-relative
-scheduling
-deadline
-copy
-parameter
+fault-tolerant scheduling
+dynamic scheduling
+scheduling algorithm
+multiprocessor system
+real-time system
+real-time task
+task queue
+backup overloading
+backup copy
+resource reclaiming
+distance parameter

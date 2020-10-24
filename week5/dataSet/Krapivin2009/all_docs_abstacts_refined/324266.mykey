@@ -1,4 +1,3 @@
-protocol
-secret
-input
-typechecks
+security protocol
+cryptographic protocol
+spi calculus

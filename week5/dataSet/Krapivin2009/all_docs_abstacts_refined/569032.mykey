@@ -1,8 +1,4 @@
-property
-safety
-system
-check
-such
-model
-automaton
-space
+model checking
+model check
+safety property
+reachability analysis

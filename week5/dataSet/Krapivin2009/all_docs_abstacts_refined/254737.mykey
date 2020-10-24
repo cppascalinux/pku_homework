@@ -1,14 +1,6 @@
-error
-motion
-sequence
-image
-direction
-parameter
-estimation
-structure
-model
-velocity
-manifold
-heading
-constraint
-point
+motion estimation
+motion parameter
+rigid motion
+rotational velocity
+estimation error
+depth constraint

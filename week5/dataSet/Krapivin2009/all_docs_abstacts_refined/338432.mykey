@@ -1,10 +1,11 @@
-regularization
-diffusion
-filter
-technique
-method
-parameter
-functional
-variation
-process
-image
+diffusion filtering
+diffusion filter
+diffusion process
+regularization parameter
+regularization technique
+regularization method
+tikhonov regularization
+total variation
+variation regularization
+nonlinear diffusion
+perona-malik filter

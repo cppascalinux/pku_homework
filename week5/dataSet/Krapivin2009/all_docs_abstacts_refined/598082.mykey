@@ -1,5 +1,6 @@
-queue
-process
-distribution
-rate
-loss
+subexponential distribution
+loss rate
+finite buffer
+fluid queue
+arrival process
+buffer queue

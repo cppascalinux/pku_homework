@@ -1,20 +1,7 @@
-broadcast
-use
-model
-program
-profile
-client
-need
-request
-user
-time
-channel
-static
-server
-requirement
-data
-environment
-bandwidth
-dynamic
-uplink
-information
+communication environment
+uplink channel
+client profile
+broadcast model
+broadcast program
+data broadcast
+bandwidth requirement

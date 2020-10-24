@@ -1,9 +1,3 @@
-model
-requirement
-machine
-time
-ii
-specification
-state
-tcas
-symbolic
+symbolic model
+state machine
+tcas ii

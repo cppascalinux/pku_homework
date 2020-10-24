@@ -1,9 +1,7 @@
-tree
-criterion
-data
-bucket
-split
-mining
-regression
-classification
-more
+data mining
+mining criterion
+classification tree
+splitting criterion
+right bucket
+regression tree
+small bucket

@@ -1,6 +1,3 @@
-method
-cluster
-clustering
-model
-algorithm
-hierarchical
+gaussian model
+hierarchical clustering
+agglomerative hierarchical

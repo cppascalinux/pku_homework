@@ -1,10 +1,7 @@
-test
-classifier
-correctness
-machine
-set
-comparable
-algorithm
-code
-linear
-vector
+proximal support
+support vector
+vector machine
+machine classifier
+nonlinear classifier
+linear classifier
+matlab code

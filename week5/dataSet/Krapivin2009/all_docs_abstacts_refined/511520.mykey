@@ -1,8 +1,4 @@
-classification
-page
-web
-result
-method
-document
-text
-cluster
+web page
+web search
+target document
+entropy loss

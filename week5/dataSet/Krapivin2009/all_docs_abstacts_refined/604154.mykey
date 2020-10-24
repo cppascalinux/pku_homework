@@ -1,8 +1,7 @@
-site
-allocation
-memory
-object
-analysis
-unitary
-space
-point
+allocation site
+memory space
+unitary site
+unitary allocation
+preallocated memory
+java program
+program point

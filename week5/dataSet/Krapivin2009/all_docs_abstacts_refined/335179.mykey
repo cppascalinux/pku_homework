@@ -1,13 +1,7 @@
-image
-correspondence
-point
-motion
-sequence
-method
-constraint
-structure
-component
-tensor
-feature
-camera
-line
+image sequence
+third order
+order constraint
+order closure
+factorization method
+closure constraint
+tensor component

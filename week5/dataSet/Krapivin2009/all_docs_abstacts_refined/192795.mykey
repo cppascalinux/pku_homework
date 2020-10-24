@@ -1,11 +1,6 @@
-rule
-interaction
-node
-type
-link
-scheme
-presentation
-engine
-hierarchy
-level
-program
+interaction engine
+interaction scheme
+interaction rule
+rich hypertext
+hyperpro interaction
+link type

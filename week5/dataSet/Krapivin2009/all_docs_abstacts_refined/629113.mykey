@@ -1,7 +1,7 @@
-coterie
-join
-algorithm
-set
-quorum
-node
-nondominated
+join algorithm
+nonempty set
+composite coterie
+input coterie
+nondominated coterie
+tree coterie
+quorum set

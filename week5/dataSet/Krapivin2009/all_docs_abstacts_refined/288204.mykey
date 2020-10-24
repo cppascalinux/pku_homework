@@ -1,11 +1,4 @@
-system
-net
-petri
-behavior
-non-markovian
-model
-process
-example
-paper
-time
-several
+stochastic petri
+stochastic process
+petri net
+markov regenerative

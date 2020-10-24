@@ -1,7 +1,6 @@
-constraint
-process
-spacecraft
-system
-algorithm
-timing
-schedule
+data-consistency constraint
+error-recovery process
+galileo spacecraft
+real-time system
+timing constraint
+precedence constraint

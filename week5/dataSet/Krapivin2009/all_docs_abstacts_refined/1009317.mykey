@@ -1,15 +1,10 @@
-cell
-constraint
-gradient
-value
-analysis
-probe
-search
-algorithm
-pair
-such
-space
-cube
-dimension
-change
-represent
+data cube
+cell constraint
+probe cell
+probe constraint
+gradient cell
+gradient analysis
+gradient constraint
+measure value
+search space
+cube computation

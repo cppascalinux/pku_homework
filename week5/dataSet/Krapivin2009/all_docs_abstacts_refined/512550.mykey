@@ -1,17 +1,11 @@
-design
-space
-algorithm
-loop
-exploration
-computation
-memory
-application
-parallelism
-time
-synthesis
-such
-transformation
-implementation
-nest
-hardware
-tool
+hardware design
+hardware implementation
+design space
+space exploration
+loop transformation
+loop nest
+memory bound
+memory parallelism
+synthesis tool
+high-level synthesis
+exploration algorithm

@@ -1,7 +1,8 @@
-surface
-curve
-shape
-along
-control
-point
-triangulation
+free-form shape
+shape control
+smooth surface
+variational surface
+surface shape
+surface triangulation
+sample point
+control curve

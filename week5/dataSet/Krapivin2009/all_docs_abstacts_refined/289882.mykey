@@ -1,6 +1,5 @@
-loop
-register
-requirement
-pipelining
-increase
-software
+software pipelining
+register requirement
+functional unit
+memory traffic
+memory access

@@ -1,8 +1,6 @@
-curve
-frame
-field
-space
-point
-quaternion
-property
-set
+quaternion frame
+quaternion field
+quaternion space
+frame field
+space curve
+frenet frame

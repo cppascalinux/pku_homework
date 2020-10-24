@@ -1,8 +1,4 @@
-time
-processor
-model
-parameter
-communication
-configuration
-application
-loggp
+loggp model
+mpi communication
+synchronization structure
+execution time

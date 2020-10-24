@@ -1,7 +1,3 @@
-identifier
-name
-service
-address
-resolution
-data
-ip
+name resolution
+ip address
+flat name

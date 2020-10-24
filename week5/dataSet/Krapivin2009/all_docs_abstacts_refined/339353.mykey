@@ -1,6 +1,4 @@
-element
-method
-problem
-finite
-norm
-mortar
+multigrid method
+mortar finite
+finite element
+element method

@@ -1,10 +1,7 @@
-operation
-transaction
-copy
-read
-weak
-write
-access
-value
-support
-consistency
+write operation
+weak read
+weak operation
+weak transaction
+weak write
+read operation
+networking condition

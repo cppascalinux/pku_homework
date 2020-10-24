@@ -1,9 +1,4 @@
-program
-flowgraphs
-reducible
-result
-normalization
-transformation
-method
-structure
-graph
+control dependence
+control structure
+code replication
+normalization method

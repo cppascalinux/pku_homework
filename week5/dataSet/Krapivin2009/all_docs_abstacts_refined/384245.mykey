@@ -1,9 +1,10 @@
-miss
-algorithm
-cache
-performance
-design
-improvement
-tlb
-memory
-set
+memory performance
+algorithm design
+direct-mapped cache
+cache miss
+quicksort algorithm
+data set
+data cache
+tlb miss
+tlb padding
+mergesort algorithm

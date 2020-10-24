@@ -1,5 +1,4 @@
-sizing
-wire
-algorithm
-buffer
-insertion
+wire sizing
+buffer insertion
+power dissipation
+signal slew

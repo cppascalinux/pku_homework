@@ -1,11 +1,12 @@
-network
-algorithm
-channel
-utilization
-traffic
-pattern
-virtual
-k-ary
-performance
-n-cube
-routing
+message latency
+interconnection network
+wormhole routing
+routing algorithm
+fully-adaptive algorithm
+traffic pattern
+virtual channel
+physical channel
+k-ary n-cube
+hotspot traffic
+channel utilization
+uniform traffic

@@ -1,15 +1,11 @@
-model
-surface
-subdivision
-set
-data
-arbitrary
-topology
-shape
-large
-scheme
-design
-element
-degree
-freedom
-mesh
+dynamic subdivision
+dynamic model
+catmull-clark subdivision
+subdivision surface
+subdivision scheme
+smooth surface
+arbitrary topology
+recursive subdivision
+surface model
+data set
+finite element

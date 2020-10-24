@@ -1,8 +1,6 @@
-morph
-triangulation
-planar
-area
-vertex
-triangle
-linear
-approach
+compatible planar
+planar triangulation
+valid morph
+linear morph
+triangle area
+boundary vertex

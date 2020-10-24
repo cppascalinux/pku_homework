@@ -1,5 +1,4 @@
-time
-polynomial
-process
-tree
-language
+regular tree
+tree language
+tree automaton
+pa process

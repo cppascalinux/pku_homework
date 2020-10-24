@@ -1,13 +1,8 @@
-cache
-access
-data
-core
-processor
-system
-miss
-consumption
-bus
-power
-execution
-technique
-locality
+data cache
+power consumption
+execution core
+low temporal
+system bus
+l2 cache
+bus access
+cache miss

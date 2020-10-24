@@ -1,11 +1,6 @@
-stencil
-computation
-compiler
-machine
-distributed-memory
-compilation
-movement
-optimization
-array
-strategy
-data
+stencil computation
+stencil compilation
+stencil compiler
+compilation strategy
+data movement
+intraprocessor data

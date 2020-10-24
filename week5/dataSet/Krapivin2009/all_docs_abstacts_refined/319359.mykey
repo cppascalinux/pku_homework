@@ -1,8 +1,5 @@
-vertex
-compression
-mesh
-connectivity
-clustering
-method
-information
-non-manifold
+non-manifold mesh
+non-manifold vertex
+polygonal mesh
+manifold mesh
+mesh compression

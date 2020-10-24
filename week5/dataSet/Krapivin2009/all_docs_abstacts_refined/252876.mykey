@@ -1,11 +1,7 @@
-estimation
-segmentation
-image
-markov
-problem
-method
-hidden
-mixture
-chain
-field
-estimate
+generalized mixture
+markov chain
+markov field
+image segmentation
+mixture estimation
+hidden markov
+random field

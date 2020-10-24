@@ -1,6 +1,7 @@
-logic
-decidable
-simulation
-specification
-state
-relation
+normed simulation
+normed forward
+normed backward
+proof method
+execution fragment
+forward simulation
+backward simulation

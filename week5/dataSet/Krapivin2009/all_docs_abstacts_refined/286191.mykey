@@ -1,10 +1,9 @@
-predicate
-algorithm
-detection
-global
-such
-process
-state
-exchange
-computation
-message
+predicate detection
+distributed system
+distributed computation
+conjunctive form
+global predicate
+global state
+first algorithm
+consistent global
+detection algorithm

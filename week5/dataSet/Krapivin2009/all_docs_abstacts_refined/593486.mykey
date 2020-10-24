@@ -1,12 +1,14 @@
-balance
-mining
-rule
-high
-algorithm
-association
-skewness
-workload
-data
-parallel
-fpm
-technique
+data distribution
+data mining
+data skewness
+parallel mining
+parallel system
+association rule
+global pruning
+global support
+distribution characteristic
+workload balance
+high data
+high workload
+high balance
+high skewness

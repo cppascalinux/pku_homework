@@ -1,11 +1,12 @@
-query
-data
-set
-cost
-spatial
-model
-join
-system
-base
-access
-tool
+cost model
+spatial query
+spatial data
+spatial join
+spatial database
+join query
+data set
+data structure
+access method
+selection query
+node access
+database system

@@ -1,6 +1,5 @@
-edge
-path
-rule
-design
-model
-constraint
+design rule
+rule constraint
+rectangle edge
+edge path
+jch model

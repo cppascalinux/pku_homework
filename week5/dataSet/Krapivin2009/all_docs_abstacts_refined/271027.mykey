@@ -1,12 +1,14 @@
-model
-consistency
-protocol
-system
-memory
-dsm
-writer
-event
-coherence
-ordering
-multiple
-software
+coherence protocol
+memory consistency
+memory system
+consistency model
+dsm system
+software dsm
+hardware dsm
+event ordering
+release consistency
+more relaxed
+relaxed consistency
+multiple writer
+writer protocol
+state transition

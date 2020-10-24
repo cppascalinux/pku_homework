@@ -1,8 +1,11 @@
-problem
-layout
-adjustment
-optimization
-method
-approach
-constraint
-node
+graph layout
+layout adjustment
+constrained optimization
+quadratic programming
+local search
+search method
+egenet solver
+constraint satisfaction
+satisfaction problem
+optimization problem
+adjustment problem

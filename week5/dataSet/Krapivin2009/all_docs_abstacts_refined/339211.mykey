@@ -1,8 +1,7 @@
-service
-time
-mean
-distribution
-group
-system
-service-time
-unlimited
+service group
+service time
+different service-time
+service-time distribution
+m/g/s system
+performance measure
+mean service

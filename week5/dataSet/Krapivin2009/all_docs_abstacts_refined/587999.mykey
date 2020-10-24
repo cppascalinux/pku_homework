@@ -1,10 +1,13 @@
-time
-schedule
-job
-relaxation
-problem
-date
-release
-lp
-value
-algorithm
+release date
+scheduling problem
+completion time
+mean busy
+busy time
+lp relaxation
+lp schedule
+lp value
+approximation algorithm
+objective function
+function value
+time relaxation
+on-line algorithm

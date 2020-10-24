@@ -1,6 +1,4 @@
-strategy
-failure
-network
-node
-link/node
-overhead
+minimal order
+loop-free routing
+routing strategy
+operational overhead

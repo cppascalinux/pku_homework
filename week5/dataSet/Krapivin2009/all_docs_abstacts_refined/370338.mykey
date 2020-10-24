@@ -1,9 +1,3 @@
-query
-optimization
-union
-evaluation
-strategy
-technique
-rewrite
-algorithm
-tuple-tagging
+tuple-tagging algorithm
+query optimization
+query evaluation

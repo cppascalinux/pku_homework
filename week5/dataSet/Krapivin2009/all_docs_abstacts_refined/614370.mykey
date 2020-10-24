@@ -1,7 +1,5 @@
-ray
-casting
-algorithm
-method
-grid
-differs
-sweep
+sweep ray
+sweep algorithm
+irregular grid
+ray casting
+low bound

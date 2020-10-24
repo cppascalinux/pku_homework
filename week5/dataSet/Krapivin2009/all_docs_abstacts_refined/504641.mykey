@@ -1,18 +1,13 @@
-variation
-feedback
-tcp
-abr
-control
-rate
-size
-capacity
-loop
-link
-slow
-time
-bottleneck
-window
-throughput
-buffer
-model
-delay
+end-to-end abr
+rate feedback
+available capacity
+window size
+bottleneck bandwidth
+bottleneck link
+buffer size
+link capacity
+link buffer
+link rate
+tcp connection
+tcp window
+tcp throughput

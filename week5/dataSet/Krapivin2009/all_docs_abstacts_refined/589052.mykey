@@ -1,8 +1,6 @@
-optimization
-algorithm
-convergence
-problem
-result
-trust
-radius
-step
+global convergence
+trust radius
+trust-region subproblem
+trust-region algorithm
+linearized constraint
+quasi-normal component

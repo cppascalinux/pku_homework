@@ -1,7 +1,6 @@
-loop
-dependence
-nest
-algorithm
-such
-transformation
-locality
+loop transformation
+loop nest
+program model
+imperfectly-nested loop
+cache size
+output dependence

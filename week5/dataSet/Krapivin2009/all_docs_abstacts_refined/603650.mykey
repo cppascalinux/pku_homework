@@ -1,4 +1,5 @@
-rewrite
-termination
-system
-hierarchy
+relative undecidability
+term rewrite
+rewrite system
+rewrite rule
+termination hierarchy

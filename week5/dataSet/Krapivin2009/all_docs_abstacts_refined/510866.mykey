@@ -1,12 +1,10 @@
-analysis
-object
-extension
-method
-context
-result
-interprocedural
-show
-full
-barrier
-information
-call
+write barrier
+intraprocedural analysis
+callee type
+type extension
+caller context
+context extension
+full interprocedural
+interprocedural analysis
+young object
+analysis result

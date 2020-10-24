@@ -1,8 +1,11 @@
-delay
-model
-input
-interconnect
-ramp
-estimate
-moment
-tree
+analytical delay
+analytical ramp
+delay model
+delay estimate
+ramp input
+ramp delay
+elmore delay
+rise time
+input delay
+transfer function
+first moment

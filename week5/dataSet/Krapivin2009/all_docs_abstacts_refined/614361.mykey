@@ -1,13 +1,7 @@
-surface
-volume
-implicit
-control
-model
-object
-collision
-animation
-fusion
-substance
-detection
-local
-separation
+deformable model
+implicit surface
+implicit layer
+collision detection
+contact surface
+soft substance
+local volume

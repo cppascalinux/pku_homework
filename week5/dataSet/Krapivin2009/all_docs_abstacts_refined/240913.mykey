@@ -1,8 +1,5 @@
-time
-warp
-simulation
-protocol
-cost
-yawn
-synchronization
-performance
+bounded time
+time warp
+synchronization cost
+simulation time
+parallel simulation

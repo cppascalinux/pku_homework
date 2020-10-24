@@ -1,12 +1,7 @@
-estimate
-method
-link
-bandwidth
-packet
-hop
-probe
-quartet
-delay
-variation
-route
-such
+packet quartet
+link bandwidth
+link layer
+link rate
+bandwidth estimate
+delay variation
+estimation method

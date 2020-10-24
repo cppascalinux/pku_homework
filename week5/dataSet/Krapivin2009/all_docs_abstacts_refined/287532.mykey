@@ -1,6 +1,4 @@
-function
-matrix
-subspace
-sign
-algorithm
-invariant
+matrix sign
+sign function
+invariant subspace
+iterative refinement

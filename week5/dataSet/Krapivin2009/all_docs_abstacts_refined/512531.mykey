@@ -1,9 +1,11 @@
-type
-program
-system
-annotation
-check
-qualifier
-inference
-analysis
-correct
+flow-sensitive type
+flow-sensitive analysis
+type qualifier
+type system
+type inference
+type check
+standard type
+inference algorithm
+alias analysis
+strong update
+linux kernel

@@ -1,12 +1,4 @@
-server
-interface
-application
-audio
-use
-output
-input
-recognition
-system
-data
-type
-i/o
+audio server
+user interface
+recognition server
+telnet interface

@@ -1,9 +1,7 @@
-data
-source
-query
-access
-plan
-delay
-operator
-time
-technique
+query plan
+query optimization
+query execution
+response time
+data source
+remote source
+remote data

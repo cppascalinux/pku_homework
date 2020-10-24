@@ -1,10 +1,2 @@
-memory
-time
-rcm
-collection
-cycle
-implementation
-scheme
-node
-space
-model
+garbage collection
+hardware support

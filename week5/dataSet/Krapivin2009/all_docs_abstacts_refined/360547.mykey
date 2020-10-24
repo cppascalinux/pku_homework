@@ -1,10 +1,15 @@
-example
-memory
-concept
-problem
-description
-partial
-detection
-result
-accuracy
-learner
+partial memory
+memory learner
+memory requirement
+training example
+extreme example
+concept description
+concept boundary
+new concept
+new example
+predictive accuracy
+stagger concept
+cap detection
+detection problem
+intrusion detection
+learning system

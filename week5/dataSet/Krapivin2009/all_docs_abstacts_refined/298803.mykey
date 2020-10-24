@@ -1,13 +1,11 @@
-analysis
-locality
-specialization
-access
-memory
-function
-program
-local
-points-to
-pointer
-compiler
-reference
-data
+locality analysis
+locality inference
+memory access
+memory reference
+local pointer
+local memory
+data structure
+data access
+remote memory
+remote access
+remote data

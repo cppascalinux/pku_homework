@@ -1,20 +1,8 @@
-factorization
-memory
-machine
-sparse
-symbolic
-algorithm
-performance
-task
-code
-structure
-lu
-static
-scheduling
-strategy
-pivoting
-process
-matrix
-scheme
-parallelism
-data
+sparse lu
+sparse matrix
+lu factorization
+partial pivoting
+memory machine
+static symbolic
+symbolic factorization
+data mapping

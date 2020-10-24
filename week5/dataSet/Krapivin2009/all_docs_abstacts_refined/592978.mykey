@@ -1,13 +1,16 @@
-lock
-mode
-system
-state
-client
-file
-data
-structure
-server
-evaluation
-access
-algorithm
-compatibility
+session lock
+file system
+file session
+local file
+local process
+local lock
+lock state
+lock management
+lock mode
+lock compatibility
+lock evaluation
+distributed lock
+data structure
+locking system
+locking mode
+access mode
