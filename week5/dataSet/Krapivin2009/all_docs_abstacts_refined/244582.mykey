@@ -5,9 +5,10 @@ optimal time
 parallel prefix
 parallel schedule
 parallel step
+resource constraint
 time-optimal schedule
 prefix computation
 prefix problem
-prefix circuit
+harmonic schedule
 time step
 schedule element

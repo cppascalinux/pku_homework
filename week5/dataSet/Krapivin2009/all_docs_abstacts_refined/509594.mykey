@@ -1,8 +1,11 @@
 communication parameter
 communication architecture
-processor speed
+memory bus
+svm system
+svm protocol
 network interface
 most application
+processor speed
 interface occupancy
 bus bandwidth
 interrupt cost

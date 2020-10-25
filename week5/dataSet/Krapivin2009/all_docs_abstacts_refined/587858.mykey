@@ -1,3 +1,6 @@
+multilevel dual
+multilevel ilu
+dual reordering
 reordering strategy
 incomplete lu
 lu factorization
@@ -5,6 +8,7 @@ indefinite matrix
 ilu factorization
 diagonal dominance
 diagonal element
+partial ilu
 schur complement
 complement matrix
 small diagonal
