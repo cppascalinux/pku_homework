@@ -1,0 +1,936 @@
+"logging.handlers" --- 日志处理程序
+***********************************
+
+**源代码:** Lib/logging/handlers.py
+
+
+Important
+^^^^^^^^^
+
+此页面仅包含参考信息。有关教程，请参阅
+
+* 基础教程
+
+* 进阶教程
+
+* 日志记录操作手册
+
+======================================================================
+
+这个包提供了以下有用的处理程序。 请注意有三个处理程序类
+("StreamHandler", "FileHandler" 和 "NullHandler") 实际上是在 "logging"
+模块本身定义的，但其文档与其他处理程序一同记录在此。
+
+
+StreamHandler
+=============
+
+"StreamHandler" 类位于核心 "logging" 包，它可将日志记录输出发送到数据
+流例如 *sys.stdout*, *sys.stderr* 或任何文件类对象（或者更精确地说，任
+何支持 "write()" 和 "flush()" 方法的对象）。
+
+class logging.StreamHandler(stream=None)
+
+   返回一个新的 "StreamHandler" 类。 如果指定了 *stream*，则实例将用它
+   作为日志记录输出；在其他情况下将使用 *sys.stderr*。
+
+   emit(record)
+
+      如果指定了一个格式化器，它会被用来格式化记录。 随后记录会被写入
+      到 "terminator" 之后的流中。 如果存在异常信息，则会使用
+      "traceback.print_exception()" 来格式化并添加到流中。
+
+   flush()
+
+      通过调用流的 "flush()" 方法来刷新它。 请注意 "close()" 方法是继
+      承自 "Handler" 的所以没有输出，因此有时可能需要显式地调用
+      "flush()"。
+
+   setStream(stream)
+
+      将实例的流设为指定值，如果两者不一致的话。 旧的流会在设置新的流
+      之前被刷新。
+
+      参数:
+         **stream** -- 处理程序应当使用的流。
+
+      返回:
+         旧的流，如果流已被改变的话，如果未被改变则为 *None*。
+
+      3.7 新版功能.
+
+   terminator
+
+      当将已格式化的记录写入到流时被用作终止符的字符串。 默认值为
+      "'\n'"。
+
+      如果你不希望以换行符终止，你可以将处理程序类实例的 "terminator"
+      属性设为空字符串。
+
+      在较早的版本中，终止符被硬编码为 "'\n'"。
+
+      3.2 新版功能.
+
+
+FileHandler
+===========
+
+"FileHandler" 类位于核心 "logging" 包，它可将日志记录输出到磁盘文件中
+。 它从 "StreamHandler" 继承了输出功能。
+
+class logging.FileHandler(filename, mode='a', encoding=None, delay=False, errors=None)
+
+   返回一个 "FileHandler" 类的新实例。 将打开指定的文件并将其用作日志
+   记录流。 如果未指定 *mode*，则会使用 "'a'"。 如果 *encoding* 不为
+   "None"，则会将其用作打开文件的编码格式。 如果 *delay* 为真值，则文
+   件打开会被推迟至第一次调用 "emit()" 时。 默认情况下，文件会无限增长
+   。 如果指定了 *errors*，它会被用于确定编码格式错误的处理方式。
+
+   在 3.6 版更改: 除了字符串值，也接受 "Path" 对象作为 *filename* 参数
+   。
+
+   在 3.9 版更改: 增加了 *errors* 形参。
+
+   close()
+
+      关闭文件。
+
+   emit(record)
+
+      将记录输出到文件。
+
+
+NullHandler
+===========
+
+3.1 新版功能.
+
+"NullHandler" 类位于核心 "logging" 包，它不执行任何格式化或输出。 它实
+际上是一个供库开发者使用的‘无操作’处理程序。
+
+class logging.NullHandler
+
+   返回一个 "NullHandler" 类的新实例。
+
+   emit(record)
+
+      此方法不执行任何操作。
+
+   handle(record)
+
+      此方法不执行任何操作。
+
+   createLock()
+
+      此方法会对锁返回 "None"，因为没有下层 I/O 的访问需要被序列化。
+
+请参阅 配置库的日志记录 了解有关如何使用 "NullHandler" 的更多信息。
+
+
+WatchedFileHandler
+==================
+
+"WatchedFileHandler" 类位于 "logging.handlers" 模块，这个
+"FileHandler" 用于监视它所写入日志记录的文件。 如果文件发生变化，它会
+被关闭并使用文件名重新打开。
+
+发生文件更改可能是由于使用了执行文件轮换的程序例如 *newsyslog* 和
+*logrotate*。 这个处理程序在 Unix/Linux 下使用，它会监视文件来查看自上
+次发出数据后是否有更改。 （如果文件的设备或 inode 发生变化就认为已被更
+改。） 如果文件被更改，则会关闭旧文件流，并再打开文件以获得新文件流。
+
+这个处理程序不适合在 Windows 下使用，因为在 Windows 下打开的日志文件无
+法被移动或改名 —— 日志记录会使用排他的锁来打开文件 —— 因此这样的处理程
+序是没有必要的。 此外，*ST_INO* 在 Windows 下不受支持；"stat()" 将总是
+为该值返回零。
+
+class logging.handlers.WatchedFileHandler(filename, mode='a', encoding=None, delay=False, errors=None)
+
+   返回一个 "WatchedFileHandler" 类的新实例。 将打开指定的文件并将其用
+   作日志记录流。 如果未指定 *mode*，则会使用 "'a'"。 如果 *encoding*
+   不为 "None"，则会将其用作打开文件的编码格式。 如果 *delay* 为真值，
+   则文件打开会被推迟至第一次调用 "emit()" 时。 默认情况下，文件会无限
+   增长。 如果提供了 *errors*，它会被用于确定编码格式错误的处理方式。
+
+   在 3.6 版更改: 除了字符串值，也接受 "Path" 对象作为 *filename* 参数
+   。
+
+   在 3.9 版更改: 增加了 *errors* 形参。
+
+   reopenIfNeeded()
+
+      检查文件是否已更改。 如果已更改，则会刷新并关闭现有流然后重新打
+      开文件，这通常是将记录输出到文件的先导操作。
+
+      3.6 新版功能.
+
+   emit(record)
+
+      将记录输出到文件，但如果文件已更改则会先调用 "reopenIfNeeded()"
+      来重新打开它。
+
+
+BaseRotatingHandler
+===================
+
+"BaseRotatingHandler" 类位于 "logging.handlers" 模块中，它是轮换文件处
+理程序类 "RotatingFileHandler" 和 "TimedRotatingFileHandler" 的基类。
+你不需要实例化此类，但它具有你可能需要重载的属性和方法。
+
+class logging.handlers.BaseRotatingHandler(filename, mode, encoding=None, delay=False, errors=None)
+
+   类的形参与 "FileHandler" 的相同。 其属性有:
+
+   namer
+
+      如果此属性被设为一个可调用对象，则 "rotation_filename()" 方法会
+      委托给该可调用对象。 传给该可调用对象的形参与传给
+      "rotation_filename()" 的相同。
+
+      注解:
+
+        namer 函数会在轮换期间被多次调用，因此它应当尽可能的简单快速。
+        它还应当对给定的输入每次都返回相同的输出，否则轮换行为可能无法
+        按预期工作。
+
+      3.3 新版功能.
+
+   rotator
+
+      如果此属性被设为一个可调用对象，则 "rotate()" 方法会委托给该可调
+      用对象。 传给该可调用对象的形参与传给 "rotate()" 的相同。
+
+      3.3 新版功能.
+
+   rotation_filename(default_name)
+
+      当轮换时修改日志文件的文件名。
+
+      提供该属性以便可以提供自定义文件名。
+
+      默认实现会调用处理程序的 'namer' 属性，如果它是可调用对象的话，
+      并传给它默认的名称。 如果该属性不是可调用对象 (默认值为 "None")
+      ，则将名称原样返回。
+
+      参数:
+         **default_name** -- 日志文件的默认名称。
+
+      3.3 新版功能.
+
+   rotate(source, dest)
+
+      当执行轮换时，轮换当前日志。
+
+      默认实现会调用处理程序的 'rotator' 属性，如果它是可调用对象的话
+      ，并传给它 source 和 dest 参数。 如果该属性不是可调用对象 (默认
+      值为 "None")，则将源简单地重命名为目标。
+
+      参数:
+         * **source** -- 源文件名。 这通常为基本文件名，例如
+           'test.log'。
+
+         * **dest** -- 目标文件名。 这通常是源被轮换后的名称，例如
+           'test.log.1'。
+
+      3.3 新版功能.
+
+该属性存在的理由是让你不必进行子类化 —— 你可以使用与
+"RotatingFileHandler" 和 "TimedRotatingFileHandler" 的实例相同的可调用
+对象。 如果 namer 或 rotator 可调用对象引发了异常，将会按照与 "emit()"
+调用期间的任何其他异常相同的方式来处理，例如通过处理程序的
+"handleError()" 方法。
+
+如果你需要对轮换进程执行更多的修改，你可以重载这些方法。
+
+请参阅 Using a rotator and namer to customize log rotation processing
+获取具体示例。
+
+
+RotatingFileHandler
+===================
+
+"RotatingFileHandler" 类位于 "logging.handlers" 模块，它支持磁盘日志文
+件的轮换。
+
+class logging.handlers.RotatingFileHandler(filename, mode='a', maxBytes=0, backupCount=0, encoding=None, delay=False, errors=None)
+
+   返回一个 "RotatingFileHandler" 类的新实例。 将打开指定的文件并将其
+   用作日志记录流。 如果未指定 *mode*，则会使用 "'a'"。 如果
+   *encoding* 不为 "None"，则会将其用作打开文件的编码格式。 如果
+   *delay* 为真值，则文件打开会被推迟至第一次调用 "emit()"。 默认情况
+   下，文件会无限增长。 如果提供了 *errors*，它会被用于确定编码格式错
+   误的处理方式。
+
+   你可以使用 *maxBytes* 和 *backupCount* 值来允许文件以预定的大小执行
+   *rollover*。 当即将超出预定大小时，将关闭旧文件并打开一个新文件用于
+   输出。 只要当前日志文件长度接近 *maxBytes* 就会发生轮换；但是如果
+   *maxBytes* 或 *backupCount* 两者之一的值为零，就不会发生轮换，因此
+   你通常要设置 *backupCount* 至少为 1，而 *maxBytes* 不能为零。 当
+   *backupCount* 为非零值时，系统将通过为原文件名添加扩展名 '.1', '.2'
+   等来保存旧日志文件。 例如，当 *backupCount* 为 5 而基本文件名为
+   "app.log" 时，你将得到 "app.log", "app.log.1", "app.log.2" 直至
+   "app.log.5"。 当前被写入的文件总是 "app.log"。 当此文件写满时，它会
+   被关闭并重户名为 "app.log.1"，而如果文件 "app.log.1", "app.log.2"
+   等存在，则它们会被分别重命名为 "app.log.2", "app.log.3" 等等。
+
+   在 3.6 版更改: 除了字符串值，也接受 "Path" 对象作为 *filename* 参数
+   。
+
+   在 3.9 版更改: 增加了 *errors* 形参。
+
+   doRollover()
+
+      执行上文所描述的轮换。
+
+   emit(record)
+
+      将记录输出到文件，以适应上文所描述的轮换。
+
+
+TimedRotatingFileHandler
+========================
+
+"TimedRotatingFileHandler" 类位于 "logging.handlers" 模块，它支持基于
+特定时间间隔的磁盘日志文件轮换。
+
+class logging.handlers.TimedRotatingFileHandler(filename, when='h', interval=1, backupCount=0, encoding=None, delay=False, utc=False, atTime=None, errors=None)
+
+   返回一个新的 "TimedRotatingFileHandler" 类实例。 指定的文件会被打开
+   并用作日志记录的流。 对于轮换操作它还会设置文件名前缀。 轮换的发生
+   是基于 *when* 和 *interval* 的积。
+
+   你可以使用 *when* 来指定 *interval* 的类型。 可能的值列表如下。 请
+   注意它们不是大小写敏感的。
+
+   +------------------+------------------------------+---------------------------+
+   | 值               | 间隔类型                     | 如果/如何使用 *atTime*    |
+   |==================|==============================|===========================|
+   | "'S'"            | 秒                           | 忽略                      |
+   +------------------+------------------------------+---------------------------+
+   | "'M'"            | 分钟                         | 忽略                      |
+   +------------------+------------------------------+---------------------------+
+   | "'H'"            | 小时                         | 忽略                      |
+   +------------------+------------------------------+---------------------------+
+   | "'D'"            | 天                           | 忽略                      |
+   +------------------+------------------------------+---------------------------+
+   | "'W0'-'W6'"      | 工作日(0=星期一)             | 用于计算初始轮换时间      |
+   +------------------+------------------------------+---------------------------+
+   | "'midnight'"     | 如果未指定 *atTime* 则在午夜 | 用于计算初始轮换时间      |
+   |                  | 执行轮换，否则将使用         |                           |
+   |                  | *atTime*。                   |                           |
+   +------------------+------------------------------+---------------------------+
+
+   当使用基于星期的轮换时，星期一为 'W0'，星期二为 'W1'，以此类推直至
+   星期日为 'W6'。 在这种情况下，传入的 *interval* 值不会被使用。
+
+   系统将通过为文件名添加扩展名来保存旧日志文件。 扩展名是基于日期和时
+   间的，根据轮换间隔的长短使用 strftime 格式 "%Y-%m-%d_%H-%M-%S" 或是
+   其中有变动的部分。
+
+   当首次计算下次轮换的时间时（即当处理程序被创建时），现有日志文件的
+   上次被修改时间或者当前时间会被用来计算下次轮换的发生时间。
+
+   如果 *utc* 参数为真值，将使用 UTC 时间；否则会使用本地时间。
+
+   如果 *backupCount* 不为零，则最多将保留 *backupCount* 个文件，而如
+   果当轮换发生时创建了更多的文件，则最旧的文件会被删除。 删除逻辑使用
+   间隔时间来确定要删除的文件，因此改变间隔时间可能导致旧文件被继续保
+   留。
+
+   如果 *delay* 为真值，则会将文件打开延迟到首次调用 "emit()" 的时候。
+
+   如果 *atTime* 不为 "None"，则它必须是一个 "datetime.time" 的实例，
+   该实例指定轮换在一天内的发生时间，用于轮换被设为“在午夜”或“在每星期
+   的某一天”之类的情况。 请注意在这些情况下，*atTime* 值实际上会被用于
+   计算 *初始* 轮换，而后续轮换将会通过正常的间隔时间计算来得出。
+
+   如果指定了 *errors*，它会被用来确定编码错误的处理方式。
+
+   注解:
+
+     初始轮换时间的计算是在处理程序被初始化时执行的。 后续轮换时间的计
+     算则仅在轮换发生时执行，而只有当提交输出时轮换才会发生。 如果不记
+     住这一点，你就可能会感到困惑。 例如，如果设置时间间隔为“每分钟”，
+     那并不意味着你总会看到（文件名中）带有间隔一分钟时间的日志文件；
+     如果在应用程序执行期间，日志记录输出的生成频率高于每分钟一次，*那
+     么* 你可以预期看到间隔一分钟时间的日志文件。 另一方面，如果（假设
+     ）日志记录消息每五分钟才输出一次，那么文件时间将会存在对应于没有
+     输出（因而没有轮换）的缺失。
+
+   在 3.4 版更改: 添加了 *atTime* 形参。
+
+   在 3.6 版更改: 除了字符串值，也接受 "Path" 对象作为 *filename* 参数
+   。
+
+   在 3.9 版更改: 增加了 *errors* 形参。
+
+   doRollover()
+
+      执行上文所描述的轮换。
+
+   emit(record)
+
+      将记录输出到文件，以适应上文所描述的轮换。
+
+
+SocketHandler
+=============
+
+"SocketHandler" 类位于 "logging.handlers" 模块，它会将日志记录输出发送
+到网络套接字。 基类所使用的是 TCP 套接字。
+
+class logging.handlers.SocketHandler(host, port)
+
+   返回一个 "SocketHandler" 类的新实例，该实例旨在与使用 *host* 与
+   *port* 给定地址的远程主机进行通信。
+
+   在 3.4 版更改: 如果 "port" 指定为 "None"，会使用 "host" 中的值来创
+   建一个 Unix 域套接字 —— 在其他情况下，则会创建一个 TCP 套接字。
+
+   close()
+
+      关闭套接字。
+
+   emit()
+
+      对记录的属性字典执行封存并以二进制格式将其写入套接字。 如果套接
+      字存在错误，则静默地丢弃数据包。 如果连接在此之前丢失，则重新建
+      立连接。 要在接收端将记录解封并输出到 "LogRecord"，请使用
+      "makeLogRecord()" 函数。
+
+   handleError()
+
+      处理在 "emit()" 期间发生的错误。 最可能的原因是连接丢失。 关闭套
+      接字以便我们能在下次事件时重新尝试。
+
+   makeSocket()
+
+      这是一个工厂方法，它允许子类定义它们想要的套接字的准确类型。 默
+      认实现会创建一个 TCP 套接字 ("socket.SOCK_STREAM")。
+
+   makePickle(record)
+
+      将记录的属性字典封存为带有长度前缀的二进制格式，并将其返回以准备
+      通过套接字进行传输。 此操作在细节上相当于:
+
+         data = pickle.dumps(record_attr_dict, 1)
+         datalen = struct.pack('>L', len(data))
+         return datalen + data
+
+      请注意封存操作不是绝对安全的。 如果你关心安全问题，你可能会想要
+      重载此方法以实现更安全的机制。 例如，你可以使用 HMAC 对封存对象
+      进行签名然后在接收端验证它们，或者你也可以在接收端禁用全局对象的
+      解封操作。
+
+   send(packet)
+
+      将封存后的字节串 *packet* 发送到套接字。 所发送字节串的格式与
+      "makePickle()" 文档中的描述一致。
+
+      此函数允许部分发送，这可能会在网络繁忙时发生。
+
+   createSocket()
+
+      尝试创建一个套接字；失败时将使用指数化回退算法处理。 在失败初次
+      发生时，处理程序将丢弃它正尝试发送的消息。 当后续消息交由同一实
+      例处理时，它将不会尝试连接直到经过一段时间以后。 默认形参设置为
+      初始延迟一秒，如果在延迟之后连接仍然无法建立，处理程序将每次把延
+      迟翻倍直至达到 30 秒的最大值。
+
+      此行为由下列处理程序属性控制:
+
+      * "retryStart" (初始延迟，默认为 1.0 秒)。
+
+      * "retryFactor" (倍数，默认为 2.0)。
+
+      * "retryMax" (最大延迟，默认为 30.0 秒)。
+
+      这意味着如果远程监听器在处理程序被使用 *之后* 启动，你可能会丢失
+      消息（因为处理程序在延迟结束之前甚至不会尝试连接，而在延迟期间静
+      默地丢弃消息）。
+
+
+DatagramHandler
+===============
+
+"DatagramHandler" 类位于 "logging.handlers" 模块，它继承自
+"SocketHandler"，支持通过 UDP 套接字发送日志记录消息。
+
+class logging.handlers.DatagramHandler(host, port)
+
+   返回一个 "DatagramHandler" 类的新实例，该实例旨在与使用 *host* 与
+   *port* 给定地址的远程主机进行通信。
+
+   在 3.4 版更改: 如果 "port" 指定为 "None"，会使用 "host" 中的值来创
+   建一个 Unix 域套接字 —— 在其他情况下，则会创建一个 UDP 套接字。
+
+   emit()
+
+      对记录的属性字典执行封存并以二进制格式将其写入套接字。 如果套接
+      字存在错误，则静默地丢弃数据包。 要在接收端将记录解封并输出到
+      "LogRecord"，请使用 "makeLogRecord()" 函数。
+
+   makeSocket()
+
+      "SocketHandler" 的工厂方法会在此被重载以创建一个 UDP 套接字
+      ("socket.SOCK_DGRAM")。
+
+   send(s)
+
+      将封存后的字节串发送到套接字。 所发送字节串的格式与
+      "SocketHandler.makePickle()" 文档中的描述一致。
+
+
+SysLogHandler
+=============
+
+"SysLogHandler" 类位于 "logging.handlers" 模块，它支持将日志记录消息发
+送到远程或本地 Unix syslog。
+
+class logging.handlers.SysLogHandler(address=('localhost', SYSLOG_UDP_PORT), facility=LOG_USER, socktype=socket.SOCK_DGRAM)
+
+   返回一个 "SysLogHandler" 类的新实例用来与通过 *address* 以 "(host,
+   port)" 元组形式给出地址的远程 Unix 机器进行通讯。 如果未指定
+   *address*，则使用 "('localhost', 514)"。 该地址会被用于打开套接字。
+   提供 "(host, port)" 元组的一种替代方式是提供字符串形式的地址，例如
+   '/dev/log'。 在这种情况下，会使用 Unix 域套接字将消息发送到 syslog
+   。 如果未指定 *facility*，则使用 "LOG_USER"。 打开的套接字类型取决
+   于 *socktype* 参数，该参数的默认值为 "socket.SOCK_DGRAM" 即打开一个
+   UDP 套接字。 要打开一个 TCP 套接字（用来配合较新的 syslog 守护程序
+   例如 rsyslog 使用），请指定值为 "socket.SOCK_STREAM"。
+
+   请注意如果你的服务器不是在 UDP 端口 514 上进行侦听，则
+   "SysLogHandler" 可能无法正常工作。 在这种情况下，请检查你应当为域套
+   接字所使用的地址 —— 它依赖于具体的系统。 例如，在 Linux 上通常为
+   '/dev/log' 而在 OS/X 上则为 '/var/run/syslog'。 你需要检查你的系统
+   平台并使用适当的地址（如果你的应用程序需要在多个平台上运行则可能需
+   要在运行时进行这样的检查）。 在 Windows 上，你大概必须要使用 UDP 选
+   项。
+
+   在 3.2 版更改: 添加了 *socktype*。
+
+   close()
+
+      关闭连接远程主机的套接字。
+
+   emit(record)
+
+      记录会被格式化，然后发送到 syslog 服务器。 如果存在异常信息，则
+      它 *不会* 被发送到服务器。
+
+      在 3.2.1 版更改: (参见: bpo-12168。) 在较早的版本中，发送至
+      syslog 守护程序的消息总是以一个 NUL 字节结束，因为守护程序的早期
+      版本期望接收一个以 NUL 结束的消息 —— 即使它不包含于对应的规范说
+      明 (**RFC 5424**)。 这些守护程序的较新版本不再期望接收 NUL 字节
+      ，如果其存在则会将其去除，而最新的守护程序（更紧密地遵循 RFC
+      5424）会将 NUL 字节作为消息的一部分传递出去。为了在面对所有这些
+      不同守护程序行为时能够更方便地处理 syslog 消息，通过使用类层级属
+      性 "append_nul"，添加 NUL 字节的操作已被作为可配置项。 该属性默
+      认为 "True" (保留现有行为) 但可在 "SysLogHandler" 实例上设为
+      "False" 以便让实例 *不会* 添加 NUL 结束符。
+
+      在 3.3 版更改: (参见: bpo-12419。) 在较早的版本中，没有 "ident"
+      或 "tag" 前缀工具可以用来标识消息的来源。 现在则可以使用一个类层
+      级属性来设置它，该属性默认为 """" 表示保留现有行为，但可在
+      "SysLogHandler" 实例上重载以便让实例不会为所处理的每条消息添加标
+      识。 请注意所提供的标识必须为文本而非字节串，并且它会被原封不动
+      地添加到消息中。
+
+   encodePriority(facility, priority)
+
+      将功能和优先级编码为一个整数。 你可以传入字符串或者整数 —— 如果
+      传入的是字符串，则会使用内部的映射字典将其转换为整数。
+
+      符号 "LOG_" 的值在 "SysLogHandler" 中定义并且是 "sys/syslog.h"
+      头文件中所定义值的镜像。
+
+      **优先级**
+
+      +----------------------------+-----------------+
+      | 名称（字符串）             | 符号值          |
+      |============================|=================|
+      | "alert"                    | LOG_ALERT       |
+      +----------------------------+-----------------+
+      | "crit" 或 "critical"       | LOG_CRIT        |
+      +----------------------------+-----------------+
+      | "debug"                    | LOG_DEBUG       |
+      +----------------------------+-----------------+
+      | "emerg" 或 "panic"         | LOG_EMERG       |
+      +----------------------------+-----------------+
+      | "err" 或 "error"           | LOG_ERR         |
+      +----------------------------+-----------------+
+      | "info"                     | LOG_INFO        |
+      +----------------------------+-----------------+
+      | "notice"                   | LOG_NOTICE      |
+      +----------------------------+-----------------+
+      | "warn" 或 "warning"        | LOG_WARNING     |
+      +----------------------------+-----------------+
+
+      **设备**
+
+      +-----------------+-----------------+
+      | 名称（字符串）  | 符号值          |
+      |=================|=================|
+      | "auth"          | LOG_AUTH        |
+      +-----------------+-----------------+
+      | "authpriv"      | LOG_AUTHPRIV    |
+      +-----------------+-----------------+
+      | "cron"          | LOG_CRON        |
+      +-----------------+-----------------+
+      | "daemon"        | LOG_DAEMON      |
+      +-----------------+-----------------+
+      | "ftp"           | LOG_FTP         |
+      +-----------------+-----------------+
+      | "kern"          | LOG_KERN        |
+      +-----------------+-----------------+
+      | "lpr"           | LOG_LPR         |
+      +-----------------+-----------------+
+      | "mail"          | LOG_MAIL        |
+      +-----------------+-----------------+
+      | "news"          | LOG_NEWS        |
+      +-----------------+-----------------+
+      | "syslog"        | LOG_SYSLOG      |
+      +-----------------+-----------------+
+      | "user"          | LOG_USER        |
+      +-----------------+-----------------+
+      | "uucp"          | LOG_UUCP        |
+      +-----------------+-----------------+
+      | "local0"        | LOG_LOCAL0      |
+      +-----------------+-----------------+
+      | "local1"        | LOG_LOCAL1      |
+      +-----------------+-----------------+
+      | "local2"        | LOG_LOCAL2      |
+      +-----------------+-----------------+
+      | "local3"        | LOG_LOCAL3      |
+      +-----------------+-----------------+
+      | "local4"        | LOG_LOCAL4      |
+      +-----------------+-----------------+
+      | "local5"        | LOG_LOCAL5      |
+      +-----------------+-----------------+
+      | "local6"        | LOG_LOCAL6      |
+      +-----------------+-----------------+
+      | "local7"        | LOG_LOCAL7      |
+      +-----------------+-----------------+
+
+   mapPriority(levelname)
+
+      将日志记录级别名称映射到 syslog 优先级名称。 如果你使用自定义级
+      别，或者如果默认算法不适合你的需要，你可能需要重载此方法。 默认
+      算法将 "DEBUG", "INFO", "WARNING", "ERROR" 和 "CRITICAL" 映射到
+      等价的 syslog 名称，并将所有其他级别名称映射到 'warning'。
+
+
+NTEventLogHandler
+=================
+
+"NTEventLogHandler" 类位于 "logging.handlers" 模块，它支持将日志记录消
+息发送到本地 Windows NT, Windows 2000 或 Windows XP 事件日志。 在你使
+用它之前，你需要安装 Mark Hammond 的 Python Win32 扩展。
+
+class logging.handlers.NTEventLogHandler(appname, dllname=None, logtype='Application')
+
+   返回一个 "NTEventLogHandler" 类的新实例。 *appname* 用来定义出现在
+   事件日志中的应用名称。 将使用此名称创建适当的注册表条目。 *dllname*
+   应当给出要包含在日志中的消息定义的 .dll 或 .exe 的完整限定路径名称
+   （如未指定则会使用 "'win32service.pyd'" —— 此文件随 Win32 扩展安装
+   且包含一些基本的消息定义占位符。 请注意使用这些占位符将使你的事件日
+   志变得很大，因为整个消息源都会被放入日志。 如果你希望有较小的日志，
+   你必须自行传入包含你想要在事件日志中使用的消息定义的 .dll 或 .exe
+   名称）。 *logtype* 为 "'Application'", "'System'" 或 "'Security'"
+   之一，且默认值为 "'Application'"。
+
+   close()
+
+      这时，你就可以从注册表中移除作为事件日志条目来源的应用名称。 但
+      是，如果你这样做，你将无法如你所预期的那样在事件日志查看器中看到
+      这些事件 —— 它必须能访问注册表来获取 .dll 名称。 当前版本并不会
+      这样做。
+
+   emit(record)
+
+      确定消息 ID，事件类别和事件类型，然后将消息记录到 NT 事件日志中
+      。
+
+   getEventCategory(record)
+
+      返回记录的事件类别。 如果你希望指定你自己的类别就要重载此方法。
+      此版本将返回 0。
+
+   getEventType(record)
+
+      返回记录的事件类型。 如果你希望指定你自己的类型就要重载此方法。
+      此版本将使用处理程序的 typemap 属性来执行映射，该属性在
+      "__init__()" 被设置为一个字典，其中包含 "DEBUG", "INFO",
+      "WARNING", "ERROR" 和 "CRITICAL" 的映射。 如果你使用你自己的级别
+      ，你将需要重载此方法或者在处理程序的 *typemap* 属性中放置一个合
+      适的字典。
+
+   getMessageID(record)
+
+      返回记录的消息 ID。 如果你使用你自己的消息，你可以通过将 *msg*
+      传给日志记录器作为 ID 而非格式字符串实现此功能。 然后，你可以在
+      这里使用字典查找来获取消息 ID。 此版本将返回 1，是
+      "win32service.pyd" 中的基本消息 ID。
+
+
+SMTPHandler
+===========
+
+"SMTPHandler" 类位于 "logging.handlers" 模块，它支持将日志记录消息通过
+SMTP 发送到一个电子邮件地址。
+
+class logging.handlers.SMTPHandler(mailhost, fromaddr, toaddrs, subject, credentials=None, secure=None, timeout=1.0)
+
+   返回一个 "SMTPHandler" 类的新实例。 该实例使用电子邮件的发件人、收
+   件人地址和主题行进行初始化。 *toaddrs* 应当为字符串列表。 要指定一
+   个非标准 SMTP 端口，请使用 (host, port) 元组格式作为 *mailhost* 参
+   数。 如果你使用一个字符串，则会使用标准 SMTP 端口。 如果你的 SMTP
+   服务器要求验证，你可以指定一个 (username, password) 元组作为
+   *credentials* 参数。
+
+   要指定使用安全协议 (TLS)，请传入一个元组作为 *secure* 参数。 这将仅
+   在提供了验证凭据时才能被使用。 元组应当或是一个空元组，或是一个包含
+   密钥文件名的单值元组，或是一个包含密钥文件和证书文件的 2 值元组。
+   （此元组会被传给 "smtplib.SMTP.starttls()" 方法。）
+
+   可以使用 *timeout* 参数为与 SMTP 服务器的通信指定超时限制。
+
+   3.3 新版功能: 增加了 *timeout* 参数。
+
+   emit(record)
+
+      对记录执行格式化并将其发送到指定的地址。
+
+   getSubject(record)
+
+      如果你想要指定一个基于记录的主题行，请重载此方法。
+
+
+MemoryHandler
+=============
+
+"MemoryHandler" 类位于 "logging.handlers" 模块，它支持在内存中缓冲日志
+记录，并定期将其刷新到 *target* 处理程序中。 刷新会在缓冲区满的时候，
+或是在遇到特定或更高严重程度事件的时候发生。
+
+"MemoryHandler" 是更通用的 "BufferingHandler" 的子类，后者属于抽象类。
+它会在内存中缓冲日志记录。 当每条记录被添加到缓冲区时，会通过调用
+"shouldFlush()" 来检查缓冲区是否应当刷新。 如果应当刷新，则要使用
+"flush()" 来执行刷新。
+
+class logging.handlers.BufferingHandler(capacity)
+
+   使用指定容量的缓冲区初始化处理程序。 这里，*capacity* 是指缓冲的日
+   志记录数量。
+
+   emit(record)
+
+      将记录添加到缓冲区。 如果 "shouldFlush()" 返回真值，则会调用
+      "flush()" 来处理缓冲区。
+
+   flush()
+
+      你可以重载此方法来实现自定义的刷新行为。 此版本只是将缓冲区清空
+      。
+
+   shouldFlush(record)
+
+      如果缓冲区容量已满则返回 "True"。 可以重载此方法以实现自定义的刷
+      新策略。
+
+class logging.handlers.MemoryHandler(capacity, flushLevel=ERROR, target=None, flushOnClose=True)
+
+   返回一个 "MemoryHandler" 类的新实例。 该实例使用 *capacity* 指定的
+   缓冲区大小（要缓冲的记录数量）来初始化。 如果 *flushLevel* 未指定，
+   则使用 "ERROR"。 如果未指定 *target*，则需要在此处理程序执行任何实
+   际操作之前使用 "setTarget()" 来设置目标。 如果 *flushOnClose* 指定
+   为 "False"，则当处理程序被关闭时 *不会* 刷新缓冲区。 如果未指定或指
+   定为 "True"，则当处理程序被关闭时将会发生之前的缓冲区刷新行为。
+
+   在 3.6 版更改: 增加了 *flushOnClose* 形参。
+
+   close()
+
+      调用 "flush()"，设置目标为 "None" 并清空缓冲区。
+
+   flush()
+
+      对于 "MemoryHandler"，刷新是指将缓冲的记录发送到目标，如果存在目
+      标的话。 当此行为发生时缓冲区也将被清空。 如果你想要不同的行为请
+      重载此方法。
+
+   setTarget(target)
+
+      设置此处理程序的目标处理程序。
+
+   shouldFlush(record)
+
+      检测缓冲区是否已满或是有记录为 *flushLevel* 或更高级别。
+
+
+HTTPHandler
+===========
+
+"HTTPHandler" 类位于 "logging.handlers" 模块，它支持使用 "GET" 或
+"POST" 语义将日志记录消息发送到 Web 服务器。
+
+class logging.handlers.HTTPHandler(host, url, method='GET', secure=False, credentials=None, context=None)
+
+   返回一个 "HTTPHandler" 类的新实例。 *host* 可以为 "host:port" 的形
+   式，如果你需要使用指定端口号的话。 如果没有指定 *method*，则会使用
+   "GET"。 如果 *secure* 为真值，则将使用 HTTPS 连接。 *context* 形参
+   可以设为一个 "ssl.SSLContext" 实例以配置用于 HTTPS 连接的 SSL 设置
+   。 如果指定了 *credentials*，它应当为包含 userid 和 password 的二元
+   组，该元组将被放入使用 Basic 验证的 HTTP 'Authorization' 标头中。
+   如果你指定了 credentials，你还应当指定 secure=True 这样你的 userid
+   和 password 就不会以明文在线路上传输。
+
+   在 3.5 版更改: 增加了 *context* 形参。
+
+   mapLogRecord(record)
+
+      基于 "record" 提供一个字典，它将被执行 URL 编码并发送至 Web 服务
+      器。 默认实现仅返回 "record.__dict__"。 在只需将 "LogRecord" 的
+      某个子集发送至 Web 服务器，或者需要对发送至服务器的内容进行更多
+      定制时可以重载此方法。
+
+   emit(record)
+
+      将记录以经 URL 编码的形式发送至 Web 服务器。 会使用
+      "mapLogRecord()" 方法来将要发送的记录转换为字典。
+
+   注解:
+
+     由于记录发送至 Web 服务器所需的预处理与通用的格式化操作不同，使用
+     "setFormatter()" 来指定一个 "Formatter" 用于 "HTTPHandler" 是没有
+     效果的。 此处理程序不会调用 "format()"，而是调用 "mapLogRecord()"
+     然后再调用 "urllib.parse.urlencode()" 来以适合发送至 Web 服务器的
+     形式对字典进行编码。
+
+
+QueueHandler
+============
+
+3.2 新版功能.
+
+"QueueHandler" 类位于 "logging.handlers" 模块，它支持将日志记录消息发
+送到一个队列，例如在 "queue" 或 "multiprocessing" 模块中实现的队列。
+
+配合 "QueueListener" 类使用，"QueueHandler" 可用来使处理程序在与执行日
+志记录的线程不同的线程上完成工作。 这对 Web 应用程序以及其他服务于客户
+端的线程需要尽可能快地响应的服务应用程序来说很重要，任何潜在的慢速操作
+（例如通过 "SMTPHandler" 发送邮件）都要在单独的线程上完成。
+
+class logging.handlers.QueueHandler(queue)
+
+   返回一个 "QueueHandler" 类的新实例。 该实例使用队列来初始化以向其发
+   送消息。 *queue* 可以为任何队列类对象；它由 "enqueue()" 方法来使用
+   ，该方法需要知道如何向其发送消息。 队列 *不要求* 具有任务跟踪 API，
+   这意味着你可以为 *queue* 使用 "SimpleQueue" 实例。
+
+   emit(record)
+
+      将准备 LogRecord 的结果排入队列。 如果发生了异常（例如由于有界队
+      列已满），则会调用 "handleError()" 方法来处理错误。 这可能导致记
+      录被静默地丢弃 (如果 "logging.raiseExceptions" 为 "False") 或者
+      消息被打印到 "sys.stderr" (如果 "logging.raiseExceptions" 为
+      "True")。
+
+   prepare(record)
+
+      准备用于队列的记录。 此方法返回的对象会被排入队列。
+
+      基本实现会格式化记录以合并消息、参数以及可能存在的异常信息。 它
+      还会从记录中原地移除无法封存的条目。
+
+      如果你想要将记录转换为 dict 或 JSON 字符串，或者发送记录被修改后
+      的副本而让初始记录保持原样，则你可能会想要重载此方法。
+
+   enqueue(record)
+
+      使用 "put_nowait()" 将记录排入队列；如果你想要使用阻塞行为，或超
+      时设置，或自定义的队列实现，则你可能会想要重载此方法。
+
+
+QueueListener
+=============
+
+3.2 新版功能.
+
+"QueueListener" 类位于 "logging.handlers" 模块，它支持从一个队列接收日
+志记录消息，例如在 "queue" 或 "multiprocessing" 模块中实现的队列。 消
+息是在内部线程中从队列接收并在同一线程上传递到一个或多个处理程序进行处
+理的。 尽管 "QueueListener" 本身并不是一个处理程序，但由于它要与
+"QueueHandler" 配合工作，因此也在此处介绍。
+
+配合 "QueueHandler" 类使用，"QueueListener" 可用来使处理程序在与执行日
+志记录的线程不同的线程上完成工作。 这对 Web 应用程序以及其他服务与客户
+端的线程需要尽可能快地响应的服务应用程序来说很重要，任何潜在的慢速动作
+（例如通过 "SMTPHandler" 发送邮件）都要在单独的线程上完成。
+
+class logging.handlers.QueueListener(queue, *handlers, respect_handler_level=False)
+
+   返回一个 "QueueListener" 类的新实例。 该实例初始化时要传入一个队列
+   以向其发送消息，还要传入一个处理程序列表用来处理放置在队列中的条目
+   。 队列可以是任何队列类对象；它会被原样传给 "dequeue()" 方法，该方
+   法需要知道如何从其获取消息。 队列 *不要求* 具有任务跟踪 API（但如提
+   供则会使用它），这意味着你可以为 *queue* 使用 "SimpleQueue" 实例。
+
+   如果 "respect_handler_level" 为 "True"，则在决定是否将消息传递给处
+   理程序之前会遵循处理程序的级别（与消息的级别进行比较）；在其他情况
+   下，其行为与之前的 Python 版本一致 —— 总是将每条消息传递给每个处理
+   程序。
+
+   在 3.5 版更改: 增加了 "respect_handler_level" 参数。
+
+   dequeue(block)
+
+      从队列移出一条记录并将其返回，可以选择阻塞。
+
+      基本实现使用 "get()"。 如果你想要使用超时设置或自定义的队列实现
+      ，则你可能会想要重载此方法。
+
+   prepare(record)
+
+      准备一条要处理的记录。
+
+      该实现只是返回传入的记录。 如果你想要对记录执行任何自定义的
+      marshal 操作或在将其传给处理程序之前进行调整，则你可能会想要重载
+      此方法。
+
+   handle(record)
+
+      处理一条记录。
+
+      此方法简单地循环遍历处理程序，向它们提供要处理的记录。 实际传给
+      处理程序的对象就是从 "prepare()" 返回的对象。
+
+   start()
+
+      启动监听器。
+
+      此方法启动一个后台线程来监视 LogRecords 队列以进行处理。
+
+   stop()
+
+      停止监听器。
+
+      此方法要求线程终止，然后等待它完成终止操作。 请注意在你的应用程
+      序退出之前如果你没有调用此方法，则可能会有一些记录在留在队列中，
+      它们将不会被处理。
+
+   enqueue_sentinel()
+
+      将一个标记写入队列以通知监听器退出。 此实现会使用 "put_nowait()"
+      。 如果你想要使得超时设置或自定义的队列实现，则你可能会想要重载
+      此方法。
+
+      3.3 新版功能.
+
+参见:
+
+  模块 "logging"
+     日志记录模块的 API 参考。
+
+  模块 "logging.config"
+     日志记录模块的配置 API 。

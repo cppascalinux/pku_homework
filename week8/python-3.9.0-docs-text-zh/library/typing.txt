@@ -1,0 +1,1670 @@
+"typing" --- 类型标注支持
+*************************
+
+3.5 新版功能.
+
+**源码：** Lib/typing.py
+
+注解:
+
+   Python 运行时并不强制标注函数和变量类型。类型标注可被用于第三方工具
+  ，比如类型检查器、集成开发环境、静态检查器等。
+
+======================================================================
+
+此模块为运行时提供了 **PEP 484** 、 **PEP 526** 、 **PEP 544** 、
+**PEP 586** 、 **PEP 589** 和 **PEP 591** 规定的类型提示。最基本的支持
+由 "Any"，"Union"，"Tuple"，"Callable"，"TypeVar" 和 "Generic" 类型组
+成。有关完整的规范，请参阅 **PEP 484**。有关类型提示的简单介绍，请参阅
+**PEP 483**。
+
+函数接受并返回一个字符串，注释像下面这样:
+
+   def greeting(name: str) -> str:
+       return 'Hello ' + name
+
+在函数 "greeting" 中，参数 "name" 预期是 "str" 类型，并且返回 "str" 类
+型。子类型允许作为参数。
+
+
+类型别名
+========
+
+要定义一个类型别名，可以将一个类型赋给别名。在本例中，"Vector" 和
+"list[float]" 将被视为可互换的同义词：
+
+   Vector = list[float]
+
+   def scale(scalar: float, vector: Vector) -> Vector:
+       return [scalar * num for num in vector]
+
+   # typechecks; a list of floats qualifies as a Vector.
+   new_vector = scale(2.0, [1.0, -4.2, 5.4])
+
+类型别名可用于简化复杂类型签名。例如:
+
+   from collections.abc import Sequence
+
+   ConnectionOptions = dict[str, str]
+   Address = tuple[str, int]
+   Server = tuple[Address, ConnectionOptions]
+
+   def broadcast_message(message: str, servers: Sequence[Server]) -> None:
+       ...
+
+   # The static type checker will treat the previous type signature as
+   # being exactly equivalent to this one.
+   def broadcast_message(
+           message: str,
+           servers: Sequence[tuple[tuple[str, int], dict[str, str]]]) -> None:
+       ...
+
+请注意，"None" 作为类型提示是一种特殊情况，并且由 "type(None)" 取代。
+
+
+NewType
+=======
+
+使用 "NewType()" 辅助函数创建不同的类型:
+
+   from typing import NewType
+
+   UserId = NewType('UserId', int)
+   some_id = UserId(524313)
+
+静态类型检查器会将新类型视为它是原始类型的子类。这对于帮助捕捉逻辑错误
+非常有用:
+
+   def get_user_name(user_id: UserId) -> str:
+       ...
+
+   # typechecks
+   user_a = get_user_name(UserId(42351))
+
+   # does not typecheck; an int is not a UserId
+   user_b = get_user_name(-1)
+
+您仍然可以对 "UserId" 类型的变量执行所有的 "int" 支持的操作，但结果将
+始终为 "int" 类型。这可以让你在需要 "int" 的地方传入 "UserId"，但会阻
+止你以无效的方式无意中创建 "UserId":
+
+   # 'output' is of type 'int', not 'UserId'
+   output = UserId(23413) + UserId(54341)
+
+请注意，这些检查仅通过静态类型检查程序来强制。在运行时，语句 "Derived
+= NewType('Derived'，Base)" 将 "Derived" 设为一个函数，该函数立即返回
+您传递它的任何参数。这意味着表达式 "Derived(some_value)" 不会创建一个
+新的类或引入任何超出常规函数调用的开销。
+
+更确切地说，表达式 "some_value is Derived(some_value)" 在运行时总是为
+真。
+
+这也意味着无法创建 "Derived" 的子类型，因为它是运行时的标识函数，而不
+是实际的类型:
+
+   from typing import NewType
+
+   UserId = NewType('UserId', int)
+
+   # Fails at runtime and does not typecheck
+   class AdminUserId(UserId): pass
+
+但是，可以基于'derived' "NewType" 创建 "NewType()"
+
+   from typing import NewType
+
+   UserId = NewType('UserId', int)
+
+   ProUserId = NewType('ProUserId', UserId)
+
+并且 "ProUserId" 的类型检查将按预期工作。
+
+有关更多详细信息，请参阅 **PEP 484**。
+
+注解:
+
+  回想一下，使用类型别名声明两种类型彼此 *等效* 。"Alias = Original"
+  将使静态类型检查对待所有情况下 "Alias" *完全等同于* "Original"。当您
+  想简化复杂类型签名时，这很有用。相反，"NewType" 声明一种类型是另一种
+  类型的子类型。"Derived = NewType('Derived', Original)" 将使静态类型
+  检查器将 "Derived" 当作 "Original" 的 *子类* ，这意味着 "Original"
+  类型的值不能用于 "Derived" 类型的值需要的地方。当您想以最小的运行时
+  间成本防止逻辑错误时，这非常有用。
+
+3.5.2 新版功能.
+
+
+Callable
+========
+
+期望特定签名的回调函数的框架可以将类型标注为 "Callable[[Arg1Type,
+Arg2Type], ReturnType]"。
+
+例如:
+
+   from collections.abc import Callable
+
+   def feeder(get_next_item: Callable[[], str]) -> None:
+       # Body
+
+   def async_query(on_success: Callable[[int], None],
+                   on_error: Callable[[int, Exception], None]) -> None:
+       # Body
+
+通过用文字省略号替换类型提示中的参数列表： "Callable[...，ReturnType]"
+，可以声明可调用的返回类型，而无需指定调用签名。
+
+
+泛型(Generic)
+=============
+
+由于无法以通用方式静态推断有关保存在容器中的对象的类型信息，因此抽象基
+类已扩展为支持订阅以表示容器元素的预期类型。
+
+   from collections.abc import Mapping, Sequence
+
+   def notify_by_email(employees: Sequence[Employee],
+                       overrides: Mapping[str, str]) -> None: ...
+
+泛型可以通过使用typing模块中名为 "TypeVar" 的新工厂进行参数化。
+
+   from collections.abc import Sequence
+   from typing import TypeVar
+
+   T = TypeVar('T')      # Declare type variable
+
+   def first(l: Sequence[T]) -> T:   # Generic function
+       return l[0]
+
+
+用户定义的泛型类型
+==================
+
+用户定义的类可以定义为泛型类。
+
+   from typing import TypeVar, Generic
+   from logging import Logger
+
+   T = TypeVar('T')
+
+   class LoggedVar(Generic[T]):
+       def __init__(self, value: T, name: str, logger: Logger) -> None:
+           self.name = name
+           self.logger = logger
+           self.value = value
+
+       def set(self, new: T) -> None:
+           self.log('Set ' + repr(self.value))
+           self.value = new
+
+       def get(self) -> T:
+           self.log('Get ' + repr(self.value))
+           return self.value
+
+       def log(self, message: str) -> None:
+           self.logger.info('%s: %s', self.name, message)
+
+"Generic[T]" 作为基类定义了类 "LoggedVar" 采用单个类型参数 "T"。这也使
+得 "T" 作为类体内的一个类型有效。
+
+"Generic" 基类定义了 "__class_getitem__()" ，使得 "LoggedVar[t]" 作为
+类型有效：
+
+   from collections.abc import Iterable
+
+   def zero_all_vars(vars: Iterable[LoggedVar[int]]) -> None:
+       for var in vars:
+           var.set(0)
+
+泛型类型可以有任意数量的类型变量，并且类型变量可能会受到限制:
+
+   from typing import TypeVar, Generic
+   ...
+
+   T = TypeVar('T')
+   S = TypeVar('S', int, str)
+
+   class StrangePair(Generic[T, S]):
+       ...
+
+"Generic" 每个参数的类型变量必须是不同的。这是无效的:
+
+   from typing import TypeVar, Generic
+   ...
+
+   T = TypeVar('T')
+
+   class Pair(Generic[T, T]):   # INVALID
+       ...
+
+您可以对 "Generic" 使用多重继承:
+
+   from collections.abc import Sized
+   from typing import TypeVar, Generic
+
+   T = TypeVar('T')
+
+   class LinkedList(Sized, Generic[T]):
+       ...
+
+从泛型类继承时，某些类型变量可能是固定的:
+
+   from collections.abc import Mapping
+   from typing import TypeVar
+
+   T = TypeVar('T')
+
+   class MyDict(Mapping[str, T]):
+       ...
+
+在这种情况下，"MyDict" 只有一个参数，"T"。
+
+在不指定类型参数的情况下使用泛型类别会为每个位置假设 "Any"。在下面的例
+子中，"MyIterable" 不是泛型，但是隐式继承自 "Iterable[Any]":
+
+   from collections.abc import Iterable
+
+   class MyIterable(Iterable): # Same as Iterable[Any]
+
+用户定义的通用类型别名也受支持。例子:
+
+   from collections.abc import Iterable
+   from typing import TypeVar, Union
+   S = TypeVar('S')
+   Response = Union[Iterable[S], int]
+
+   # Return type here is same as Union[Iterable[str], int]
+   def response(query: str) -> Response[str]:
+       ...
+
+   T = TypeVar('T', int, float, complex)
+   Vec = Iterable[tuple[T, T]]
+
+   def inproduct(v: Vec[T]) -> T: # Same as Iterable[tuple[T, T]]
+       return sum(x*y for x, y in v)
+
+在 3.7 版更改: "Generic" 不再拥有一个自定义的元类。
+
+一个用户定义的泛型类能够使用抽象基本类作为基类，而不会发生元类冲突。泛
+型元类不再被支持。参数化泛型的结果会被缓存，并且在 typing 模块中的大部
+分类型是可哈希且可比较相等性的。
+
+
+"Any" 类型
+==========
+
+"Any" 是一种特殊的类型。静态类型检查器将所有类型视为与 "Any" 兼容，反
+之亦然， "Any" 也与所有类型相兼容。
+
+这意味着可对类型为 "Any" 的值执行任何操作或者方法调用并将其赋值给任意
+变量:
+
+   from typing import Any
+
+   a = None    # type: Any
+   a = []      # OK
+   a = 2       # OK
+
+   s = ''      # type: str
+   s = a       # OK
+
+   def foo(item: Any) -> int:
+       # Typechecks; 'item' could be any type,
+       # and that type might have a 'bar' method
+       item.bar()
+       ...
+
+需要注意的是，将 "Any" 类型的值赋值给另一个更具体的类型时，Python不会
+执行类型检查。例如，当把 "a" 赋值给 "s" 时，即使 "s" 被声明为 "str" 类
+型，在运行时接收到的是 "int" 值，静态类型检查器也不会报错。
+
+此外，所有返回值无类型或形参无类型的函数将隐式地默认使用 "Any" 类型:
+
+   def legacy_parser(text):
+       ...
+       return data
+
+   # A static type checker will treat the above
+   # as having the same signature as:
+   def legacy_parser(text: Any) -> Any:
+       ...
+       return data
+
+当需要混用动态类型和静态类型的代码时，上述行为可以让 "Any" 被用作 *应
+急出口* 。
+
+"Any" 和 "object" 的行为对比。与 "Any" 相似，所有的类型都是 "object"
+的子类型。然而不同于 "Any"，反之并不成立： "object" *不是* 其他所有类
+型的子类型。
+
+这意味着当一个值的类型是 "object" 的时候，类型检查器会拒绝对它的几乎所
+有的操作。把它赋值给一个指定了类型的变量（或者当作返回值）是一个类型错
+误。比如说：
+
+   def hash_a(item: object) -> int:
+       # Fails; an object does not have a 'magic' method.
+       item.magic()
+       ...
+
+   def hash_b(item: Any) -> int:
+       # Typechecks
+       item.magic()
+       ...
+
+   # Typechecks, since ints and strs are subclasses of object
+   hash_a(42)
+   hash_a("foo")
+
+   # Typechecks, since Any is compatible with all types
+   hash_b(42)
+   hash_b("foo")
+
+使用 "object" 示意一个值可以类型安全地兼容任何类型。使用 "Any" 示意一
+个值地类型是动态定义的。
+
+
+名义性子类型 区别于 结构性子类型
+================================
+
+最初 **PEP 484** 将 Python 的静态类型系统定义为使用 *名义性子类型*。即
+是说，当且仅当 "A" 是 "B" 的子类时，可在需要 "B" 类时提供 "A" 类。
+
+这一要求之前也适用于抽象基类，比如 "Iterable" 。这一做法的问题在于，一
+个类必须显式地标注为支持他们，这即不 Pythonic，也不太可能在惯用动态类
+型的 Python 代码中会有人正常地去用。举例来说，这符合 **PEP 484**：
+
+   from collections.abc import Sized, Iterable, Iterator
+
+   class Bucket(Sized, Iterable[int]):
+       ...
+       def __len__(self) -> int: ...
+       def __iter__(self) -> Iterator[int]: ...
+
+ **PEP 544** 通过允许用户不必在类定义中显式地标注基类来解决这一问题，
+允许静态类型检查器隐含地认为 "Bucket" 既是 "Sized" 的子类型又是
+"Iterable[int]" 的子类型。这被称为 *结构性子类型* （或者静态鸭子类型）
+：
+
+   from collections.abc import Iterator, Iterable
+
+   class Bucket:  # Note: no base classes
+       ...
+       def __len__(self) -> int: ...
+       def __iter__(self) -> Iterator[int]: ...
+
+   def collect(items: Iterable[int]) -> int: ...
+   result = collect(Bucket())  # Passes type check
+
+此外，通过继承一个特殊的类 "Protocol" ，用户能够定义新的自定义协议来充
+分享受结构化子类型（后文中有例子）。
+
+
+模块内容
+========
+
+本模块定义了如下类、函数和修饰器。
+
+注解:
+
+  本模块定义了若干现存的标准库类的子类，同时扩展为 "Generic" 以支持
+  "[]" 中的类型变量。由于现存的标准库类在 Python 3.9 中已经增强为支持
+  "[]" ，这些类型变得冗余。这些荣誉类型在 Python 3.9 中被弃用，但解释
+  器不会发起弃用警告。预期上类型检查器将会在程序的目标版本为 Python
+  3.9 以上时标记这些弃用的类型。这些被弃用的类型会在 Python 3.9.0 发布
+  的五年后从 "typing" 模块中移除。详情请见 **PEP 585** 《标准集合的类
+  型提示泛型》。
+
+
+特殊类型原语
+------------
+
+
+特殊类型
+~~~~~~~~
+
+这些能被用于类型标注但不支持 "[]"。
+
+typing.Any
+
+   特殊类型，表明类型没有任何限制。
+
+   * 每一个类型都对 "Any" 兼容。
+
+   * "Any" 对每一个类型都兼容。
+
+typing.NoReturn
+
+   标记一个函数没有返回值的特殊类型。比如说:
+
+      from typing import NoReturn
+
+      def stop() -> NoReturn:
+          raise RuntimeError('no way')
+
+   3.5.4 新版功能.
+
+   3.6.2 新版功能.
+
+
+特殊形式
+~~~~~~~~
+
+这些能被用于类型标注，且支持 "[]" ，每个具有独特的语法。
+
+typing.Tuple
+
+   元组类型； "Tuple[X, Y]" 标注了一个二元组类型，其第一个元素的类型为
+   X 且第二个元素的类型为 Y。空元组的类型可写作 "Tuple[()]" 。
+
+   举例： "Tuple[T1, T2]" 是一个二元组，类型分别为 T1 和 T2。
+   "Tuple[int, float, str]" 是一个由整数、浮点数和字符串组成的三元组。
+
+   为表达一个同类型元素的变长元组，使用省略号字面量，如 "Tuple[int,
+   ...]" 。单独的一个 "Tuple" 等价于 "Tuple[Any, ...]"，进而等价于
+   "tuple" 。
+
+   3.9 版后已移除: "builtins.tuple" now supports "[]". See **PEP 585**
+   and Generic Alias Type.
+
+typing.Union
+
+   联合类型； "Union[X, Y]" 意味着：要不是 X，要不是 Y。
+
+   使用形如 "Union[int, str]" 的形式来定义一个联合类型。细节如下:
+
+   * 参数必须是类型，而且必须至少有一个参数。
+
+   * 联合类型的联合类型会被展开打平，比如:
+
+        Union[Union[int, str], float] == Union[int, str, float]
+
+   * 仅有一个参数的联合类型会坍缩成参数自身，比如:
+
+        Union[int] == int  # The constructor actually returns int
+
+   * 多余的参数会被跳过，比如:
+
+        Union[int, str, int] == Union[int, str]
+
+   * 在比较联合类型的时候，参数顺序会被忽略，比如:
+
+        Union[int, str] == Union[str, int]
+
+   * 你不能继承或者实例化一个联合类型。
+
+   * 你不能写成 "Union[X][Y]" 。
+
+   * 你可以使用 "Optional[X]" 作为 "Union[X, None]" 的缩写。
+
+   在 3.7 版更改: 不要在运行时内从联合类型中移除显式说明的子类。
+
+typing.Optional
+
+   可选类型。
+
+    "Optional[X]" 等价于 "Union[X, None]" 。
+
+   请注意，这与可选参数并非相同的概念。可选参数是一个具有默认值的参数
+   。可选参数的类型注解并不因为它是可选的就需要 "Optional" 限定符。例
+   如：
+
+      def foo(arg: int = 0) -> None:
+          ...
+
+   另一方面，如果允许显式地传递值 "None" ， 使用 "Optional" 也是正当的
+   ，无论该参数是否是可选的。例如：
+
+      def foo(arg: Optional[int] = None) -> None:
+          ...
+
+typing.Callable
+
+   可调用类型； "Callable[[int], str]" 是一个函数，接受一个 int 参数，
+   返回一个 str 。
+
+   下标值的语法必须恰为两个值：参数列表和返回类型。参数列表必须是一个
+   类型和省略号组成的列表；返回值必须是单一一个类型。
+
+   不存在语法来表示可选的或关键词参数，这类函数类型罕见用于回调函数。
+   "Callable[..., ReturnType]" （使用字面省略号）能被用于提示一个可调
+   用对象，接受任意数量的参数并且返回 "ReturnType"。单独的 "Callable"
+   等价于 "Callable[..., Any]" ，并且进而等价于
+   "collections.abc.Callable" 。
+
+   3.9 版后已移除: "collections.abc.Callable" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Type(Generic[CT_co])
+
+   一个注解为 "C" 的变量可以接受一个类型为 "C" 的值。相对地，一个注解
+   为 "Type[C]" 的变量可以接受本身为类的值 —— 更精确地说它接受 "C" 的
+   *类对象* ，例如：
+
+      a = 3         # Has type 'int'
+      b = int       # Has type 'Type[int]'
+      c = type(a)   # Also has type 'Type[int]'
+
+   注意 "Type[C]" 是协变的：
+
+      class User: ...
+      class BasicUser(User): ...
+      class ProUser(User): ...
+      class TeamUser(User): ...
+
+      # Accepts User, BasicUser, ProUser, TeamUser, ...
+      def make_new_user(user_class: Type[User]) -> User:
+          # ...
+          return user_class()
+
+    "Type[C]" 是协变的这一事实暗示了任何 "C" 的子类应当实现与 "C" 相同
+   的构造器签名和类方法签名。类型检查器应当标记违反的情况，但应当也允
+   许子类中调用构造器符合指示的基类。类型检查器被要求如何处理这种情况
+   可能会在 **PEP 484** 将来的版本中改变。
+
+    "Type" 合法的参数仅有类、 "Any" 、类型变量 以及上述类型的联合类型
+   。例如：
+
+      def new_non_team_user(user_class: Type[Union[BaseUser, ProUser]]): ...
+
+    "Type[Any]" 等价于 "Type"，因此继而等价于 "type"，它是 Python 的元
+   类层级的根部。
+
+   3.5.2 新版功能.
+
+   3.9 版后已移除: "builtins.type" now supports "[]". See **PEP 585**
+   and Generic Alias Type.
+
+typing.Literal
+
+   该类型将指示类型检查器该变量或者函数参数的值等价于提供的字面量（或
+   者提供的几个字面量的其中之一）。例如：
+
+      def validate_simple(data: Any) -> Literal[True]:  # always returns True
+          ...
+
+      MODE = Literal['r', 'rb', 'w', 'wb']
+      def open_helper(file: str, mode: MODE) -> str:
+          ...
+
+      open_helper('/some/path', 'r')  # Passes type check
+      open_helper('/other/path', 'typo')  # Error in type checker
+
+   "Literal[...]" 不能创建子类。在运行时，任意值均可作为
+   "Literal[...]" 的类型参数，但类型检查器可以施加额外限制。关于字面量
+   类型更多详情请见 **PEP 586** 。
+
+   3.8 新版功能.
+
+typing.ClassVar
+
+   特殊的类型构造器，用以标记类变量。
+
+   在 **PEP 526** 中被引入，ClassVar 包裹起来的变量注解指示了给定属性
+   预期用于类变量，并且不应在类的实例上被设置。用法：
+
+      class Starship:
+          stats: ClassVar[dict[str, int]] = {} # class variable
+          damage: int = 10                     # instance variable
+
+   "ClassVar" 仅接受类型，并且不能被再次添加下标。
+
+   "ClassVar" 本身并不是一个类，并且不应与 "isinstance()" or
+   "issubclass()" 一起使用。 "ClassVar" 并不改变 Python 运行时行为，但
+   它可以被用于第三方类型检查器。例如，某个类型检查器可能会标记以下代
+   码为错误的：
+
+      enterprise_d = Starship(3000)
+      enterprise_d.stats = {} # Error, setting class variable on instance
+      Starship.stats = {}     # This is OK
+
+   3.5.3 新版功能.
+
+typing.Final
+
+   一个特殊的类型构造来指示类型检查器该名称不能被再次赋值或者在子类中
+   被重载。例如：
+
+      MAX_SIZE: Final = 9000
+      MAX_SIZE += 1  # Error reported by type checker
+
+      class Connection:
+          TIMEOUT: Final[int] = 10
+
+      class FastConnector(Connection):
+          TIMEOUT = 1  # Error reported by type checker
+
+   There is no runtime checking of these properties. See **PEP 591**
+   for more details.
+
+   3.8 新版功能.
+
+typing.Annotated
+
+   A type, introduced in **PEP 593** ("Flexible function and variable
+   annotations"), to decorate existing types with context-specific
+   metadata (possibly multiple pieces of it, as "Annotated" is
+   variadic). Specifically, a type "T" can be annotated with metadata
+   "x" via the typehint "Annotated[T, x]". This metadata can be used
+   for either static analysis or at runtime. If a library (or tool)
+   encounters a typehint "Annotated[T, x]" and has no special logic
+   for metadata "x", it should ignore it and simply treat the type as
+   "T". Unlike the "no_type_check" functionality that currently exists
+   in the "typing" module which completely disables typechecking
+   annotations on a function or a class, the "Annotated" type allows
+   for both static typechecking of "T" (e.g., via mypy or Pyre, which
+   can safely ignore "x") together with runtime access to "x" within a
+   specific application.
+
+   Ultimately, the responsibility of how to interpret the annotations
+   (if at all) is the responsibility of the tool or library
+   encountering the "Annotated" type. A tool or library encountering
+   an "Annotated" type can scan through the annotations to determine
+   if they are of interest (e.g., using "isinstance()").
+
+   When a tool or a library does not support annotations or encounters
+   an unknown annotation it should just ignore it and treat annotated
+   type as the underlying type.
+
+   It's up to the tool consuming the annotations to decide whether the
+   client is allowed to have several annotations on one type and how
+   to merge those annotations.
+
+   Since the "Annotated" type allows you to put several annotations of
+   the same (or different) type(s) on any node, the tools or libraries
+   consuming those annotations are in charge of dealing with potential
+   duplicates. For example, if you are doing value range analysis you
+   might allow this:
+
+      T1 = Annotated[int, ValueRange(-10, 5)]
+      T2 = Annotated[T1, ValueRange(-20, 3)]
+
+   Passing "include_extras=True" to "get_type_hints()" lets one access
+   the extra annotations at runtime.
+
+   The details of the syntax:
+
+   * The first argument to "Annotated" must be a valid type
+
+   * Multiple type annotations are supported ("Annotated" supports
+     variadic arguments):
+
+        Annotated[int, ValueRange(3, 10), ctype("char")]
+
+   * "Annotated" must be called with at least two arguments (
+     "Annotated[int]" is not valid)
+
+   * The order of the annotations is preserved and matters for
+     equality checks:
+
+        Annotated[int, ValueRange(3, 10), ctype("char")] != Annotated[
+            int, ctype("char"), ValueRange(3, 10)
+        ]
+
+   * Nested "Annotated" types are flattened, with metadata ordered
+     starting with the innermost annotation:
+
+        Annotated[Annotated[int, ValueRange(3, 10)], ctype("char")] == Annotated[
+            int, ValueRange(3, 10), ctype("char")
+        ]
+
+   * Duplicated annotations are not removed:
+
+        Annotated[int, ValueRange(3, 10)] != Annotated[
+            int, ValueRange(3, 10), ValueRange(3, 10)
+        ]
+
+   * "Annotated" can be used with nested and generic aliases:
+
+        T = TypeVar('T')
+        Vec = Annotated[list[tuple[T, T]], MaxLen(10)]
+        V = Vec[int]
+
+        V == Annotated[list[tuple[int, int]], MaxLen(10)]
+
+   3.9 新版功能.
+
+
+Building generic types
+~~~~~~~~~~~~~~~~~~~~~~
+
+These are not used in annotations. They are building blocks for
+creating generic types.
+
+class typing.Generic
+
+   Abstract base class for generic types.
+
+   A generic type is typically declared by inheriting from an
+   instantiation of this class with one or more type variables. For
+   example, a generic mapping type might be defined as:
+
+      class Mapping(Generic[KT, VT]):
+          def __getitem__(self, key: KT) -> VT:
+              ...
+              # Etc.
+
+   这个类之后可以被这样用:
+
+      X = TypeVar('X')
+      Y = TypeVar('Y')
+
+      def lookup_name(mapping: Mapping[X, Y], key: X, default: Y) -> Y:
+          try:
+              return mapping[key]
+          except KeyError:
+              return default
+
+class typing.TypeVar
+
+   类型变量
+
+   用法:
+
+      T = TypeVar('T')  # Can be anything
+      A = TypeVar('A', str, bytes)  # Must be str or bytes
+
+   Type variables exist primarily for the benefit of static type
+   checkers.  They serve as the parameters for generic types as well
+   as for generic function definitions.  See "Generic" for more
+   information on generic types.  Generic functions work as follows:
+
+      def repeat(x: T, n: int) -> Sequence[T]:
+          """Return a list containing n references to x."""
+          return [x]*n
+
+      def longest(x: A, y: A) -> A:
+          """Return the longest of two strings."""
+          return x if len(x) >= len(y) else y
+
+   The latter example's signature is essentially the overloading of
+   "(str, str) -> str" and "(bytes, bytes) -> bytes".  Also note that
+   if the arguments are instances of some subclass of "str", the
+   return type is still plain "str".
+
+   "isinstance(x, T)" 会在运行时抛出 "TypeError" 异常。一般地说，
+   "isinstance()" 和 "issubclass()" 不应该和类型一起使用。
+
+   Type variables may be marked covariant or contravariant by passing
+   "covariant=True" or "contravariant=True".  See **PEP 484** for more
+   details.  By default type variables are invariant.  Alternatively,
+   a type variable may specify an upper bound using "bound=<type>".
+   This means that an actual type substituted (explicitly or
+   implicitly) for the type variable must be a subclass of the
+   boundary type, see **PEP 484**.
+
+typing.AnyStr
+
+   "AnyStr" is a type variable defined as "AnyStr = TypeVar('AnyStr',
+   str, bytes)".
+
+   It is meant to be used for functions that may accept any kind of
+   string without allowing different kinds of strings to mix. For
+   example:
+
+      def concat(a: AnyStr, b: AnyStr) -> AnyStr:
+          return a + b
+
+      concat(u"foo", u"bar")  # Ok, output has type 'unicode'
+      concat(b"foo", b"bar")  # Ok, output has type 'bytes'
+      concat(u"foo", b"bar")  # Error, cannot mix unicode and bytes
+
+class typing.Protocol(Generic)
+
+   Base class for protocol classes. Protocol classes are defined like
+   this:
+
+      class Proto(Protocol):
+          def meth(self) -> int:
+              ...
+
+   Such classes are primarily used with static type checkers that
+   recognize structural subtyping (static duck-typing), for example:
+
+      class C:
+          def meth(self) -> int:
+              return 0
+
+      def func(x: Proto) -> int:
+          return x.meth()
+
+      func(C())  # Passes static type check
+
+   See **PEP 544** for details. Protocol classes decorated with
+   "runtime_checkable()" (described later) act as simple-minded
+   runtime protocols that check only the presence of given attributes,
+   ignoring their type signatures.
+
+   Protocol classes can be generic, for example:
+
+      class GenProto(Protocol[T]):
+          def meth(self) -> T:
+              ...
+
+   3.8 新版功能.
+
+@typing.runtime_checkable
+
+   Mark a protocol class as a runtime protocol.
+
+   Such a protocol can be used with "isinstance()" and "issubclass()".
+   This raises "TypeError" when applied to a non-protocol class.  This
+   allows a simple-minded structural check, very similar to "one trick
+   ponies" in "collections.abc" such as "Iterable".  For example:
+
+      @runtime_checkable
+      class Closable(Protocol):
+          def close(self): ...
+
+      assert isinstance(open('/some/file'), Closable)
+
+   注解:
+
+     "runtime_checkable()" will check only the presence of the
+     required methods, not their type signatures! For example,
+     "builtins.complex" implements "__float__()", therefore it passes
+     an "issubclass()" check against "SupportsFloat". However, the
+     "complex.__float__" method exists only to raise a "TypeError"
+     with a more informative message.
+
+   3.8 新版功能.
+
+
+Other special directives
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+These are not used in annotations. They are building blocks for
+declaring types.
+
+class typing.NamedTuple
+
+   Typed version of "collections.namedtuple()".
+
+   用法:
+
+      class Employee(NamedTuple):
+          name: str
+          id: int
+
+   这相当于:
+
+      Employee = collections.namedtuple('Employee', ['name', 'id'])
+
+   To give a field a default value, you can assign to it in the class
+   body:
+
+      class Employee(NamedTuple):
+          name: str
+          id: int = 3
+
+      employee = Employee('Guido')
+      assert employee.id == 3
+
+   Fields with a default value must come after any fields without a
+   default.
+
+   The resulting class has an extra attribute "__annotations__" giving
+   a dict that maps the field names to the field types.  (The field
+   names are in the "_fields" attribute and the default values are in
+   the "_field_defaults" attribute both of which are part of the
+   namedtuple API.)
+
+   "NamedTuple" subclasses can also have docstrings and methods:
+
+      class Employee(NamedTuple):
+          """Represents an employee."""
+          name: str
+          id: int = 3
+
+          def __repr__(self) -> str:
+              return f'<Employee {self.name}, id={self.id}>'
+
+   Backward-compatible usage:
+
+      Employee = NamedTuple('Employee', [('name', str), ('id', int)])
+
+   在 3.6 版更改: Added support for **PEP 526** variable annotation
+   syntax.
+
+   在 3.6.1 版更改: Added support for default values, methods, and
+   docstrings.
+
+   在 3.8 版更改: The "_field_types" and "__annotations__" attributes
+   are now regular dictionaries instead of instances of "OrderedDict".
+
+   在 3.9 版更改: Removed the "_field_types" attribute in favor of the
+   more standard "__annotations__" attribute which has the same
+   information.
+
+typing.NewType(name, tp)
+
+   A helper function to indicate a distinct type to a typechecker, see
+   NewType. At runtime it returns a function that returns its
+   argument. Usage:
+
+      UserId = NewType('UserId', int)
+      first_user = UserId(1)
+
+   3.5.2 新版功能.
+
+class typing.TypedDict(dict)
+
+   Special construct to add type hints to a dictionary. At runtime it
+   is a plain "dict".
+
+   "TypedDict" declares a dictionary type that expects all of its
+   instances to have a certain set of keys, where each key is
+   associated with a value of a consistent type. This expectation is
+   not checked at runtime but is only enforced by type checkers.
+   Usage:
+
+      class Point2D(TypedDict):
+          x: int
+          y: int
+          label: str
+
+      a: Point2D = {'x': 1, 'y': 2, 'label': 'good'}  # OK
+      b: Point2D = {'z': 3, 'label': 'bad'}           # Fails type check
+
+      assert Point2D(x=1, y=2, label='first') == dict(x=1, y=2, label='first')
+
+   The type info for introspection can be accessed via
+   "Point2D.__annotations__" and "Point2D.__total__".  To allow using
+   this feature with older versions of Python that do not support
+   **PEP 526**, "TypedDict" supports two additional equivalent
+   syntactic forms:
+
+      Point2D = TypedDict('Point2D', x=int, y=int, label=str)
+      Point2D = TypedDict('Point2D', {'x': int, 'y': int, 'label': str})
+
+   By default, all keys must be present in a TypedDict. It is possible
+   to override this by specifying totality. Usage:
+
+      class point2D(TypedDict, total=False):
+          x: int
+          y: int
+
+   This means that a point2D TypedDict can have any of the keys
+   omitted. A type checker is only expected to support a literal False
+   or True as the value of the total argument. True is the default,
+   and makes all items defined in the class body be required.
+
+   See **PEP 589** for more examples and detailed rules of using
+   "TypedDict".
+
+   3.8 新版功能.
+
+
+Generic concrete collections
+----------------------------
+
+
+Corresponding to built-in types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class typing.Dict(dict, MutableMapping[KT, VT])
+
+   "dict" 的泛型版本。对标注返回类型比较有用。如果要标注参数的话，使用
+   如 "Mapping" 的抽象容器类型是更好的选择。
+
+   这个类型可以这样使用:
+
+      def count_words(text: str) -> Dict[str, int]:
+          ...
+
+   3.9 版后已移除: "builtins.dict" now supports "[]". See **PEP 585**
+   and Generic Alias Type.
+
+class typing.List(list, MutableSequence[T])
+
+   Generic version of "list". Useful for annotating return types. To
+   annotate arguments it is preferred to use an abstract collection
+   type such as "Sequence" or "Iterable".
+
+   这个类型可以这样用:
+
+      T = TypeVar('T', int, float)
+
+      def vec2(x: T, y: T) -> List[T]:
+          return [x, y]
+
+      def keep_positives(vector: Sequence[T]) -> List[T]:
+          return [item for item in vector if item > 0]
+
+   3.9 版后已移除: "builtins.list" now supports "[]". See **PEP 585**
+   and Generic Alias Type.
+
+class typing.Set(set, MutableSet[T])
+
+   A generic version of "builtins.set". Useful for annotating return
+   types. To annotate arguments it is preferred to use an abstract
+   collection type such as "AbstractSet".
+
+   3.9 版后已移除: "builtins.set" now supports "[]". See **PEP 585**
+   and Generic Alias Type.
+
+class typing.FrozenSet(frozenset, AbstractSet[T_co])
+
+   A generic version of "builtins.frozenset".
+
+   3.9 版后已移除: "builtins.frozenset" now supports "[]". See **PEP
+   585** and Generic Alias Type.
+
+注解:
+
+  "Tuple" is a special form.
+
+
+Corresponding to types in "collections"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class typing.DefaultDict(collections.defaultdict, MutableMapping[KT, VT])
+
+   "collections.defaultdict" 的泛型版本。
+
+   3.5.2 新版功能.
+
+   3.9 版后已移除: "collections.defaultdict" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.OrderedDict(collections.OrderedDict, MutableMapping[KT, VT])
+
+   "collections.OrderedDict" 的泛型版本。
+
+   3.7.2 新版功能.
+
+   3.9 版后已移除: "collections.OrderedDict" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.ChainMap(collections.ChainMap, MutableMapping[KT, VT])
+
+   "collections.ChainMap" 的泛型版本。
+
+   3.5.4 新版功能.
+
+   3.6.1 新版功能.
+
+   3.9 版后已移除: "collections.ChainMap" now supports "[]". See **PEP
+   585** and Generic Alias Type.
+
+class typing.Counter(collections.Counter, Dict[T, int])
+
+   "collections.Counter" 的泛型版本。
+
+   3.5.4 新版功能.
+
+   3.6.1 新版功能.
+
+   3.9 版后已移除: "collections.Counter" now supports "[]". See **PEP
+   585** and Generic Alias Type.
+
+class typing.Deque(deque, MutableSequence[T])
+
+   "collections.deque" 的泛型版本。
+
+   3.5.4 新版功能.
+
+   3.6.1 新版功能.
+
+   3.9 版后已移除: "collections.deque" now supports "[]". See **PEP
+   585** and Generic Alias Type.
+
+
+Other concrete types
+~~~~~~~~~~~~~~~~~~~~
+
+class typing.IO
+class typing.TextIO
+class typing.BinaryIO
+
+   Generic type "IO[AnyStr]" and its subclasses "TextIO(IO[str])" and
+   "BinaryIO(IO[bytes])" represent the types of I/O streams such as
+   returned by "open()". These types are also in the "typing.io"
+   namespace.
+
+class typing.Pattern
+class typing.Match
+
+   These type aliases correspond to the return types from
+   "re.compile()" and "re.match()".  These types (and the
+   corresponding functions) are generic in "AnyStr" and can be made
+   specific by writing "Pattern[str]", "Pattern[bytes]", "Match[str]",
+   or "Match[bytes]". These types are also in the "typing.re"
+   namespace.
+
+   3.9 版后已移除: Classes "Pattern" and "Match" from "re" now support
+   "[]". See **PEP 585** and Generic Alias Type.
+
+class typing.Text
+
+   "Text" is an alias for "str". It is provided to supply a forward
+   compatible path for Python 2 code: in Python 2, "Text" is an alias
+   for "unicode".
+
+   Use "Text" to indicate that a value must contain a unicode string
+   in a manner that is compatible with both Python 2 and Python 3:
+
+      def add_unicode_checkmark(text: Text) -> Text:
+          return text + u' \u2713'
+
+   3.5.2 新版功能.
+
+
+Abstract Base Classes
+---------------------
+
+
+Corresponding to collections in "collections.abc"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class typing.AbstractSet(Sized, Collection[T_co])
+
+   "collections.abc.Set"  的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Set" now supports "[]". See **PEP
+   585** and Generic Alias Type.
+
+class typing.ByteString(Sequence[int])
+
+   "collections.abc.ByteString" 的泛型版本。
+
+   This type represents the types "bytes", "bytearray", and
+   "memoryview" of byte sequences.
+
+   As a shorthand for this type, "bytes" can be used to annotate
+   arguments of any of the types mentioned above.
+
+   3.9 版后已移除: "collections.abc.ByteString" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Collection(Sized, Iterable[T_co], Container[T_co])
+
+   "collections.abc.Collection" 的泛型版本。
+
+   3.6.0 新版功能.
+
+   3.9 版后已移除: "collections.abc.Collection" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Container(Generic[T_co])
+
+   "collections.abc.Container" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Container" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.ItemsView(MappingView, Generic[KT_co, VT_co])
+
+   "collections.abc.ItemsView" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.ItemsView" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.KeysView(MappingView[KT_co], AbstractSet[KT_co])
+
+   "collections.abc.KeysView" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.KeysView" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Mapping(Sized, Collection[KT], Generic[VT_co])
+
+   "collections.abc.Mapping" 的泛型版本。这个类型可以如下使用:
+
+      def get_position_in_index(word_list: Mapping[str, int], word: str) -> int:
+          return word_list[word]
+
+   3.9 版后已移除: "collections.abc.Mapping" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.MappingView(Sized, Iterable[T_co])
+
+   "collections.abc.MappingView" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.MappingView" now supports "[]".
+   See **PEP 585** and Generic Alias Type.
+
+class typing.MutableMapping(Mapping[KT, VT])
+
+   "collections.abc.MutableMapping" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.MutableMapping" now supports "[]".
+   See **PEP 585** and Generic Alias Type.
+
+class typing.MutableSequence(Sequence[T])
+
+   "collections.abc.MutableSequence" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.MutableSequence" now supports
+   "[]". See **PEP 585** and Generic Alias Type.
+
+class typing.MutableSet(AbstractSet[T])
+
+   "collections.abc.MutableSet" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.MutableSet" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Sequence(Reversible[T_co], Collection[T_co])
+
+   "collections.abc.Sequence" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Sequence" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.ValuesView(MappingView[VT_co])
+
+   "collections.abc.ValuesView" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.ValuesView" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+
+Corresponding to other types in "collections.abc"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class typing.Iterable(Generic[T_co])
+
+   "collections.abc.Iterable" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Iterable" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Iterator(Iterable[T_co])
+
+   "collections.abc.Iterator" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Iterator" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Generator(Iterator[T_co], Generic[T_co, T_contra, V_co])
+
+   A generator can be annotated by the generic type
+   "Generator[YieldType, SendType, ReturnType]". For example:
+
+      def echo_round() -> Generator[int, float, str]:
+          sent = yield 0
+          while sent >= 0:
+              sent = yield round(sent)
+          return 'Done'
+
+   Note that unlike many other generics in the typing module, the
+   "SendType" of "Generator" behaves contravariantly, not covariantly
+   or invariantly.
+
+   If your generator will only yield values, set the "SendType" and
+   "ReturnType" to "None":
+
+      def infinite_stream(start: int) -> Generator[int, None, None]:
+          while True:
+              yield start
+              start += 1
+
+   Alternatively, annotate your generator as having a return type of
+   either "Iterable[YieldType]" or "Iterator[YieldType]":
+
+      def infinite_stream(start: int) -> Iterator[int]:
+          while True:
+              yield start
+              start += 1
+
+   3.9 版后已移除: "collections.abc.Generator" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Hashable
+
+   "collections.abc.Hashable" 的别名。
+
+class typing.Reversible(Iterable[T_co])
+
+   "collections.abc.Reversible" 的泛型版本。
+
+   3.9 版后已移除: "collections.abc.Reversible" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.Sized
+
+   "collections.abc.Sized" 的别名。
+
+
+Asynchronous programming
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+class typing.Coroutine(Awaitable[V_co], Generic[T_co, T_contra, V_co])
+
+   A generic version of "collections.abc.Coroutine". The variance and
+   order of type variables correspond to those of "Generator", for
+   example:
+
+      from collections.abc import Coroutine
+      c = None # type: Coroutine[list[str], str, int]
+      ...
+      x = c.send('hi') # type: list[str]
+      async def bar() -> None:
+          x = await c # type: int
+
+   3.5.3 新版功能.
+
+   3.9 版后已移除: "collections.abc.Coroutine" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+class typing.AsyncGenerator(AsyncIterator[T_co], Generic[T_co, T_contra])
+
+   An async generator can be annotated by the generic type
+   "AsyncGenerator[YieldType, SendType]". For example:
+
+      async def echo_round() -> AsyncGenerator[int, float]:
+          sent = yield 0
+          while sent >= 0.0:
+              rounded = await round(sent)
+              sent = yield rounded
+
+   Unlike normal generators, async generators cannot return a value,
+   so there is no "ReturnType" type parameter. As with "Generator",
+   the "SendType" behaves contravariantly.
+
+   If your generator will only yield values, set the "SendType" to
+   "None":
+
+      async def infinite_stream(start: int) -> AsyncGenerator[int, None]:
+          while True:
+              yield start
+              start = await increment(start)
+
+   Alternatively, annotate your generator as having a return type of
+   either "AsyncIterable[YieldType]" or "AsyncIterator[YieldType]":
+
+      async def infinite_stream(start: int) -> AsyncIterator[int]:
+          while True:
+              yield start
+              start = await increment(start)
+
+   3.6.1 新版功能.
+
+   3.9 版后已移除: "collections.abc.AsyncGenerator" now supports "[]".
+   See **PEP 585** and Generic Alias Type.
+
+class typing.AsyncIterable(Generic[T_co])
+
+   "collections.abc.AsyncIterable" 的泛型版本。
+
+   3.5.2 新版功能.
+
+   3.9 版后已移除: "collections.abc.AsyncIterable" now supports "[]".
+   See **PEP 585** and Generic Alias Type.
+
+class typing.AsyncIterator(AsyncIterable[T_co])
+
+   "collections.abc.AsyncIterator" 的泛型版本。
+
+   3.5.2 新版功能.
+
+   3.9 版后已移除: "collections.abc.AsyncIterator" now supports "[]".
+   See **PEP 585** and Generic Alias Type.
+
+class typing.Awaitable(Generic[T_co])
+
+   "collections.abc.Awaitable" 的泛型版本。
+
+   3.5.2 新版功能.
+
+   3.9 版后已移除: "collections.abc.Awaitable" now supports "[]". See
+   **PEP 585** and Generic Alias Type.
+
+
+Context manager types
+~~~~~~~~~~~~~~~~~~~~~
+
+class typing.ContextManager(Generic[T_co])
+
+   "contextlib.AbstractContextManager" 的泛型版本。
+
+   3.5.4 新版功能.
+
+   3.6.0 新版功能.
+
+   3.9 版后已移除: "contextlib.AbstractContextManager" now supports
+   "[]". See **PEP 585** and Generic Alias Type.
+
+class typing.AsyncContextManager(Generic[T_co])
+
+   "contextlib.AbstractAsyncContextManager" 的泛型版本。
+
+   3.5.4 新版功能.
+
+   3.6.2 新版功能.
+
+   3.9 版后已移除: "contextlib.AbstractAsyncContextManager" now
+   supports "[]". See **PEP 585** and Generic Alias Type.
+
+
+协议
+----
+
+These protocols are decorated with "runtime_checkable()".
+
+class typing.SupportsAbs
+
+   An ABC with one abstract method "__abs__" that is covariant in its
+   return type.
+
+class typing.SupportsBytes
+
+   An ABC with one abstract method "__bytes__".
+
+class typing.SupportsComplex
+
+   An ABC with one abstract method "__complex__".
+
+class typing.SupportsFloat
+
+   An ABC with one abstract method "__float__".
+
+class typing.SupportsIndex
+
+   An ABC with one abstract method "__index__".
+
+   3.8 新版功能.
+
+class typing.SupportsInt
+
+   An ABC with one abstract method "__int__".
+
+class typing.SupportsRound
+
+   An ABC with one abstract method "__round__" that is covariant in
+   its return type.
+
+
+Functions and decorators
+------------------------
+
+typing.cast(typ, val)
+
+   Cast a value to a type.
+
+   This returns the value unchanged.  To the type checker this signals
+   that the return value has the designated type, but at runtime we
+   intentionally don't check anything (we want this to be as fast as
+   possible).
+
+@typing.overload
+
+   The "@overload" decorator allows describing functions and methods
+   that support multiple different combinations of argument types. A
+   series of "@overload"-decorated definitions must be followed by
+   exactly one non-"@overload"-decorated definition (for the same
+   function/method). The "@overload"-decorated definitions are for the
+   benefit of the type checker only, since they will be overwritten by
+   the non-"@overload"-decorated definition, while the latter is used
+   at runtime but should be ignored by a type checker.  At runtime,
+   calling a "@overload"-decorated function directly will raise
+   "NotImplementedError". An example of overload that gives a more
+   precise type than can be expressed using a union or a type
+   variable:
+
+      @overload
+      def process(response: None) -> None:
+          ...
+      @overload
+      def process(response: int) -> tuple[int, str]:
+          ...
+      @overload
+      def process(response: bytes) -> str:
+          ...
+      def process(response):
+          <actual implementation>
+
+   See **PEP 484** for details and comparison with other typing
+   semantics.
+
+@typing.final
+
+   A decorator to indicate to type checkers that the decorated method
+   cannot be overridden, and the decorated class cannot be subclassed.
+   For example:
+
+      class Base:
+          @final
+          def done(self) -> None:
+              ...
+      class Sub(Base):
+          def done(self) -> None:  # Error reported by type checker
+                ...
+
+      @final
+      class Leaf:
+          ...
+      class Other(Leaf):  # Error reported by type checker
+          ...
+
+   There is no runtime checking of these properties. See **PEP 591**
+   for more details.
+
+   3.8 新版功能.
+
+@typing.no_type_check
+
+   用于指明标注不是类型提示的装饰器。
+
+   此 *decorator* 装饰器生效于类或函数上。如果作用于类上的话，它会递归
+   地作用于这个类的所定义的所有方法上（但是对于超类或子类所定义的方法
+   不会生效）。
+
+   此方法会就地地修改函数。
+
+@typing.no_type_check_decorator
+
+   使其它装饰器起到 "no_type_check()" 效果的装饰器。
+
+   This wraps the decorator with something that wraps the decorated
+   function in "no_type_check()".
+
+@typing.type_check_only
+
+   标记一个类或函数在运行时内不可用的装饰器。
+
+   This decorator is itself not available at runtime. It is mainly
+   intended to mark classes that are defined in type stub files if an
+   implementation returns an instance of a private class:
+
+      @type_check_only
+      class Response:  # private or not available at runtime
+          code: int
+          def get_header(self, name: str) -> str: ...
+
+      def fetch_response() -> Response: ...
+
+   Note that returning instances of private classes is not
+   recommended. It is usually preferable to make such classes public.
+
+
+Introspection helpers
+---------------------
+
+typing.get_type_hints(obj, globalns=None, localns=None, include_extras=False)
+
+   返回一个字典，字典内含有函数、方法、模块或类对象的类型提示。
+
+   This is often the same as "obj.__annotations__". In addition,
+   forward references encoded as string literals are handled by
+   evaluating them in "globals" and "locals" namespaces. If necessary,
+   "Optional[t]" is added for function and method annotations if a
+   default value equal to "None" is set. For a class "C", return a
+   dictionary constructed by merging all the "__annotations__" along
+   "C.__mro__" in reverse order.
+
+   The function recursively replaces all "Annotated[T, ...]" with "T",
+   unless "include_extras" is set to "True" (see "Annotated" for more
+   information). For example:
+
+      class Student(NamedTuple):
+          name: Annotated[str, 'some marker']
+
+      get_type_hints(Student) == {'name': str}
+      get_type_hints(Student, include_extras=False) == {'name': str}
+      get_type_hints(Student, include_extras=True) == {
+          'name': Annotated[str, 'some marker']
+      }
+
+   在 3.9 版更改: Added "include_extras" parameter as part of **PEP
+   593**.
+
+typing.get_args(tp)
+
+typing.get_origin(tp)
+
+   Provide basic introspection for generic types and special typing
+   forms.
+
+   For a typing object of the form "X[Y, Z, ...]" these functions
+   return "X" and "(Y, Z, ...)". If "X" is a generic alias for a
+   builtin or "collections" class, it gets normalized to the original
+   class. For unsupported objects return "None" and "()"
+   correspondingly. Examples:
+
+      assert get_origin(Dict[str, int]) is dict
+      assert get_args(Dict[int, str]) == (int, str)
+
+      assert get_origin(Union[int, str]) is Union
+      assert get_args(Union[int, str]) == (int, str)
+
+   3.8 新版功能.
+
+class typing.ForwardRef
+
+   A class used for internal typing representation of string forward
+   references. For example, "list["SomeClass"]" is implicitly
+   transformed into "list[ForwardRef("SomeClass")]".  This class
+   should not be instantiated by a user, but may be used by
+   introspection tools.
+
+
+常数
+----
+
+typing.TYPE_CHECKING
+
+   A special constant that is assumed to be "True" by 3rd party static
+   type checkers. It is "False" at runtime. Usage:
+
+      if TYPE_CHECKING:
+          import expensive_mod
+
+      def fun(arg: 'expensive_mod.SomeType') -> None:
+          local_var: expensive_mod.AnotherType = other_fun()
+
+   The first type annotation must be enclosed in quotes, making it a
+   "forward reference", to hide the "expensive_mod" reference from the
+   interpreter runtime.  Type annotations for local variables are not
+   evaluated, so the second annotation does not need to be enclosed in
+   quotes.
+
+   注解:
+
+     If "from __future__ import annotations" is used in Python 3.7 or
+     later, annotations are not evaluated at function definition time.
+     Instead, they are stored as strings in "__annotations__", This
+     makes it unnecessary to use quotes around the annotation. (see
+     **PEP 563**).
+
+   3.5.2 新版功能.

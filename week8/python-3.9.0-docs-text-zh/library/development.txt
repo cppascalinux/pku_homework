@@ -1,0 +1,298 @@
+开发工具
+********
+
+本章中描述的各模块可帮你编写 Python 程序。例如，"pydoc" 模块接受一个模
+块并根据该模块的内容来生成文档。"doctest" 和 "unittest" 这两个模块包含
+了用于编写单元测试的框架，并可用于自动测试所编写的代码，验证预期的输出
+是否产生。**2to3** 程序能够将 Python 2.x 源代码翻译成有效的 Python 3.x
+源代码。
+
+本章中描述的模块列表是：
+
+* "typing" --- 类型标注支持
+
+  * 类型别名
+
+  * NewType
+
+  * Callable
+
+  * 泛型(Generic)
+
+  * 用户定义的泛型类型
+
+  * "Any" 类型
+
+  * 名义性子类型 区别于 结构性子类型
+
+  * 模块内容
+
+    * 特殊类型原语
+
+      * 特殊类型
+
+      * 特殊形式
+
+      * Building generic types
+
+      * Other special directives
+
+    * Generic concrete collections
+
+      * Corresponding to built-in types
+
+      * Corresponding to types in "collections"
+
+      * Other concrete types
+
+    * Abstract Base Classes
+
+      * Corresponding to collections in "collections.abc"
+
+      * Corresponding to other types in "collections.abc"
+
+      * Asynchronous programming
+
+      * Context manager types
+
+    * 协议
+
+    * Functions and decorators
+
+    * Introspection helpers
+
+    * 常数
+
+* "pydoc" --- 文档生成器和在线帮助系统
+
+* Python Development Mode
+
+* Effects of the Python Development Mode
+
+* ResourceWarning Example
+
+* Bad file descriptor error example
+
+* "doctest" --- 测试交互性的Python示例
+
+  * 简单用法：检查Docstrings中的示例
+
+  * Simple Usage: Checking Examples in a Text File
+
+  * How It Works
+
+    * Which Docstrings Are Examined?
+
+    * How are Docstring Examples Recognized?
+
+    * What's the Execution Context?
+
+    * What About Exceptions?
+
+    * Option Flags
+
+    * Directives
+
+    * 警告
+
+  * Basic API
+
+  * Unittest API
+
+  * Advanced API
+
+    * DocTest 对象
+
+    * Example Objects
+
+    * DocTestFinder 对象
+
+    * DocTestParser 对象
+
+    * DocTestRunner 对象
+
+    * OutputChecker 对象
+
+  * 调试
+
+  * Soapbox
+
+* "unittest" --- 单元测试框架
+
+  * 基本实例
+
+  * 命令行界面
+
+    * 命令行选项
+
+  * 探索性测试
+
+  * 组织你的测试代码
+
+  * 复用已有的测试代码
+
+  * 跳过测试与预计的失败
+
+  * Distinguishing test iterations using subtests
+
+  * 类与函数
+
+    * 测试用例
+
+      * Deprecated aliases
+
+    * Grouping tests
+
+    * Loading and running tests
+
+      * load_tests Protocol
+
+  * Class and Module Fixtures
+
+    * setUpClass and tearDownClass
+
+    * setUpModule and tearDownModule
+
+  * Signal Handling
+
+* "unittest.mock" --- mock对象库
+
+  * 快速上手
+
+  * Mock 类
+
+    * Calling
+
+    * Deleting Attributes
+
+    * Mock names and the name attribute
+
+    * Attaching Mocks as Attributes
+
+  * The patchers
+
+    * patch
+
+    * patch.object
+
+    * patch.dict
+
+    * patch.multiple
+
+    * patch methods: start and stop
+
+    * patch builtins
+
+    * TEST_PREFIX
+
+    * Nesting Patch Decorators
+
+    * Where to patch
+
+    * Patching Descriptors and Proxy Objects
+
+  * MagicMock and magic method support
+
+    * Mocking Magic Methods
+
+    * Magic Mock
+
+  * Helpers
+
+    * sentinel
+
+    * DEFAULT
+
+    * call
+
+    * create_autospec
+
+    * ANY
+
+    * FILTER_DIR
+
+    * mock_open
+
+    * Autospeccing
+
+    * Sealing mocks
+
+* "unittest.mock" 上手指南
+
+  * 使用 mock
+
+    * 模拟方法调用
+
+    * 对象上的方法调用的 mock
+
+    * Mocking Classes
+
+    * Naming your mocks
+
+    * Tracking all Calls
+
+    * Setting Return Values and Attributes
+
+    * Raising exceptions with mocks
+
+    * Side effect functions and iterables
+
+    * Mocking asynchronous iterators
+
+    * Mocking asynchronous context manager
+
+    * Creating a Mock from an Existing Object
+
+  * Patch Decorators
+
+  * Further Examples
+
+    * Mocking chained calls
+
+    * Partial mocking
+
+    * Mocking a Generator Method
+
+    * Applying the same patch to every test method
+
+    * Mocking Unbound Methods
+
+    * Checking multiple calls with mock
+
+    * Coping with mutable arguments
+
+    * Nesting Patches
+
+    * Mocking a dictionary with MagicMock
+
+    * Mock subclasses and their attributes
+
+    * Mocking imports with patch.dict
+
+    * Tracking order of calls and less verbose call assertions
+
+    * More complex argument matching
+
+* 2to3 - 自动将 Python 2 代码转为 Python 3 代码
+
+  * 使用 2to3
+
+  * 修复器
+
+  * "lib2to3" —— 2to3 支持库
+
+* "test" ---  Python回归测试包
+
+  * Writing Unit Tests for the "test" package
+
+  * Running tests using the command-line interface
+
+* "test.support" --- Utilities for the Python test suite
+
+* "test.support.socket_helper" --- Utilities for socket tests
+
+* "test.support.script_helper" --- Utilities for the Python execution
+  tests
+
+* "test.support.bytecode_helper" --- Support tools for testing correct
+  bytecode generation

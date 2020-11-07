@@ -1,0 +1,113 @@
+列表对象
+********
+
+PyListObject
+
+   这个C类型 "PyObject" 的子类型代表一个Python列表对象。
+
+PyTypeObject PyList_Type
+
+   这是个属于 "PyTypeObject" 的代表Python列表类型的实例。在Python层面
+   和类型 "list" 是同一个对象。
+
+int PyList_Check(PyObject *p)
+
+   如果 *p* 是一个列表对象或者是一个列表类型的子类型实例时，返回真。
+
+int PyList_CheckExact(PyObject *p)
+
+   当 *p* 是一个列表对象，但是不是列表类型的子类型实例时，返回真。
+
+PyObject* PyList_New(Py_ssize_t len)
+    *Return value: New reference.*
+
+   成功时返回一个长度为 *len* 的新列表，失败时返回 "NULL"。
+
+   注解:
+
+     当 *len* 大于零时，被返回的列表对象项目被设成 "NULL"。因此你不能
+     用类似C函数 "PySequence_SetItem()" 的抽象API或者用C函数
+     "PyList_SetItem()" 将所有项目设置成真实对象前对Python代码公开这个
+     对象。
+
+Py_ssize_t PyList_Size(PyObject *list)
+
+   返回 *list* 中列表对象的长度；这等于在列表对象调用 "len(list)" 。
+
+Py_ssize_t PyList_GET_SIZE(PyObject *list)
+
+   宏版本的C函数 "PyList_Size()" ，没有错误检测。
+
+PyObject* PyList_GetItem(PyObject *list, Py_ssize_t index)
+    *Return value: Borrowed reference.*
+
+   返回 *list* 所指向列表中 *index* 位置上的对象。 位置值必须为非负数
+   ；不支持从列表末尾进行索引。 如果 *index* 超出边界 (<0 or
+   >=len(list))，则返回 "NULL" 并设置 "IndexError" 异常。
+
+PyObject* PyList_GET_ITEM(PyObject *list, Py_ssize_t i)
+    *Return value: Borrowed reference.*
+
+   宏版本的C函数 "PyList_GetItem()" ，没有错误检测。
+
+int PyList_SetItem(PyObject *list, Py_ssize_t index, PyObject *item)
+
+   将列表中索引为 *index* 的项设为 *item*。 成功时返回 "0"。 如果
+   *index* 超出范围则返回 "-1" 并设定 "IndexError" 异常。
+
+   注解:
+
+     此函数会“偷走”一个对 *item* 的引用并丢弃一个对列表中受影响位置上
+     的已有条目的引用。
+
+void PyList_SET_ITEM(PyObject *list, Py_ssize_t i, PyObject *o)
+
+   不带错误检测的宏版本 "PyList_SetItem()"。 这通常只被用于新列表中之
+   前没有内容的位置进行填充。
+
+   注解:
+
+     该宏会“偷走”一个对 *item* 的引用，但与 "PyList_SetItem()" 不同的
+     是它 *不会* 丢弃对任何被替换条目的引用；在 *list* 的 *i* 位置上的
+     任何引用都将被泄露。
+
+int PyList_Insert(PyObject *list, Py_ssize_t index, PyObject *item)
+
+   将条目 *item* 插入到列表 *list* 索引号 *index* 之前的位置。 如果成
+   功将返回 "0"；如果不成功则返回 "-1" 并设置一个异常。 相当于
+   "list.insert(index, item)"。
+
+int PyList_Append(PyObject *list, PyObject *item)
+
+   将对象 *item* 添加到列表 *list* 的末尾。 如果成功将返回 "0"；如果不
+   成功则返回 "-1" 并设置一个异常。 相当于 "list.append(item)"。
+
+PyObject* PyList_GetSlice(PyObject *list, Py_ssize_t low, Py_ssize_t high)
+    *Return value: New reference.*
+
+   返回一个对象列表，包含 *list* 当中位于 *low* 和 *high* *之间* 的对
+   象。 如果不成功则返回 "NULL" 并设置异常。 相当于 "list[low:high]"。
+   不支持从列表末尾进行索引。
+
+int PyList_SetSlice(PyObject *list, Py_ssize_t low, Py_ssize_t high, PyObject *itemlist)
+
+   将 *list* 当中 *low* 与 *high* 之间的切片设为 *itemlist* 的内容。
+   相当于 "list[low:high] = itemlist"。 *itemlist* 可以为 "NULL"，表示
+   赋值为一个空列表（删除切片）。 成功时返回 "0"，失败时返回 "-1"。 这
+   里不支持从列表末尾进行索引。
+
+int PyList_Sort(PyObject *list)
+
+   对 *list* 中的条目进行原地排序。 成功时返回 "0"，失败时返回 "-1"。
+   这等价于 "list.sort()"。
+
+int PyList_Reverse(PyObject *list)
+
+   对 *list* 中的条目进行原地反转。 成功时返回 "0"，失败时返回 "-1"。
+   这等价于 "list.reverse()"。
+
+PyObject* PyList_AsTuple(PyObject *list)
+    *Return value: New reference.*
+
+   返回一个新的元组对象，其中包含 *list* 的内容；等价于 "tuple(list)"
+   。

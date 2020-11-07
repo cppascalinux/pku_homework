@@ -1,0 +1,227 @@
+"audioop" --- 处理原始音频数据
+******************************
+
+======================================================================
+
+"audioop" 模块包含针对声音片段的一些有用操作。它操作的声音片段由 8、16
+、24 或 32 位宽的有符号整型采样值组成，存储在 *类字节串对象* 中。除非
+特别说明，否则所有标量项目均为整数。
+
+在 3.4 版更改: 增加了对 24 位采样的支持。现在，所有函数都接受任何 *类
+字节串对象*。而传入字符串会立即导致错误。
+
+本模块提供对 a-LAW、u-LAW 和 Intel/DVI ADPCM 编码的支持。
+
+部分更复杂的操作仅接受 16 位采样，而其他操作始终需要采样大小（以字节为
+单位）作为该操作的参数。
+
+此模块定义了下列变量和函数：
+
+exception audioop.error
+
+   所有错误都会抛出此异常，比如采样值的字节数未知等等。
+
+audioop.add(fragment1, fragment2, width)
+
+   两个采样作为参数传入，返回一个片段，该片段是两个采样的和。*width*
+   是采样位宽（以字节为单位），可以取 "1", "2", "3" 或 "4"。两个片段的
+   长度应相同。如果发生溢出，较长的采样将被截断。
+
+audioop.adpcm2lin(adpcmfragment, width, state)
+
+   将 Intel/DVI ADPCM 编码的片段解码为线性片段。关于 ADPCM 编码的详情
+   请参阅 "lin2adpcm()" 的描述。返回一个元组 "(sample, newstate)"，其
+   中 sample 的位宽由 *width* 指定。
+
+audioop.alaw2lin(fragment, width)
+
+   将 a-LAW 编码的声音片段转换为线性编码声音片段。由于 a-LAW 编码采样
+   值始终为 8 位，因此这里的 *width* 仅指输出片段的采样位宽。
+
+audioop.avg(fragment, width)
+
+   返回片段中所有采样值的平均值。
+
+audioop.avgpp(fragment, width)
+
+   返回片段中所有采样值的平均峰峰值。由于没有进行过滤，因此该例程的实
+   用性尚存疑。
+
+audioop.bias(fragment, width, bias)
+
+   返回一个片段，该片段由原始片段中的每个采样值加上偏差组成。在溢出时
+   采样值会回卷 (wrap around)。
+
+audioop.byteswap(fragment, width)
+
+   “按字节交换”片段中的所有采样值，返回修改后的片段。将大端序采样转换
+   为小端序采样，反之亦然。
+
+   3.4 新版功能.
+
+audioop.cross(fragment, width)
+
+   将片段作为参数传入，返回其中过零点的数量。
+
+audioop.findfactor(fragment, reference)
+
+   返回一个系数 *F* 使得 "rms(add(fragment, mul(reference, -F)))" 最小
+   ，即返回的系数乘以 *reference* 后与 *fragment* 最匹配。两个片段都应
+   包含 2 字节宽的采样。
+
+   本例程所需的时间与 "len(fragment)" 成正比。
+
+audioop.findfit(fragment, reference)
+
+   尽可能尝试让 *reference* 匹配 *fragment* 的一部分（*fragment* 应较
+   长）。从概念上讲，完成这些靠从 *fragment* 中取出切片，使用
+   "findfactor()" 计算最佳匹配，并最小化结果。两个片段都应包含 2 字节
+   宽的采样。返回一个元组 "(offset, factor)"，其中 *offset* 是在
+   *fragment* 中的偏移量（整数），表示从此处开始最佳匹配，而 *factor*
+   是由 "findfactor()" 定义的因数（浮点数）。
+
+audioop.findmax(fragment, length)
+
+   在 *fragment* 中搜索所有长度为 *length* 的采样切片（不是字节！）中
+   ，能量最大的那一个切片，即返回 *i* 使得
+   "rms(fragment[i*2:(i+length)*2])" 最大。两个片段都应包含 2 字节宽的
+   采样。
+
+   本例程所需的时间与 "len(fragment)" 成正比。
+
+audioop.getsample(fragment, width, index)
+
+   返回片段中采样值索引 *index* 的值。
+
+audioop.lin2adpcm(fragment, width, state)
+
+   将采样转换为 4 位 Intel/DVI ADPCM 编码。ADPCM 编码是一种自适应编码
+   方案，其中每个 4 比特数字是一个采样值与下一个采样值之间的差除以（不
+   定的）步长。IMA 已选择使用 Intel/DVI ADPCM 算法，因此它很可能成为标
+   准。
+
+   *state* 是一个表示编码器状态的元组。编码器返回一个元组 "(adpcmfrag,
+   newstate)"，而 *newstate* 要在下一次调用 "lin2adpcm()" 时传入。在初
+   始调用中，可以将 "None" 作为 state 传递。*adpcmfrag* 是 ADPCM 编码
+   的片段，每个字节打包了 2 个 4 比特值。
+
+audioop.lin2alaw(fragment, width)
+
+   将音频片段中的采样值转换为 a-LAW 编码，并将其作为字节对象返回。
+   a-LAW 是一种音频编码格式，仅使用 8 位采样即可获得大约 13 位的动态范
+   围。Sun 音频硬件等使用该编码。
+
+audioop.lin2lin(fragment, width, newwidth)
+
+   将采样在 1、2、3 和 4 字节格式之间转换。
+
+   注解:
+
+     在某些音频格式（如 .WAV 文件）中，16、24 和 32 位采样是有符号的，
+     但 8 位采样是无符号的。因此，当将这些格式转换为 8 位宽采样时，还
+     需使结果加上 128:
+
+        new_frames = audioop.lin2lin(frames, old_width, 1)
+        new_frames = audioop.bias(new_frames, 1, 128)
+
+     反之，将 8 位宽的采样转换为 16、24 或 32 位时，必须采用相同的处理
+     。
+
+audioop.lin2ulaw(fragment, width)
+
+   将音频片段中的采样值转换为 u-LAW 编码，并将其作为字节对象返回。
+   u-LAW 是一种音频编码格式，仅使用 8 位采样即可获得大约 14 位的动态范
+   围。Sun 音频硬件等使用该编码。
+
+audioop.max(fragment, width)
+
+   返回片段中所有采样值的最大 *绝对值*。
+
+audioop.maxpp(fragment, width)
+
+   返回声音片段中的最大峰峰值。
+
+audioop.minmax(fragment, width)
+
+   返回声音片段中所有采样值的最小值和最大值组成的元组。
+
+audioop.mul(fragment, width, factor)
+
+   返回一个片段，该片段由原始片段中的每个采样值乘以浮点值 *factor* 组
+   成。如果发生溢出，采样将被截断。
+
+audioop.ratecv(fragment, width, nchannels, inrate, outrate, state[, weightA[, weightB]])
+
+   转换输入片段的帧速率。
+
+   *state* 是一个表示转换器状态的元组。转换器返回一个元组
+   "(newfragment, newstate)"，而 *newstate* 要在下一次调用 "ratecv()"
+   时传入。初始调用应传入 "None" 作为 state。
+
+   参数 *weightA* 和 *weightB* 是简单数字滤波器的参数，默认分别为 "1"
+   和 "0"。
+
+audioop.reverse(fragment, width)
+
+   将片段中的采样值反转，返回修改后的片段。
+
+audioop.rms(fragment, width)
+
+   返回片段的均方根值，即 "sqrt(sum(S_i^2)/n)"。
+
+   测量音频信号的能量。
+
+audioop.tomono(fragment, width, lfactor, rfactor)
+
+   将立体声片段转换为单声道片段。左通道乘以 *lfactor*，右通道乘以
+   *rfactor*，然后两个通道相加得到单声道信号。
+
+audioop.tostereo(fragment, width, lfactor, rfactor)
+
+   由单声道片段生成立体声片段。立体声片段中的两对采样都是从单声道计算
+   而来的，即左声道是乘以 *lfactor*，右声道是乘以 *rfactor*。
+
+audioop.ulaw2lin(fragment, width)
+
+   将 u-LAW 编码的声音片段转换为线性编码声音片段。由于 u-LAW 编码采样
+   值始终为 8 位，因此这里的 *width* 仅指输出片段的采样位宽。
+
+请注意，诸如 "mul()" 或 "max()" 之类的操作在单声道和立体声间没有区别，
+即所有采样都作相同处理。如果出现问题，应先将立体声片段拆分为两个单声道
+片段，之后再重组。以下是如何进行该操作的示例:
+
+   def mul_stereo(sample, width, lfactor, rfactor):
+       lsample = audioop.tomono(sample, width, 1, 0)
+       rsample = audioop.tomono(sample, width, 0, 1)
+       lsample = audioop.mul(lsample, width, lfactor)
+       rsample = audioop.mul(rsample, width, rfactor)
+       lsample = audioop.tostereo(lsample, width, 1, 0)
+       rsample = audioop.tostereo(rsample, width, 0, 1)
+       return audioop.add(lsample, rsample, width)
+
+如果使用 ADPCM 编码器构造网络数据包，并且希望协议是无状态的（即能够容
+忍数据包丢失），则不仅需要传输数据，还应该传输状态。请注意，必须将*初
+始*状态（传入 "lin2adpcm()" 的状态）发送给解码器，不能发送最终状态（编
+码器返回的状态）。如果要使用 "struct.Struct" 以二进制保存状态，可以将
+第一个元素（预测值）用 16 位编码，将第二个元素（增量索引）用 8 位编码
+。
+
+本 ADPCM 编码器从不与其他 ADPCM 编码器对立，仅针对自身。本开发者可能会
+误读标准，这种情况下它们将无法与相应标准互操作。
+
+乍看之下 "find*()" 例程可能有些可笑。它们主要是用于回声消除，一种快速
+有效的方法是选取输出样本中能量最高的片段，在输入样本中定位该片段，然后
+从输入样本中减去整个输出样本:
+
+   def echocancel(outputdata, inputdata):
+       pos = audioop.findmax(outputdata, 800)    # one tenth second
+       out_test = outputdata[pos*2:]
+       in_test = inputdata[pos*2:]
+       ipos, factor = audioop.findfit(in_test, out_test)
+       # Optional (for better cancellation):
+       # factor = audioop.findfactor(in_test[ipos*2:ipos*2+len(out_test)],
+       #              out_test)
+       prefill = '\0'*(pos+ipos)*2
+       postfill = '\0'*(len(inputdata)-len(prefill)-len(outputdata))
+       outputdata = prefill + audioop.mul(outputdata, 2, -factor) + postfill
+       return audioop.add(inputdata, outputdata, 2)

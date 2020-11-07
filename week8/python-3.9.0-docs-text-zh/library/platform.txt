@@ -1,0 +1,215 @@
+"platform" ---  获取底层平台的标识数据
+**************************************
+
+**源代码：** Lib/platform.py
+
+======================================================================
+
+注解:
+
+  特定平台按字母顺序排列，Linux 包括在 Unix 小节之中。
+
+
+跨平台
+======
+
+platform.architecture(executable=sys.executable, bits='', linkage='')
+
+   查询给定的可执行文件（默认为 Python 解释器二进制码文件）来获取各种
+   架构信息。
+
+   返回一个元素 "(bits, linkage)"，其中包含可执行文件所使用的位架构和
+   链接格式信息。 这两个值均以字符串形式返回。
+
+   无法确定的值将返回为形参预设所给出的值。 如果给出的位数为 "''"，则
+   会使用 "sizeof(pointer)" (或者当 Python 版本 < 1.5.2 时为
+   "sizeof(long)") 作为所支持的指针大小的提示。
+
+   此函数依赖于系统的 "file" 命令来执行实际的操作。 这在几乎所有 Unix
+   平台和某些非 Unix 平台上只有当可执行文件指向 Python 解释器时才可用
+   。 当以上要求不满足时将会使用合理的默认值。
+
+   注解:
+
+     在 Mac OS X（也许还有其他平台）上，可执行文件可能是包含多种架构的
+     通用文件。要获取当前解释器的“64 位性”，更可靠的做法是查询
+     "sys.maxsize" 属性:
+
+        is_64bits = sys.maxsize > 2**32
+
+platform.machine()
+
+   返回机器类型，例如 "'i386'"。 如果该值无法确定则会返回一个空字符串
+   。
+
+platform.node()
+
+   返回计算机的网络名称（可能不是完整限定名称！）。 如果该值无法确定则
+   会返回一个空字符串。
+
+platform.platform(aliased=0, terse=0)
+
+   返回一个标识底层平台的字符串，其中带有尽可能多的有用信息。
+
+   输出信息的目标是“人类易读”而非机器易解析。 它在不同平台上可能看起来
+   不一致，这是有意为之的。
+
+   如果 *aliased* 为真值，此函数将使用各种平台不同与其通常名称的别名来
+   报告系统名称，例如 SunOS 将被报告为 Solaris。 "system_alias()" 函数
+   将被用于实现此功能。
+
+   将 *terse* 设为真值将导致此函数只返回标识平台所必须的最小量信息。
+
+   在 3.8 版更改: 在 macOS 上，此函数现在会在 "mac_ver()" 返回的发布版
+   字符串非空时使用它，以便获取 macOS 版本而非 darwin 版本。
+
+platform.processor()
+
+   返回（真实的）处理器名称，例如 "'amdk6'"。
+
+   如果该值无法确定则将返回空字符串。 请注意许多平台都不提供此信息或是
+   简单地返回与 "machine()" 相同的值。 NetBSD 则会提供此信息。
+
+platform.python_build()
+
+   返回一个元组 "(buildno, builddate)"，以字符串表示的 Python 编译代码
+   和日期。
+
+platform.python_compiler()
+
+   返回一个标识用于编译 Python 的编译器的的字符串。
+
+platform.python_branch()
+
+   返回一个标识 Python 实现的 SCM 分支的字符串。
+
+platform.python_implementation()
+
+   返回一个标识 Python 实现的字符串。 可能的返回值有: 'CPython',
+   'IronPython', 'Jython', 'PyPy'。
+
+platform.python_revision()
+
+   返回一个标识 Python 实现的 SCM 修订版的字符串。
+
+platform.python_version()
+
+   将 Python 版本以字符串 "'major.minor.patchlevel'" 形式返回。
+
+   请注意此返回值不同于 Python "sys.version"，它将总是包括 patchlevel
+   (默认为 0)。
+
+platform.python_version_tuple()
+
+   将 Python 版本以字符串元组 "(major, minor, patchlevel)" 形式返回。
+
+   请注意此返回值不同于 Python "sys.version"，它将总是包括 patchlevel
+   (默认为 "'0'")。
+
+platform.release()
+
+   返回系统的发布版本，例如 "'2.2.0'" 或 "'NT'"，如果该值无法确定则将
+   返回一个空字符串。
+
+platform.system()
+
+   返回系统平台/OS的名称，例如 "'Linux'", "'Darwin'", "'Java'",
+   "'Windows'"。 如果该值无法确定则将返回一个空字符串。
+
+platform.system_alias(system, release, version)
+
+   返回别名为某些系统所使用的常见营销名称的 "(system, release,
+   version)"。 它还会在可能导致混淆的情况下对信息进行一些重排序操作。
+
+platform.version()
+
+   返回系统的发布版本信息，例如 "'#3 on degas'"。 如果该值无法确定则将
+   返回一个空字符串。
+
+platform.uname()
+
+   具有高可移植性的 uname 接口。 返回包含六个属性的 "namedtuple()":
+   "system", "node", "release", "version", "machine" 和 "processor"。
+
+   请注意此函数添加的第六个属性 ("processor") 并不存在于 "os.uname()"
+   的结果中。 并且前两个属性的属性名称也不一致；"os.uname()" 是将它们
+   称为 "sysname" 和 "nodename"。
+
+   无法确定的条目会被设为 "''"。
+
+   在 3.3 版更改: 将结果从元组改为命名元组。
+
+
+Java平台
+========
+
+platform.java_ver(release='', vendor='', vminfo=('', '', ''), osinfo=('', '', ''))
+
+   Jython 的版本接口
+
+   返回一个元组 "(release, vendor, vminfo, osinfo)"，其中 *vminfo* 为
+   元组 "(vm_name, vm_release, vm_vendor)" 而 *osinfo* 为元组
+   "(os_name, os_version, os_arch)"。 无法确定的值将设为由形参所给出的
+   默认值 (默认均为 "''")。
+
+
+Windows平台
+===========
+
+platform.win32_ver(release='', version='', csd='', ptype='')
+
+   从 Windows 注册表获取额外的版本信息并返回一个元组 "(release,
+   version, csd, ptype)" 表示 OS 发行版, 版本号, CSD 级别 (Service
+   Pack) 和 OS 类型 (多个/单个处理器)。
+
+   一点提示: *ptype* 在单个处理器的 NT 机器上为 "'Uniprocessor Free'"
+   而在多个处理器的机器上为 "'Multiprocessor Free'"。 *'Free'* 是指该
+   OS 版本没有调试代码。 它还可能显示 *'Checked'* 表示该 OS 版本使用了
+   调试代码，即检测参数、范围等的代码。
+
+   注解:
+
+     此函数在安装了 Mark Hammond 的 "win32all" 包并且为 Python 2.3 或
+     更新版本上效果最佳（此支持是在 Python 2.6 中增加的）。 显然它只能
+     在兼容 Win32 的平台上运行。
+
+platform.win32_edition()
+
+   返回一个代表当前 Windows 版本的字符串。 可能的值包括但不限于
+   "'Enterprise'", "'IoTUAP'", "'ServerStandard'" 和 "'nanoserver'"。
+
+   3.8 新版功能.
+
+platform.win32_is_iot()
+
+   如果 "win32_edition()" 返回的 Windows 版本被识别为 IoT 版则返回
+   "True"。
+
+   3.8 新版功能.
+
+
+Mac OS平台
+==========
+
+platform.mac_ver(release='', versioninfo=('', '', ''), machine='')
+
+   获取 Mac OS 版本信息并将其返回为元组 "(release, versioninfo,
+   machine)"，其中 *versioninfo* 是一个元组 "(version, dev_stage,
+   non_release_version)"。
+
+   无法确定的条目会被设为 "''"。 所有元组条目均为字符串。
+
+
+Unix 平台
+=========
+
+platform.libc_ver(executable=sys.executable, lib='', version='', chunksize=16384)
+
+   尝试确定可执行文件（默认为 Python 解释器）所链接到的 libc 版本。 返
+   回一个字符串元组 "(lib, version)"，当查找失败时其默认值将设为给定的
+   形参值。
+
+   请注意此函数对于不同 libc 版本向可执行文件添加符号的方式有深层的关
+   联，可能仅适用于使用 **gcc** 编译出来的可执行文件。
+
+   文件将按 *chunksize* 个字节的分块来读取和扫描。

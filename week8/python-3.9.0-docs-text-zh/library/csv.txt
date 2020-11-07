@@ -1,0 +1,455 @@
+"csv" --- CSV 文件读写
+**********************
+
+**源代码：** Lib/csv.py
+
+======================================================================
+
+CSV (Comma Separated Values) 格式是电子表格和数据库中最常见的输入、输
+出文件格式。在 **RFC 4180** 规范推出的很多年前，CSV 格式就已经被开始使
+用了，由于当时并没有合理的标准，不同应用程序读写的数据会存在细微的差别
+。这种差别让处理多个来源的 CSV 文件变得困难。但尽管分隔符会变化，此类
+文件的大致格式是相似的，所以编写一个单独的模块以高效处理此类数据，将程
+序员从读写数据的繁琐细节中解放出来是有可能的。
+
+"csv" 模块实现了 CSV 格式表单数据的读写。其提供了诸如“以兼容 Excel 的
+方式输出数据文件”或“读取 Excel 程序输出的数据文件”的功能，程序员无需知
+道 Excel 所采用 CSV 格式的细节。此模块同样可以用于定义其他应用程序可用
+的 CSV 格式或定义特定需求的 CSV 格式。
+
+"csv" 模块中的 "reader" 类和 "writer" 类可用于读写序列化的数据。也可使
+用 "DictReader" 类和 "DictWriter" 类以字典的形式读写数据。
+
+参见:
+
+  该实现在“Python 增强提议” - PEP *305* (CSV 文件 API)  中被提出
+     《Python 增强提议》提出了对 Python 的这一补充。
+
+
+模块内容
+========
+
+"csv" 模块定义了以下函数：
+
+csv.reader(csvfile, dialect='excel', **fmtparams)
+
+   返回一个 reader 对象，该对象将逐行遍历 *csvfile*。*csvfile* 可以是
+   任何对象，只要这个对象支持 *iterator* 协议并在每次调用 "__next__()"
+   方法时都返回字符串，*文件对象* 和列表对象均适用。如果 *csvfile* 是
+   文件对象，则打开它时应使用 "newline=''"。 [1] 可选参数 *dialect* 是
+   用于不同的 CSV 变种的特定参数组。它可以是 "Dialect" 类的子类的实例
+   ，也可以是 "list_dialects()" 函数返回的字符串之一。另一个可选关键字
+   参数 *fmtparams* 可以覆写当前变种格式中的单个格式设置。有关变种和格
+   式设置参数的完整详细信息，请参见 变种与格式参数 部分。
+
+   csv 文件的每一行都读取为一个由字符串组成的列表。除非指定了
+   "QUOTE_NONNUMERIC" 格式选项（在这种情况下，未加引号的字段会转换为浮
+   点数），否则不会执行自动数据类型转换。
+
+   一个简短的用法示例:
+
+      >>> import csv
+      >>> with open('eggs.csv', newline='') as csvfile:
+      ...     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+      ...     for row in spamreader:
+      ...         print(', '.join(row))
+      Spam, Spam, Spam, Spam, Spam, Baked Beans
+      Spam, Lovely Spam, Wonderful Spam
+
+csv.writer(csvfile, dialect='excel', **fmtparams)
+
+   返回一个 writer 对象，该对象负责将用户的数据在给定的文件类对象上转
+   换为带分隔符的字符串。*csvfile* 可以是具有 "write()" 方法的任何对象
+   。如果 *csvfile* 是文件对象，则打开它时应使用 "newline=''"。 [1] 可
+   选参数 *dialect* 是用于不同的 CSV 变种的特定参数组。它可以是
+   "Dialect" 类的子类的实例，也可以是 "list_dialects()" 函数返回的字符
+   串之一。另一个可选关键字参数 *fmtparams* 可以覆写当前变种格式中的单
+   个格式设置。有关变种和格式设置参数的完整详细信息，请参见 变种与格式
+   参数 部分。为了尽量简化与数据库 API 模块之间的对接，"None" 值会写入
+   为空字符串。虽然这个转换是不可逆的，但它让 SQL 空数据值转储到 CSV
+   文件更容易，而无需预处理从 "cursor.fetch*" 调用返回的数据。写入前，
+   所有非字符串数据都先用 "str()" 转化为字符串再写入。
+
+   一个简短的用法示例:
+
+      import csv
+      with open('eggs.csv', 'w', newline='') as csvfile:
+          spamwriter = csv.writer(csvfile, delimiter=' ',
+                                  quotechar='|', quoting=csv.QUOTE_MINIMAL)
+          spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
+          spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
+
+csv.register_dialect(name[, dialect[, **fmtparams]])
+
+   将 *name* 与 *dialect* 关联起来。*name* 必须是字符串。要指定变种
+   (dialect)，可以给出 "Dialect" 的子类，或给出 *fmtparams* 关键字参数
+   ，或两者都给出（此时关键字参数会覆盖 *dialect* 参数）。 有关变种和
+   格式设置参数的完整详细信息，请参见 变种与格式参数 部分。
+
+csv.unregister_dialect(name)
+
+   从变种注册表中删除 *name* 对应的变种。如果 *name* 不是已注册的变种
+   名称，则抛出 "Error" 异常。
+
+csv.get_dialect(name)
+
+   返回 *name* 对应的变种。如果 *name* 不是已注册的变种名称，则抛出
+   "Error" 异常。该函数返回的是不可变的 "Dialect" 对象。
+
+csv.list_dialects()
+
+   返回所有已注册变种的名称。
+
+csv.field_size_limit([new_limit])
+
+   返回解析器当前允许的最大字段大小。如果指定了 *new_limit*，则它将成
+   为新的最大字段大小。
+
+"csv" 模块定义了以下类：
+
+class csv.DictReader(f, fieldnames=None, restkey=None, restval=None, dialect='excel', *args, **kwds)
+
+   创建一个对象，该对象在操作上类似于常规 reader，但是将每行中的信息映
+   射到一个 "dict"，该 dict 的键由 *fieldnames* 可选参数给出。
+
+   *fieldnames* 参数是一个 *sequence*。如果省略 *fieldnames*，则文件
+   *f* 第一行中的值将用作字段名。无论字段名是如何确定的，字典都将保留
+   其原始顺序。
+
+   如果某一行中的字段多于字段名，则剩余数据会被放入一个列表，并与
+   *restkey* 所指定的字段名 (默认为 "None") 一起保存。 如果某个非空白
+   行的字段少于字段名，则缺失的值会使用 *restval* 的值来填充 (默认为
+   "None")。
+
+   所有其他可选或关键字参数都传递给底层的 "reader" 实例。
+
+   在 3.6 版更改: 返回的行现在的类型是 "OrderedDict"。
+
+   在 3.8 版更改: 现在，返回的行是 "dict" 类型。
+
+   一个简短的用法示例:
+
+      >>> import csv
+      >>> with open('names.csv', newline='') as csvfile:
+      ...     reader = csv.DictReader(csvfile)
+      ...     for row in reader:
+      ...         print(row['first_name'], row['last_name'])
+      ...
+      Eric Idle
+      John Cleese
+
+      >>> print(row)
+      {'first_name': 'John', 'last_name': 'Cleese'}
+
+class csv.DictWriter(f, fieldnames, restval='', extrasaction='raise', dialect='excel', *args, **kwds)
+
+   创建一个对象，该对象在操作上类似常规 writer，但会将字典映射到输出行
+   。 *fieldnames* 参数是由键组成的 "序列"，它指定字典中值的顺序，这些
+   值会按指定顺序传递给 "writerow()" 方法并写入文件 *f*。 如果字典缺少
+   *fieldnames* 中的键，则可选参数 *restval* 用于指定要写入的值。 如果
+   传递给 "writerow()" 方法的字典的某些键在 *fieldnames* 中找不到，则
+   可选参数 *extrasaction* 用于指定要执行的操作。 如果将其设置为默认值
+   "'raise'"，则会引发 "ValueError"。 如果将其设置为 "'ignore'"，则字
+   典中的其他键值将被忽略。 所有其他可选或关键字参数都传递给底层的
+   "writer" 实例。
+
+   注意，与 "DictReader" 类不同，"DictWriter" 类的 *fieldnames* 参数不
+   是可选参数。
+
+   一个简短的用法示例:
+
+      import csv
+
+      with open('names.csv', 'w', newline='') as csvfile:
+          fieldnames = ['first_name', 'last_name']
+          writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+          writer.writeheader()
+          writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+          writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+          writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+
+class csv.Dialect
+
+   "Dialect" 类是主要依赖于其属性的容器类，用于将定义好的参数传递给特
+   定的 "reader" 或 "writer" 实例。
+
+class csv.excel
+
+   "excel" 类定义了 Excel 生成的 CSV 文件的常规属性。它在变种注册表中
+   的名称是 "'excel'"。
+
+class csv.excel_tab
+
+   "excel_tab" 类定义了 Excel 生成的、制表符分隔的 CSV 文件的常规属性
+   。它在变种注册表中的名称是 "'excel-tab'"。
+
+class csv.unix_dialect
+
+   "unix_dialect" 类定义了在 UNIX 系统上生成的 CSV 文件的常规属性，即
+   使用 "'\n'" 作为换行符，且所有字段都有引号包围。它在变种注册表中的
+   名称是 "'unix'"。
+
+   3.2 新版功能.
+
+class csv.Sniffer
+
+   "Sniffer" 类用于推断 CSV 文件的格式。
+
+   "Sniffer" 类提供了两个方法：
+
+   sniff(sample, delimiters=None)
+
+      分析给定的 *sample* 并返回一个 "Dialect" 子类，该子类中包含了分
+      析出的格式参数。如果给出可选的 *delimiters* 参数，则该参数会被解
+      释为字符串，该字符串包含了可能的有效定界符。
+
+   has_header(sample)
+
+      分析示例文本（假定为 CSV 格式），如果第一行很可能是一系列列标题
+      ，则返回 "True"。
+
+使用 "Sniffer" 的示例：
+
+   with open('example.csv', newline='') as csvfile:
+       dialect = csv.Sniffer().sniff(csvfile.read(1024))
+       csvfile.seek(0)
+       reader = csv.reader(csvfile, dialect)
+       # ... process CSV file contents here ...
+
+"csv" 模块定义了以下常量：
+
+csv.QUOTE_ALL
+
+   指示 "writer" 对象给所有字段加上引号。
+
+csv.QUOTE_MINIMAL
+
+   指示 "writer" 对象仅为包含特殊字符（例如 *定界符*、*引号字符* 或 *
+   行结束符* 中的任何字符）的字段加上引号。
+
+csv.QUOTE_NONNUMERIC
+
+   指示 "writer" 对象为所有非数字字段加上引号。
+
+   指示 reader 将所有未用引号引出的字段转换为 *float* 类型。
+
+csv.QUOTE_NONE
+
+   指示 "writer" 对象不使用引号引出字段。当 *定界符* 出现在输出数据中
+   时，其前面应该有 *转义符*。如果未设置 *转义符*，则遇到任何需要转义
+   的字符时，writer 都会抛出 "Error" 异常。
+
+   指示 "reader" 不对引号字符进行特殊处理。
+
+"csv" 模块定义了以下异常：
+
+exception csv.Error
+
+   该异常可能由任何发生错误的函数抛出。
+
+
+变种与格式参数
+==============
+
+为了更容易指定输入和输出记录的格式，特定的一组格式参数组合为一个
+dialect（变种）。一个 dialect 是一个 "Dialect" 类的子类，它具有一组特
+定的方法和一个 "validate()" 方法。创建 "reader" 或 "writer" 对象时，程
+序员可以将某个字符串或 "Dialect" 类的子类指定为 dialect 参数。要想补充
+或覆盖 *dialect* 参数，程序员还可以单独指定某些格式参数，这些参数的名
+称与下面 "Dialect" 类定义的属性相同。
+
+Dialect 类支持以下属性：
+
+Dialect.delimiter
+
+   一个用于分隔字段的单字符，默认为 "','"。
+
+Dialect.doublequote
+
+   控制出现在字段中的 *引号字符* 本身应如何被引出。当该属性为 "True"
+   时，双写引号字符。如果该属性为 "False"，则在 *引号字符* 的前面放置
+   *转义符*。默认值为 "True"。
+
+   在输出时，如果 *doublequote* 是 "False"，且 *转义符* 未指定，且在字
+   段中发现 *引号字符* 时，会抛出 "Error" 异常。
+
+Dialect.escapechar
+
+   一个用于 writer 的单字符，用来在 *quoting* 设置为 "QUOTE_NONE" 的情
+   况下转义 *定界符*，在 *doublequote* 设置为 "False" 的情况下转义 *引
+   号字符*。在读取时，*escapechar* 去除了其后所跟字符的任何特殊含义。
+   该属性默认为 "None"，表示禁用转义。
+
+Dialect.lineterminator
+
+   放在 "writer" 产生的行的结尾，默认为 "'\r\n'"。
+
+   注解:
+
+     "reader" 经过硬编码，会识别 "'\r'" 或 "'\n'" 作为行尾，并忽略
+     *lineterminator*。未来可能会更改这一行为。
+
+Dialect.quotechar
+
+   一个单字符，用于包住含有特殊字符的字段，特殊字符如 *定界符* 或 *引
+   号字符* 或换行符。默认为 "'"'"。
+
+Dialect.quoting
+
+   控制 writer 何时生成引号，以及 reader 何时识别引号。该属性可以等于
+   任何 "QUOTE_*" 常量（参见 模块内容 段落），默认为 "QUOTE_MINIMAL"。
+
+Dialect.skipinitialspace
+
+   如果为 "True"，则忽略 *定界符* 之后的空格。默认值为 "False"。
+
+Dialect.strict
+
+   如果为 "True"，则在输入错误的 CSV 时抛出 "Error" 异常。默认值为
+   "False"。
+
+
+Reader 对象
+===========
+
+Reader 对象（"DictReader" 实例和 "reader()" 函数返回的对象）具有以下公
+开方法：
+
+csvreader.__next__()
+
+   返回 reader 的可迭代对象的下一行，返回值可能是列表（由 "reader()"
+   返回的对象）或字典（由 "DictReader" 返回的对象），解析是根据当前设
+   置的变种进行的。通常应该这样调用它："next(reader)"。
+
+Reader 对象具有以下公开属性：
+
+csvreader.dialect
+
+   变种描述，只读，供解析器使用。
+
+csvreader.line_num
+
+   源迭代器已经读取了的行数。它与返回的记录数不同，因为记录可能跨越多
+   行。
+
+DictReader 对象具有以下公开属性：
+
+csvreader.fieldnames
+
+   字段名称。如果在创建对象时未传入字段名称，则首次访问时或从文件中读
+   取第一条记录时会初始化此属性。
+
+
+Writer 对象
+===========
+
+"Writer" 对象（"DictWriter" 实例和 "writer()" 函数返回的对象）具有下面
+的公开方法。对于 "Writer" 对象，*行* 必须是（一组可迭代的）字符串或数
+字。对于 "DictWriter" 对象，*行* 必须是一个字典，这个字典将字段名映射
+为字符串或数字（数字要先经过 "str()" 转换类型）。请注意，输出的复数会
+有括号包围。这样其他程序读取 CSV 文件时可能会有一些问题（假设它们完全
+支持复数）。
+
+csvwriter.writerow(row)
+
+   将参数 *row* 写入 writer 的文件对象，并根据当前设置的变种进行格式化
+   。本方法的返回值就是底层文件对象 *write* 方法的返回值。
+
+   在 3.5 版更改: 开始支持任意类型的迭代器。
+
+csvwriter.writerows(rows)
+
+   将 *rows*（即能迭代出多个上述 *row* 对象的迭代器）中的所有元素写入
+   writer 的文件对象，并根据当前设置的变种进行格式化。
+
+Writer 对象具有以下公开属性：
+
+csvwriter.dialect
+
+   变种描述，只读，供 writer 使用。
+
+DictWriter 对象具有以下公开方法：
+
+DictWriter.writeheader()
+
+   在 writer 的文件对象中，写入一行字段名称（字段名称在构造函数中指定
+   ），并根据当前设置的变种进行格式化。本方法的返回值就是内部使用的
+   "csvwriter.writerow()" 方法的返回值。
+
+   3.2 新版功能.
+
+   在 3.8 版更改: 现在 "writeheader()" 也返回其内部使用的
+   "csvwriter.writerow()" 方法的返回值。
+
+
+示例
+====
+
+读取 CSV 文件最简单的一个例子:
+
+   import csv
+   with open('some.csv', newline='') as f:
+       reader = csv.reader(f)
+       for row in reader:
+           print(row)
+
+读取其他格式的文件:
+
+   import csv
+   with open('passwd', newline='') as f:
+       reader = csv.reader(f, delimiter=':', quoting=csv.QUOTE_NONE)
+       for row in reader:
+           print(row)
+
+相应最简单的写入示例是:
+
+   import csv
+   with open('some.csv', 'w', newline='') as f:
+       writer = csv.writer(f)
+       writer.writerows(someiterable)
+
+由于使用 "open()" 来读取 CSV 文件，因此默认情况下，将使用系统默认编码
+来解码文件并转换为 unicode（请参阅 "locale.getpreferredencoding()"）。
+要使用其他编码来解码文件，请使用 open 的 "encoding" 参数:
+
+   import csv
+   with open('some.csv', newline='', encoding='utf-8') as f:
+       reader = csv.reader(f)
+       for row in reader:
+           print(row)
+
+这同样适用于写入非系统默认编码的内容：打开输出文件时，指定 encoding 参
+数。
+
+注册一个新的变种:
+
+   import csv
+   csv.register_dialect('unixpwd', delimiter=':', quoting=csv.QUOTE_NONE)
+   with open('passwd', newline='') as f:
+       reader = csv.reader(f, 'unixpwd')
+
+Reader 的更高级用法——捕获并报告错误:
+
+   import csv, sys
+   filename = 'some.csv'
+   with open(filename, newline='') as f:
+       reader = csv.reader(f)
+       try:
+           for row in reader:
+               print(row)
+       except csv.Error as e:
+           sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, e))
+
+尽管该模块不直接支持解析字符串，但仍可如下轻松完成:
+
+   import csv
+   for row in csv.reader(['one,two,three']):
+       print(row)
+
+-[ 脚注 ]-
+
+[1] 如果没有指定 "newline=''"，则嵌入引号中的换行符将无法正确解析，并
+    且在写入时，使用 "\r\n" 换行的平台会有多余的 "\r" 写入。由于 csv
+    模块会执行自己的（*通用*）换行符处理，因此指定 "newline=''" 应该总
+    是安全的。

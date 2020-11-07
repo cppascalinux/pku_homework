@@ -1,0 +1,74 @@
+数据 marshal 操作支持
+*********************
+
+这些例程允许 C 代码处理与 "marshal" 模块所用相同数据格式的序列化对象。
+其中有些函数可用来将数据写入这种序列化格式，另一些函数则可用来读取并恢
+复数据。 用于存储 marshal 数据的文件必须以二进制模式打开。
+
+数字值在存储时会将最低位字节放在开头。
+
+此模块支持两种数据格式版本：第 0 版为历史版本，第 1 版本会在文件和
+marshal 反序列化中共享固化的字符串。 第 2 版本会对浮点数使用二进制格式
+。 "Py_MARSHAL_VERSION" 指明了当前文件的格式（当前取值为 2）。
+
+void PyMarshal_WriteLongToFile(long value, FILE *file, int version)
+
+   将一个 "long" 整数 *value* 以 marshal 格式写入 *file*。 这将只写入
+   *value* 最低的 32 位；无论本机 "long" 类型的长度如何。 *version* 指
+   明文件格式的版本。
+
+void PyMarshal_WriteObjectToFile(PyObject *value, FILE *file, int version)
+
+   将一个 Python 对象 *value* 以 marshal 格式写入 *file*。 *version*
+   指明文件格式的版本。
+
+PyObject* PyMarshal_WriteObjectToString(PyObject *value, int version)
+    *Return value: New reference.*
+
+   返回一个包含 *value* 的 marshal 表示形式的字节串对象。 *version* 指
+   明文件格式的版本。
+
+以下函数允许读取并恢复存储为 marshal 格式的值。
+
+long PyMarshal_ReadLongFromFile(FILE *file)
+
+   从打开用于读取的 "FILE*" 的对应数据流返回一个 C "long"。 使用只函数
+   只能读取 32 位的值，无论本机 "long" 类型的长度为何。
+
+   发生错误时，将设置适当的异常 ("EOFError") 并返回 "-1"。
+
+int PyMarshal_ReadShortFromFile(FILE *file)
+
+   从打开用于读取的 "FILE*" 的对应数据流返回一个 C "short"。 使用此函
+   数只能读取 16 位的值，无论本机 "short" 类型的长度为何。
+
+   发生错误时，将设置适当的异常 ("EOFError") 并返回 "-1"。
+
+PyObject* PyMarshal_ReadObjectFromFile(FILE *file)
+    *Return value: New reference.*
+
+   从打开用于读取的 "FILE*" 的对应数据流返回一个 Python 对象。
+
+   发生错误时，将设置适当的异常 ("EOFError", "ValueError" 或
+   "TypeError") 并返回 "NULL"。
+
+PyObject* PyMarshal_ReadLastObjectFromFile(FILE *file)
+    *Return value: New reference.*
+
+   从打开用于读取的 "FILE*" 的对应数据流返回一个 Python 对象。 不同于
+   "PyMarshal_ReadObjectFromFile()"，此函数假定将不再从该文件读取更多
+   的对象，允许其将文件数据积极地载入内存，以便反序列化过程可以在内存
+   中的数据上操作而不是每次从文件读取一个字节。 只有当你确定不会再从文
+   件读取任何内容时方可使用此形式。
+
+   发生错误时，将设置适当的异常 ("EOFError", "ValueError" 或
+   "TypeError") 并返回 "NULL"。
+
+PyObject* PyMarshal_ReadObjectFromString(const char *data, Py_ssize_t len)
+    *Return value: New reference.*
+
+   从包含指向 *data* 的 *len* 个字节的字节缓冲区对应的数据流返回一个
+   Python 对象。
+
+   发生错误时，将设置适当的异常 ("EOFError", "ValueError" 或
+   "TypeError") 并返回 "NULL"。

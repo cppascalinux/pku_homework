@@ -1,0 +1,127 @@
+编解码器注册与支持功能
+**********************
+
+int PyCodec_Register(PyObject *search_function)
+
+   注册一个新的编解码器搜索函数。
+
+   作为副作用，其尝试加载 "encodings" 包，如果尚未完成，请确保它始终位
+   于搜索函数列表的第一位。
+
+int PyCodec_KnownEncoding(const char *encoding)
+
+   根据注册的给定 *encoding* 的编解码器是否已存在而返回 "1" 或 "0"。此
+   函数总能成功。
+
+PyObject* PyCodec_Encode(PyObject *object, const char *encoding, const char *errors)
+    *Return value: New reference.*
+
+   泛型编解码器基本编码 API。
+
+   *object* 使用由 *errors* 所定义的错误处理方法传递给定 *encoding* 的
+   编码器函数。 *errors* 可以为 "NULL" 表示使用为编码器所定义的默认方
+   法。 如果找不到编码器则会引发 "LookupError"。
+
+PyObject* PyCodec_Decode(PyObject *object, const char *encoding, const char *errors)
+    *Return value: New reference.*
+
+   泛型编解码器基本解码 API。
+
+   *object* 使用由 *errors* 所定义的错误处理方法传递给定 *encoding* 的
+   解码器函数。 *errors* 可以为 "NULL" 表示使用为编解码器所定义的默认
+   方法。 如果找不到编解码器则会引发 "LookupError"。
+
+
+Codec 查找API
+=============
+
+在下列函数中，*encoding* 字符串会被查找并转换为小写字母形式，这使得通
+过此机制查找编码格式实际上对大小写不敏感。 如果未找到任何编解码器，则
+将设置 "KeyError" 并返回 "NULL"。
+
+PyObject* PyCodec_Encoder(const char *encoding)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个编码器函数。
+
+PyObject* PyCodec_Decoder(const char *encoding)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个解码器函数。
+
+PyObject* PyCodec_IncrementalEncoder(const char *encoding, const char *errors)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个 "IncrementalEncoder" 对象。
+
+PyObject* PyCodec_IncrementalDecoder(const char *encoding, const char *errors)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个 "IncrementalDecoder" 对象。
+
+PyObject* PyCodec_StreamReader(const char *encoding, PyObject *stream, const char *errors)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个 "StreamReader" 工厂函数。
+
+PyObject* PyCodec_StreamWriter(const char *encoding, PyObject *stream, const char *errors)
+    *Return value: New reference.*
+
+   为给定的 *encoding* 获取一个 "StreamWriter" 工厂函数。
+
+
+用于Unicode编码错误处理程序的注册表API
+======================================
+
+int PyCodec_RegisterError(const char *name, PyObject *error)
+
+   在给定的 *name* 之下注册错误处理回调函数 *error*。 该回调函数将在一
+   个编解码器遇到无法编码的字符/无法解码的字节数据并且 *name* 被指定为
+   encode/decode 函数调用的 error 形参时由该编解码器来调用。
+
+   该回调函数会接受一个 "UnicodeEncodeError", "UnicodeDecodeError" 或
+   "UnicodeTranslateError" 的实例作为单独参数，其中包含关于有问题字符
+   或字节序列及其在原始序列的偏移量信息（请参阅 Unicode Exception
+   Objects 了解提取此信息的函数详情）。 该回调函数必须引发给定的异常，
+   或者返回一个包含有问题序列及相应替换序列的二元组，以及一个表示偏移
+   量的整数，该整数指明应在什么位置上恢复编码/解码操作。
+
+   成功则返回``0`` ，失败则返回``-1``
+
+PyObject* PyCodec_LookupError(const char *name)
+    *Return value: New reference.*
+
+   查找在 *name* 之下注册的错误处理回调函数。 作为特例还可以传入
+   "NULL"，在此情况下将返回针对 "strict" 的错误处理回调函数。
+
+PyObject* PyCodec_StrictErrors(PyObject *exc)
+    *Return value: Always NULL.*
+
+   引发 *exc* 作为异常。
+
+PyObject* PyCodec_IgnoreErrors(PyObject *exc)
+    *Return value: New reference.*
+
+   忽略 unicode 错误，跳过错误的输入。
+
+PyObject* PyCodec_ReplaceErrors(PyObject *exc)
+    *Return value: New reference.*
+
+   使用 "?" 或 "U+FFFD" 替换 unicode 编码错误。
+
+PyObject* PyCodec_XMLCharRefReplaceErrors(PyObject *exc)
+    *Return value: New reference.*
+
+   使用 XML 字符引用替换 unicode 编码错误。
+
+PyObject* PyCodec_BackslashReplaceErrors(PyObject *exc)
+    *Return value: New reference.*
+
+   使用反斜杠转义符 ("\x", "\u" 和 "\U") 替换 unicode 编码错误。
+
+PyObject* PyCodec_NameReplaceErrors(PyObject *exc)
+    *Return value: New reference.*
+
+   使用 "\N{...}" 转义符替换 unicode 编码错误。
+
+   3.5 新版功能.

@@ -1,0 +1,360 @@
+通用操作系统服务
+****************
+
+本章中描述的各模块提供了在（几乎）所有的操作系统上可用的操作系统特性的
+接口，例如文件和时钟。这些接口通常以 Unix 或 C 接口为参照对象设计，不
+过在大多数其他系统上也可用。这里有一个概述：
+
+* "os" --- 多种操作系统接口
+
+  * 文件名，命令行参数，以及环境变量。
+
+  * 进程参数
+
+  * 创建文件对象
+
+  * 文件描述符操作
+
+    * 查询终端的尺寸
+
+    * 文件描述符的继承
+
+  * 文件和目录
+
+    * Linux 扩展属性
+
+  * 进程管理
+
+  * 调度器接口
+
+  * 其他系统信息
+
+  * 随机数
+
+* "io" --- 处理流的核心工具
+
+  * 概述
+
+    * 文本 I/O
+
+    * 二进制 I/O
+
+    * 原始 I/O
+
+  * 高阶模块接口
+
+    * 内存中的流
+
+  * 类的层次结构
+
+    * I/O 基类
+
+    * 原始文件 I/O
+
+    * 缓冲流
+
+    * 文本 I/O
+
+  * 性能
+
+    * 二进制 I/O
+
+    * 文本 I/O
+
+    * 多线程
+
+    * 可重入性
+
+* "time" --- 时间的访问和转换
+
+  * 函数
+
+  * Clock ID 常量
+
+  * 时区常量
+
+* "argparse" --- 命令行选项、参数和子命令解析器
+
+  * 示例
+
+    * 创建一个解析器
+
+    * 添加参数
+
+    * 解析参数
+
+  * ArgumentParser 对象
+
+    * prog
+
+    * usage
+
+    * description
+
+    * epilog
+
+    * parents
+
+    * formatter_class
+
+    * prefix_chars
+
+    * fromfile_prefix_chars
+
+    * argument_default
+
+    * allow_abbrev
+
+    * conflict_handler
+
+    * add_help
+
+    * exit_on_error
+
+  * add_argument() 方法
+
+    * name or flags
+
+    * action
+
+    * nargs
+
+    * const
+
+    * default
+
+    * type
+
+    * choices
+
+    * required
+
+    * help
+
+    * metavar
+
+    * dest
+
+    * Action 类
+
+  * parse_args() 方法
+
+    * 选项值语法
+
+    * 无效的参数
+
+    * 包含 "-" 的参数
+
+    * 参数缩写（前缀匹配）
+
+    * 在 "sys.argv" 以外
+
+    * 命名空间对象
+
+  * 其它实用工具
+
+    * 子命令
+
+    * FileType 对象
+
+    * 参数组
+
+    * 互斥
+
+    * 解析器默认值
+
+    * 打印帮助
+
+    * 部分解析
+
+    * 自定义文件解析
+
+    * 退出方法
+
+    * 混合解析
+
+  * 升级 optparse 代码
+
+* "getopt" --- C 风格的命令行选项解析器
+
+* "logging" --- Python 的日志记录工具
+
+  * 记录器对象
+
+  * 日志级别
+
+  * 处理器对象
+
+  * 格式器对象
+
+  * Filter 对象
+
+  * LogRecord 属性
+
+  * LogRecord 属性
+
+  * LoggerAdapter 对象
+
+  * 线程安全
+
+  * 模块级别函数
+
+  * 模块级属性
+
+  * 与警告模块集成
+
+* "logging.config" --- 日志记录配置
+
+  * 配置函数
+
+  * 配置字典架构
+
+    * 字典架构细节
+
+    * 增量配置
+
+    * 对象连接
+
+    * 用户定义对象
+
+    * 访问外部对象
+
+    * 访问内部对象
+
+    * 导入解析与定制导入器
+
+  * 配置文件格式
+
+* "logging.handlers" --- 日志处理程序
+
+  * StreamHandler
+
+  * FileHandler
+
+  * NullHandler
+
+  * WatchedFileHandler
+
+  * BaseRotatingHandler
+
+  * RotatingFileHandler
+
+  * TimedRotatingFileHandler
+
+  * SocketHandler
+
+  * DatagramHandler
+
+  * SysLogHandler
+
+  * NTEventLogHandler
+
+  * SMTPHandler
+
+  * MemoryHandler
+
+  * HTTPHandler
+
+  * QueueHandler
+
+  * QueueListener
+
+* "getpass" --- 便携式密码输入工具
+
+* "curses" --- 终端字符单元显示的处理
+
+  * 函数
+
+  * Window 对象
+
+  * 常量
+
+* "curses.textpad" --- 用于 curses 程序的文本输入控件
+
+  * 文本框对象
+
+* "curses.ascii" --- 用于 ASCII 字符的工具
+
+* "curses.panel" --- curses 的面板栈扩展
+
+  * 函数
+
+  * Panel 对象
+
+* "platform" ---  获取底层平台的标识数据
+
+  * 跨平台
+
+  * Java平台
+
+  * Windows平台
+
+  * Mac OS平台
+
+  * Unix 平台
+
+* "errno" --- 标准 errno 系统符号
+
+* "ctypes" --- Python 的外部函数库
+
+  * ctypes 教程
+
+    * 载入动态连接库
+
+    * 操作导入的动态链接库中的函数
+
+    * 调用函数
+
+    * 基础数据类型
+
+    * 调用函数，继续
+
+    * 使用自定义的数据类型调用函数
+
+    * 指定必选参数的类型(函数原型)
+
+    * 返回类型
+
+    * 传递指针（或以引用方式传递形参）
+
+    * 结构体和联合
+
+    * 结构体/联合字段对齐及字节顺序
+
+    * 结构体和联合中的位域
+
+    * 数组
+
+    * 指针
+
+    * 类型转换
+
+    * 不完整类型
+
+    * 回调函数
+
+    * 访问 dll 的导出变量
+
+    * 意外
+
+    * 变长数据类型
+
+  * ctypes 参考手册
+
+    * 寻找动态链接库
+
+    * 加载动态链接库
+
+    * 外部函数
+
+    * 函数原型
+
+    * 工具函数
+
+    * 数据类型
+
+    * 基础数据类型
+
+    * 结构化数据类型
+
+    * 数组与指针

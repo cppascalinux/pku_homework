@@ -1,0 +1,295 @@
+6. Distutils 示例
+*****************
+
+注解:
+
+  这篇文档只有在
+  https://setuptools.readthedocs.io/en/latest/setuptools.html 上的
+  "setuptools" 文档独立涵盖此处包含的所有相关信息之前，才会单独保留。
+
+本章节提供几个基础示例，来帮助用户入门 distutils。关于使用 distutils
+的额外信息可以参考 Distutils Cookbook。
+
+参见:
+
+  Distutils Cookbook
+     一套展示如何更好地控制和使用 distutils 的方法。
+
+
+6.1. 纯 Python 分发（通过 module）
+==================================
+
+如果你要分发一组模块，特别是它们不在特定的包中，你可以在配置脚本中使用
+"py_modules" 选项单独指定它们。
+
+最简单的情况下，你只用关心两个文件：一个配置脚本，和单个你要分发的模块
+，这个示例中的 "foo.py": ：
+
+   <root>/
+           setup.py
+           foo.py
+
+（在本章节的所有图中，*<root>* 表示分发根目录。）这种情况下的一个最小
+配置脚本是：
+
+   from distutils.core import setup
+   setup(name='foo',
+         version='1.0',
+         py_modules=['foo'],
+         )
+
+注意分发的包名用 "name" 选项单独指定，没有规定它必须和包中单独的模块同
+名（虽然这也是个可以遵循的好习惯）。然而，分发名用来生成文件名，所以你
+应该坚持用字母、数字、下划线和连词号。
+
+因为 "py_modules" 是个列表，你当然可以指定多个模块，比如，如果你要分发
+模块 "foo" 和 "bar"，你的配置可能是这样：
+
+   <root>/
+           setup.py
+           foo.py
+           bar.py
+
+并且配置脚本是：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         py_modules=['foo', 'bar'],
+         )
+
+你可以把模块源文件放进另一个目录，但是如果你有足够的模块，也许用包指定
+模块更简单，而不是单独列出它们。
+
+
+6.2. 纯 Python 分发（通过 包）
+==============================
+
+如果你有超过一组模块要分发，特别是它们在不同的包中，也许指定整个包更简
+单，而不是指定单独的模块。这样即使你的模块不在一个包中也有效；你可以直
+接令 Distutils 来从根包来处理模块，并且这样对任何其他包也有效（除非你
+不需要 "__init__.py" 文件）。
+
+上一个示例的配置脚本也可以写成：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         packages=[''],
+         )
+
+（空字符串表示根包。）
+
+如果两个文件移动到子目录，但是依然在根包中，如：
+
+   <root>/
+           setup.py
+           src/      foo.py
+                     bar.py
+
+那么你依然需要指定根包，但是你还需要告诉 Distutils 根包中的源文件在哪
+：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         package_dir={'': 'src'},
+         packages=[''],
+         )
+
+更一般地，你要分发多个在同一个包（或者子包）中的模块。举个例子，假设
+"foo" 和 "bar" 模块属于 "foobar" 包，排布源文件树的一种方式是：
+
+   <root>/
+           setup.py
+           foobar/
+                    __init__.py
+                    foo.py
+                    bar.py
+
+这其实是 Distutils 默认的排布，也是你的配置脚本中需要的工作量最小的。
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         packages=['foobar'],
+         )
+
+如果你要把模块放到没有按照它们的包名命名的目录里，那你需要再次使用
+"package_dir" 选项。比如，如果 "src" 目录包含包 "foobar" 中的模块：
+
+   <root>/
+           setup.py
+           src/
+                    __init__.py
+                    foo.py
+                    bar.py
+
+一个合适的配置脚本可以是：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         package_dir={'foobar': 'src'},
+         packages=['foobar'],
+         )
+
+或者，你可以把主包中的模块直接放到分发根目录：
+
+   <root>/
+           setup.py
+           __init__.py
+           foo.py
+           bar.py
+
+这样你的配置文件是：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         package_dir={'foobar': ''},
+         packages=['foobar'],
+         )
+
+（空字符串同样表示当前目录。）
+
+如果你有子包，则它们必须显式列在 "packages" 中，但是 "package_dir" 中
+的任何条目会自动扩展到子包。（也就是说，Distutils *不会* 扫描你的源码
+树，而是尝试通过查找 "__init__.py" 文件，来弄清哪些目录与 Python 包关
+联。）这样，如果默认排布产生一个子包：
+
+   <root>/
+           setup.py
+           foobar/
+                    __init__.py
+                    foo.py
+                    bar.py
+                    subfoo/
+                              __init__.py
+                              blah.py
+
+则相应的配置脚本是：
+
+   from distutils.core import setup
+   setup(name='foobar',
+         version='1.0',
+         packages=['foobar', 'foobar.subfoo'],
+         )
+
+
+6.3. 单个扩展模块
+=================
+
+扩展模块用 "ext_modules" 选项指定。"package_dir" 对在哪寻找扩展源文件
+无效；它只对纯 Python 模块的源文件有效。最简单的，一个用单个C源文件写
+的单扩展模块是：
+
+   <root>/
+           setup.py
+           foo.c
+
+如果 "foo" 扩展属于根包，则配置脚本可以是：
+
+   from distutils.core import setup
+   from distutils.extension import Extension
+   setup(name='foobar',
+         version='1.0',
+         ext_modules=[Extension('foo', ['foo.c'])],
+         )
+
+如果扩展在包中，比如 "foopkg"，那么
+
+使用完全相同的源文件树排布，通过改变扩展的名字，这个扩展很容易放入
+"foopkg" 包中：
+
+   from distutils.core import setup
+   from distutils.extension import Extension
+   setup(name='foobar',
+         version='1.0',
+         ext_modules=[Extension('foopkg.foo', ['foo.c'])],
+         )
+
+
+6.4. 检查一个包
+===============
+
+"check" 命令允许你校验你的包的元数据是否满足生成分发的最低要求。
+
+直接使用你的 "setup.py" 脚本来运行它。如果缺了一些东西，"check" 会显示
+警告。
+
+我们来用单个脚本举例：
+
+   from distutils.core import setup
+
+   setup(name='foobar')
+
+运行 "check" 命令会显示一些警告：
+
+   $ python setup.py check
+   running check
+   warning: check: missing required meta-data: version, url
+   warning: check: missing meta-data: either (author and author_email) or
+            (maintainer and maintainer_email) should be supplied
+
+如果你在 "long_description" 域中使用 reStructuredText 语法，并且安装了
+docutils ，你可以用 "check" 命令，和 "restructuredtext" 选项检查语法是
+否正确。
+
+比如，如果 "setup.py" 脚本改成：
+
+   from distutils.core import setup
+
+   desc = """\
+   My description
+   ==============
+
+   This is the description of the ``foobar`` package.
+   """
+
+   setup(name='foobar', version='1', author='tarek',
+       author_email='tarek@ziade.org',
+       url='http://example.com', long_description=desc)
+
+长描述中有问题的地方，通过使用 "docutils" 解析器，"check" 能进行删除：
+
+   $ python setup.py check --restructuredtext
+   running check
+   warning: check: Title underline too short. (line 2)
+   warning: check: Could not finish the parsing.
+
+
+6.5. 读取元数据
+===============
+
+"distutils.core.setup()" 函数提供一个通过项目的 "setup.py"  脚本，来查
+询项目的元数据的域的命令行接口：
+
+   $ python setup.py --name
+   distribute
+
+这个调用通过运行 "distutils.core.setup()" 函数读取 "name" 元数据。然而
+，当源文件或者二进制分发用 Distutils 创建时，元数据域写入一个名为
+"PKG-INFO" 的静态文件。当一个基于Distutils的项目安装在 Python 中时，
+"PKG-INFO" 文件随着分发的模块和包一起复制到 "NAME-VERSION-pyX.X.egg-
+info" 中，其中 "NAME" 是项目的名字，"VERSION" 是元数据中定义的版本，
+"pyX.X" 则是 Python 的大版本和小版本，如 "2.7" 或者 "3.2"。
+
+你可以读回静态文件，使用 "distutils.dist.DistributionMetadata" 类和它
+的 "read_pkg_file()" 方法：
+
+   >>> from distutils.dist import DistributionMetadata
+   >>> metadata = DistributionMetadata()
+   >>> metadata.read_pkg_file(open('distribute-0.6.8-py2.7.egg-info'))
+   >>> metadata.name
+   'distribute'
+   >>> metadata.version
+   '0.6.8'
+   >>> metadata.description
+   'Easily download, build, install, upgrade, and uninstall Python packages'
+
+注意类也可以用元数据文件载入值来实例化：
+
+   >>> pkg_info_path = 'distribute-0.6.8-py2.7.egg-info'
+   >>> DistributionMetadata(pkg_info_path).name
+   'distribute'

@@ -1,0 +1,191 @@
+字典对象
+********
+
+PyDictObject
+
+   这个 "PyObject" 的子类型代表一个Python字典对象。
+
+PyTypeObject PyDict_Type
+
+   Python字典类型表示为 "PyTypeObject" 的实例。这与Python层面的 "dict"
+   是相同的对象。
+
+int PyDict_Check(PyObject *p)
+
+   如果 *p* 是字典对象或者字典类型的子类型的实例，则返回真。
+
+int PyDict_CheckExact(PyObject *p)
+
+   如果 *p* 是字典对象但不是字典类型的子类型的实例，则返回真。
+
+PyObject* PyDict_New()
+    *Return value: New reference.*
+
+   返回一个新的空字典，失败时返回 "NULL"。
+
+PyObject* PyDictProxy_New(PyObject *mapping)
+    *Return value: New reference.*
+
+   返回 "types.MappingProxyType" 对象，用于强制执行只读行为的映射。这
+   通常用于创建视图以防止修改非动态类类型的字典。
+
+void PyDict_Clear(PyObject *p)
+
+   清空现有字典的所有键值对。
+
+int PyDict_Contains(PyObject *p, PyObject *key)
+
+   确定 *key* 是否包含在字典 *p* 中。如果 *key* 匹配上 *p* 的某一项，
+   则返回 "1" ，否则返回 "0" 。返回 "-1" 表示出错。这等同于Python表达
+   式 "key in p" 。
+
+PyObject* PyDict_Copy(PyObject *p)
+    *Return value: New reference.*
+
+   返回与 *p* 包含相同键值对的新字典。
+
+int PyDict_SetItem(PyObject *p, PyObject *key, PyObject *val)
+
+   使用 *key* 作为键将 *val* 插入字典 *p*。 *key* 必须为 *hashable*；
+   如果不是，则将引发 "TypeError"。 成功时返回 "0"，失败时返回 "-1"。
+   此函数 *不会* 附带对 *val* 的引用。
+
+int PyDict_SetItemString(PyObject *p, const char *key, PyObject *val)
+
+   使用 *key* 作为键将 *val* 插入到字典 *p*。 *key* 应当为 "const
+   char*"。 键对象是使用 "PyUnicode_FromString(key)" 创建的。 成功时返
+   回 "0"，失败时返回 "-1"。 此函数 *不会* 附带对 *val* 的引用。
+
+int PyDict_DelItem(PyObject *p, PyObject *key)
+
+   移除字典 *p* 中键为 *key* 的条目。 *key* 必须是可哈希的；如果不是，
+   则会引发 "TypeError"。 如果字典中没有 *key*，则会引发 "KeyError"。
+   成功时返回 "0"，失败时返回 "-1"。
+
+int PyDict_DelItemString(PyObject *p, const char *key)
+
+   移除字典 *p* 中由字符串 *key* 指定的键的条目。 如果字典中没有 *key*
+   ，则会引发 "KeyError"。 成功时返回 "0"，失败时返回 "-1"。
+
+PyObject* PyDict_GetItem(PyObject *p, PyObject *key)
+    *Return value: Borrowed reference.*
+
+   从字典 *p* 中返回以 *key* 为键的对象。 如果键名 *key* 不存在但 *没
+   有* 设置一个异常则返回 "NULL"。
+
+   需要注意的是，调用 "__hash__()" 和 "__eq__()" 方法产生的异常不会被
+   抛出。改用 "PyDict_GetItemWithError()" 获得错误报告。
+
+PyObject* PyDict_GetItemWithError(PyObject *p, PyObject *key)
+    *Return value: Borrowed reference.*
+
+   "PyDict_GetItem()" 的变种，它不会屏蔽异常。 当异常发生时将返回
+   "NULL" **并且** 设置一个异常。 如果键不存在则返回 "NULL" **并且不会
+   ** 设置一个异常。
+
+PyObject* PyDict_GetItemString(PyObject *p, const char *key)
+    *Return value: Borrowed reference.*
+
+   这与 "PyDict_GetItem()" 一样，但是 *key* 被指定为 "const char*"，而
+   不是 "PyObject*"。
+
+   需要注意的是，调用 "__hash__()" 、 "__eq__()" 方法和创建一个临时的
+   字符串对象时产生的异常不会被抛出。改用 "PyDict_GetItemWithError()"
+   获得错误报告。
+
+PyObject* PyDict_SetDefault(PyObject *p, PyObject *key, PyObject *defaultobj)
+    *Return value: Borrowed reference.*
+
+   这跟Python层面的 "dict.setdefault()" 一样。如果键 *key* 存在，它返
+   回在字典 *p* 里面对应的值。如果键不存在，它会和值 *defaultobj* 一起
+   插入并返回 *defaultobj* 。这个函数只计算 *key* 的哈希函数一次，而不
+   是在查找和插入时分别计算它。
+
+   3.4 新版功能.
+
+PyObject* PyDict_Items(PyObject *p)
+    *Return value: New reference.*
+
+   返回一个包含字典中所有键值项的 "PyListObject"。
+
+PyObject* PyDict_Keys(PyObject *p)
+    *Return value: New reference.*
+
+   返回一个包含字典中所有键(keys)的 "PyListObject"。
+
+PyObject* PyDict_Values(PyObject *p)
+    *Return value: New reference.*
+
+   返回一个包含字典中所有值(values)的 "PyListObject"。
+
+Py_ssize_t PyDict_Size(PyObject *p)
+
+   返回字典中项目数，等价于对字典 *p* 使用 "len(p)"。
+
+int PyDict_Next(PyObject *p, Py_ssize_t *ppos, PyObject **pkey, PyObject **pvalue)
+
+   迭代字典 *p* 中的所有键值对。 在第一次调用此函数开始迭代之前，由
+   *ppos* 所引用的 "Py_ssize_t" 必须被初始化为 "0"；该函数将为字典中的
+   每个键值对返回真值，一旦所有键值对都报告完毕则返回假值。 形参
+   *pkey* 和 *pvalue* 应当指向 "PyObject*" 变量，它们将分别使用每个键
+   和值来填充，或者也可以为 "NULL"。 通过它们返回的任何引用都是暂借的
+   。 *ppos* 在迭代期间不应被更改。 它的值表示内部字典结构中的偏移量，
+   并且由于结构是稀疏的，因此偏移量并不连续。
+
+   例如:
+
+      PyObject *key, *value;
+      Py_ssize_t pos = 0;
+
+      while (PyDict_Next(self->dict, &pos, &key, &value)) {
+          /* do something interesting with the values... */
+          ...
+      }
+
+   字典 *p* 不应该在遍历期间发生改变。在遍历字典时，改变键中的值是安全
+   的，但仅限于键的集合不发生改变。例如:
+
+      PyObject *key, *value;
+      Py_ssize_t pos = 0;
+
+      while (PyDict_Next(self->dict, &pos, &key, &value)) {
+          long i = PyLong_AsLong(value);
+          if (i == -1 && PyErr_Occurred()) {
+              return -1;
+          }
+          PyObject *o = PyLong_FromLong(i + 1);
+          if (o == NULL)
+              return -1;
+          if (PyDict_SetItem(self->dict, key, o) < 0) {
+              Py_DECREF(o);
+              return -1;
+          }
+          Py_DECREF(o);
+      }
+
+int PyDict_Merge(PyObject *a, PyObject *b, int override)
+
+   对映射对象 *b* 进行迭代，将键值对添加到字典 *a*。 *b* 可以是一个字
+   典，或任何支持 "PyMapping_Keys()" 和 "PyObject_GetItem()" 的对象。
+   如果 *override* 为真值，则如果在 *b* 中找到相同的键则 *a* 中已存在
+   的相应键值对将被替换，否则如果在 *a* 中没有相同的键则只是添加键值对
+   。 当成功时返回 "0" 或者当引发异常时返回 "-1"。
+
+int PyDict_Update(PyObject *a, PyObject *b)
+
+   这与 C 中的 "PyDict_Merge(a, b, 1)" 一样，也类似于 Python 中的
+   "a.update(b)"，差别在于 "PyDict_Update()" 在第二个参数没有 "keys"
+   属性时不会回退到迭代键值对的序列。 当成功时返回 "0" 或者当引发异常
+   时返回 "-1"。
+
+int PyDict_MergeFromSeq2(PyObject *a, PyObject *seq2, int override)
+
+   将 *seq2* 中的键值对更新或合并到字典 *a*。 *seq2* 必须为产生长度为
+   2 的用作键值对的元素的可迭代对象。 当存在重复的键时，如果
+   *override* 真值则最后出现的键胜出。 当成功时返回 "0" 或者当引发异常
+   时返回 "-1"。 等价的 Python 代码（返回值除外）:
+
+      def PyDict_MergeFromSeq2(a, seq2, override):
+          for key, value in seq2:
+              if override or key not in a:
+                  a[key] = value

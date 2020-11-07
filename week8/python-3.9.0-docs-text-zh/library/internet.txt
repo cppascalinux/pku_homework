@@ -1,0 +1,302 @@
+互联网协议和支持
+****************
+
+本章介绍的模块实现了互联网协议并支持相关技术。 它们都是用 Python 实现
+的。 这些模块中的大多数都需要存在依赖于系统的模块 "socket" ，目前大多
+数流行平台都支持它。 这是一个概述：
+
+* "webbrowser" --- 方便的Web浏览器控制器
+
+  * 浏览器控制器对象
+
+* "cgi" --- Common Gateway Interface support
+
+  * 概述
+
+  * 使用cgi模块。
+
+  * Higher Level Interface
+
+  * 函数
+
+  * Caring about security
+
+  * Installing your CGI script on a Unix system
+
+  * Testing your CGI script
+
+  * Debugging CGI scripts
+
+  * Common problems and solutions
+
+* "cgitb" --- 用于 CGI 脚本的回溯管理器
+
+* "wsgiref" --- WSGI Utilities and Reference Implementation
+
+  * "wsgiref.util" -- WSGI environment utilities
+
+  * "wsgiref.headers" -- WSGI response header tools
+
+  * "wsgiref.simple_server" -- a simple WSGI HTTP server
+
+  * "wsgiref.validate" --- WSGI conformance checker
+
+  * "wsgiref.handlers" -- server/gateway base classes
+
+  * 示例
+
+* "urllib" --- URL 处理模块
+
+* "urllib.request" --- 用于打开 URL 的可扩展库
+
+  * Request 对象
+
+  * OpenerDirector 对象
+
+  * BaseHandler 对象
+
+  * HTTPRedirectHandler 对象
+
+  * HTTPCookieProcessor 对象
+
+  * ProxyHandler 对象
+
+  * HTTPPasswordMgr 对象
+
+  * HTTPPasswordMgrWithPriorAuth 对象
+
+  * AbstractBasicAuthHandler 对象
+
+  * HTTPBasicAuthHandler 对象
+
+  * ProxyBasicAuthHandler 对象
+
+  * AbstractDigestAuthHandler 对象
+
+  * HTTPDigestAuthHandler 对象
+
+  * ProxyDigestAuthHandler 对象
+
+  * HTTPHandler 对象
+
+  * HTTPSHandler 对象
+
+  * FileHandler 对象
+
+  * DataHandler 对象
+
+  * FTPHandler 对象
+
+  * CacheFTPHandler 对象
+
+  * UnknownHandler 对象
+
+  * HTTPErrorProcessor 对象
+
+  * 示例
+
+  * Legacy interface
+
+  * "urllib.request" Restrictions
+
+* "urllib.response" --- urllib 使用的 Response 类
+
+* "urllib.parse" --- Parse URLs into components
+
+  * URL 解析
+
+  * 解析ASCII编码字节
+
+  * 结构化解析结果
+
+  * URL Quoting
+
+* "urllib.error" --- urllib.request 引发的异常类
+
+* "urllib.robotparser" --- robots.txt 语法分析程序
+
+* "http" --- HTTP 模块
+
+  * HTTP 状态码
+
+* "http.client" --- HTTP 协议客户端
+
+  * HTTPConnection 对象
+
+  * HTTPResponse 对象
+
+  * 示例
+
+  * HTTPMessage Objects
+
+* "ftplib" --- FTP 协议客户端
+
+  * FTP Objects
+
+  * FTP_TLS Objects
+
+* "poplib" --- POP3 protocol client
+
+  * POP3 Objects
+
+  * POP3 Example
+
+* "imaplib" --- IMAP4 protocol client
+
+  * IMAP4 Objects
+
+  * IMAP4 Example
+
+* "nntplib" --- NNTP protocol client
+
+  * NNTP Objects
+
+    * Attributes
+
+    * 方法
+
+  * 工具函数
+
+* "smtplib" ---SMTP协议客户端
+
+  * SMTP Objects
+
+  * SMTP Example
+
+* "smtpd" --- SMTP 服务器
+
+  * SMTPServer 对象
+
+  * DebuggingServer 对象
+
+  * PureProxy对象
+
+  * MailmanProxy 对象
+
+  * SMTPChannel 对象
+
+* "telnetlib" --- Telnet client
+
+  * Telnet Objects
+
+  * Telnet Example
+
+* "uuid" --- UUID objects according to **RFC 4122**
+
+  * 示例
+
+* "socketserver" --- A framework for network servers
+
+  * Server Creation Notes
+
+  * Server Objects
+
+  * Request Handler Objects
+
+  * 示例
+
+    * "socketserver.TCPServer" Example
+
+    * "socketserver.UDPServer" Example
+
+    * Asynchronous Mixins
+
+* "http.server" --- HTTP 服务器
+
+* "http.cookies" --- HTTP状态管理
+
+  * Cookie 对象
+
+  * Morsel 对象
+
+  * 示例
+
+* "http.cookiejar" —— HTTP 客户端的 Cookie 处理
+
+  * CookieJar 和 FileCookieJar 对象
+
+  * FileCookieJar subclasses and co-operation with web browsers
+
+  * CookiePolicy 对象
+
+  * DefaultCookiePolicy 对象
+
+  * Cookie 对象
+
+  * 示例
+
+* "xmlrpc" --- XMLRPC 服务端与客户端模块
+
+* "xmlrpc.client" --- XML-RPC client access
+
+  * ServerProxy 对象
+
+  * DateTime 对象
+
+  * Binary 对象
+
+  * Fault 对象
+
+  * ProtocolError 对象
+
+  * MultiCall 对象
+
+  * Convenience Functions
+
+  * Example of Client Usage
+
+  * Example of Client and Server Usage
+
+* "xmlrpc.server" --- Basic XML-RPC servers
+
+  * SimpleXMLRPCServer Objects
+
+    * SimpleXMLRPCServer Example
+
+  * CGIXMLRPCRequestHandler
+
+  * Documenting XMLRPC server
+
+  * DocXMLRPCServer Objects
+
+  * DocCGIXMLRPCRequestHandler
+
+* "ipaddress" --- IPv4/IPv6 操作库
+
+  * 方便的工厂函数
+
+  * IP 地址
+
+    * 地址对象
+
+    * Conversion to Strings and Integers
+
+    * 运算符
+
+      * Comparison operators
+
+      * Arithmetic operators
+
+  * IP Network definitions
+
+    * Prefix, net mask and host mask
+
+    * Network objects
+
+    * 运算符
+
+      * Logical operators
+
+      * 迭代
+
+      * Networks as containers of addresses
+
+  * Interface objects
+
+    * 运算符
+
+      * Logical operators
+
+  * Other Module Level Functions
+
+  * Custom Exceptions

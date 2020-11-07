@@ -1,0 +1,1551 @@
+事件循环
+********
+
+**Source code:** Lib/asyncio/events.py, Lib/asyncio/base_events.py
+
+======================================================================
+
+-[ 前言 ]-
+
+事件循环是每个 asyncio 应用的核心。 事件循环会运行异步任务和回调，执行
+网络 IO 操作，以及运行子进程。
+
+应用开发者通常应当使用高层级的 asyncio 函数，例如 "asyncio.run()"，应
+当很少有必要引用循环对象或调用其方法。 本节所针对的主要是低层级代码、
+库和框架的编写者，他们需要更细致地控制事件循环行为。
+
+-[ 获取事件循环 ]-
+
+以下低层级函数可被用于获取、设置或创建事件循环:
+
+asyncio.get_running_loop()
+
+   返回当前 OS 线程中正在运行的事件循环。
+
+   如果没有正在运行的事件循环则会引发 "RuntimeError"。 此函数只能由协
+   程或回调来调用。
+
+   3.7 新版功能.
+
+asyncio.get_event_loop()
+
+   Get the current event loop.
+
+   If there is no current event loop set in the current OS thread, the
+   OS thread is main, and "set_event_loop()" has not yet been called,
+   asyncio will create a new event loop and set it as the current one.
+
+   由于此函数具有相当复杂的行为（特别是在使用了自定义事件循环策略的时
+   候），更推荐在协程和回调中使用 "get_running_loop()" 函数而非
+   "get_event_loop()"。
+
+   应该考虑使用 "asyncio.run()" 函数而非使用低层级函数来手动创建和关闭
+   事件循环。
+
+asyncio.set_event_loop(loop)
+
+   将 *loop* 设置为当前 OS 线程的当前事件循环。
+
+asyncio.new_event_loop()
+
+   创建一个新的事件循环。
+
+请注意 "get_event_loop()", "set_event_loop()" 以及 "new_event_loop()"
+函数的行为可以通过 设置自定义事件循环策略 来改变。
+
+-[ 内容 ]-
+
+本文档包含下列小节:
+
+* 事件循环方法集 章节是事件循环APIs的参考文档；
+
+* 回调处理 章节是从调度方法 例如 "loop.call_soon()"  和
+  "loop.call_later()" 中返回 "Handle" 和 "TimerHandle" 实例的文档。
+
+* Server Objects 章节记录了从事件循环方法返回的类型，比如
+  "loop.create_server()" ；
+
+* Event Loop Implementations 章节记录了 "SelectorEventLoop" 和
+  "ProactorEventLoop" 类；
+
+* Examples 章节展示了如何使用某些事件循环API。
+
+
+事件循环方法集
+==============
+
+事件循环有下列 **低级** APIs：
+
+* 运行和停止循环
+
+* 调度回调
+
+* 调度延迟回调
+
+* 创建 Futures 和 Tasks
+
+* 打开网络连接
+
+* 创建网络服务
+
+* 传输文件
+
+* TLS 升级
+
+* 监控文件描述符
+
+* 直接使用 socket 对象
+
+* DNS
+
+* 使用管道
+
+* Unix 信号
+
+* 在线程或者进程池中执行代码。
+
+* 错误处理API
+
+* 开启调试模式
+
+* 运行子进程
+
+
+运行和停止循环
+--------------
+
+loop.run_until_complete(future)
+
+   运行直到 *future* (  "Future" 的实例 ) 被完成。
+
+   如果参数是 coroutine object ，将被隐式调度为 "asyncio.Task" 来运行
+   。
+
+   返回 Future 的结果 或者引发相关异常。
+
+loop.run_forever()
+
+   运行事件循环直到 "stop()" 被调用。
+
+   If "stop()" is called before "run_forever()" is called, the loop
+   will poll the I/O selector once with a timeout of zero, run all
+   callbacks scheduled in response to I/O events (and those that were
+   already scheduled), and then exit.
+
+   If "stop()" is called while "run_forever()" is running, the loop
+   will run the current batch of callbacks and then exit. Note that
+   new callbacks scheduled by callbacks will not run in this case;
+   instead, they will run the next time "run_forever()" or
+   "run_until_complete()" is called.
+
+loop.stop()
+
+   停止事件循环。
+
+loop.is_running()
+
+   返回 "True" 如果事件循环当前正在运行。
+
+loop.is_closed()
+
+   如果事件循环已经被关闭，返回 "True" 。
+
+loop.close()
+
+   关闭事件循环。
+
+   当这个函数被调用的时候，循环必须处于非运行状态。pending状态的回调将
+   被丢弃。
+
+   此方法清除所有的队列并立即关闭执行器，不会等待执行器完成。
+
+   这个方法是幂等的和不可逆的。事件循环关闭后，不应调用其他方法。
+
+coroutine loop.shutdown_asyncgens()
+
+   Schedule all currently open *asynchronous generator* objects to
+   close with an "aclose()" call.  After calling this method, the
+   event loop will issue a warning if a new asynchronous generator is
+   iterated. This should be used to reliably finalize all scheduled
+   asynchronous generators.
+
+   运行请注意，当使用 "asyncio.run()" 时，无需调用此函数。
+
+   示例:
+
+      try:
+          loop.run_forever()
+      finally:
+          loop.run_until_complete(loop.shutdown_asyncgens())
+          loop.close()
+
+   3.6 新版功能.
+
+coroutine loop.shutdown_default_executor()
+
+   Schedule the closure of the default executor and wait for it to
+   join all of the threads in the "ThreadPoolExecutor". After calling
+   this method, a "RuntimeError" will be raised if
+   "loop.run_in_executor()" is called while using the default
+   executor.
+
+   运行请注意，当使用 "asyncio.run()" 时，无需调用此函数。
+
+   3.9 新版功能.
+
+
+调度回调
+--------
+
+loop.call_soon(callback, *args, context=None)
+
+   Schedule the *callback* *callback* to be called with *args*
+   arguments at the next iteration of the event loop.
+
+   回调按其注册顺序被调用。每个回调仅被调用一次。
+
+   可选的仅关键字型参数 *context* 允许为要运行的 *callback* 指定一个自
+   定义 "contextvars.Context" 。如果没有提供 *context* ，则使用当前上
+   下文。
+
+   返回一个能用来取消回调的 "asyncio.Handle" 实例。
+
+   这个方法不是线程安全的。
+
+loop.call_soon_threadsafe(callback, *args, context=None)
+
+   "call_soon()" 的线程安全变体。必须被用于安排 *来自其他线程* 的回调
+   。
+
+   查看 并发和多线程 章节的文档。
+
+在 3.7 版更改: 仅用于关键字形参的参数  *context*  已经被添加。请参阅：
+**PEP 567** 查看更多细节。
+
+注解:
+
+  大多数 "asyncio" 的调度函数不让传递关键字参数。为此，请使用
+  "functools.partial()" ：
+
+     # will schedule "print("Hello", flush=True)"
+     loop.call_soon(
+         functools.partial(print, "Hello", flush=True))
+
+  使用 partial 对象通常比使用lambda更方便，asyncio 在调试和错误消息中
+  能更好的呈现 partial 对象。
+
+
+调度延迟回调
+------------
+
+事件循环提供安排调度函数在将来某个时刻调用的机制。事件循环使用单调时钟
+来跟踪时间。
+
+loop.call_later(delay, callback, *args, context=None)
+
+   安排 *callback* 在给定的 *delay* 秒（可以是 int 或者 float）后被调
+   用。
+
+   返回一个 "asyncio.TimerHandle" 实例，该实例能用于取消回调。
+
+   *callback* 只被调用一次。如果两个回调被安排在同样的时间点，执行顺序
+   未限定。
+
+   可选的位置参数 *args* 在被调用的时候传递给  *callback*  。 如果你想
+   把关键字参数传递给 *callback* ，请使用 "functools.partial()" 。
+
+   可选的仅关键字型参数 *context* 允许为要运行的 *callback* 指定一个自
+   定义 "contextvars.Context" 。如果没有提供 *context* ，则使用当前上
+   下文。
+
+   在 3.7 版更改: 仅用于关键字形参的参数  *context*  已经被添加。请参
+   阅： **PEP 567** 查看更多细节。
+
+   在 3.8 版更改: In Python 3.7 and earlier with the default event
+   loop implementation, the *delay* could not exceed one day. This has
+   been fixed in Python 3.8.
+
+loop.call_at(when, callback, *args, context=None)
+
+   安排 *callback* 在给定的绝对时间戳的 *时间* （一个 int 或者 float）
+   被调用，使用与 "loop.time()" 同样的时间参考。
+
+   这个函数的行为与 "call_later()" 相同。
+
+   返回一个 "asyncio.TimerHandle" 实例，该实例能用于取消回调。
+
+   在 3.7 版更改: 仅用于关键字形参的参数  *context*  已经被添加。请参
+   阅： **PEP 567** 查看更多细节。
+
+   在 3.8 版更改: In Python 3.7 and earlier with the default event
+   loop implementation, the difference between *when* and the current
+   time could not exceed one day.  This has been fixed in Python 3.8.
+
+loop.time()
+
+   根据时间循环内部的单调时钟，返回当前时间， "float" 值。
+
+注解:
+
+  在 3.8 版更改: In Python 3.7 and earlier timeouts (relative *delay*
+  or absolute *when*) should not exceed one day.  This has been fixed
+  in Python 3.8.
+
+参见: "asyncio.sleep()" 函数
+
+
+创建 Futures 和 Tasks
+---------------------
+
+loop.create_future()
+
+   创建一个附加到事件循环中的 "asyncio.Future" 对象。
+
+   这是在asyncio中创建Futures的首选方式。这让第三方事件循环可以提供
+   Future 对象的替代实现(更好的性能或者功能)。
+
+   3.5.2 新版功能.
+
+loop.create_task(coro, *, name=None)
+
+   安排一个 协程 的执行。返回一个  "Task"  对象。
+
+   三方的事件循环可以使用它们自己定义的 "Task" 类的子类来实现互操作性
+   。这个例子里，返回值的类型是 "Task" 的子类。
+
+   If the *name* argument is provided and not "None", it is set as the
+   name of the task using "Task.set_name()".
+
+   在 3.8 版更改: 添加了 "name" 形参。
+
+loop.set_task_factory(factory)
+
+   设置一个 task 工厂 ， 被用于  "loop.create_task()" 。
+
+   If *factory* is "None" the default task factory will be set.
+   Otherwise, *factory* must be a *callable* with the signature
+   matching "(loop, coro)", where *loop* is a reference to the active
+   event loop, and *coro* is a coroutine object.  The callable must
+   return a "asyncio.Future"-compatible object.
+
+loop.get_task_factory()
+
+   Return a task factory or "None" if the default one is in use.
+
+
+打开网络连接
+------------
+
+coroutine loop.create_connection(protocol_factory, host=None, port=None, *, ssl=None, family=0, proto=0, flags=0, sock=None, local_addr=None, server_hostname=None, ssl_handshake_timeout=None, happy_eyeballs_delay=None, interleave=None)
+
+   Open a streaming transport connection to a given address specified
+   by *host* and *port*.
+
+   The socket family can be either "AF_INET" or "AF_INET6" depending
+   on *host* (or the *family* argument, if provided).
+
+   The socket type will be "SOCK_STREAM".
+
+   *protocol_factory* must be a callable returning an asyncio protocol
+   implementation.
+
+   这个方法会尝试在后台创建连接。当创建成功，返回 "(transport,
+   protocol)" 组合。
+
+   基本操作的时间顺序如下：
+
+   1. The connection is established and a transport is created for it.
+
+   2. *protocol_factory* is called without arguments and is expected
+      to return a protocol instance.
+
+   3. The protocol instance is coupled with the transport by calling
+      its "connection_made()" method.
+
+   4. 成功时返回一个 "(transport, protocol)" 元组。
+
+   创建的transport是一个实现相关的双向流。
+
+   其他参数：
+
+   * *ssl*: if given and not false, a SSL/TLS transport is created (by
+     default a plain TCP transport is created).  If *ssl* is a
+     "ssl.SSLContext" object, this context is used to create the
+     transport; if *ssl* is "True", a default context returned from
+     "ssl.create_default_context()" is used.
+
+     参见: SSL/TLS安全事项
+
+   * *server_hostname* sets or overrides the hostname that the target
+     server's certificate will be matched against.  Should only be
+     passed if *ssl* is not "None".  By default the value of the
+     *host* argument is used.  If *host* is empty, there is no default
+     and you must pass a value for *server_hostname*.  If
+     *server_hostname* is an empty string, hostname matching is
+     disabled (which is a serious security risk, allowing for
+     potential man-in-the-middle attacks).
+
+   * *family*，*proto*，*flags* 是可选的地址族，协议和标志，通过传递给
+     getaddrinfo() 来解析 *host*。如果给出，这些应该都是来自 "socket"
+     模块相应的常量的整数。
+
+   * *happy_eyeballs_delay*, if given, enables Happy Eyeballs for this
+     connection. It should be a floating-point number representing the
+     amount of time in seconds to wait for a connection attempt to
+     complete, before starting the next attempt in parallel. This is
+     the "Connection Attempt Delay" as defined in **RFC 8305**. A
+     sensible default value recommended by the RFC is "0.25" (250
+     milliseconds).
+
+   * *interleave* controls address reordering when a host name
+     resolves to multiple IP addresses. If "0" or unspecified, no
+     reordering is done, and addresses are tried in the order returned
+     by "getaddrinfo()". If a positive integer is specified, the
+     addresses are interleaved by address family, and the given
+     integer is interpreted as "First Address Family Count" as defined
+     in **RFC 8305**. The default is "0" if *happy_eyeballs_delay* is
+     not specified, and "1" if it is.
+
+   * *sock*, if given, should be an existing, already connected
+     "socket.socket" object to be used by the transport. If *sock* is
+     given, none of *host*, *port*, *family*, *proto*, *flags*,
+     *happy_eyeballs_delay*, *interleave* and *local_addr* should be
+     specified.
+
+   * *local_addr*, if given, is a "(local_host, local_port)" tuple
+     used to bind the socket to locally.  The *local_host* and
+     *local_port* are looked up using "getaddrinfo()", similarly to
+     *host* and *port*.
+
+   * *ssl_handshake_timeout* is (for a TLS connection) the time in
+     seconds to wait for the TLS handshake to complete before aborting
+     the connection. "60.0" seconds if "None" (default).
+
+   3.8 新版功能: Added the *happy_eyeballs_delay* and *interleave*
+   parameters.Happy Eyeballs Algorithm: Success with Dual-Stack Hosts.
+   When a server's IPv4 path and protocol are working, but the
+   server's IPv6 path and protocol are not working, a dual-stack
+   client application experiences significant connection delay
+   compared to an IPv4-only client.  This is undesirable because it
+   causes the dual- stack client to have a worse user experience.
+   This document specifies requirements for algorithms that reduce
+   this user-visible delay and provides an algorithm.For more
+   information: https://tools.ietf.org/html/rfc6555
+
+   3.7 新版功能: *ssl_handshake_timeout* 形参。
+
+   在 3.6 版更改: The socket option "TCP_NODELAY" is set by default
+   for all TCP connections.
+
+   在 3.5 版更改: "ProactorEventLoop" 类中添加 SSL/TLS 支持。
+
+   参见:
+
+     The "open_connection()" function is a high-level alternative API.
+     It returns a pair of ("StreamReader", "StreamWriter") that can be
+     used directly in async/await code.
+
+coroutine loop.create_datagram_endpoint(protocol_factory, local_addr=None, remote_addr=None, *, family=0, proto=0, flags=0, reuse_address=None, reuse_port=None, allow_broadcast=None, sock=None)
+
+   注解:
+
+     形参 *reuse_address* 已不再受支持，因为使用 "SO_REUSEADDR" 会对
+     UDP 造成显著的安全问题。 显式地传入 "reuse_address=True" 将会引发
+     异常。When multiple processes with differing UIDs assign sockets
+     to an identical UDP socket address with "SO_REUSEADDR", incoming
+     packets can become randomly distributed among the sockets.对于受
+     支持的平台，*reuse_port* 可以被用作类似功能的替代。 通过
+     *reuse_port* 将改用 "SO_REUSEPORT"，它能够防止具有不同 UID 的进程
+     将套接字赋给相同的套接字地址。
+
+   创建一个数据报连接。
+
+   The socket family can be either "AF_INET", "AF_INET6", or
+   "AF_UNIX", depending on *host* (or the *family* argument, if
+   provided).
+
+   socket类型将是 "SOCK_DGRAM" 。
+
+   *protocol_factory* must be a callable returning a protocol
+   implementation.
+
+   A tuple of "(transport, protocol)" is returned on success.
+
+   其他参数：
+
+   * *local_addr*，如果指定的话，就是一个 "(local_host, local_port)"
+     元组，用于在本地绑定套接字。 *local_host* 和 *local_port* 是使用
+     "getaddrinfo()" 来查找的。
+
+   * *remote_addr*，如果指定的话，就是一个 "(remote_host,
+     remote_port)" 元组，用于同一个远程地址连接。*remote_host* 和
+     *remote_port* 是使用 "getaddrinfo()" 来查找的。
+
+   * *family*, *proto*, *flags* 是可选的地址族，协议和标志，其会被传递
+     给 "getaddrinfo()" 来完成 *host* 的解析。如果要指定的话，这些都应
+     该是来自于 "socket" 模块的对应常量。
+
+   * *reuse_port* tells the kernel to allow this endpoint to be bound
+     to the same port as other existing endpoints are bound to, so
+     long as they all set this flag when being created. This option is
+     not supported on Windows and some Unixes. If the "SO_REUSEPORT"
+     constant is not defined then this capability is unsupported.
+
+   * *allow_broadcast* 告知内核允许此端点向广播地址发送消息。
+
+   * *sock* 可选择通过指定此值用于使用一个预先存在的，已经处于连接状态
+     的 "socket.socket" 对象，并将其提供给此传输对象使用。如果指定了这
+     个值， *local_addr* 和 *remote_addr* 就应该被忽略 (必须为 "None")
+     。
+
+   参见 UDP echo 客户端协议  和 UDP echo 服务端协议 的例子。
+
+   在 3.4.4 版更改: 添加了 *family*, *proto*, *flags*,
+   *reuse_address*, *reuse_port*, *allow_broadcast* 和 *sock* 等参数。
+
+   在 3.8.1 版更改: The *reuse_address* parameter is no longer
+   supported due to security concerns.
+
+   在 3.8 版更改: 添加WIndows的支持。
+
+coroutine loop.create_unix_connection(protocol_factory, path=None, *, ssl=None, sock=None, server_hostname=None, ssl_handshake_timeout=None)
+
+   创建Unix 连接
+
+   The socket family will be "AF_UNIX"; socket type will be
+   "SOCK_STREAM".
+
+   A tuple of "(transport, protocol)" is returned on success.
+
+   *path* is the name of a Unix domain socket and is required, unless
+   a *sock* parameter is specified.  Abstract Unix sockets, "str",
+   "bytes", and "Path" paths are supported.
+
+   See the documentation of the "loop.create_connection()" method for
+   information about arguments to this method.
+
+   可用性: Unix。
+
+   3.7 新版功能: *ssl_handshake_timeout* 形参。
+
+   在 3.7 版更改: *path* 形参现在可以是 *path-like object* 对象。
+
+
+创建网络服务
+------------
+
+coroutine loop.create_server(protocol_factory, host=None, port=None, *, family=socket.AF_UNSPEC, flags=socket.AI_PASSIVE, sock=None, backlog=100, ssl=None, reuse_address=None, reuse_port=None, ssl_handshake_timeout=None, start_serving=True)
+
+   创建TCP服务 (socket 类型 "SOCK_STREAM" ) 监听 *host* 地址的 *port*
+   端口。
+
+   返回一个 "Server" 对象。
+
+   参数：
+
+   * *protocol_factory* must be a callable returning a protocol
+     implementation.
+
+   * The *host* parameter can be set to several types which determine
+     where the server would be listening:
+
+     * If *host* is a string, the TCP server is bound to a single
+       network interface specified by *host*.
+
+     * If *host* is a sequence of strings, the TCP server is bound to
+       all network interfaces specified by the sequence.
+
+     * If *host* is an empty string or "None", all interfaces are
+       assumed and a list of multiple sockets will be returned (most
+       likely one for IPv4 and another one for IPv6).
+
+   * *family* can be set to either "socket.AF_INET" or "AF_INET6" to
+     force the socket to use IPv4 or IPv6. If not set, the *family*
+     will be determined from host name (defaults to "AF_UNSPEC").
+
+   * *flags* 是用于 "getaddrinfo()" 的位掩码。
+
+   * *sock* can optionally be specified in order to use a preexisting
+     socket object. If specified, *host* and *port* must not be
+     specified.
+
+   * *backlog* 是传递给 "listen()" 的最大排队连接的数量（默认为100）。
+
+   * *ssl* can be set to an "SSLContext" instance to enable TLS over
+     the accepted connections.
+
+   * *reuse_address* tells the kernel to reuse a local socket in
+     "TIME_WAIT" state, without waiting for its natural timeout to
+     expire. If not specified will automatically be set to "True" on
+     Unix.
+
+   * *reuse_port* 告知内核，只要在创建的时候都设置了这个标志，就允许此
+     端点绑定到其它端点列表所绑定的同样的端口上。这个选项在 Windows 上
+     是不支持的。
+
+   * *ssl_handshake_timeout* is (for a TLS server) the time in seconds
+     to wait for the TLS handshake to complete before aborting the
+     connection. "60.0" seconds if "None" (default).
+
+   * *start_serving* 设置成 "True" (默认值) 会导致创建server并立即开始
+     接受连接。设置成 "False" ，用户需要等待 "Server.start_serving()"
+     或者 "Server.serve_forever()" 以使server开始接受连接。
+
+   3.7 新版功能: Added *ssl_handshake_timeout* and *start_serving*
+   parameters.
+
+   在 3.6 版更改: The socket option "TCP_NODELAY" is set by default
+   for all TCP connections.
+
+   在 3.5 版更改: "ProactorEventLoop" 类中添加 SSL/TLS 支持。
+
+   在 3.5.1 版更改: The *host* parameter can be a sequence of strings.
+
+   参见:
+
+     The "start_server()" function is a higher-level alternative API
+     that returns a pair of "StreamReader" and "StreamWriter" that can
+     be used in an async/await code.
+
+coroutine loop.create_unix_server(protocol_factory, path=None, *, sock=None, backlog=100, ssl=None, ssl_handshake_timeout=None, start_serving=True)
+
+   Similar to "loop.create_server()" but works with the "AF_UNIX"
+   socket family.
+
+   *path* is the name of a Unix domain socket, and is required, unless
+   a *sock* argument is provided.  Abstract Unix sockets, "str",
+   "bytes", and "Path" paths are supported.
+
+   See the documentation of the "loop.create_server()" method for
+   information about arguments to this method.
+
+   可用性: Unix。
+
+   3.7 新版功能: The *ssl_handshake_timeout* and *start_serving*
+   parameters.
+
+   在 3.7 版更改: *path* 形参现在可以是 "Path" 对象。
+
+coroutine loop.connect_accepted_socket(protocol_factory, sock, *, ssl=None, ssl_handshake_timeout=None)
+
+   Wrap an already accepted connection into a transport/protocol pair.
+
+   This method can be used by servers that accept connections outside
+   of asyncio but that use asyncio to handle them.
+
+   参数：
+
+   * *protocol_factory* must be a callable returning a protocol
+     implementation.
+
+   * *sock* is a preexisting socket object returned from
+     "socket.accept".
+
+   * *ssl* 可被设置为一个 "SSLContext" 以在接受的连接上启用 SSL。
+
+   * *ssl_handshake_timeout* 是(为一个SSL连接)在中止连接前，等待SSL握
+     手完成的时间【单位秒】。如果为 "None" (缺省) 则是 "60.0" 秒。
+
+   返回一个 "(transport, protocol)" 对。
+
+   3.7 新版功能: *ssl_handshake_timeout* 形参。
+
+   3.5.3 新版功能.
+
+
+传输文件
+--------
+
+coroutine loop.sendfile(transport, file, offset=0, count=None, *, fallback=True)
+
+   Send a *file* over a *transport*.  Return the total number of bytes
+   sent.
+
+   如果可用的化，该方法将使用高性能的 "os.sendfile()" 。
+
+   *file* 必须是个二进制模式打开的常规文件对象。
+
+   *offset* tells from where to start reading the file. If specified,
+   *count* is the total number of bytes to transmit as opposed to
+   sending the file until EOF is reached. File position is always
+   updated, even when this method raises an error, and "file.tell()"
+   can be used to obtain the actual number of bytes sent.
+
+   *fallback* set to "True" makes asyncio to manually read and send
+   the file when the platform does not support the sendfile system
+   call (e.g. Windows or SSL socket on Unix).
+
+   Raise "SendfileNotAvailableError" if the system does not support
+   the *sendfile* syscall and *fallback* is "False".
+
+   3.7 新版功能.
+
+
+TLS 升级
+--------
+
+coroutine loop.start_tls(transport, protocol, sslcontext, *, server_side=False, server_hostname=None, ssl_handshake_timeout=None)
+
+   Upgrade an existing transport-based connection to TLS.
+
+   Return a new transport instance, that the *protocol* must start
+   using immediately after the *await*.  The *transport* instance
+   passed to the *start_tls* method should never be used again.
+
+   参数：
+
+   * *transport* and *protocol* instances that methods like
+     "create_server()" and "create_connection()" return.
+
+   * *sslcontext* ：一个已经配置好的 "SSLContext" 实例。
+
+   * *server_side* pass "True" when a server-side connection is being
+     upgraded (like the one created by "create_server()").
+
+   * *server_hostname* ：设置或者覆盖目标服务器证书中相对应的主机名。
+
+   * *ssl_handshake_timeout* is (for a TLS connection) the time in
+     seconds to wait for the TLS handshake to complete before aborting
+     the connection. "60.0" seconds if "None" (default).
+
+   3.7 新版功能.
+
+
+监控文件描述符
+--------------
+
+loop.add_reader(fd, callback, *args)
+
+   开始监视 *fd* 文件描述符以获取读取的可用性，一旦 *fd* 可用于读取，
+   使用指定的参数调用 *callback* 。
+
+loop.remove_reader(fd)
+
+   停止对文件描述符 *fd* 读取可用性的监视。
+
+loop.add_writer(fd, callback, *args)
+
+   开始监视 *fd* 文件描述符的写入可用性，一旦 *fd* 可用于写入，使用指
+   定的参数调用 *callback* 。
+
+   使用 "functools.partial()" 传递关键字参数  给 *callback*.
+
+loop.remove_writer(fd)
+
+   停止对文件描述符 *fd* 的写入可用性监视。
+
+See also Platform Support section for some limitations of these
+methods.
+
+
+直接使用 socket 对象
+--------------------
+
+In general, protocol implementations that use transport-based APIs
+such as "loop.create_connection()" and "loop.create_server()" are
+faster than implementations that work with sockets directly. However,
+there are some use cases when performance is not critical, and working
+with "socket" objects directly is more convenient.
+
+coroutine loop.sock_recv(sock, nbytes)
+
+   Receive up to *nbytes* from *sock*.  Asynchronous version of
+   "socket.recv()".
+
+   返回接收到的数据【bytes对象类型】。
+
+   *sock* 必须是个非阻塞socket。
+
+   在 3.7 版更改: Even though this method was always documented as a
+   coroutine method, releases before Python 3.7 returned a "Future".
+   Since Python 3.7 this is an "async def" method.
+
+coroutine loop.sock_recv_into(sock, buf)
+
+   Receive data from *sock* into the *buf* buffer.  Modeled after the
+   blocking "socket.recv_into()" method.
+
+   返回写入缓冲区的字节数。
+
+   *sock* 必须是个非阻塞socket。
+
+   3.7 新版功能.
+
+coroutine loop.sock_sendall(sock, data)
+
+   Send *data* to the *sock* socket. Asynchronous version of
+   "socket.sendall()".
+
+   This method continues to send to the socket until either all data
+   in *data* has been sent or an error occurs.  "None" is returned on
+   success.  On error, an exception is raised. Additionally, there is
+   no way to determine how much data, if any, was successfully
+   processed by the receiving end of the connection.
+
+   *sock* 必须是个非阻塞socket。
+
+   在 3.7 版更改: 虽然这个方法一直被标记为协程方法。但是，Python 3.7
+   之前，该方法返回 "Future" ，从Python 3.7 开始，这个方法是 "async
+   def" 方法。
+
+coroutine loop.sock_connect(sock, address)
+
+   Connect *sock* to a remote socket at *address*.
+
+   Asynchronous version of "socket.connect()".
+
+   *sock* 必须是个非阻塞socket。
+
+   在 3.5.2 版更改: "address" no longer needs to be resolved.
+   "sock_connect" will try to check if the *address* is already
+   resolved by calling "socket.inet_pton()".  If not,
+   "loop.getaddrinfo()" will be used to resolve the *address*.
+
+   参见: "loop.create_connection()" 和  "asyncio.open_connection()" 。
+
+coroutine loop.sock_accept(sock)
+
+   Accept a connection.  Modeled after the blocking "socket.accept()"
+   method.
+
+   此 *scoket* 必须绑定到一个地址上并且监听连接。返回值是一个 "(conn,
+   address)" 对，其中 *conn* 是一个 *新*的套接字对象，用于在此连接上收
+   发数据，*address* 是连接的另一端的套接字所绑定的地址。
+
+   *sock* 必须是个非阻塞socket。
+
+   在 3.7 版更改: 虽然这个方法一直被标记为协程方法。但是，Python 3.7
+   之前，该方法返回 "Future" ，从Python 3.7 开始，这个方法是 "async
+   def" 方法。
+
+   参见: "loop.create_server()" and "start_server()".
+
+coroutine loop.sock_sendfile(sock, file, offset=0, count=None, *, fallback=True)
+
+   Send a file using high-performance "os.sendfile" if possible.
+   Return the total number of bytes sent.
+
+   Asynchronous version of "socket.sendfile()".
+
+   *sock* must be a non-blocking "socket.SOCK_STREAM" "socket".
+
+   *file* 必须是个用二进制方式打开的常规文件对象。
+
+   *offset* tells from where to start reading the file. If specified,
+   *count* is the total number of bytes to transmit as opposed to
+   sending the file until EOF is reached. File position is always
+   updated, even when this method raises an error, and "file.tell()"
+   can be used to obtain the actual number of bytes sent.
+
+   *fallback*, when set to "True", makes asyncio manually read and
+   send the file when the platform does not support the sendfile
+   syscall (e.g. Windows or SSL socket on Unix).
+
+   如果系统不支持 *sendfile* 并且 *fallback* 为 "False" ，引发
+   "SendfileNotAvailableError" 异常。
+
+   *sock* 必须是个非阻塞socket。
+
+   3.7 新版功能.
+
+
+DNS
+---
+
+coroutine loop.getaddrinfo(host, port, *, family=0, type=0, proto=0, flags=0)
+
+   异步版的 "socket.getaddrinfo()" 。
+
+coroutine loop.getnameinfo(sockaddr, flags=0)
+
+   异步版的 "socket.getnameinfo()" 。
+
+在 3.7 版更改: *getaddrinfo* 和 *getnameinfo* 方法一直被标记返回一个协
+程，但是Python 3.7之前，实际返回的是 "asyncio.Future" 对象。从Python
+3.7 开始，这两个方法是协程。
+
+
+使用管道
+--------
+
+coroutine loop.connect_read_pipe(protocol_factory, pipe)
+
+   Register the read end of *pipe* in the event loop.
+
+   *protocol_factory* must be a callable returning an asyncio protocol
+   implementation.
+
+   *pipe* 是个 *类似文件型对象*.
+
+   Return pair "(transport, protocol)", where *transport* supports the
+   "ReadTransport" interface and *protocol* is an object instantiated
+   by the *protocol_factory*.
+
+   使用 "SelectorEventLoop" 事件循环， *pipe* 被设置为非阻塞模式。
+
+coroutine loop.connect_write_pipe(protocol_factory, pipe)
+
+   Register the write end of *pipe* in the event loop.
+
+   *protocol_factory* must be a callable returning an asyncio protocol
+   implementation.
+
+   *pipe* 是个 *类似文件型对象*.
+
+   Return pair "(transport, protocol)", where *transport* supports
+   "WriteTransport" interface and *protocol* is an object instantiated
+   by the *protocol_factory*.
+
+   使用 "SelectorEventLoop" 事件循环， *pipe* 被设置为非阻塞模式。
+
+注解:
+
+  "SelectorEventLoop" does not support the above methods on Windows.
+  Use "ProactorEventLoop" instead for Windows.
+
+参见:
+
+  The "loop.subprocess_exec()" and "loop.subprocess_shell()" methods.
+
+
+Unix 信号
+---------
+
+loop.add_signal_handler(signum, callback, *args)
+
+   设置 *callback* 作为 *signum* 信号的处理程序。
+
+   The callback will be invoked by *loop*, along with other queued
+   callbacks and runnable coroutines of that event loop. Unlike signal
+   handlers registered using "signal.signal()", a callback registered
+   with this function is allowed to interact with the event loop.
+
+   如果信号数字非法或者不可捕获，就抛出一个 "ValueError" 。如果建立处
+   理器的过程中出现问题，会抛出一个 "RuntimeError" 。
+
+   使用 "functools.partial()" 传递关键字参数  给 *callback*.
+
+   和 "signal.signal()" 一样，这个函数只能在主线程中调用。
+
+loop.remove_signal_handler(sig)
+
+   移除 *sig* 信号的处理程序。
+
+   Return "True" if the signal handler was removed, or "False" if no
+   handler was set for the given signal.
+
+   可用性: Unix。
+
+参见: "signal" 模块。
+
+
+在线程或者进程池中执行代码。
+----------------------------
+
+awaitable loop.run_in_executor(executor, func, *args)
+
+   安排在指定的执行器中调用 *func* 。
+
+   The *executor* argument should be an "concurrent.futures.Executor"
+   instance. The default executor is used if *executor* is "None".
+
+   示例:
+
+      import asyncio
+      import concurrent.futures
+
+      def blocking_io():
+          # File operations (such as logging) can block the
+          # event loop: run them in a thread pool.
+          with open('/dev/urandom', 'rb') as f:
+              return f.read(100)
+
+      def cpu_bound():
+          # CPU-bound operations will block the event loop:
+          # in general it is preferable to run them in a
+          # process pool.
+          return sum(i * i for i in range(10 ** 7))
+
+      async def main():
+          loop = asyncio.get_running_loop()
+
+          ## Options:
+
+          # 1. Run in the default loop's executor:
+          result = await loop.run_in_executor(
+              None, blocking_io)
+          print('default thread pool', result)
+
+          # 2. Run in a custom thread pool:
+          with concurrent.futures.ThreadPoolExecutor() as pool:
+              result = await loop.run_in_executor(
+                  pool, blocking_io)
+              print('custom thread pool', result)
+
+          # 3. Run in a custom process pool:
+          with concurrent.futures.ProcessPoolExecutor() as pool:
+              result = await loop.run_in_executor(
+                  pool, cpu_bound)
+              print('custom process pool', result)
+
+      asyncio.run(main())
+
+   这个方法返回一个 "asyncio.Future" 对象。
+
+   使用 "functools.partial()" 传递关键字参数  给 *func* 。
+
+   在 3.5.3 版更改: "loop.run_in_executor()" no longer configures the
+   "max_workers" of the thread pool executor it creates, instead
+   leaving it up to the thread pool executor ("ThreadPoolExecutor") to
+   set the default.
+
+loop.set_default_executor(executor)
+
+   Set *executor* as the default executor used by "run_in_executor()".
+   *executor* should be an instance of "ThreadPoolExecutor".
+
+   3.8 版后已移除: Using an executor that is not an instance of
+   "ThreadPoolExecutor" is deprecated and will trigger an error in
+   Python 3.9.
+
+   *executor* 必须是个 "concurrent.futures.ThreadPoolExecutor" 的实例
+   。
+
+
+错误处理API
+-----------
+
+允许自定义事件循环中如何去处理异常。
+
+loop.set_exception_handler(handler)
+
+   将 *handler* 设置为新的事件循环异常处理器。
+
+   If *handler* is "None", the default exception handler will be set.
+   Otherwise, *handler* must be a callable with the signature matching
+   "(loop, context)", where "loop" is a reference to the active event
+   loop, and "context" is a "dict" object containing the details of
+   the exception (see "call_exception_handler()" documentation for
+   details about context).
+
+loop.get_exception_handler()
+
+   返回当前的异常处理器，如果没有设置异常处理器，则返回 "None" 。
+
+   3.5.2 新版功能.
+
+loop.default_exception_handler(context)
+
+   默认的异常处理器。
+
+   This is called when an exception occurs and no exception handler is
+   set. This can be called by a custom exception handler that wants to
+   defer to the default handler behavior.
+
+   *context* 参数和 "call_exception_handler()" 中的同名参数完全相同。
+
+loop.call_exception_handler(context)
+
+   调用当前事件循环异常处理器。
+
+   *context* 是个包含下列键的 "dict" 对象(未来版本的Python可能会引入新
+   键)：
+
+   * 'message': 错误消息；
+
+   * 'exception' （可选）: 异常对象；
+
+   * 'future' （可选）:  "asyncio.Future" 实例。
+
+   * 'handle' （可选）: "asyncio.Handle" 实例；
+
+   * 'protocol' （可选）: Protocol 实例；
+
+   * 'transport' （可选）: Transport 实例；
+
+   * 'socket' （可选）： "socket.socket" 实例。
+
+   注解:
+
+     This method should not be overloaded in subclassed event loops.
+     For custom exception handling, use the "set_exception_handler()"
+     method.
+
+
+开启调试模式
+------------
+
+loop.get_debug()
+
+   获取事件循环调试模式状态（"bool"）。
+
+   如果环境变量 "PYTHONASYNCIODEBUG" 是一个非空字符串，就返回 "True"
+   ，否则就返回 "False" 。
+
+loop.set_debug(enabled: bool)
+
+   设置事件循环的调试模式。
+
+   在 3.7 版更改: The new Python Development Mode can now also be used
+   to enable the debug mode.
+
+参见: debug mode of asyncio.
+
+
+运行子进程
+----------
+
+Methods described in this subsections are low-level.  In regular
+async/await code consider using the high-level
+"asyncio.create_subprocess_shell()" and
+"asyncio.create_subprocess_exec()" convenience functions instead.
+
+注解:
+
+  The default asyncio event loop on **Windows** does not support
+  subprocesses. See Subprocess Support on Windows for details.
+
+coroutine loop.subprocess_exec(protocol_factory, *args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
+
+   用 *args* 指定的一个或者多个字符串型参数创建一个子进程。
+
+   *args* 必须是个由下列形式的字符串组成的列表：
+
+   * "str";
+
+   * 或者由 文件熊编码 编码的 "bytes" 。
+
+   The first string specifies the program executable, and the
+   remaining strings specify the arguments.  Together, string
+   arguments form the "argv" of the program.
+
+   This is similar to the standard library "subprocess.Popen" class
+   called with "shell=False" and the list of strings passed as the
+   first argument; however, where "Popen" takes a single argument
+   which is list of strings, *subprocess_exec* takes multiple string
+   arguments.
+
+   The *protocol_factory* must be a callable returning a subclass of
+   the "asyncio.SubprocessProtocol" class.
+
+   其他参数：
+
+   * *stdin* can be any of these:
+
+     * a file-like object representing a pipe to be connected to the
+       subprocess's standard input stream using "connect_write_pipe()"
+
+     * the "subprocess.PIPE" constant (default) which will create a
+       new pipe and connect it,
+
+     * the value "None" which will make the subprocess inherit the
+       file descriptor from this process
+
+     * the "subprocess.DEVNULL" constant which indicates that the
+       special "os.devnull" file will be used
+
+   * *stdout* can be any of these:
+
+     * a file-like object representing a pipe to be connected to the
+       subprocess's standard output stream using
+       "connect_write_pipe()"
+
+     * the "subprocess.PIPE" constant (default) which will create a
+       new pipe and connect it,
+
+     * the value "None" which will make the subprocess inherit the
+       file descriptor from this process
+
+     * the "subprocess.DEVNULL" constant which indicates that the
+       special "os.devnull" file will be used
+
+   * *stderr* can be any of these:
+
+     * a file-like object representing a pipe to be connected to the
+       subprocess's standard error stream using "connect_write_pipe()"
+
+     * the "subprocess.PIPE" constant (default) which will create a
+       new pipe and connect it,
+
+     * the value "None" which will make the subprocess inherit the
+       file descriptor from this process
+
+     * the "subprocess.DEVNULL" constant which indicates that the
+       special "os.devnull" file will be used
+
+     * the "subprocess.STDOUT" constant which will connect the
+       standard error stream to the process' standard output stream
+
+   * All other keyword arguments are passed to "subprocess.Popen"
+     without interpretation, except for *bufsize*,
+     *universal_newlines*, *shell*, *text*, *encoding* and *errors*,
+     which should not be specified at all.
+
+     The "asyncio" subprocess API does not support decoding the
+     streams as text. "bytes.decode()" can be used to convert the
+     bytes returned from the stream to text.
+
+   其他参数的文档，请参阅 "subprocess.Popen" 类的构造函数。
+
+   Returns a pair of "(transport, protocol)", where *transport*
+   conforms to the "asyncio.SubprocessTransport" base class and
+   *protocol* is an object instantiated by the *protocol_factory*.
+
+coroutine loop.subprocess_shell(protocol_factory, cmd, *, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
+
+   Create a subprocess from *cmd*, which can be a "str" or a "bytes"
+   string encoded to the filesystem encoding, using the platform's
+   "shell" syntax.
+
+   这类似与用 "shell=True" 调用标准库的 "subprocess.Popen" 类。
+
+   The *protocol_factory* must be a callable returning a subclass of
+   the "SubprocessProtocol" class.
+
+   See "subprocess_exec()" for more details about the remaining
+   arguments.
+
+   Returns a pair of "(transport, protocol)", where *transport*
+   conforms to the "SubprocessTransport" base class and *protocol* is
+   an object instantiated by the *protocol_factory*.
+
+注解:
+
+  It is the application's responsibility to ensure that all whitespace
+  and special characters are quoted appropriately to avoid shell
+  injection vulnerabilities. The "shlex.quote()" function can be used
+  to properly escape whitespace and special characters in strings that
+  are going to be used to construct shell commands.
+
+
+回调处理
+========
+
+class asyncio.Handle
+
+   A callback wrapper object returned by "loop.call_soon()",
+   "loop.call_soon_threadsafe()".
+
+   cancel()
+
+      Cancel the callback.  If the callback has already been canceled
+      or executed, this method has no effect.
+
+   cancelled()
+
+      Return "True" if the callback was cancelled.
+
+      3.7 新版功能.
+
+class asyncio.TimerHandle
+
+   A callback wrapper object returned by "loop.call_later()", and
+   "loop.call_at()".
+
+   This class is a subclass of "Handle".
+
+   when()
+
+      Return a scheduled callback time as "float" seconds.
+
+      The time is an absolute timestamp, using the same time reference
+      as "loop.time()".
+
+      3.7 新版功能.
+
+
+Server Objects
+==============
+
+Server objects are created by "loop.create_server()",
+"loop.create_unix_server()", "start_server()", and
+"start_unix_server()" functions.
+
+Do not instantiate the class directly.
+
+class asyncio.Server
+
+   *Server* 对象是异步上下文管理器。当用于 "async with" 语句时，异步上
+   下文管理器可以确保 Server 对象被关闭，并且在 "async with" 语句完成
+   后，不接受新的连接。
+
+      srv = await loop.create_server(...)
+
+      async with srv:
+          # some code
+
+      # At this point, srv is closed and no longer accepts new connections.
+
+   在 3.7 版更改: Python3.7 开始，Server 对象是一个异步上下文管理器。
+
+   close()
+
+      停止服务：关闭监听的套接字并且设置 "sockets" 属性为 "None" 。
+
+      用于表示已经连进来的客户端连接会保持打开的状态。
+
+      服务器是被异步关闭的，使用 "wait_closed()" 协程来等待服务器关闭
+      。
+
+   get_loop()
+
+      Return the event loop associated with the server object.
+
+      3.7 新版功能.
+
+   coroutine start_serving()
+
+      开始接受连接。
+
+      这个方法是幂等的【相同参数重复执行，能获得相同的结果】，所以此方
+      法能在服务已经运行的时候调用。
+
+      The *start_serving* keyword-only parameter to
+      "loop.create_server()" and "asyncio.start_server()" allows
+      creating a Server object that is not accepting connections
+      initially.  In this case "Server.start_serving()", or
+      "Server.serve_forever()" can be used to make the Server start
+      accepting connections.
+
+      3.7 新版功能.
+
+   coroutine serve_forever()
+
+      开始接受连接，直到协程被取消。 "serve_forever" 任务的取消将导致
+      服务器被关闭。
+
+      如果服务器已经在接受连接了，这个方法可以被调用。每个 *Server* 对
+      象，仅能有一个 "serve_forever" 任务。
+
+      示例:
+
+         async def client_connected(reader, writer):
+             # Communicate with the client with
+             # reader/writer streams.  For example:
+             await reader.readline()
+
+         async def main(host, port):
+             srv = await asyncio.start_server(
+                 client_connected, host, port)
+             await srv.serve_forever()
+
+         asyncio.run(main('127.0.0.1', 0))
+
+      3.7 新版功能.
+
+   is_serving()
+
+      如果服务器正在接受新连接的状态，返回 "True" 。
+
+      3.7 新版功能.
+
+   coroutine wait_closed()
+
+      等待 "close()" 方法执行完毕。
+
+   sockets
+
+      List of "socket.socket" objects the server is listening on.
+
+      在 3.7 版更改: Prior to Python 3.7 "Server.sockets" used to
+      return an internal list of server sockets directly.  In 3.7 a
+      copy of that list is returned.
+
+
+事件循环实现
+============
+
+asyncio ships with two different event loop implementations:
+"SelectorEventLoop" and "ProactorEventLoop".
+
+By default asyncio is configured to use "SelectorEventLoop" on Unix
+and "ProactorEventLoop" on Windows.
+
+class asyncio.SelectorEventLoop
+
+   An event loop based on the "selectors" module.
+
+   Uses the most efficient *selector* available for the given
+   platform.  It is also possible to manually configure the exact
+   selector implementation to be used:
+
+      import asyncio
+      import selectors
+
+      selector = selectors.SelectSelector()
+      loop = asyncio.SelectorEventLoop(selector)
+      asyncio.set_event_loop(loop)
+
+   可用性: Unix, Windows。
+
+class asyncio.ProactorEventLoop
+
+   用 "I/O Completion Ports" (IOCP) 构建的专为Windows 的事件循环。
+
+   可用性: Windows。
+
+   参见: MSDN documentation on I/O Completion Ports.
+
+class asyncio.AbstractEventLoop
+
+   Abstract base class for asyncio-compliant event loops.
+
+   The Event Loop Methods section lists all methods that an
+   alternative implementation of "AbstractEventLoop" should have
+   defined.
+
+
+示例
+====
+
+Note that all examples in this section **purposefully** show how to
+use the low-level event loop APIs, such as "loop.run_forever()" and
+"loop.call_soon()".  Modern asyncio applications rarely need to be
+written this way; consider using the high-level functions like
+"asyncio.run()".
+
+
+call_soon() 的 Hello World 示例。
+---------------------------------
+
+An example using the "loop.call_soon()" method to schedule a callback.
+The callback displays ""Hello World"" and then stops the event loop:
+
+   import asyncio
+
+   def hello_world(loop):
+       """A callback to print 'Hello World' and stop the event loop"""
+       print('Hello World')
+       loop.stop()
+
+   loop = asyncio.get_event_loop()
+
+   # Schedule a call to hello_world()
+   loop.call_soon(hello_world, loop)
+
+   # Blocking call interrupted by loop.stop()
+   try:
+       loop.run_forever()
+   finally:
+       loop.close()
+
+参见:
+
+  A similar Hello World example created with a coroutine and the
+  "run()" function.
+
+
+使用 call_later() 来展示当前的日期
+----------------------------------
+
+An example of a callback displaying the current date every second. The
+callback uses the "loop.call_later()" method to reschedule itself
+after 5 seconds, and then stops the event loop:
+
+   import asyncio
+   import datetime
+
+   def display_date(end_time, loop):
+       print(datetime.datetime.now())
+       if (loop.time() + 1.0) < end_time:
+           loop.call_later(1, display_date, end_time, loop)
+       else:
+           loop.stop()
+
+   loop = asyncio.get_event_loop()
+
+   # Schedule the first call to display_date()
+   end_time = loop.time() + 5.0
+   loop.call_soon(display_date, end_time, loop)
+
+   # Blocking call interrupted by loop.stop()
+   try:
+       loop.run_forever()
+   finally:
+       loop.close()
+
+参见:
+
+  A similar current date example created with a coroutine and the
+  "run()" function.
+
+
+监控一个文件描述符的读事件
+--------------------------
+
+使用 "loop.add_reader()" 方法，等到文件描述符收到一些数据，然后关闭事
+件循环：
+
+   import asyncio
+   from socket import socketpair
+
+   # Create a pair of connected file descriptors
+   rsock, wsock = socketpair()
+
+   loop = asyncio.get_event_loop()
+
+   def reader():
+       data = rsock.recv(100)
+       print("Received:", data.decode())
+
+       # We are done: unregister the file descriptor
+       loop.remove_reader(rsock)
+
+       # Stop the event loop
+       loop.stop()
+
+   # Register the file descriptor for read event
+   loop.add_reader(rsock, reader)
+
+   # Simulate the reception of data from the network
+   loop.call_soon(wsock.send, 'abc'.encode())
+
+   try:
+       # Run the event loop
+       loop.run_forever()
+   finally:
+       # We are done. Close sockets and the event loop.
+       rsock.close()
+       wsock.close()
+       loop.close()
+
+参见:
+
+  * A similar example using transports, protocols, and the
+    "loop.create_connection()" method.
+
+  * Another similar example using the high-level
+    "asyncio.open_connection()" function and streams.
+
+
+为SIGINT和SIGTERM设置信号处理器
+-------------------------------
+
+(This "signals" example only works on Unix.)
+
+Register handlers for signals "SIGINT" and "SIGTERM" using the
+"loop.add_signal_handler()" method:
+
+   import asyncio
+   import functools
+   import os
+   import signal
+
+   def ask_exit(signame, loop):
+       print("got signal %s: exit" % signame)
+       loop.stop()
+
+   async def main():
+       loop = asyncio.get_running_loop()
+
+       for signame in {'SIGINT', 'SIGTERM'}:
+           loop.add_signal_handler(
+               getattr(signal, signame),
+               functools.partial(ask_exit, signame, loop))
+
+       await asyncio.sleep(3600)
+
+   print("Event loop running for 1 hour, press Ctrl+C to interrupt.")
+   print(f"pid {os.getpid()}: send SIGINT or SIGTERM to exit.")
+
+   asyncio.run(main())

@@ -1,0 +1,62 @@
+反射
+****
+
+PyObject* PyEval_GetBuiltins(void)
+    *Return value: Borrowed reference.*
+
+   返回当前执行帧中内置函数的字典，如果当前没有帧正在执行，则返回线程
+   状态的解释器。
+
+PyObject* PyEval_GetLocals(void)
+    *Return value: Borrowed reference.*
+
+   返回当前执行帧中局部变量的字典，如果没有当前执行的帧则返回 "NULL"。
+
+PyObject* PyEval_GetGlobals(void)
+    *Return value: Borrowed reference.*
+
+   返回当前执行帧中全局变量的字典，如果没有当前执行的帧则返回 "NULL"。
+
+PyFrameObject* PyEval_GetFrame(void)
+    *Return value: Borrowed reference.*
+
+   返回当前线程状态的帧，如果没有当前执行的帧则返回 "NULL"。
+
+   另请参阅 "PyThreadState_GetFrame()"。
+
+int PyFrame_GetBack(PyFrameObject *frame)
+
+   获取 *frame* 为下一个外部帧。
+
+   返回一个强引用，如果 *frame* 没有外部帧则返回 "NULL"。
+
+   *frame* 必须不为 "NULL"。
+
+   3.9 新版功能.
+
+int PyFrame_GetCode(PyFrameObject *frame)
+
+   获取 *frame* 的代码。
+
+   返回一个强引用。
+
+   *frame* 必须不为 "NULL"。 结果（帧的代码）不能为 "NULL"。
+
+   3.9 新版功能.
+
+int PyFrame_GetLineNumber(PyFrameObject *frame)
+
+   返回 *frame* 当前正在执行的行号。
+
+   *frame* 必须不为 "NULL"。
+
+const char* PyEval_GetFuncName(PyObject *func)
+
+   如果 *func* 是函数、类或实例对象，则返回它的名称，否则返回 *func*
+   的类型的名称。
+
+const char* PyEval_GetFuncDesc(PyObject *func)
+
+   根据 *func* 的类型返回描述字符串。 返回值包括函数和方法的 "()", "
+   constructor", " instance" 和 " object"。 与 "PyEval_GetFuncName()"
+   的结果连接，结果将是 *func* 的描述。

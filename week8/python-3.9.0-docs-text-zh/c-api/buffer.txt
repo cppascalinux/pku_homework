@@ -1,0 +1,462 @@
+缓冲协议
+********
+
+在 Python 中可使用一些对象来包装对底层内存数组或称 *缓冲* 的访问。此类
+对象包括内置的 "bytes" 和 "bytearray" 以及一些如 "array.array" 这样的
+扩展类型。第三方库也可能会为了特殊的目的而定义它们自己的类型，例如用于
+图像处理和数值分析等。
+
+虽然这些类型中的每一种都有自己的语义，但它们具有由可能较大的内存缓冲区
+支持的共同特征。 在某些情况下，希望直接访问该缓冲区而无需中间复制。
+
+Python 以 缓冲协议 的形式在 C 层级上提供这样的功能。 此协议包括两个方
+面:
+
+* 在生产者这一方面，该类型的协议可以导出一个“缓冲区接口”，允许公开它的
+  底层缓冲区信息。该接口的描述信息在 Buffer Object Structures 一节中；
+
+* 在消费者一侧，有几种方法可用于获得指向对象的原始底层数据的指针（例如
+  一个方法的形参）。
+
+一些简单的对象例如 "bytes" 和 "bytearray" 会以面向字节的形式公开它们的
+底层缓冲区。 也可能会用其他形式；例如 "array.array" 所公开的元素可以是
+多字节值。
+
+缓冲区接口的消费者的一个例子是文件对象的 "write()" 方法：任何可以输出
+为一系列字节流的对象可以被写入文件。然而 "write()" 方法只需要对于传入
+对象的只读权限，其他的方法，如 "readinto()" 需要参数内容的写入权限。缓
+冲区接口使得对象可以选择性地允许或拒绝读写或只读缓冲区的导出。
+
+对于缓冲接口的消费者而言，有两种方式来获取一个目的对象的缓冲：
+
+* 使用正确的参数来调用 "PyObject_GetBuffer()" 函数；
+
+* 调用 "PyArg_ParseTuple()" (或其同级对象之一) 并传入 "y*", "w*" or
+  "s*" 格式代码 中的一个。
+
+在这两种情况下，当不再需要缓冲区时必须调用 "PyBuffer_Release()" 。如果
+此操作失败，可能会导致各种问题，例如资源泄漏。
+
+
+缓冲区结构
+==========
+
+缓冲区结构(或者简单地称为“buffers”)对于将二进制数据从另一个对象公开给
+Python 程序员非常有用。它们还可以用作零拷贝切片机制。使用它们引用内存
+块的能力，可以很容易地将任何数据公开给 Python 程序员。内存可以是 C 扩
+展中的一个大的常量数组，也可以是在传递到操作系统库之前用于操作的原始内
+存块，或者可以用来传递本机内存格式的结构化数据。
+
+与 Python 解释器公开的大多部数据类型不同，缓冲区不是 "PyObject" 指针而
+是简单的 C 结构。 这使得它们可以非常简单地创建和复制。 当需要为缓冲区
+加上泛型包装器时，可以创建一个 内存视图 对象。
+
+有关如何编写并导出对象的简短说明，请参阅 缓冲区对象结构。 要获取缓冲区
+对象，请参阅 "PyObject_GetBuffer()"。
+
+Py_buffer
+
+   void *buf
+
+      指向由缓冲区字段描述的逻辑结构开始的指针。 这可以是导出程序底层
+      物理内存块中的任何位置。 例如，使用负的 "strides" 值可能指向内存
+      块的末尾。
+
+      对于 *contiguous* ，‘邻接’数组，值指向内存块的开头。
+
+   void *obj
+
+      对导出对象的新引用。 该引用归使用者所有，并由
+      "PyBuffer_Release()" 自动递减并设置为 "NULL"。 该字段等于任何标
+      准 C-API 函数的返回值。
+
+      作为一种特殊情况，对于由 "PyMemoryView_FromBuffer()" 或
+      "PyBuffer_FillInfo()" 包装的 *temporary* 缓冲区，此字段为 "NULL"
+      。 通常，导出对象不得使用此方案。
+
+   Py_ssize_t len
+
+      "product(shape) * itemsize"。对于连续数组，这是基础内存块的长度
+      。对于非连续数组，如果逻辑结构复制到连续表示形式，则该长度将具有
+      该长度。
+
+      仅当缓冲区是通过保证连续性的请求获取时，才访问 "((char *)buf)[0]
+      up to ((char *)buf)[len-1]" 时才有效。在大多数情况下，此类请求将
+      为 "PyBUF_SIMPLE" 或 "PyBUF_WRITABLE"。
+
+   int readonly
+
+      缓冲区是否为只读的指示器。此字段由 "PyBUF_WRITABLE" 标志控制。
+
+   Py_ssize_t itemsize
+
+      单个元素的项大小（以字节为单位）。与 "struct.calcsize()" 调用非
+      "NULL" "format" 的值相同。
+
+      重要例外：如果使用者请求的缓冲区没有 "PyBUF_FORMAT" 标志，
+      "format" 将设置为 "NULL"，但 "itemsize" 仍具有原始格式的值。
+
+      如果 "shape" 存在，则相等的 "product(shape) * itemsize == len"
+      仍然存在，使用者可以使用 "itemsize" 来导航缓冲区。
+
+      如果 "shape" 是 "NULL"，因为结果为 "PyBUF_SIMPLE" 或
+      "PyBUF_WRITABLE" 请求，则使用者必须忽略 "itemsize"，并假设
+      "itemsize == 1"。
+
+   const char *format
+
+      在 "struct" 模块样式语法中 *NUL* 字符串，描述单个项的内容。如果
+      这是 "NULL"，则假定为``"B"`` (无符号字节) 。
+
+      此字段由 "PyBUF_FORMAT" 标志控制。
+
+   int ndim
+
+      The number of dimensions the memory represents as an
+      n-dimensional array. If it is "0", "buf" points to a single item
+      representing a scalar. In this case, "shape", "strides" and
+      "suboffsets" MUST be "NULL".
+
+      The macro "PyBUF_MAX_NDIM" limits the maximum number of
+      dimensions to 64. Exporters MUST respect this limit, consumers
+      of multi-dimensional buffers SHOULD be able to handle up to
+      "PyBUF_MAX_NDIM" dimensions.
+
+   Py_ssize_t *shape
+
+      An array of "Py_ssize_t" of length "ndim" indicating the shape
+      of the memory as an n-dimensional array. Note that "shape[0] *
+      ... * shape[ndim-1] * itemsize" MUST be equal to "len".
+
+      Shape 形状数组中的值被限定在 "shape[n] >= 0" 。 "shape[n] == 0"
+      这一情形需要特别注意。更多信息请参阅 complex arrays 。
+
+      shape 数组对于使用者来说是只读的。
+
+   Py_ssize_t *strides
+
+      An array of "Py_ssize_t" of length "ndim" giving the number of
+      bytes to skip to get to a new element in each dimension.
+
+      Stride 步幅数组中的值可以为任何整数。对于常规数组，步幅通常为正
+      数，但是使用者必须能够处理 "strides[n] <= 0" 的情况。更多信息请
+      参阅 complex arrays 。
+
+      The strides array is read-only for the consumer.
+
+   Py_ssize_t *suboffsets
+
+      An array of "Py_ssize_t" of length "ndim". If "suboffsets[n] >=
+      0", the values stored along the nth dimension are pointers and
+      the suboffset value dictates how many bytes to add to each
+      pointer after de-referencing. A suboffset value that is negative
+      indicates that no de-referencing should occur (striding in a
+      contiguous memory block).
+
+      If all suboffsets are negative (i.e. no de-referencing is
+      needed), then this field must be "NULL" (the default value).
+
+      Python Imaging Library (PIL) 中使用了这种类型的数组表达方式。请
+      参阅 complex arrays 来了解如何从这样一个数组中访问元素。
+
+      suboffsets 数组对于使用者来说是只读的。
+
+   void *internal
+
+      This is for use internally by the exporting object. For example,
+      this might be re-cast as an integer by the exporter and used to
+      store flags about whether or not the shape, strides, and
+      suboffsets arrays must be freed when the buffer is released. The
+      consumer MUST NOT alter this value.
+
+
+Buffer request types
+====================
+
+Buffers are usually obtained by sending a buffer request to an
+exporting object via "PyObject_GetBuffer()". Since the complexity of
+the logical structure of the memory can vary drastically, the consumer
+uses the *flags* argument to specify the exact buffer type it can
+handle.
+
+All "Py_buffer" fields are unambiguously defined by the request type.
+
+
+request-independent fields
+--------------------------
+
+The following fields are not influenced by *flags* and must always be
+filled in with the correct values: "obj", "buf", "len", "itemsize",
+"ndim".
+
+
+readonly, format
+----------------
+
+   PyBUF_WRITABLE
+
+      Controls the "readonly" field. If set, the exporter MUST provide
+      a writable buffer or else report failure. Otherwise, the
+      exporter MAY provide either a read-only or writable buffer, but
+      the choice MUST be consistent for all consumers.
+
+   PyBUF_FORMAT
+
+      Controls the "format" field. If set, this field MUST be filled
+      in correctly. Otherwise, this field MUST be "NULL".
+
+"PyBUF_WRITABLE" can be |'d to any of the flags in the next section.
+Since "PyBUF_SIMPLE" is defined as 0, "PyBUF_WRITABLE" can be used as
+a stand-alone flag to request a simple writable buffer.
+
+"PyBUF_FORMAT" can be |'d to any of the flags except "PyBUF_SIMPLE".
+The latter already implies format "B" (unsigned bytes).
+
+
+形状，步幅，子偏移量
+--------------------
+
+The flags that control the logical structure of the memory are listed
+in decreasing order of complexity. Note that each flag contains all
+bits of the flags below it.
+
++-------------------------------+---------+-----------+--------------+
+| 请求                          | 形状    | 步幅      | 子偏移量     |
+|===============================|=========|===========|==============|
+| PyBUF_INDIRECT                | 是      | 是        | 如果需要的话 |
++-------------------------------+---------+-----------+--------------+
+| PyBUF_STRIDES                 | 是      | 是        | NULL         |
++-------------------------------+---------+-----------+--------------+
+| PyBUF_ND                      | 是      | NULL      | NULL         |
++-------------------------------+---------+-----------+--------------+
+| PyBUF_SIMPLE                  | NULL    | NULL      | NULL         |
++-------------------------------+---------+-----------+--------------+
+
+
+连续性的请求
+------------
+
+C or Fortran *contiguity* can be explicitly requested, with and
+without stride information. Without stride information, the buffer
+must be C-contiguous.
+
++-------------------------------------+---------+-----------+--------------+----------+
+| 请求                                | 形状    | 步幅      | 子偏移量     | 邻接     |
+|=====================================|=========|===========|==============|==========|
+| PyBUF_C_CONTIGUOUS                  | 是      | 是        | NULL         | C        |
++-------------------------------------+---------+-----------+--------------+----------+
+| PyBUF_F_CONTIGUOUS                  | 是      | 是        | NULL         | F        |
++-------------------------------------+---------+-----------+--------------+----------+
+| PyBUF_ANY_CONTIGUOUS                | 是      | 是        | NULL         | C 或 F   |
++-------------------------------------+---------+-----------+--------------+----------+
+| "PyBUF_ND"                          | 是      | NULL      | NULL         | C        |
++-------------------------------------+---------+-----------+--------------+----------+
+
+
+复合请求
+--------
+
+所有可能的请求都由上一节中某些标志的组合完全定义。为方便起见，缓冲区协
+议提供常用的组合作为单个标志。
+
+In the following table *U* stands for undefined contiguity. The
+consumer would have to call "PyBuffer_IsContiguous()" to determine
+contiguity.
+
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| 请求                            | 形状    | 步幅      | 子偏移量     | 邻接     | 只读       | 格式     |
+|=================================|=========|===========|==============|==========|============|==========|
+| PyBUF_FULL                      | 是      | 是        | 如果需要的话 | U        | 0          | 是       |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_FULL_RO                   | 是      | 是        | 如果需要的话 | U        | 1 或 0     | 是       |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_RECORDS                   | 是      | 是        | NULL         | U        | 0          | 是       |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_RECORDS_RO                | 是      | 是        | NULL         | U        | 1 或 0     | 是       |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_STRIDED                   | 是      | 是        | NULL         | U        | 0          | NULL     |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_STRIDED_RO                | 是      | 是        | NULL         | U        | 1 或 0     | NULL     |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_CONTIG                    | 是      | NULL      | NULL         | C        | 0          | NULL     |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+| PyBUF_CONTIG_RO                 | 是      | NULL      | NULL         | C        | 1 或 0     | NULL     |
++---------------------------------+---------+-----------+--------------+----------+------------+----------+
+
+
+复杂数组
+========
+
+
+NumPy-风格：形状和步幅
+----------------------
+
+The logical structure of NumPy-style arrays is defined by "itemsize",
+"ndim", "shape" and "strides".
+
+If "ndim == 0", the memory location pointed to by "buf" is interpreted
+as a scalar of size "itemsize". In that case, both "shape" and
+"strides" are "NULL".
+
+If "strides" is "NULL", the array is interpreted as a standard
+n-dimensional C-array. Otherwise, the consumer must access an
+n-dimensional array as follows:
+
+   ptr = (char *)buf + indices[0] * strides[0] + ... + indices[n-1] * strides[n-1];
+   item = *((typeof(item) *)ptr);
+
+As noted above, "buf" can point to any location within the actual
+memory block. An exporter can check the validity of a buffer with this
+function:
+
+   def verify_structure(memlen, itemsize, ndim, shape, strides, offset):
+       """Verify that the parameters represent a valid array within
+          the bounds of the allocated memory:
+              char *mem: start of the physical memory block
+              memlen: length of the physical memory block
+              offset: (char *)buf - mem
+       """
+       if offset % itemsize:
+           return False
+       if offset < 0 or offset+itemsize > memlen:
+           return False
+       if any(v % itemsize for v in strides):
+           return False
+
+       if ndim <= 0:
+           return ndim == 0 and not shape and not strides
+       if 0 in shape:
+           return True
+
+       imin = sum(strides[j]*(shape[j]-1) for j in range(ndim)
+                  if strides[j] <= 0)
+       imax = sum(strides[j]*(shape[j]-1) for j in range(ndim)
+                  if strides[j] > 0)
+
+       return 0 <= offset+imin and offset+imax+itemsize <= memlen
+
+
+PIL-风格：形状，步幅和子偏移量
+------------------------------
+
+In addition to the regular items, PIL-style arrays can contain
+pointers that must be followed in order to get to the next element in
+a dimension. For example, the regular three-dimensional C-array "char
+v[2][2][3]" can also be viewed as an array of 2 pointers to 2 two-
+dimensional arrays: "char (*v[2])[2][3]". In suboffsets
+representation, those two pointers can be embedded at the start of
+"buf", pointing to two "char x[2][3]" arrays that can be located
+anywhere in memory.
+
+Here is a function that returns a pointer to the element in an N-D
+array pointed to by an N-dimensional index when there are both
+non-"NULL" strides and suboffsets:
+
+   void *get_item_pointer(int ndim, void *buf, Py_ssize_t *strides,
+                          Py_ssize_t *suboffsets, Py_ssize_t *indices) {
+       char *pointer = (char*)buf;
+       int i;
+       for (i = 0; i < ndim; i++) {
+           pointer += strides[i] * indices[i];
+           if (suboffsets[i] >=0 ) {
+               pointer = *((char**)pointer) + suboffsets[i];
+           }
+       }
+       return (void*)pointer;
+   }
+
+
+缓冲区相关函数
+==============
+
+int PyObject_CheckBuffer(PyObject *obj)
+
+   Return "1" if *obj* supports the buffer interface otherwise "0".
+   When "1" is returned, it doesn't guarantee that
+   "PyObject_GetBuffer()" will succeed.  This function always
+   succeeds.
+
+int PyObject_GetBuffer(PyObject *exporter, Py_buffer *view, int flags)
+
+   Send a request to *exporter* to fill in *view* as specified by
+   *flags*. If the exporter cannot provide a buffer of the exact type,
+   it MUST raise "PyExc_BufferError", set "view->obj" to "NULL" and
+   return "-1".
+
+   On success, fill in *view*, set "view->obj" to a new reference to
+   *exporter* and return 0. In the case of chained buffer providers
+   that redirect requests to a single object, "view->obj" MAY refer to
+   this object instead of *exporter* (See Buffer Object Structures).
+
+   Successful calls to "PyObject_GetBuffer()" must be paired with
+   calls to "PyBuffer_Release()", similar to "malloc()" and "free()".
+   Thus, after the consumer is done with the buffer,
+   "PyBuffer_Release()" must be called exactly once.
+
+void PyBuffer_Release(Py_buffer *view)
+
+   Release the buffer *view* and decrement the reference count for
+   "view->obj". This function MUST be called when the buffer is no
+   longer being used, otherwise reference leaks may occur.
+
+   It is an error to call this function on a buffer that was not
+   obtained via "PyObject_GetBuffer()".
+
+Py_ssize_t PyBuffer_SizeFromFormat(const char *format)
+
+   Return the implied "itemsize" from "format". On error, raise an
+   exception and return -1.
+
+   3.9 新版功能.
+
+int PyBuffer_IsContiguous(Py_buffer *view, char order)
+
+   Return "1" if the memory defined by the *view* is C-style (*order*
+   is "'C'") or Fortran-style (*order* is "'F'") *contiguous* or
+   either one (*order* is "'A'").  Return "0" otherwise.  This
+   function always succeeds.
+
+void* PyBuffer_GetPointer(Py_buffer *view, Py_ssize_t *indices)
+
+   Get the memory area pointed to by the *indices* inside the given
+   *view*. *indices* must point to an array of "view->ndim" indices.
+
+int PyBuffer_FromContiguous(Py_buffer *view, void *buf, Py_ssize_t len, char fort)
+
+   Copy contiguous *len* bytes from *buf* to *view*. *fort* can be
+   "'C'" or "'F'" (for C-style or Fortran-style ordering). "0" is
+   returned on success, "-1" on error.
+
+int PyBuffer_ToContiguous(void *buf, Py_buffer *src, Py_ssize_t len, char order)
+
+   Copy *len* bytes from *src* to its contiguous representation in
+   *buf*. *order* can be "'C'" or "'F'" or "'A'" (for C-style or
+   Fortran-style ordering or either one). "0" is returned on success,
+   "-1" on error.
+
+   This function fails if *len* != *src->len*.
+
+void PyBuffer_FillContiguousStrides(int ndims, Py_ssize_t *shape, Py_ssize_t *strides, int itemsize, char order)
+
+   Fill the *strides* array with byte-strides of a *contiguous*
+   (C-style if *order* is "'C'" or Fortran-style if *order* is "'F'")
+   array of the given shape with the given number of bytes per
+   element.
+
+int PyBuffer_FillInfo(Py_buffer *view, PyObject *exporter, void *buf, Py_ssize_t len, int readonly, int flags)
+
+   Handle buffer requests for an exporter that wants to expose *buf*
+   of size *len* with writability set according to *readonly*. *buf*
+   is interpreted as a sequence of unsigned bytes.
+
+   The *flags* argument indicates the request type. This function
+   always fills in *view* as specified by flags, unless *buf* has been
+   designated as read-only and "PyBUF_WRITABLE" is set in *flags*.
+
+   On success, set "view->obj" to a new reference to *exporter* and
+   return 0. Otherwise, raise "PyExc_BufferError", set "view->obj" to
+   "NULL" and return "-1";
+
+   如果此函数用作 getbufferproc 的一部分，则 *exporter* 必须设置为导出
+   对象，并且必须在未修改的情况下传递 *flags*。否则，*exporter* 必须是
+   "NULL"。

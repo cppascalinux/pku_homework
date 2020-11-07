@@ -1,0 +1,254 @@
+数字协议
+********
+
+int PyNumber_Check(PyObject *o)
+
+   如果对象 *o* 提供数字的协议，返回真 "1"，否则返回假。这个函数不会调
+   用失败。
+
+   在 3.8 版更改: 如果 *o* 是一个索引整数则返回 "1"。
+
+PyObject* PyNumber_Add(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2* 相加的结果，如果失败，返回 "NULL"。等价于 Python
+   表达式 "o1 + o2"。
+
+PyObject* PyNumber_Subtract(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 减去 *o2* 的结果，如果失败，返回 "NULL"。等价于 Python 表
+   达式 "o1 - o2"。
+
+PyObject* PyNumber_Multiply(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1*  、 *o2* 相乘的结果，如果失败，返回 "NULL"。等价于 Python
+   表达式 "o1 * o2"。
+
+PyObject* PyNumber_MatrixMultiply(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2* 做矩阵乘法的结果，如果失败，返回 "NULL"。等价于
+   Python 表达式 "o1 @ o2"。
+
+   3.5 新版功能.
+
+PyObject* PyNumber_FloorDivide(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 的向下取整后的结果，如果失败，返回  "NULL"。等
+   价于“传统”的整数除法。
+
+PyObject* PyNumber_TrueDivide(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 的一个合理的近似值，如果失败，返回 "NULL"。结果
+   是近似的，因为二进制浮点数是一个近似值，不可能以2为基数来表示出所有
+   实数。这个函数返回两个整数相除得到的浮点数。
+
+PyObject* PyNumber_Remainder(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 得到的余数，如果失败，返回 "NULL"。等价于
+   Python 表达式 "o1 % o2"。
+
+PyObject* PyNumber_Divmod(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   参考内置函数 "divmod()"。如果失败，返回 "NULL"。等价于 Python 表达
+   式 "divmod(o1, o2)"。
+
+PyObject* PyNumber_Power(PyObject *o1, PyObject *o2, PyObject *o3)
+    *Return value: New reference.*
+
+   请参阅内置函数 "pow()"。 如果失败，返回 "NULL"。 等价于 Python 中的
+   表达式 "pow(o1, o2, o3)"，其中 *o3* 是可选的。如果要忽略 *o3*，则需
+   传入 "Py_None" 作为代替（如果传入 "NULL" 会导致非法内存访问）。
+
+PyObject* PyNumber_Negative(PyObject *o)
+    *Return value: New reference.*
+
+   返回 *o* 的负值，如果失败，返回 "NULL" 。等价于 Python 表达式 "-o"
+   。
+
+PyObject* PyNumber_Positive(PyObject *o)
+    *Return value: New reference.*
+
+   返回 *o*，如果失败，返回 "NULL" 。等价于 Python 表达式 "+o"。
+
+PyObject* PyNumber_Absolute(PyObject *o)
+    *Return value: New reference.*
+
+   返回 *o* 的绝对值，如果失败，返回 "NULL"。等价于 Python 表达式
+   "abs(o)"。
+
+PyObject* PyNumber_Invert(PyObject *o)
+    *Return value: New reference.*
+
+   返回 *o* 的按位取反后的结果，如果失败，返回 "NULL"。等价于 Python
+   表达式 "~o"。
+
+PyObject* PyNumber_Lshift(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 左移 *o2* 个比特后的结果，如果失败，返回 "NULL"。等价于
+   Python 表达式 "o1 << o2"。
+
+PyObject* PyNumber_Rshift(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 右移 *o2* 个比特后的结果，如果失败，返回  "NULL" 。等价于
+   Python 表达式 "o1 >> o2"。
+
+PyObject* PyNumber_And(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 和 *o2* “按位与”的结果，如果失败，返回 "NULL" 。等价于
+   Python 表达式 "o1 & o2"。
+
+PyObject* PyNumber_Xor(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 和 *o2* “按位异或”的结果，如果失败，返回 "NULL" 。等价于
+   Python 表达式 "o1 ^ o2"。
+
+PyObject* PyNumber_Or(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 和 *o2* “按位或”的结果，如果失败，返回 "NULL" 。等价于
+   Python 表达式 "o1 | o2"。
+
+PyObject* PyNumber_InPlaceAdd(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2* 相加的结果，如果失败，返回 "NULL"。当 *o1* 支持时
+   ，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 += o2"。
+
+PyObject* PyNumber_InPlaceSubtract(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2* 相减的结果，如果失败，返回 "NULL" 。当 *o1* 支持时
+   ，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 -= o2"。
+
+PyObject* PyNumber_InPlaceMultiply(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2*相乘的结果，如果失败，返回 ``NULL`` 。当 *o1* 支持
+   时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 *= o2"。
+
+PyObject* PyNumber_InPlaceMatrixMultiply(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 、*o2* 做矩阵乘法后的结果，如果失败，返回 "NULL" 。当
+   *o1* 支持时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 @=
+   o2"。
+
+   3.5 新版功能.
+
+PyObject* PyNumber_InPlaceFloorDivide(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 后向下取整的结果，如果失败，返回 "NULL"。当
+   *o1* 支持时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1
+   //= o2"。
+
+PyObject* PyNumber_InPlaceTrueDivide(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 的一个合理的近似值，如果失败，返回 "NULL"。结果
+   是近似的，因为二进制浮点数是一个近似值，不可能以2为基数来表示出所有
+   实数。这个函数返回两个整数相除得到的浮点数。当 *o1* 支持时，这个运
+   算直接使用它储存结果。
+
+PyObject* PyNumber_InPlaceRemainder(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 除以 *o2* 得到的余数，如果失败，返回 "NULL"。当 *o1* 支持
+   时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 %= o2"。
+
+PyObject* PyNumber_InPlacePower(PyObject *o1, PyObject *o2, PyObject *o3)
+    *Return value: New reference.*
+
+   请参阅内置函数 "pow()"。 如果失败，返回 "NULL"。当 *o1* 支持时，这
+   个运算直接使用它储存结果。当 *o3* 是 "Py_None" 时，等价于 Python 语
+   句  "o1 **= o2"；否则等价于在原来位置储存结果的 "pow(o1, o2, o3)"
+   。如果要忽略 *o3*，则需传入 "Py_None"  （传入 "NULL" 会导致非法内存
+   访问）。
+
+PyObject* PyNumber_InPlaceLshift(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 左移 *o2* 个比特后的结果，如果失败，返回 "NULL"。当 *o1*
+   支持时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 <<= o2"
+   。
+
+PyObject* PyNumber_InPlaceRshift(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   返回 *o1* 右移 *o2* 个比特后的结果，如果失败，返回 "NULL"。当 *o1*
+   支持时，这个运算直接使用它储存结果。 等价于 Python 语句 "o1 >>= o2"
+   。
+
+PyObject* PyNumber_InPlaceAnd(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   成功时返回 *o1* 和 *o2* "按位与" 的结果，失败时返回 "NULL"。 在
+   *o1* 支持的前提下该操作将 *原地* 执行。 等价与 Python 语句 "o1 &=
+   o2"。
+
+PyObject* PyNumber_InPlaceXor(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   成功时返回 *o1* 和 *o2* "按位异或的结果，失败时返回 "NULL"。 在
+   *o1* 支持的前提下该操作将 *原地* 执行。 等价与 Python 语句 "o1 ^=
+   o2"。
+
+PyObject* PyNumber_InPlaceOr(PyObject *o1, PyObject *o2)
+    *Return value: New reference.*
+
+   成功时返回 *o1* 和 *o2* "按位或" 的结果，失败时返回 "NULL"。 在
+   *o1* 支持的前提下该操作将 *原地* 执行。 等价于 Python 语句 "o1 |=
+   o2"。
+
+PyObject* PyNumber_Long(PyObject *o)
+    *Return value: New reference.*
+
+   成功时返回 *o* 转换为整数对象后的结果，失败时返回 "NULL"。 等价于
+   Python 表达式 "int(o)"。
+
+PyObject* PyNumber_Float(PyObject *o)
+    *Return value: New reference.*
+
+   成功时返回 *o* 转换为浮点对象后的结果，失败时返回 "NULL"。 等价于
+   Python 表达式 "float(o)"。
+
+PyObject* PyNumber_Index(PyObject *o)
+    *Return value: New reference.*
+
+   成功时返回 *o* 转换为 Python int 类型后的结果，失败时返回 "NULL" 并
+   引发 "TypeError" 异常。
+
+PyObject* PyNumber_ToBase(PyObject *n, int base)
+    *Return value: New reference.*
+
+   返回整数 *n* 转换成以 *base* 为基数的字符串后的结果。这个 *base* 参
+   数必须是 2，8，10 或者 16 。对于基数 2，8，或 16 ，返回的字符串将分
+   别加上基数标识 "'0b'", "'0o'", or "'0x'"。如果 *n* 不是 Python 中的
+   整数 *int* 类型，就先通过 "PyNumber_Index()" 将它转换成整数类型。
+
+Py_ssize_t PyNumber_AsSsize_t(PyObject *o, PyObject *exc)
+
+   如果 *o* 是一个整数类型的解释型，返回 *o* 转换成一个 Py_ssize_t 值
+   项后的结果。如果调用失败，返回 "-1" 并引发异常。
+
+   如果 *o* 可以被转换为 Python int 类型但尝试转换为 Py_ssize_t 值则会
+   引发 "OverflowError"，这时 *exc* 参数为将被引发的异常类型 (通常是
+   "IndexError" 或 "OverflowError")。 如果 *exc* 为 "NULL"，则异常会被
+   清除并且值会被裁剪为负整数 "PY_SSIZE_T_MIN" 或正整数
+   "PY_SSIZE_T_MAX"。
+
+int PyIndex_Check(PyObject *o)
+
+   如果 *o* 是一个索引整数（存有 nb_index 位置并有 tp_as_number 填入其
+   中）则返回 "1"，否则返回 "0" 。这个函数不会调用失败。

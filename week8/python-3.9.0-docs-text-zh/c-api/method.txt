@@ -1,0 +1,75 @@
+实例方法对象
+************
+
+实例方法是 "PyCFunction" 的包装器，也是将 "PyCFunction" 绑定到类对象的
+一种新方式。 它替代了原先的调用 "PyMethod_New(func, NULL, class)"。
+
+PyTypeObject PyInstanceMethod_Type
+
+   这个 "PyTypeObject" 实例代表 Python 实例方法类型。 它并不对 Python
+   程序公开。
+
+int PyInstanceMethod_Check(PyObject *o)
+
+   如果 *o* 是实例方法对象 (类型为 "PyInstanceMethod_Type") 则返回真值
+   。 形参必须不为 "NULL"。
+
+PyObject* PyInstanceMethod_New(PyObject *func)
+    *Return value: New reference.*
+
+   返回一个新的实例方法对象，*func* 应为任意可调用对象，*func* 将在实
+   例方法被调用时作为函数被调用。
+
+PyObject* PyInstanceMethod_Function(PyObject *im)
+    *Return value: Borrowed reference.*
+
+   返回关联到实例方法 *im* 的函数对象。
+
+PyObject* PyInstanceMethod_GET_FUNCTION(PyObject *im)
+    *Return value: Borrowed reference.*
+
+   宏版本的 "PyInstanceMethod_Function()"，略去了错误检测。
+
+
+方法对象
+********
+
+方法是绑定的函数对象。 方法总是会被绑定到一个用户自定义类的实例。 未绑
+定方法（绑定到一个类的方法）已不再可用。
+
+PyTypeObject PyMethod_Type
+
+   这个 "PyTypeObject" 实例代表 Python 方法类型。 它作为
+   "types.MethodType" 向 Python 程序公开。
+
+int PyMethod_Check(PyObject *o)
+
+   如果 *o* 是方法对象 (类型为 "PyMethod_Type") 则返回真值。 形参必须
+   不为 "NULL"。
+
+PyObject* PyMethod_New(PyObject *func, PyObject *self)
+    *Return value: New reference.*
+
+   返回一个新的方法对象，*func* 应为任意可调用对象，*self* 为该方法应
+   绑定的实例。 在方法被调用时 *func* 将作为函数被调用。 *self* 必须不
+   为 "NULL"。
+
+PyObject* PyMethod_Function(PyObject *meth)
+    *Return value: Borrowed reference.*
+
+   返回关联到方法 *meth* 的函数对象。
+
+PyObject* PyMethod_GET_FUNCTION(PyObject *meth)
+    *Return value: Borrowed reference.*
+
+   宏版本的 "PyMethod_Function()"，略去了错误检测。
+
+PyObject* PyMethod_Self(PyObject *meth)
+    *Return value: Borrowed reference.*
+
+   返回关联到方法 *meth* 的实例。
+
+PyObject* PyMethod_GET_SELF(PyObject *meth)
+    *Return value: Borrowed reference.*
+
+   宏版本的 "PyMethod_Self()"，略去了错误检测。

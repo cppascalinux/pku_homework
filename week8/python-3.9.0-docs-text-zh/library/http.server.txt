@@ -1,0 +1,465 @@
+"http.server" --- HTTP 服务器
+*****************************
+
+**源代码：** Lib/http/server.py
+
+======================================================================
+
+这个模块定义了实现 HTTP 服务器（ Web 服务器）的类。
+
+警告:
+
+  不推荐在生产环境中使用 "http.server" 。它只实现了基本的安全检查功能
+  。
+
+"HTTPServer" 是 "socketserver.TCPServer" 的一个子类。它会创建和侦听
+HTTP 套接字，并将请求调度给处理程序。用于创建和运行服务器的代码看起来
+像这样：
+
+   def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
+       server_address = ('', 8000)
+       httpd = server_class(server_address, handler_class)
+       httpd.serve_forever()
+
+class http.server.HTTPServer(server_address, RequestHandlerClass)
+
+   该类基于 "TCPServer" 类，并会将服务器地址存入名为 "server_name" 和
+   "server_port" 的实例变量中。服务器可被处理程序通过 "server" 实例变
+   量访问。
+
+class http.server.ThreadingHTTPServer(server_address, RequestHandlerClass)
+
+   这个类与 HTTPServer 相似，但会通过使用 "ThreadingMixIn" 来以线程处
+   理请求。 这适用于处理 Web 浏览器预开启套接字，以便 "HTTPServer" 无
+   限期地执行等待。
+
+   3.7 新版功能.
+
+"HTTPServer" 和 "ThreadingHTTPServer" 必须在实例化时给定一个
+*RequestHandlerClass*，此模块提供了该对象的三种不同形式:
+
+class http.server.BaseHTTPRequestHandler(request, client_address, server)
+
+   这个类用于处理到达服务器的 HTTP 请求。 它本身无法响应任何实际的
+   HTTP 请求；它必须被子类化以处理每个请求方法（例如 GET 或 POST）。
+   "BaseHTTPRequestHandler" 提供了许多供子类使用的类和实例变量以及方法
+   。
+
+   这个处理程序将解析请求和标头，然后调用特定请求类型对应的方法。 方法
+   名称将根据请求来构造。 例如，对于请求方法 "SPAM"，将不带参数地调用
+   "do_SPAM()" 方法。 所有相关信息会被保存在该处理程序的实际变量中。
+   子类不需要重载或扩展 "__init__()" 方法。
+
+   "BaseHTTPRequestHandler" 具有下列实例变量:
+
+   client_address
+
+      包含 "(host, port)" 形式的指向客户端地址的元组。
+
+   server
+
+      包含服务器实例。
+
+   close_connection
+
+      应当在 "handle_one_request()" 返回之前设定的布尔值，指明是否要期
+      待另一个请求，还是应当关闭连接。
+
+   requestline
+
+      包含 HTTP 请求行的字符串表示。 末尾的 CRLF 会被去除。 该属性应当
+      由 "handle_one_request()" 来设定。 如果无有效请求行被处理，则它
+      应当被设为空字符串。
+
+   command
+
+      包含具体的命令（请求类型）。 例如 "'GET'"。
+
+   path
+
+      包含请求路径。
+
+   request_version
+
+      包含请求的版本字符串。 例如 "'HTTP/1.0'"。
+
+   headers
+
+      Holds an instance of the class specified by the "MessageClass"
+      class variable. This instance parses and manages the headers in
+      the HTTP request. The "parse_headers()" function from
+      "http.client" is used to parse the headers and it requires that
+      the HTTP request provide a valid **RFC 2822** style header.
+
+   rfile
+
+      An "io.BufferedIOBase" input stream, ready to read from the
+      start of the optional input data.
+
+   wfile
+
+      Contains the output stream for writing a response back to the
+      client. Proper adherence to the HTTP protocol must be used when
+      writing to this stream in order to achieve successful
+      interoperation with HTTP clients.
+
+      在 3.6 版更改: This is an "io.BufferedIOBase" stream.
+
+   "BaseHTTPRequestHandler" has the following attributes:
+
+   server_version
+
+      Specifies the server software version.  You may want to override
+      this. The format is multiple whitespace-separated strings, where
+      each string is of the form name[/version]. For example,
+      "'BaseHTTP/0.2'".
+
+   sys_version
+
+      Contains the Python system version, in a form usable by the
+      "version_string" method and the "server_version" class variable.
+      For example, "'Python/1.4'".
+
+   error_message_format
+
+      Specifies a format string that should be used by "send_error()"
+      method for building an error response to the client. The string
+      is filled by default with variables from "responses" based on
+      the status code that passed to "send_error()".
+
+   error_content_type
+
+      Specifies the Content-Type HTTP header of error responses sent
+      to the client.  The default value is "'text/html'".
+
+   protocol_version
+
+      This specifies the HTTP protocol version used in responses.  If
+      set to "'HTTP/1.1'", the server will permit HTTP persistent
+      connections; however, your server *must* then include an
+      accurate "Content-Length" header (using "send_header()") in all
+      of its responses to clients. For backwards compatibility, the
+      setting defaults to "'HTTP/1.0'".
+
+   MessageClass
+
+      Specifies an "email.message.Message"-like class to parse HTTP
+      headers.  Typically, this is not overridden, and it defaults to
+      "http.client.HTTPMessage".
+
+   responses
+
+      This attribute contains a mapping of error code integers to two-
+      element tuples containing a short and long message. For example,
+      "{code: (shortmessage, longmessage)}". The *shortmessage* is
+      usually used as the *message* key in an error response, and
+      *longmessage* as the *explain* key.  It is used by
+      "send_response_only()" and "send_error()" methods.
+
+   A "BaseHTTPRequestHandler" instance has the following methods:
+
+   handle()
+
+      Calls "handle_one_request()" once (or, if persistent connections
+      are enabled, multiple times) to handle incoming HTTP requests.
+      You should never need to override it; instead, implement
+      appropriate "do_*()" methods.
+
+   handle_one_request()
+
+      This method will parse and dispatch the request to the
+      appropriate "do_*()" method.  You should never need to override
+      it.
+
+   handle_expect_100()
+
+      When a HTTP/1.1 compliant server receives an "Expect:
+      100-continue" request header it responds back with a "100
+      Continue" followed by "200 OK" headers. This method can be
+      overridden to raise an error if the server does not want the
+      client to continue.  For e.g. server can chose to send "417
+      Expectation Failed" as a response header and "return False".
+
+      3.2 新版功能.
+
+   send_error(code, message=None, explain=None)
+
+      Sends and logs a complete error reply to the client. The numeric
+      *code* specifies the HTTP error code, with *message* as an
+      optional, short, human readable description of the error.  The
+      *explain* argument can be used to provide more detailed
+      information about the error; it will be formatted using the
+      "error_message_format" attribute and emitted, after a complete
+      set of headers, as the response body.  The "responses" attribute
+      holds the default values for *message* and *explain* that will
+      be used if no value is provided; for unknown codes the default
+      value for both is the string "???". The body will be empty if
+      the method is HEAD or the response code is one of the following:
+      "1xx", "204 No Content", "205 Reset Content", "304 Not
+      Modified".
+
+      在 3.4 版更改: The error response includes a Content-Length
+      header. Added the *explain* argument.
+
+   send_response(code, message=None)
+
+      Adds a response header to the headers buffer and logs the
+      accepted request. The HTTP response line is written to the
+      internal buffer, followed by *Server* and *Date* headers. The
+      values for these two headers are picked up from the
+      "version_string()" and "date_time_string()" methods,
+      respectively. If the server does not intend to send any other
+      headers using the "send_header()" method, then "send_response()"
+      should be followed by an "end_headers()" call.
+
+      在 3.3 版更改: Headers are stored to an internal buffer and
+      "end_headers()" needs to be called explicitly.
+
+   send_header(keyword, value)
+
+      Adds the HTTP header to an internal buffer which will be written
+      to the output stream when either "end_headers()" or
+      "flush_headers()" is invoked. *keyword* should specify the
+      header keyword, with *value* specifying its value. Note that,
+      after the send_header calls are done, "end_headers()" MUST BE
+      called in order to complete the operation.
+
+      在 3.2 版更改: Headers are stored in an internal buffer.
+
+   send_response_only(code, message=None)
+
+      Sends the response header only, used for the purposes when "100
+      Continue" response is sent by the server to the client. The
+      headers not buffered and sent directly the output stream.If the
+      *message* is not specified, the HTTP message corresponding the
+      response *code*  is sent.
+
+      3.2 新版功能.
+
+   end_headers()
+
+      Adds a blank line (indicating the end of the HTTP headers in the
+      response) to the headers buffer and calls "flush_headers()".
+
+      在 3.2 版更改: The buffered headers are written to the output
+      stream.
+
+   flush_headers()
+
+      Finally send the headers to the output stream and flush the
+      internal headers buffer.
+
+      3.3 新版功能.
+
+   log_request(code='-', size='-')
+
+      Logs an accepted (successful) request. *code* should specify the
+      numeric HTTP code associated with the response. If a size of the
+      response is available, then it should be passed as the *size*
+      parameter.
+
+   log_error(...)
+
+      Logs an error when a request cannot be fulfilled. By default, it
+      passes the message to "log_message()", so it takes the same
+      arguments (*format* and additional values).
+
+   log_message(format, ...)
+
+      Logs an arbitrary message to "sys.stderr". This is typically
+      overridden to create custom error logging mechanisms. The
+      *format* argument is a standard printf-style format string,
+      where the additional arguments to "log_message()" are applied as
+      inputs to the formatting. The client ip address and current date
+      and time are prefixed to every message logged.
+
+   version_string()
+
+      Returns the server software's version string. This is a
+      combination of the "server_version" and "sys_version"
+      attributes.
+
+   date_time_string(timestamp=None)
+
+      Returns the date and time given by *timestamp* (which must be
+      "None" or in the format returned by "time.time()"), formatted
+      for a message header. If *timestamp* is omitted, it uses the
+      current date and time.
+
+      The result looks like "'Sun, 06 Nov 1994 08:49:37 GMT'".
+
+   log_date_time_string()
+
+      Returns the current date and time, formatted for logging.
+
+   address_string()
+
+      Returns the client address.
+
+      在 3.3 版更改: Previously, a name lookup was performed. To avoid
+      name resolution delays, it now always returns the IP address.
+
+class http.server.SimpleHTTPRequestHandler(request, client_address, server, directory=None)
+
+   This class serves files from the current directory and below,
+   directly mapping the directory structure to HTTP requests.
+
+   A lot of the work, such as parsing the request, is done by the base
+   class "BaseHTTPRequestHandler".  This class implements the
+   "do_GET()" and "do_HEAD()" functions.
+
+   The following are defined as class-level attributes of
+   "SimpleHTTPRequestHandler":
+
+   server_version
+
+      This will be ""SimpleHTTP/" + __version__", where "__version__"
+      is defined at the module level.
+
+   extensions_map
+
+      A dictionary mapping suffixes into MIME types, contains custom
+      overrides for the default system mappings. The mapping is used
+      case-insensitively, and so should contain only lower-cased keys.
+
+      在 3.9 版更改: This dictionary is no longer filled with the
+      default system mappings, but only contains overrides.
+
+   directory
+
+      If not specified, the directory to serve is the current working
+      directory.
+
+      在 3.9 版更改: 接受一个 *path-like object*。
+
+   The "SimpleHTTPRequestHandler" class defines the following methods:
+
+   do_HEAD()
+
+      This method serves the "'HEAD'" request type: it sends the
+      headers it would send for the equivalent "GET" request. See the
+      "do_GET()" method for a more complete explanation of the
+      possible headers.
+
+   do_GET()
+
+      The request is mapped to a local file by interpreting the
+      request as a path relative to the current working directory.
+
+      If the request was mapped to a directory, the directory is
+      checked for a file named "index.html" or "index.htm" (in that
+      order). If found, the file's contents are returned; otherwise a
+      directory listing is generated by calling the "list_directory()"
+      method. This method uses "os.listdir()" to scan the directory,
+      and returns a "404" error response if the "listdir()" fails.
+
+      If the request was mapped to a file, it is opened. Any "OSError"
+      exception in opening the requested file is mapped to a "404",
+      "'File not found'" error. If there was a "'If-Modified-Since'"
+      header in the request, and the file was not modified after this
+      time, a "304", "'Not Modified'" response is sent. Otherwise, the
+      content type is guessed by calling the "guess_type()" method,
+      which in turn uses the *extensions_map* variable, and the file
+      contents are returned.
+
+      A "'Content-type:'" header with the guessed content type is
+      output, followed by a "'Content-Length:'" header with the file's
+      size and a "'Last-Modified:'" header with the file's
+      modification time.
+
+      Then follows a blank line signifying the end of the headers, and
+      then the contents of the file are output. If the file's MIME
+      type starts with "text/" the file is opened in text mode;
+      otherwise binary mode is used.
+
+      For example usage, see the implementation of the "test()"
+      function invocation in the "http.server" module.
+
+      在 3.7 版更改: Support of the "'If-Modified-Since'" header.
+
+The "SimpleHTTPRequestHandler" class can be used in the following
+manner in order to create a very basic webserver serving files
+relative to the current directory:
+
+   import http.server
+   import socketserver
+
+   PORT = 8000
+
+   Handler = http.server.SimpleHTTPRequestHandler
+
+   with socketserver.TCPServer(("", PORT), Handler) as httpd:
+       print("serving at port", PORT)
+       httpd.serve_forever()
+
+"http.server" can also be invoked directly using the "-m" switch of
+the interpreter with a "port number" argument.  Similar to the
+previous example, this serves files relative to the current directory:
+
+   python -m http.server 8000
+
+By default, server binds itself to all interfaces.  The option
+"-b/--bind" specifies a specific address to which it should bind. Both
+IPv4 and IPv6 addresses are supported. For example, the following
+command causes the server to bind to localhost only:
+
+   python -m http.server 8000 --bind 127.0.0.1
+
+3.4 新版功能: "--bind" argument was introduced.
+
+3.8 新版功能: "--bind" argument enhanced to support IPv6
+
+By default, server uses the current directory. The option
+"-d/--directory" specifies a directory to which it should serve the
+files. For example, the following command uses a specific directory:
+
+   python -m http.server --directory /tmp/
+
+3.7 新版功能: "--directory" specify alternate directory
+
+class http.server.CGIHTTPRequestHandler(request, client_address, server)
+
+   This class is used to serve either files or output of CGI scripts
+   from the current directory and below. Note that mapping HTTP
+   hierarchic structure to local directory structure is exactly as in
+   "SimpleHTTPRequestHandler".
+
+   注解:
+
+     CGI scripts run by the "CGIHTTPRequestHandler" class cannot
+     execute redirects (HTTP code 302), because code 200 (script
+     output follows) is sent prior to execution of the CGI script.
+     This pre-empts the status code.
+
+   The class will however, run the CGI script, instead of serving it
+   as a file, if it guesses it to be a CGI script.  Only directory-
+   based CGI are used --- the other common server configuration is to
+   treat special extensions as denoting CGI scripts.
+
+   The "do_GET()" and "do_HEAD()" functions are modified to run CGI
+   scripts and serve the output, instead of serving files, if the
+   request leads to somewhere below the "cgi_directories" path.
+
+   The "CGIHTTPRequestHandler" defines the following data member:
+
+   cgi_directories
+
+      This defaults to "['/cgi-bin', '/htbin']" and describes
+      directories to treat as containing CGI scripts.
+
+   The "CGIHTTPRequestHandler" defines the following method:
+
+   do_POST()
+
+      This method serves the "'POST'" request type, only allowed for
+      CGI scripts.  Error 501, "Can only POST to CGI scripts", is
+      output when trying to POST to a non-CGI url.
+
+   Note that CGI scripts will be run with UID of user nobody, for
+   security reasons.  Problems with the CGI script will be translated
+   to error 403.
+
+"CGIHTTPRequestHandler" can be enabled in the command line by passing
+the "--cgi" option:
+
+   python -m http.server --cgi 8000

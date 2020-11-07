@@ -1,0 +1,76 @@
+文件对象
+********
+
+这此 API 是对内置文件对象的 Python 2 C API 的最小仿真，它过去依赖于 C
+标准库的缓冲 I/O ("FILE*") 支持。 在 Python 3 中，文件和流使用新的
+"io" 模块，该模块在操作系统的低层级无缓冲  I/O 之上定义了几个层。 下面
+所描述的函数是针对这些新 API 的便捷 C 包装器，主要用于解释器的内部错误
+报告；建议第三方代码改为访问 "io" API。
+
+PyObject* PyFile_FromFd(int fd, const char *name, const char *mode, int buffering, const char *encoding, const char *errors, const char *newline, int closefd)
+    *Return value: New reference.*
+
+   根据已打开文件 *fd* 的文件描述符创建一个 Python 文件对象。 参数
+   *name*, *encoding*, *errors* 和 *newline* 可以为 "NULL" 表示使用默
+   认值；*buffering* 可以为 *-1* 表示使用默认值。 *name* 会被忽略仅保
+   留用于向下兼容。 失败时返回 "NULL"。 有关参数的更全面描述，请参阅
+   "io.open()" 函数的文档。
+
+   警告:
+
+     由于Python流具有自己的缓冲层，因此将它们与 OS 级文件描述符混合会
+     产生各种问题（例如数据的意外排序）。
+
+   在 3.2 版更改: 忽略 *name* 属性。
+
+int PyObject_AsFileDescriptor(PyObject *p)
+
+   将与 *p* 关联的文件描述器返回为 "int" 。 如果对象是整数，则返回其值
+   。 如果没有，则调用对象的 "fileno()" 方法（如果存在）; 该方法必须返
+   回一个整数，该整数作为文件描述器值返回。 设置异常并在失败时返回
+   "-1"。
+
+PyObject* PyFile_GetLine(PyObject *p, int n)
+    *Return value: New reference.*
+
+   等价于 "p.readline([n])" ，这个函数从对象 *p* 中读取一行。 *p* 可以
+   是文件对象或具有 "readline()" 方法的任何对象。 如果 *n* 是 "0" ，则
+   无论该行的长度如何，都会读取一行。 如果 *n* 大于``0``，则从文件中读
+   取不超过 *n* 个字节；可以返回行的一部分。 在这两种情况下，如果立即
+   到达文件末尾，则返回空字符串。 但是，如果 *n* 小于 "0" ，则无论长度
+   如何都会读取一行，但是如果立即到达文件末尾，则引发 "EOFError"。
+
+int PyFile_SetOpenCodeHook(Py_OpenCodeHookFunction handler)
+
+   重载 "io.open_code()" 的正常行为，将其形参通过所提供的处理程序来传
+   递。
+
+   处理程序是一个类型为 "PyObject *(*)(PyObject *path, void
+   *userData)" 的函数，其中 *path* 确保为 "PyUnicodeObject"。
+
+   *userData* 指针会被传入钩子函数。 因于钩子函数可能由不同的运行时调
+   用，该指针不应直接指向 Python 状态。
+
+   鉴于这个钩子专门在导入期间使用的，请避免在新模块执行期间进行导入操
+   作，除非已知它们为冻结状态或者是在 "sys.modules" 中可用。
+
+   一旦钩子被设定，它就不能被移除或替换，之后对
+   "PyFile_SetOpenCodeHook()" 的调用也将失败，如果解释器已经被初始化，
+   函数将返回 -1 并设置一个异常。
+
+   此函数可以安全地在 "Py_Initialize()" 之前调用。
+
+   引发一个 审计事件 "setopencodehook"，不附带任何参数。
+
+   3.8 新版功能.
+
+int PyFile_WriteObject(PyObject *obj, PyObject *p, int flags)
+
+   将对象 *obj* 写入文件对象 *p* 。 *flags* 唯一支持的标志是
+   "Py_PRINT_RAW"；如果给定，则写入对象的 "str()" 而不是 "repr()"。成
+   功时返回 "0"，失败时返回 "-1"。 将设置适当的例外。
+
+int PyFile_WriteString(const char *s, PyObject *p)
+
+   将字符串 *s* 写入文件对象 *p*。 成功返回 "0" 失败返回 "-1"；将设定
+   相应的异常。

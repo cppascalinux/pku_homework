@@ -1,0 +1,722 @@
+"tarfile" --- 读写tar归档文件
+*****************************
+
+**源代码:** Lib/tarfile.py
+
+======================================================================
+
+"tarfile" 模块可以用来读写 tar 归档，包括使用 gzip, bz2 和 lzma 压缩的
+归档。 请使用 "zipfile" 模块来读写 ".zip" 文件，或者使用 shutil 的高层
+级函数。
+
+一些事实和数字:
+
+* 读写 "gzip", "bz2" 和 "lzma" 解压的归档要求相应的模块可用。
+
+* 支持读取 / 写入 POSIX.1-1988 (ustar) 格式。
+
+* 对 GNU tar 格式的读/写支持，包括 *longname* 和 *longlink* 扩展，对所
+  有种类 *sparse* 扩展的只读支持，包括 sparse 文件的恢复。
+
+* 对 POSIX.1-2001 (pax) 格式的读/写支持。
+
+* 处理目录、正常文件、硬链接、符号链接、fifo 管道、字符设备和块设备，
+  并且能够获取和恢复文件信息例如时间戳、访问权限和所有者等。
+
+在 3.3 版更改: 添加了对 "lzma" 压缩的支持。
+
+tarfile.open(name=None, mode='r', fileobj=None, bufsize=10240, **kwargs)
+
+   针对路径名 *name* 返回 "TarFile" 对象。 有关 "TarFile" 对象以及所允
+   许的关键字参数的详细信息请参阅 TarFile 对象。
+
+   *mode* 必须是 "'filemode[:compression]'" 形式的字符串，其默认值为
+   "'r'"。 以下是模式组合的完整列表:
+
+   +--------------------+-----------------------------------------------+
+   | 模式               | 动作                                          |
+   |====================|===============================================|
+   | "'r' or 'r:*'"     | 打开和读取使用透明压缩（推荐）。              |
+   +--------------------+-----------------------------------------------+
+   | "'r:'"             | 打开和读取不使用压缩。                        |
+   +--------------------+-----------------------------------------------+
+   | "'r:gz'"           | 打开和读取使用gzip 压缩。                     |
+   +--------------------+-----------------------------------------------+
+   | "'r:bz2'"          | 打开和读取使用bzip2 压缩。                    |
+   +--------------------+-----------------------------------------------+
+   | "'r:xz'"           | 打开和读取使用lzma 压缩。                     |
+   +--------------------+-----------------------------------------------+
+   | "'x'" 或 "'x:'"    | 创建tarfile不进行压缩。如果文件已经存在，则抛 |
+   |                    | 出 "FileExistsError" 异常。                   |
+   +--------------------+-----------------------------------------------+
+   | "'x:gz'"           | 使用gzip压缩创建tarfile。如果文件已经存在，则 |
+   |                    | 抛出 "FileExistsError" 异常。                 |
+   +--------------------+-----------------------------------------------+
+   | "'x:bz2'"          | 使用bzip2 压缩创建tarfile。如果文件已经存在， |
+   |                    | 则抛出 "FileExistsError" 异常。               |
+   +--------------------+-----------------------------------------------+
+   | "'x:xz'"           | 使用lzma 压缩创建tarfile。如果文件已经存在，  |
+   |                    | 则抛出 "FileExistsError" 异常。               |
+   +--------------------+-----------------------------------------------+
+   | "'a' or 'a:'"      | 打开以便在没有压缩的情况下追加。如果文件不存  |
+   |                    | 在，则创建该文件。                            |
+   +--------------------+-----------------------------------------------+
+   | "'w' or 'w:'"      | 打开用于未压缩的写入。                        |
+   +--------------------+-----------------------------------------------+
+   | "'w:gz'"           | 打开用于 gzip 压缩的写入。                    |
+   +--------------------+-----------------------------------------------+
+   | "'w:bz2'"          | 打开用于 bzip2 压缩的写入。                   |
+   +--------------------+-----------------------------------------------+
+   | "'w:xz'"           | 打开用于 lzma 压缩的写入。                    |
+   +--------------------+-----------------------------------------------+
+
+   请注意 "'a:gz'", "'a:bz2'" 或 "'a:xz'" 是不可能的组合。 如果 *mode*
+   不适用于打开特定（压缩的）文件用于读取，则会引发 "ReadError"。 请使
+   用 *mode* "'r'" 来避免这种情况。 如果某种压缩方法不受支持，则会引发
+   "CompressionError"。
+
+   如果指定了 *fileobj*，它会被用作对应于 *name* 的以二进制模式打开的
+   *file object* 的替代。 它会被设定为处在位置 0。
+
+   对于 "'w:gz'", "'r:gz'", "'w:bz2'", "'r:bz2'", "'x:gz'", "'x:bz2'"
+   等模式，"tarfile.open()" 接受关键字参数 *compresslevel* (默认值为
+   "9") 来指定文件的压缩等级。
+
+   针对特殊的目的，还存在第二种 *mode* 格式:
+   "'filemode|[compression]'"。 "tarfile.open()" 将返回一个将其数据作
+   为数据块流来处理的 "TarFile" 对象。 对此文件将不能执行随机查找。 如
+   果给定了 *fileobj*，它可以是任何具有 "read()" 或 "write()" 方法 (由
+   *mode* 确定) 的对象。 *bufsize* 指定块大小，默认值为 "20 * 512" 字
+   节。 可与此格式组合使用的有 "sys.stdin", 套接字 *file object* 或磁
+   带设备等。 但是，对于这样的 "TarFile" 对象存在不允许随机访问的限制
+   ，参见 示例。 目前可用的模式如下:
+
+   +---------------+----------------------------------------------+
+   | 模式          | 动作                                         |
+   |===============|==============================================|
+   | "'r|*'"       | 打开 tar 块的 *流* 以进行透明压缩读取。      |
+   +---------------+----------------------------------------------+
+   | "'r|'"        | 打开一个未压缩的 tar 块的 *stream* 用于读取  |
+   |               | 。                                           |
+   +---------------+----------------------------------------------+
+   | "'r|gz'"      | 打开一个 gzip 压缩的 *stream* 用于读取。     |
+   +---------------+----------------------------------------------+
+   | "'r|bz2'"     | 打开一个 bzip2 压缩的 *stream* 用于读取。    |
+   +---------------+----------------------------------------------+
+   | "'r|xz'"      | 打开一个 lzma 压缩 *stream* 用于读取。       |
+   +---------------+----------------------------------------------+
+   | "'w|'"        | 打开一个未压缩的 *stream* 用于写入。         |
+   +---------------+----------------------------------------------+
+   | "'w|gz'"      | 打开一个 gzip 压缩的 *stream* 用于写入。     |
+   +---------------+----------------------------------------------+
+   | "'w|bz2'"     | 打开一个 bzip2 压缩的 *stream* 用于写入。    |
+   +---------------+----------------------------------------------+
+   | "'w|xz'"      | 打开一个 lzma 压缩的 *stream* 用于写入。     |
+   +---------------+----------------------------------------------+
+
+   在 3.5 版更改: 添加了 "'x'" (仅创建) 模式。
+
+   在 3.6 版更改: *name* 形参接受一个 *path-like object*。
+
+class tarfile.TarFile
+
+   用于读取和写入 tar 归档的类。 请不要直接使用这个类：而要使用
+   "tarfile.open()"。 参见 TarFile 对象。
+
+tarfile.is_tarfile(name)
+
+   如果 *name* 是一个 "tarfile" 能读取的 tar 归档文件则返回 "True"。
+   *name* 可以为 "str"，文件或文件类对象。
+
+   在 3.9 版更改: 支持文件或类文件对象。
+
+"tarfile" 模块定义了以下异常:
+
+exception tarfile.TarError
+
+   所有 "tarfile" 异常的基类。
+
+exception tarfile.ReadError
+
+   当一个不能被 "tarfile" 模块处理或者因某种原因而无效的 tar 归档被打
+   开时将被引发。
+
+exception tarfile.CompressionError
+
+   当一个压缩方法不受支持或者当数据无法被正确解码时将被引发。
+
+exception tarfile.StreamError
+
+   当达到流式 "TarFile" 对象的典型限制时将被引发。
+
+exception tarfile.ExtractError
+
+   当使用 "TarFile.extract()" 时针对 *non-fatal* 所引发的异常，但是仅
+   限 "TarFile.errorlevel""== 2"。
+
+exception tarfile.HeaderError
+
+   如果获取的缓冲区无效则会由 "TarInfo.frombuf()" 引发的异常。
+
+以下常量在模块层级上可用:
+
+tarfile.ENCODING
+
+   默认的字符编码格式：在 Windows 上为 "'utf-8'"，其他系统上则为
+   "sys.getfilesystemencoding()" 所返回的值。
+
+以下常量各自定义了一个 "tarfile" 模块能够创建的 tar 归档格式。 相关细
+节请参阅 受支持的 tar 格式 小节。
+
+tarfile.USTAR_FORMAT
+
+   POSIX.1-1988 (ustar) 格式。
+
+tarfile.GNU_FORMAT
+
+   GNU tar 格式。
+
+tarfile.PAX_FORMAT
+
+   POSIX.1-2001 (pax) 格式。
+
+tarfile.DEFAULT_FORMAT
+
+   用于创建归档的默认格式。 目前为 "PAX_FORMAT"。
+
+   在 3.8 版更改: 新归档的默认格式已更改为 "PAX_FORMAT" 而不再是
+   "GNU_FORMAT"。
+
+参见:
+
+  模块 "zipfile"
+     "zipfile" 标准模块的文档。
+
+  归档操作
+     标准 "shutil" 模块所提供的高层级归档工具的文档。
+
+  GNU tar manual, Basic Tar Format
+     针对 tar 归档文件的文档，包含 GNU tar 扩展。
+
+
+TarFile 对象
+============
+
+"TarFile" 对象提供了一个 tar 归档的接口。 一个 tar 归档就是数据块的序
+列。 一个归档成员（被保存文件）是由一个标头块加多个数据块组成的。 一个
+文件可以在一个 tar 归档中多次被保存。 每个归档成员都由一个 "TarInfo"
+对象来代表，详情参见 TarInfo 对象。
+
+"TarFile" 对象可在 "with" 语句中作为上下文管理器使用。 当语句块结束时
+它将自动被关闭。 请注意在发生异常事件时被打开用于写入的归档将不会被终
+结；只有内部使用的文件对象将被关闭。 相关用例请参见 示例。
+
+3.2 新版功能: 添加了对上下文管理器协议的支持。
+
+class tarfile.TarFile(name=None, mode='r', fileobj=None, format=DEFAULT_FORMAT, tarinfo=TarInfo, dereference=False, ignore_zeros=False, encoding=ENCODING, errors='surrogateescape', pax_headers=None, debug=0, errorlevel=0)
+
+   下列所有参数都是可选项并且也可作为实例属性来访问。
+
+   *name* 是归档的路径名称。 *name* 可以是一个 *path-like object*。 如
+   果给定了 *fileobj* 则它可以被省略。 在此情况下，如果对象的 "name"
+   属性存在则它会被使用。
+
+   *mode* 可以为 "'r'" 表示从现有归档读取，"'a'" 表示将数据追加到现有
+   文件，"'w'" 表示创建新文件覆盖现有文件，或者 "'x'" 表示仅在文件不存
+   在时创建新文件。
+
+   如果给定了 *fileobj*，它会被用于读取或写入数据。 如果可以被确定，则
+   *mode* 会被 *fileobj* 的模式所覆盖。 *fileobj* 的使用将从位置 0 开
+   始。
+
+   注解:
+
+     当 "TarFile" 被关闭时，*fileobj* 不会被关闭。
+
+   *format* 控制用于写入的归档格式。 它必须为在模块层级定义的常量
+   "USTAR_FORMAT", "GNU_FORMAT" 或 "PAX_FORMAT" 中的一个。 当读取时，
+   格式将被自动检测，即使单个归档中存在不同的格式。
+
+   *tarinfo* 参数可以被用来将默认的 "TarInfo" 类替换为另一个。
+
+   如果 *dereference* 为 "False"，则会将符号链接和硬链接添加到归档中。
+   如果为 "True"，则会将目标文件的内容添加到归档中。 在不支持符号链接
+   的系统上参数将不起作用。
+
+   如果 *ignore_zeros* 为 "False"，则会将空的数据块当作归档的末尾来处
+   理。 如果为 "True"，则会跳过空的（和无效的）数据块并尝试获取尽可能
+   多的成员。 此参数仅适用于读取拼接的或损坏的归档。
+
+   *debug* 可设为从 "0" (无调试消息) 到 "3" (全部调试消息)。 消息会被
+   写入到 "sys.stderr"。
+
+   如果 *errorlevel* 为 "0"，则当使用 "TarFile.extract()" 时会忽略所有
+   错误。 无论何种情况，当启用调试时它们都将被显示为调试输出的错误消息
+   。 如果为 "1"，则所有 *fatal* 错误会被作为 "OSError" 异常被引发。
+   如果为 "2"，则所有 *non-fatal* 错误也会被作为 "TarError" 异常被引发
+   。
+
+   *encoding* 和 *errors* 参数定义了读取或写入归档所使用的字符编码格式
+   以及要如何处理转换错误。 默认设置将适用于大多数用户。 要深入了解详
+   情可参阅 Unicode 问题 小节。
+
+   可选的 *pax_headers* 参数是字符串的字典，如果 *format* 为
+   "PAX_FORMAT" 它将被作为 pax 全局标头被添加。
+
+   在 3.2 版更改: 使用 "'surrogateescape'" 作为 *errors* 参数的默认值
+   。
+
+   在 3.5 版更改: 添加了 "'x'" (仅创建) 模式。
+
+   在 3.6 版更改: *name* 形参接受一个 *path-like object*。
+
+classmethod TarFile.open(...)
+
+   作为替代的构造器。 "tarfile.open()" 函数实际上是这个类方法的快捷方
+   式。
+
+TarFile.getmember(name)
+
+   返回成员 *name* 的 "TarInfo" 对象。 如果 *name* 在归档中找不到，则
+   会引发 "KeyError"。
+
+   注解:
+
+     如果一个成员在归档中出现超过一次，它的最后一次出现会被视为是最新
+     的版本。
+
+TarFile.getmembers()
+
+   以 "TarInfo" 对象列表的形式返回归档的成员。 列表的顺序与归档中成员
+   的顺序一致。
+
+TarFile.getnames()
+
+   以名称列表的形式返回成员。 它的顺序与 "getmembers()" 所返回列表的顺
+   序一致。
+
+TarFile.list(verbose=True, *, members=None)
+
+   将内容清单打印到 "sys.stdout"。 如果 *verbose* 为 "False"，则将只打
+   印成员名称。 如果为 "True"，则输出将类似于 **ls -l** 的输出效果。
+   如果给定了可选的 *members*，它必须为 "getmembers()" 所返回的列表的
+   一个子集。
+
+   在 3.5 版更改: 添加了 *members* 形参。
+
+TarFile.next()
+
+   当 "TarFile" 被打开用于读取时，以 "TarInfo" 对象的形式返回归档的下
+   一个成员。 如果不再有可用对象则返回 "None"。
+
+TarFile.extractall(path=".", members=None, *, numeric_owner=False)
+
+   将归档中的所有成员提取到当前工作目录或 *path* 目录。 如果给定了可选
+   的 *members*，则它必须为 "getmembers()" 所返回的列表的一个子集。 字
+   典信息例如所有者、修改时间和权限会在所有成员提取完毕后被设置。 这样
+   做是为了避免两个问题：目录的修改时间会在每当在其中创建文件时被重置
+   。 并且如果目录的权限不允许写入，提取文件到目录的操作将失败。
+
+   如果 *numeric_owner* 为 "True"，则将使用来自 tarfile 的 uid 和 gid
+   数值来设置被提取文件的所有者/用户组。 在其他情况下，则会使用来自
+   tarfile 的名称值。
+
+   警告:
+
+     绝不要未经预先检验就从不可靠的源中提取归档文件。 这样有可能在
+     *path* 之外创建文件，例如某些成员具有以 ""/"" 开始的绝对路径文件
+     名或带有两个点号 "".."" 的文件名。
+
+   在 3.5 版更改: 添加了 *numeric_owner* 形参。
+
+   在 3.6 版更改: *path* 形参接受一个 *path-like object*。
+
+TarFile.extract(member, path="", set_attrs=True, *, numeric_owner=False)
+
+   从归档中提取出一个成员放入当前工作目录，将使用其完整名称。 成员的文
+   件信息会尽可能精确地被提取。 *member* 可以是一个文件名或 "TarInfo"
+   对象。 你可以使用 *path* 指定一个不同的目录。 *path* 可以是一个
+   *path-like object*。 将会设置文件属性 (owner, mtime, mode) 除非
+   *set_attrs* 为假值。
+
+   如果 *numeric_owner* 为 "True"，则将使用来自 tarfile 的 uid 和 gid
+   数值来设置被提取文件的所有者/用户组。 在其他情况下，则会使用来自
+   tarfile 的名称值。
+
+   注解:
+
+     "extract()" 方法不会处理某些提取问题。 在大多数情况下你应当考虑使
+     用 "extractall()" 方法。
+
+   警告:
+
+     查看 "extractall()" 的警告信息。
+
+   在 3.2 版更改: 添加了 *set_attrs* 形参。
+
+   在 3.5 版更改: 添加了 *numeric_owner* 形参。
+
+   在 3.6 版更改: *path* 形参接受一个 *path-like object*。
+
+TarFile.extractfile(member)
+
+   将归档中的一个成员提取为文件对象。 *member* 可以是一个文件名或
+   "TarInfo" 对象。 如果 *member* 是一个常规文件或链接，则会返回一个
+   "io.BufferedReader" 对象。 对于所有其他现有成员，则都将返回 "None"
+   。 如果 *member* 未在归档中出现，则会引发 "KeyError"。
+
+   在 3.3 版更改: 返回一个 "io.BufferedReader" 对象。
+
+TarFile.add(name, arcname=None, recursive=True, *, filter=None)
+
+   将文件 *name* 添加到归档。 *name* 可以为任意类型的文件（目录、fifo
+   、符号链接等等）。 如果给出 *arcname* 则它将为归档中的文件指定一个
+   替代名称。 默认情况下会递归地添加目录。 这可以通过将 *recursive* 设
+   为 "False" 来避免。 递归操作会按排序顺序添加条目。 如果给定了
+   *filter*，它应当为一个接受 "TarInfo" 对象并返回已修改 "TarInfo" 对
+   象的函数。 如果它返回 "None" 则 "TarInfo" 对象将从归档中被排除。 具
+   体示例参见 示例。
+
+   在 3.2 版更改: 添加了 *filter* 形参。
+
+   在 3.7 版更改: 递归操作按排序顺序添加条目。
+
+TarFile.addfile(tarinfo, fileobj=None)
+
+   将 "TarInfo" 对象 *tarinfo* 添加到归档。 如果给定了 *fileobj*，它应
+   当是一个 *binary file*，并会从中读取 "tarinfo.size" 个字节添加到归
+   档。 你可以直接创建 "TarInfo" 对象，或是使用 "gettarinfo()" 来创建
+   。
+
+TarFile.gettarinfo(name=None, arcname=None, fileobj=None)
+
+   基于 "os.stat()" 的结果或者现有文件的相同数据创建一个 "TarInfo"。
+   文件或者是命名为 *name*，或者是使用文件描述符指定为一个 *file
+   object* *fileobj*。 *name* 可以是一个 *path-like object*。 如果给定
+   了 *arcname*，则它将为归档中的文件指定一个替代名称，在其他情况下，
+   名称将从 *fileobj* 的 "name" 属性或 *name* 参数获取。 名称应当是一
+   个文本字符串。
+
+   你可以在使用 "addfile()" 添加 "TarInfo" 的某些属性之前修改它们。 如
+   果文件对象不是从文件开头进行定位的普通文件对象，"size" 之类的属性就
+   可能需要修改。 例如 "GzipFile" 之类的文件就属于这种情况。  "name"
+   也可以被修改，在这种情况下 *arcname* 可以是一个占位字符串。
+
+   在 3.6 版更改: *name* 形参接受一个 *path-like object*。
+
+TarFile.close()
+
+   关闭 "TarFile"。 在写入模式下，会向归档添加两个表示结束的零数据块。
+
+TarFile.pax_headers
+
+   一个包含 pax 全局标头的键值对的字典。
+
+
+TarInfo 对象
+============
+
+"TarInfo" 对象代表 "TarFile" 中的一个文件。 除了会存储所有必要的文件属
+性（例如文件类型、大小、时间、权限、所有者等），它还提供了一些确定文件
+类型的有用方法。 此对象 *并不* 包含文件数据本身。
+
+"TarInfo" 对象可通过 "TarFile" 的方法 "getmember()", "getmembers()" 和
+"gettarinfo()" 返回。
+
+class tarfile.TarInfo(name="")
+
+   创建一个 "TarInfo" 对象。
+
+classmethod TarInfo.frombuf(buf, encoding, errors)
+
+   基于字符串缓冲区 *buf* 创建并返回一个 "TarInfo" 对象。
+
+   如果缓冲区无效则会引发 "HeaderError"。
+
+classmethod TarInfo.fromtarfile(tarfile)
+
+   从 "TarFile" 对象 *tarfile* 读取下一个成员并将其作为 "TarInfo" 对象
+   返回。
+
+TarInfo.tobuf(format=DEFAULT_FORMAT, encoding=ENCODING, errors='surrogateescape')
+
+   基于 "TarInfo" 对象创建一个字符串缓冲区。 有关参数的信息请参见
+   "TarFile" 类的构造器。
+
+   在 3.2 版更改: 使用 "'surrogateescape'" 作为 *errors* 参数的默认值
+   。
+
+"TarInfo" 对象具有以下公有数据属性:
+
+TarInfo.name
+
+   归档成员的名称。
+
+TarInfo.size
+
+   以字节表示的大小。
+
+TarInfo.mtime
+
+   上次修改的时间。
+
+TarInfo.mode
+
+   权限位。
+
+TarInfo.type
+
+   文件类型。 *type* 通常为以下常量之一: "REGTYPE", "AREGTYPE",
+   "LNKTYPE", "SYMTYPE", "DIRTYPE", "FIFOTYPE", "CONTTYPE", "CHRTYPE",
+   "BLKTYPE", "GNUTYPE_SPARSE"。 要更方便地确定一个 "TarInfo" 对象的类
+   型，请使用下述的 "is*()" 方法。
+
+TarInfo.linkname
+
+   目标文件名的名称，该属性仅在类型为 "LNKTYPE" 和 "SYMTYPE" 的
+   "TarInfo" 对象中存在。
+
+TarInfo.uid
+
+   最初保存该成员的用户的用户 ID。
+
+TarInfo.gid
+
+   最初保存该成员的用户的分组 ID。
+
+TarInfo.uname
+
+   用户名。
+
+TarInfo.gname
+
+   分组名。
+
+TarInfo.pax_headers
+
+   一个包含所关联的 pax 扩展标头的键值对的字典。
+
+"TarInfo" 对象还提供了一些便捷查询方法:
+
+TarInfo.isfile()
+
+   如果 "Tarinfo" 对象为普通文件则返回 "True"。
+
+TarInfo.isreg()
+
+   与 "isfile()" 相同。
+
+TarInfo.isdir()
+
+   如果为目录则返回 "True"。
+
+TarInfo.issym()
+
+   如果为符号链接则返回 "True"。
+
+TarInfo.islnk()
+
+   如果为硬链接则返回 "True"。
+
+TarInfo.ischr()
+
+   如果为字符设备则返回 "True"。
+
+TarInfo.isblk()
+
+   如果为块设备则返回 "True"。
+
+TarInfo.isfifo()
+
+   如果为 FIFO 则返回 "True"。.
+
+TarInfo.isdev()
+
+   如果为字符设备、块设备或 FIFO 之一则返回 "True"。
+
+
+命令行界面
+==========
+
+3.4 新版功能.
+
+"tarfile" 模块提供了简单的命令行接口以便与 tar 归档进行交互。
+
+如果你想要创建一个新的 tar 归档，请在 "-c" 选项后指定其名称然后列出应
+当被包含的文件名:
+
+   $ python -m tarfile -c monty.tar  spam.txt eggs.txt
+
+传入一个字典也是可接受的:
+
+   $ python -m tarfile -c monty.tar life-of-brian_1979/
+
+如果你想要将一个 tar 归档提取到指定的目录，请使用 "-e" 选项:
+
+   $ python -m tarfile -e monty.tar
+
+你也可以通过传入目录名称将一个 tar 归档提取到不同的目录:
+
+   $ python -m tarfile -e monty.tar  other-dir/
+
+要获取一个 tar 归档中文件的列表，请使用 "-l" 选项:
+
+   $ python -m tarfile -l monty.tar
+
+
+命令行选项
+----------
+
+-l <tarfile>
+--list <tarfile>
+
+   列出一个 tarfile 中的文件名。
+
+-c <tarfile> <source1> ... <sourceN>
+--create <tarfile> <source1> ... <sourceN>
+
+   基于源文件创建 tarfile。
+
+-e <tarfile> [<output_dir>]
+--extract <tarfile> [<output_dir>]
+
+   如果未指定 *output_dir* 则会将 tarfile 提取到当前目录。
+
+-t <tarfile>
+--test <tarfile>
+
+   检测 tarfile 是否有效。
+
+-v, --verbose
+
+   更详细地输出结果。
+
+
+示例
+====
+
+如何将整个 tar 归档提取到当前工作目录:
+
+   import tarfile
+   tar = tarfile.open("sample.tar.gz")
+   tar.extractall()
+   tar.close()
+
+如何通过 "TarFile.extractall()" 使用生成器函数而非列表来提取一个 tar
+归档的子集:
+
+   import os
+   import tarfile
+
+   def py_files(members):
+       for tarinfo in members:
+           if os.path.splitext(tarinfo.name)[1] == ".py":
+               yield tarinfo
+
+   tar = tarfile.open("sample.tar.gz")
+   tar.extractall(members=py_files(tar))
+   tar.close()
+
+如何基于一个文件名列表创建未压缩的 tar 归档:
+
+   import tarfile
+   tar = tarfile.open("sample.tar", "w")
+   for name in ["foo", "bar", "quux"]:
+       tar.add(name)
+   tar.close()
+
+使用 "with" 语句的同一个示例:
+
+   import tarfile
+   with tarfile.open("sample.tar", "w") as tar:
+       for name in ["foo", "bar", "quux"]:
+           tar.add(name)
+
+如何读取一个 gzip 压缩的 tar 归档并显示一些成员信息:
+
+   import tarfile
+   tar = tarfile.open("sample.tar.gz", "r:gz")
+   for tarinfo in tar:
+       print(tarinfo.name, "is", tarinfo.size, "bytes in size and is ", end="")
+       if tarinfo.isreg():
+           print("a regular file.")
+       elif tarinfo.isdir():
+           print("a directory.")
+       else:
+           print("something else.")
+   tar.close()
+
+如何创建一个归档并使用 "TarFile.add()" 中的 *filter* 形参来重置用户信
+息:
+
+   import tarfile
+   def reset(tarinfo):
+       tarinfo.uid = tarinfo.gid = 0
+       tarinfo.uname = tarinfo.gname = "root"
+       return tarinfo
+   tar = tarfile.open("sample.tar.gz", "w:gz")
+   tar.add("foo", filter=reset)
+   tar.close()
+
+
+受支持的 tar 格式
+=================
+
+通过 "tarfile" 模块可以创建三种 tar 格式:
+
+* The POSIX.1-1988 ustar 格式 ("USTAR_FORMAT")。 它支持最多 256 个字符
+  的文件名长度和最多 100 个字符的链接名长度。 文件大小上限为 8 GiB。
+  这是一种老旧但广受支持的格式。
+
+* GNU tar 格式 ("GNU_FORMAT")。 它支持长文件名和链接名、大于 8 GiB 的
+  文件以及稀疏文件。 它是 GNU/Linux 系统上的事实标准。 "tarfile" 完全
+  支持针对长名称的 GNU tar 扩展，稀疏文件支持则限制为只读。
+
+* POSIX.1-2001 pax 格式 ("PAX_FORMAT")。 它是几乎无限制的最灵活格式。
+  它支持长文件名和链接名，大文件以及使用便捷方式存储路径名。 现代的
+  tar 实现，包括 GNU tar, bsdtar/libarchive 和 star，完全支持扩展
+  *pax* 特性；某些老旧或不维护的库可能不受支持，但应当会将 *pax* 归档
+  视为广受支持的 *ustar* 格式。 这是目前新建归档的默认格式。
+
+  它扩展了现有的 *ustar* 格式，包括用于无法以其他方式存储的附加标头。
+  存在两种形式的 pax 标头：扩展标头只影响后续的文件标头，全局标头则适
+  用于完整归档并会影响所有后续的文件。 为了便于移植，在 pax 标头中的所
+  有数据均以 *UTF-8* 编码。
+
+还有一些 tar 格式的其他变种，它们可以被读取但不能被创建:
+
+* 古老的 V7 格式。 这是来自 Unix 第七版的第一个 tar 格式，它只存储常规
+  文件和目录。 名称长度不能超过 100 个字符，并且没有用户/分组名信息。
+  某些归档在带有非 ASCII 字符字段的情况下会产生计算错误的标头校验和。
+
+* SunOS tar 扩展格式。 此格式是 POSIX.1-2001 pax 格式的一个变种，但并
+  不保持兼容。
+
+
+Unicode 问题
+============
+
+最初 tar 格式被设计用来在磁带机上生成备份，主要关注于保存文件系统信息
+。 现在 tar 归档通常用于文件分发和在网络上交换归档。 最初格式（它是所
+有其他格式的基础）的一个问题是它没有支持不同字符编码格式的概念。 例如
+，一个在 *UTF-8* 系统上创建的普通 tar 归档如果包含非 *ASCII* 字符则将
+无法在 *Latin-1* 系统上被正确读取。 文本元数据（例如文件名，链接名，用
+户/分组名）将变为损坏状态。 不幸的是，没有什么办法能够自动检测一个归档
+的编码格式。 pax 格式被设计用来解决这个问题。 它使用通用字符编码格式
+*UTF-8* 来存储非 ASCII 元数据。
+
+在 "tarfile" 中字符转换的细节由 "TarFile" 类的 *encoding* 和 *errors*
+关键字参数控制。
+
+*encoding* 定义了用于归档中元数据的字符编码格式。 默认值为
+"sys.getfilesystemencoding()" 或是回退选项 "'ascii'"。 根据归档是被读
+取还是被写入，元数据必须被解码或编码。 如果没有正确设置 *encoding*，转
+换可能会失败。
+
+*errors* 参数定义了不能被转换的字符将如何处理。 可能的取值在 错误处理
+方案 小节列出。 默认方案为 "'surrogateescape'"，它也被 Python 用于文件
+系统调用，参见 文件名，命令行参数，以及环境变量。。
+
+对于 "PAX_FORMAT" 归档（默认格式），*encoding* 通常是不必要的，因为所
+有元数据都使用 *UTF-8* 来存储。 *encoding* 仅在解码二进制 pax 标头或存
+储带有替代字符的字符串等少数场景下会被使用。

@@ -1,0 +1,1730 @@
+"socket" --- 底层网络接口
+*************************
+
+**源代码:** Lib/socket.py
+
+======================================================================
+
+这个模块提供了访问 BSD *套接字* 的接口。在所有现代 Unix 系统、Windows
+、macOS 和其他一些平台上可用。
+
+注解:
+
+  一些行为可能因平台不同而异，因为调用的是操作系统的套接字API。
+
+这个Python接口是用Python的面向对象风格对Unix系统调用和套接字库接口的直
+译：函数 "socket()" 返回一个 *套接字对象* ，其方法是对各种套接字系统调
+用的实现。形参类型一般与C接口相比更高级：例如在Python文件 "read()" 和
+"write()" 操作中，接收操作的缓冲区分配是自动的，发送操作的缓冲区长度是
+隐式的。
+
+参见:
+
+  模块 "socketserver"
+     用于简化网络服务端编写的类。
+
+  模块 "ssl"
+     套接字对象的TLS/SSL封装。
+
+
+套接字协议族
+============
+
+根据系统以及构建选项，此模块提供了各种套接字协议簇。
+
+特定的套接字对象需要的地址格式将根据此套接字对象被创建时指定的地址族被
+自动选择。套接字地址表示如下：
+
+* 一个绑定在文件系统节点上的 "AF_UNIX" 套接字的地址表示为一个字符串，
+  使用文件系统字符编码和 "'surrogateescape'" 错误回调方法（see **PEP
+  383**）。一个地址在 Linux 的抽象命名空间被返回为带有初始的 null 字节
+  的 *字节类对象* ；注意在这个命名空间种的套接字可能与普通文件系统套接
+  字通信，所以打算运行在 Linux 上的程序可能需要解决两种地址类型。当传
+  递为参数时，一个字符串或字节类对象可以用于任一类型的地址。
+
+     在 3.3 版更改: 之前，"AF_UNIX" 套接字路径被假设使用 UTF-8 编码。
+
+     在 3.5 版更改: 现在支持可写的 *字节类对象*。
+
+* 一对 "(host, port)" 被用于 "AF_INET" 地址族，*host* 是一个表示为互联
+  网域名表示法之内的主机名或者一个 IPv4 地址的字符串，例如
+  "'daring.cwi.nl'" 或 "'100.50.200.5'"，*port* 是一个整数。
+
+  * 对于 IPv4 地址，有两种可接受的特殊形式被用来代替一个主机地址：
+    "''" 代表 "INADDR_ANY"，用来绑定到所有接口；字符串 "'<broadcast>'"
+    代表 "INADDR_BROADCAST"。此行为不兼容 IPv6，因此，如果你的 Python
+    程序打算支持 IPv6，则可能需要避开这些。
+
+* 对于 "AF_INET6" 地址族，使用一个四元组 "(host, port, flowinfo,
+  scope_id)"，其中 *flowinfo* 和 *scope_id* 代表了 C 库 "struct
+  sockaddr_in6" 中的 "sin6_flowinfo" 和 "sin6_scope_id" 成员。对于
+  "socket" 模块中的方法， *flowinfo* 和 *scope_id* 可以被省略，只为了
+  向后兼容。注意，省略 *scope_id* 可能会导致操作带有领域 (Scope) 的
+  IPv6 地址时出错。
+
+  在 3.7 版更改: 对于多播地址（其 *scope_id* 起作用），*地址* 中可以不
+  包含 "%scope_id" （或 "zone id" ）部分，这部分是多余的，可以放心省略
+  （推荐）。
+
+* "AF_NETLINK" 套接字由一对 "(pid, groups)" 表示。
+
+* 指定 "AF_TIPC" 地址族可以使用仅 Linux 支持的 TIPC 协议。TIPC 是一种
+  开放的、非基于 IP 的网络协议，旨在用于集群计算环境。其地址用元组表示
+  ，其中的字段取决于地址类型。一般元组形式为 "(addr_type, v1, v2, v3
+  [, scope])"，其中：
+
+  * *addr_type* 取 "TIPC_ADDR_NAMESEQ"、"TIPC_ADDR_NAME" 或
+    "TIPC_ADDR_ID" 中的一个。
+
+  * *scope* 取 "TIPC_ZONE_SCOPE"、"TIPC_CLUSTER_SCOPE" 和
+    "TIPC_NODE_SCOPE" 中的一个。
+
+  * 如果 *addr_type* 为 "TIPC_ADDR_NAME"，那么 *v1* 是服务器类型，*v2*
+    是端口标识符，*v3* 应为 0。
+
+    如果 *addr_type* 为 "TIPC_ADDR_NAMESEQ"，那么 *v1* 是服务器类型，
+    *v2* 是端口号下限，而 *v3* 是端口号上限。
+
+    如果 *addr_type* 为 "TIPC_ADDR_ID"，那么 *v1* 是节点 (node)，*v2*
+    是 ref，*v3* 应为 0。
+
+* "AF_CAN" 地址族使用元组 "(interface, )"，其中 *interface* 是表示网络
+  接口名称的字符串，如 "'can0'"。网络接口名 "''" 可以用于接收本族所有
+  网络接口的数据包。
+
+  * "CAN_ISOTP" 协议接受一个元组 "(interface, rx_addr, tx_addr)"，其中
+    两个额外参数都是无符号长整数，都表示 CAN 标识符（标准或扩展标识符
+    ）。
+
+  * "CAN_J1939" 协议接受一个元组 "(interface, name, pgn, addr)"，其中
+    额外参数有：表示 ECU 名称的 64 位无符号整数，表示参数组号
+    (Parameter Group Number, PGN) 的 32 位无符号整数，以及表示地址的 8
+    位整数。
+
+* "PF_SYSTEM" 协议簇的 "SYSPROTO_CONTROL" 协议接受一个字符串或元组
+  "(id, unit)"。其中字符串是内核控件的名称，该控件使用动态分配的 ID。
+  而如果 ID 和内核控件的单元 (unit) 编号都已知，或使用了已注册的 ID，
+  可以采用元组。
+
+  3.3 新版功能.
+
+* "AF_BLUETOOTH" 支持以下协议和地址格式：
+
+  * "BTPROTO_L2CAP" 接受 "(bdaddr, psm)"，其中 "bdaddr" 为字符串格式的
+    蓝牙地址，"psm" 是一个整数。
+
+  * "BTPROTO_RFCOMM" 接受 "(bdaddr, channel)"，其中 "bdaddr" 为字符串
+    格式的蓝牙地址，"channel" 是一个整数。
+
+  * "BTPROTO_HCI" 接受 "(device_id,)"，其中 "device_id" 为整数或字符串
+    ，它表示接口对应的蓝牙地址（具体取决于你的系统，NetBSD 和
+    DragonFlyBSD 需要蓝牙地址字符串，其他系统需要整数）。
+
+    在 3.2 版更改: 添加了对 NetBSD 和 DragonFlyBSD 的支持。
+
+  * "BTPROTO_SCO" 接受 "bdaddr"，其中 "bdaddr" 是 "bytes" 对象，其中含
+    有字符串格式的蓝牙地址（如 "b'12:23:34:45:56:67'" ），FreeBSD 不支
+    持此协议。
+
+* "AF_ALG" 是一个仅 Linux 可用的、基于套接字的接口，用于连接内核加密算
+  法。算法套接字可用包括 2 至 4 个元素的元组来配置 "(type, name [,
+  feat [, mask]])"，其中：
+
+  * *type* 是表示算法类型的字符串，如 "aead"、"hash"、"skcipher" 或
+    "rng"。
+
+  * *name* 是表示算法类型和操作模式的字符串，如 "sha256"、
+    "hmac(sha256)"、"cbc(aes)" 或 "drbg_nopr_ctr_aes256"。
+
+  * *feat* 和 *mask* 是无符号 32 位整数。
+
+  Availability: Linux 2.6.38, some algorithm types require more recent
+  Kernels.
+
+  3.6 新版功能.
+
+* "AF_VSOCK" 用于支持虚拟机与宿主机之间的通讯。该套接字用 "(CID,
+  port)" 元组表示，其中 Context ID (CID) 和 port 都是整数。
+
+  Availability: Linux >= 4.8 QEMU >= 2.8 ESX >= 4.0 ESX Workstation >=
+  6.5.
+
+  3.7 新版功能.
+
+* "AF_PACKET" 是一个底层接口，直接连接至网卡。数据包使用元组 "(ifname,
+  proto[, pkttype[, hatype[, addr]]])" 表示，其中：
+
+  * *ifname* - 指定设备名称的字符串。
+
+  * *proto* - 一个用网络字节序表示的整数，指定以太网协议版本号。
+
+  * *pkttype* - 指定数据包类型的整数（可选）：
+
+    * "PACKET_HOST" （默认） - 寻址到本地主机的数据包。
+
+    * "PACKET_BROADCAST" - 物理层广播的数据包。
+
+    * "PACKET_MULTIHOST" - 发送到物理层多播地址的数据包。
+
+    * "PACKET_OTHERHOST" - 被（处于混杂模式的）网卡驱动捕获的、发送到
+      其他主机的数据包。
+
+    * "PACKET_OUTGOING" - 来自本地主机的、回环到一个套接字的数据包。
+
+  * *hatype* - 可选整数，指定 ARP 硬件地址类型。
+
+  * *addr* - 可选的类字节串对象，用于指定硬件物理地址，其解释取决于各
+    设备。
+
+* "AF_QIPCRTR" 是一个仅 Linux 可用的、基于套接字的接口，用于与高通平台
+  中协处理器上运行的服务进行通信。该地址簇用一个 "(node, port)" 元组表
+  示，其中 *node* 和 *port* 为非负整数。
+
+  3.8 新版功能.
+
+* "IPPROTO_UDPLITE" 是一种 UDP 的变体，允许指定数据包的哪一部分计算入
+  校验码内。它添加了两个可以修改的套接字选项。
+  "self.setsockopt(IPPROTO_UDPLITE, UDPLITE_SEND_CSCOV, length)" 修改
+  传出数据包的哪一部分计算入校验码内，而
+  "self.setsockopt(IPPROTO_UDPLITE, UDPLITE_RECV_CSCOV, length)" 将过
+  滤掉计算入校验码的数据太少的数据包。在这两种情况下，"length" 都应在
+  "range(8, 2**16, 8)" 范围内。
+
+  对于 IPv4，应使用 "socket(AF_INET, SOCK_DGRAM, IPPROTO_UDPLITE)" 来
+  构造这样的套接字；对于 IPv6，应使用 "socket(AF_INET6, SOCK_DGRAM,
+  IPPROTO_UDPLITE)" 来构造这样的套接字。
+
+  Availability: Linux >= 2.6.20, FreeBSD >= 10.1-RELEASE
+
+  3.9 新版功能.
+
+如果你在 IPv4/v6 套接字地址的 *host* 部分中使用了一个主机名，此程序可
+能会表现不确定行为，因为 Python 使用 DNS 解析返回的第一个地址。套接字
+地址在实际的 IPv4/v6 中以不同方式解析，根据 DNS 解析和/或 host 配置。
+为了确定行为，在 *host* 部分中使用数字的地址。
+
+所有的错误都抛出异常。对于无效的参数类型和内存溢出异常情况可能抛出普通
+异常；从 Python 3.3 开始，与套接字或地址语义有关的错误抛出 "OSError"
+或它的子类之一（常用 "socket.error"）。
+
+可以用 "setblocking()" 设置非阻塞模式。一个基于超时的 generalization
+通过 "settimeout()" 支持。
+
+
+模块内容
+========
+
+"socket" 模块包含下列元素。
+
+
+异常
+----
+
+exception socket.error
+
+   一个被弃用的 "OSError" 的别名。
+
+   在 3.3 版更改: 根据 **PEP 3151**，这个类是 "OSError" 的别名。
+
+exception socket.herror
+
+   "OSError" 的子类，本异常通常表示与地址相关的错误，比如那些在 POSIX
+   C API 中使用了 *h_errno* 的函数，包括 "gethostbyname_ex()" 和
+   "gethostbyaddr()"。附带的值是一对 "(h_errno, string)"，代表库调用返
+   回的错误。*h_errno* 是一个数字，而 *string* 表示 *h_errno* 的描述，
+   它们由 C 函数 "hstrerror()" 返回。
+
+   在 3.3 版更改: 此类是 "OSError" 的子类。
+
+exception socket.gaierror
+
+   "OSError" 的子类，本异常来自 "getaddrinfo()" 和 "getnameinfo()"，表
+   示与地址相关的错误。附带的值是一对 "(error, string)"，代表库调用返
+   回的错误。*string* 表示 *error* 的描述，它由 C 函数
+   "gai_strerror()" 返回。数字值 *error* 与本模块中定义的 "EAI_*" 常量
+   之一匹配。
+
+   在 3.3 版更改: 此类是 "OSError" 的子类。
+
+exception socket.timeout
+
+   "OSError" 的子类，当套接字发生超时，且事先已调用过 "settimeout()"
+   （或隐式地通过 "setdefaulttimeout()" ）启用了超时，则会抛出此异常。
+   附带的值是一个字符串，其值总是 "timed out"。
+
+   在 3.3 版更改: 此类是 "OSError" 的子类。
+
+
+常数
+----
+
+   AF_* 和 SOCK_* 常量现在都在 "AddressFamily" 和 "SocketKind" 这两个
+   "IntEnum" 集合内。
+
+   3.4 新版功能.
+
+socket.AF_UNIX
+socket.AF_INET
+socket.AF_INET6
+
+   这些常量表示地址（和协议）簇，用于 "socket()" 的第一个参数。如果
+   "AF_UNIX" 常量未定义，即表示不支持该协议。不同系统可能会有更多其他
+   常量可用。
+
+socket.SOCK_STREAM
+socket.SOCK_DGRAM
+socket.SOCK_RAW
+socket.SOCK_RDM
+socket.SOCK_SEQPACKET
+
+   这些常量表示套接字类型，用于 "socket()" 的第二个参数。不同系统可能
+   会有更多其他常量可用。（一般只有 "SOCK_STREAM" 和 "SOCK_DGRAM" 可用
+   ）
+
+socket.SOCK_CLOEXEC
+socket.SOCK_NONBLOCK
+
+   这两个常量（如果已定义）可以与上述套接字类型结合使用，允许你设置这
+   些原子性相关的 flags （从而避免可能的竞争条件和单独调用的需要）。
+
+   参见: Secure File Descriptor Handling （安全地处理文件描述符） 提供了更
+       详尽的解释。
+
+   可用性： Linux >= 2.6.27。
+
+   3.2 新版功能.
+
+SO_*
+socket.SOMAXCONN
+MSG_*
+SOL_*
+SCM_*
+IPPROTO_*
+IPPORT_*
+INADDR_*
+IP_*
+IPV6_*
+EAI_*
+AI_*
+NI_*
+TCP_*
+
+   此列表内的许多常量，记载在 Unix 文档中的套接字和/或 IP 协议部分，同
+   时也定义在本 socket 模块中。它们通常用于套接字对象的 "setsockopt()"
+   和 "getsockopt()" 方法的参数中。在大多数情况下，仅那些在 Unix 头文
+   件中有定义的符号会在本模块中定义，部分符号提供了默认值。
+
+   在 3.6 版更改: 添加了 "SO_DOMAIN", "SO_PROTOCOL", "SO_PEERSEC",
+   "SO_PASSSEC", "TCP_USER_TIMEOUT", "TCP_CONGESTION"。
+
+   在 3.6.5 版更改: 在 Windows 上，如果 Windows 运行时支持，则
+   "TCP_FASTOPEN"、"TCP_KEEPCNT" 可用。
+
+   在 3.7 版更改: 添加了 "TCP_NOTSENT_LOWAT"。在 Windows 上，如果
+   Windows 运行时支持，则 "TCP_KEEPIDLE"、"TCP_KEEPINTVL" 可用。
+
+socket.AF_CAN
+socket.PF_CAN
+SOL_CAN_*
+CAN_*
+
+   此列表内的许多常量，记载在 Linux 文档中，同时也定义在本 socket 模块
+   中。
+
+   可用性： Linux >= 2.6.25。
+
+   3.3 新版功能.
+
+socket.CAN_BCM
+CAN_BCM_*
+
+   CAN 协议簇内的 CAN_BCM 是广播管理器（Bbroadcast Manager -- BCM）协
+   议，广播管理器常量在 Linux 文档中有所记载，在本 socket 模块中也有定
+   义。
+
+   可用性： Linux >= 2.6.25。
+
+   注解:
+
+     "CAN_BCM_CAN_FD_FRAME" 旗标仅在 Linux >= 4.8 时可用。
+
+   3.4 新版功能.
+
+socket.CAN_RAW_FD_FRAMES
+
+   在 CAN_RAW 套接字中启用 CAN FD 支持，默认是禁用的。它使应用程序可以
+   发送 CAN 和 CAN FD 帧。但是，从套接字读取时，也必须同时接受 CAN 和
+   CAN FD 帧。
+
+   此常量在 Linux 文档中有所记载。
+
+   可用性： Linux >= 3.6。
+
+   3.5 新版功能.
+
+socket.CAN_RAW_JOIN_FILTERS
+
+   加入已应用的 CAN 过滤器，这样只有与所有 CAN 过滤器匹配的 CAN 帧才能
+   传递到用户空间。
+
+   此常量在 Linux 文档中有所记载。
+
+   可用性： Linux >= 4.1。
+
+   3.9 新版功能.
+
+socket.CAN_ISOTP
+
+   CAN 协议簇中的 CAN_ISOTP 就是 ISO-TP (ISO 15765-2) 协议。ISO-TP 常
+   量在 Linux 文档中有所记载。
+
+   可用性： Linux >= 2.6.25。
+
+   3.7 新版功能.
+
+socket.CAN_J1939
+
+   CAN 协议族中的 CAN_J1939 即 SAE J1939 协议。 J1939 常量记录在 Linux
+   文档中。
+
+   可用性： Linux >= 5.4。
+
+   3.9 新版功能.
+
+socket.AF_PACKET
+socket.PF_PACKET
+PACKET_*
+
+   此列表内的许多常量，记载在 Linux 文档中，同时也定义在本 socket 模块
+   中。
+
+   可用性： Linux >= 2.2。
+
+socket.AF_RDS
+socket.PF_RDS
+socket.SOL_RDS
+RDS_*
+
+   此列表内的许多常量，记载在 Linux 文档中，同时也定义在本 socket 模块
+   中。
+
+   可用性： Linux >= 2.6.30。
+
+   3.3 新版功能.
+
+socket.SIO_RCVALL
+socket.SIO_KEEPALIVE_VALS
+socket.SIO_LOOPBACK_FAST_PATH
+RCVALL_*
+
+   Windows 的 WSAIoctl() 的常量。这些常量用于套接字对象的 "ioctl()" 方
+   法的参数。
+
+   在 3.6 版更改: 添加了 "SIO_LOOPBACK_FAST_PATH"。
+
+TIPC_*
+
+   TIPC 相关常量，与 C socket API 导出的常量一致。更多信息请参阅 TIPC
+   文档。
+
+socket.AF_ALG
+socket.SOL_ALG
+ALG_*
+
+   用于 Linux 内核加密算法的常量。
+
+   可用性： Linux >= 2.6.38。
+
+   3.6 新版功能.
+
+socket.AF_VSOCK
+socket.IOCTL_VM_SOCKETS_GET_LOCAL_CID
+VMADDR*
+SO_VM*
+
+   用于 Linux 宿主机/虚拟机通讯的常量。
+
+   可用性： Linux >= 4.8。
+
+   3.7 新版功能.
+
+socket.AF_LINK
+
+   可用性： BSD、OSX。
+
+   3.4 新版功能.
+
+socket.has_ipv6
+
+   本常量为一个布尔值，该值指示当前平台是否支持 IPv6。
+
+socket.BDADDR_ANY
+socket.BDADDR_LOCAL
+
+   这些是字符串常量，包含蓝牙地址，这些地址具有特殊含义。例如，当用
+   "BTPROTO_RFCOMM" 指定绑定套接字时， "BDADDR_ANY" 表示“任何地址”。
+
+socket.HCI_FILTER
+socket.HCI_TIME_STAMP
+socket.HCI_DATA_DIR
+
+   与 "BTPROTO_HCI" 一起使用。 "HCI_FILTER" 在 NetBSD 或 DragonFlyBSD
+   上不可用。 "HCI_TIME_STAMP" 和 "HCI_DATA_DIR" 在 FreeBSD、NetBSD 或
+   DragonFlyBSD 上不可用。
+
+socket.AF_QIPCRTR
+
+   高通 IPC 路由协议的常数，用于与提供远程处理器的服务进行通信。
+
+   可用性： Linux >= 4.7。
+
+
+函数
+----
+
+
+创建套接字
+~~~~~~~~~~
+
+下列函数都能创建 套接字对象.
+
+socket.socket(family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None)
+
+   使用给定的地址族、套接字类型和协议号创建一个新的套接字。 地址族应为
+   "AF_INET" (默认值), "AF_INET6", "AF_UNIX", "AF_CAN", "AF_PACKET" 或
+   "AF_RDS" 之一。 套接字类型应为 "SOCK_STREAM" (默认值),
+   "SOCK_DGRAM", "SOCK_RAW" 或其他可能的 "SOCK_" 常量之一。 协议号通常
+   为零并且可以省略，或在协议族为 "AF_CAN" 的情况下，协议应为
+   "CAN_RAW", "CAN_BCM", "CAN_ISOTP" 或 "CAN_J1939" 之一。
+
+   如果指定了 *fileno*，那么将从这一指定的文件描述符中自动检测
+   *family*、*type* 和 *proto* 的值。如果调用本函数时显式指定了
+   *family*、*type* 或 *proto* 参数，可以覆盖自动检测的值。这只会影响
+   Python 表示诸如 "socket.getpeername()" 一类函数的返回值的方式，而不
+   影响实际的操作系统资源。与 "socket.fromfd()" 不同，*fileno* 将返回
+   原先的套接字，而不是复制出新的套接字。这有助于在分离的套接字上调用
+   "socket.close()" 来关闭它。
+
+   新创建的套接字是 不可继承的。
+
+   引发一个 审计事件 "socket.__new__" 附带参数 "self"、"family"、
+   "type"、"protocol"。
+
+   在 3.3 版更改: 添加了 AF_CAN 簇。添加了 AF_RDS 簇。
+
+   在 3.4 版更改: 添加了 CAN_BCM 协议。
+
+   在 3.4 版更改: 返回的套接字现在是不可继承的。
+
+   在 3.7 版更改: 添加了 CAN_ISOTP 协议。
+
+   在 3.7 版更改: 当将 "SOCK_NONBLOCK" 或 "SOCK_CLOEXEC" 标志位应用于
+   *type* 上时，它们会被清除，且 "socket.type" 反映不出它们。但它们仍
+   将传递给底层系统的 *socket()* 调用。因此，
+
+      sock = socket.socket(
+          socket.AF_INET,
+          socket.SOCK_STREAM | socket.SOCK_NONBLOCK)
+
+   仍将在支持 "SOCK_NONBLOCK" 的系统上创建一个非阻塞的套接字，但是
+   "sock.type" 会被置为 "socket.SOCK_STREAM"。
+
+   在 3.9 版更改: 添加了 CAN_J1939 协议。
+
+socket.socketpair([family[, type[, proto]]])
+
+   构建一对已连接的套接字对象，使用给定的地址簇、套接字类型和协议号。
+   地址簇、套接字类型和协议号与上述 "socket()" 函数相同。默认地址簇为
+   "AF_UNIX" （需要当前平台支持，不支持则默认为 "AF_INET" ）。
+
+   新创建的套接字都是 不可继承的。
+
+   在 3.2 版更改: 现在，返回的套接字对象支持全部套接字 API，而不是全部
+   API 的一个子集。
+
+   在 3.4 版更改: 返回的套接字现在都是不可继承的。
+
+   在 3.5 版更改: 添加了 Windows 支持。
+
+socket.create_connection(address[, timeout[, source_address]])
+
+   连接到一个 TCP 服务，该服务正在侦听 Internet *address* （用二元组
+   "(host, port)" 表示）。连接后返回套接字对象。这是比
+   "socket.connect()" 更高级的函数：如果 *host* 是非数字主机名，它将尝
+   试从 "AF_INET" 和 "AF_INET6" 解析它，然后依次尝试连接到所有可能的地
+   址，直到连接成功。这使得编写兼容 IPv4 和 IPv6 的客户端变得容易。
+
+   传入可选参数 *timeout* 可以在套接字实例上设置超时（在尝试连接前）。
+   如果未提供 *timeout*，则使用由 "getdefaulttimeout()" 返回的全局默认
+   超时设置。
+
+   如果提供了 *source_address*，它必须为二元组 "(host, port)"，以便套
+   接字在连接之前绑定为其源地址。如果 host 或 port 分别为 '' 或 0，则
+   使用操作系统默认行为。
+
+   在 3.2 版更改: 添加了 *source_address*。
+
+socket.create_server(address, *, family=AF_INET, backlog=None, reuse_port=False, dualstack_ipv6=False)
+
+   便捷函数，创建绑定到 *address* （二元组 "(host, port)" ）的 TCP 套
+   接字，返回套接字对象。
+
+   *family* 应设置为 "AF_INET" 或 "AF_INET6"。*backlog* 是传递给
+   "socket.listen()" 的队列大小，当它为 "0" 则表示默认的合理值。
+   *reuse_port* 表示是否设置 "SO_REUSEPORT" 套接字选项。
+
+   如果 *dualstack_ipv6* 为 true 且平台支持，则套接字能接受 IPv4 和
+   IPv6 连接，否则将抛出 "ValueError" 异常。大多数 POSIX 平台和
+   Windows 应该支持此功能。启用此功能后，"socket.getpeername()" 在进行
+   IPv4 连接时返回的地址将是一个（映射到 IPv4 的）IPv6 地址。在默认启
+   用该功能的平台上（如 Linux），如果 *dualstack_ipv6* 为 false，即显
+   式禁用此功能。该参数可以与 "has_dualstack_ipv6()" 结合使用：
+
+      import socket
+
+      addr = ("", 8080)  # all interfaces, port 8080
+      if socket.has_dualstack_ipv6():
+          s = socket.create_server(addr, family=socket.AF_INET6, dualstack_ipv6=True)
+      else:
+          s = socket.create_server(addr)
+
+   注解:
+
+     在 POSIX 平台上，设置 "SO_REUSEADDR" 套接字选项是为了立即重用以前
+     绑定在同一 *address* 上并保持 TIME_WAIT 状态的套接字。
+
+   3.8 新版功能.
+
+socket.has_dualstack_ipv6()
+
+   如果平台支持创建 IPv4 和 IPv6 连接都可以处理的 TCP 套接字，则返回
+   "True"。
+
+   3.8 新版功能.
+
+socket.fromfd(fd, family, type, proto=0)
+
+   复制文件描述符 *fd* （一个由文件对象的 "fileno()" 方法返回的整数）
+   ，然后从结果中构建一个套接字对象。地址簇、套接字类型和协议号与上述
+   "socket()" 函数相同。文件描述符应指向一个套接字，但不会专门去检查——
+   如果文件描述符是无效的，则对该对象的后续操作可能会失败。本函数很少
+   用到，但是在将套接字作为标准输入或输出传递给程序（如 Unix inet 守护
+   程序启动的服务器）时，可以使用本函数获取或设置套接字选项。套接字将
+   处于阻塞模式。
+
+   新创建的套接字是 不可继承的。
+
+   在 3.4 版更改: 返回的套接字现在是不可继承的。
+
+socket.fromshare(data)
+
+   根据 "socket.share()" 方法获得的数据实例化套接字。套接字将处于阻塞
+   模式。
+
+   可用性: Windows。
+
+   3.3 新版功能.
+
+socket.SocketType
+
+   这是一个 Python 类型对象，表示套接字对象的类型。它等同于
+   "type(socket(...))"。
+
+
+其他功能
+~~~~~~~~
+
+"socket" 模块还提供多种网络相关服务：
+
+socket.close(fd)
+
+   关闭一个套接字文件描述符。它类似于 "os.close()"，但专用于套接字。在
+   某些平台上（特别是在 Windows 上），"os.close()" 对套接字文件描述符
+   无效。
+
+   3.7 新版功能.
+
+socket.getaddrinfo(host, port, family=0, type=0, proto=0, flags=0)
+
+   将 *host*/*port* 参数转换为 5 元组的序列，其中包含创建（连接到某服
+   务的）套接字所需的所有参数。*host* 是域名，是字符串格式的 IPv4/v6
+   地址或 "None"。*port* 是字符串格式的服务名称，如 "'http'" 、端口号
+   （数字）或 "None"。传入 "None" 作为 *host* 和 *port* 的值，相当于将
+   "NULL" 传递给底层 C API。
+
+   可以指定 *family*、*type* 和 *proto* 参数，以缩小返回的地址列表。向
+   这些参数分别传入 0 表示保留全部结果范围。*flags* 参数可以是 "AI_*"
+   常量中的一个或多个，它会影响结果的计算和返回。例如，
+   "AI_NUMERICHOST" 会禁用域名解析，此时如果 *host* 是域名，则会抛出错
+   误。
+
+   本函数返回一个列表，其中的 5 元组具有以下结构：
+
+   "(family, type, proto, canonname, sockaddr)"
+
+   在这些元组中，*family*, *type*, *proto* 都是整数且其作用是被传入
+   "socket()" 函数。 如果 "AI_CANONNAME" 是 *flags* 参数的一部分则
+   *canonname* 将是表示 *host* 规范名称的字符串；否则 *canonname* 将为
+   空。 *sockaddr* 是一个描述套接字地址的元组，其具体格式取决于返回的
+   *family* (对于 "AF_INET" 为 "(address, port)" 2 元组，对于
+   "AF_INET6" 则为 "(address, port, flowinfo, scope_id)" 4 元组)，其作
+   用是被传入 "socket.connect()" 方法。
+
+   引发一个 审计事件 "socket.getaddrinfo" 附带参数 "host"、"port"、
+   "family"、"type"、"protocol"。
+
+   下面的示例获取了 TCP 连接地址信息，假设该连接通过 80 端口连接至
+   "example.org" （如果系统未启用 IPv6，则结果可能会不同）:
+
+      >>> socket.getaddrinfo("example.org", 80, proto=socket.IPPROTO_TCP)
+      [(<AddressFamily.AF_INET6: 10>, <SocketType.SOCK_STREAM: 1>,
+       6, '', ('2606:2800:220:1:248:1893:25c8:1946', 80, 0, 0)),
+       (<AddressFamily.AF_INET: 2>, <SocketType.SOCK_STREAM: 1>,
+       6, '', ('93.184.216.34', 80))]
+
+   在 3.2 版更改: 现在可以使用关键字参数的形式来传递参数。
+
+   在 3.7 版更改: 对于 IPv6 多播地址，表示地址的字符串将不包含
+   "%scope_id" 部分。
+
+socket.getfqdn([name])
+
+   返回 *name* 的全限定域名 (Fully Qualified Domain Name -- FQDN)。如
+   果 *name* 省略或为空，则将其解释为本地主机。为了查找全限定名称，首
+   先将检查由 "gethostbyaddr()" 返回的主机名，然后是主机的别名（如果存
+   在）。选中第一个包含句点的名字。如果无法获取全限定域名，则返回由
+   "gethostname()" 返回的主机名。
+
+socket.gethostbyname(hostname)
+
+   将主机名转换为 IPv4 地址格式。IPv4 地址以字符串格式返回，如
+   "'100.50.200.5'"。如果主机名本身是 IPv4 地址，则原样返回。更完整的
+   接口请参考 "gethostbyname_ex()"。 "gethostbyname()" 不支持 IPv6 名
+   称解析，应使用 "getaddrinfo()" 来支持 IPv4/v6 双协议栈。
+
+   引发一个 审计事件 "socket.gethostbyname"，附带参数 "hostname"。
+
+socket.gethostbyname_ex(hostname)
+
+   将主机名转换为 IPv4 地址格式的扩展接口。返回三元组 "(hostname,
+   aliaslist, ipaddrlist)"，其中 *hostname* 是响应给定 *ip_address* 的
+   主要主机名，*aliaslist* 是相同地址的其他可用主机名的列表（可能为空
+   ），而 *ipaddrlist* 是 IPv4 地址列表，包含相同主机名、相同接口的不
+   同地址（通常是一个地址，但不总是如此）。"gethostbyname_ex()" 不支持
+   IPv6 名称解析，应使用 "getaddrinfo()" 来支持 IPv4/v6 双协议栈。
+
+   引发一个 审计事件 "socket.gethostbyname"，附带参数 "hostname"。
+
+socket.gethostname()
+
+   返回一个字符串，包含当前正在运行 Python 解释器的机器的主机名。
+
+   引发一个 审计事件 "socket.gethostname"，没有附带参数。
+
+   注意： "gethostname()" 并不总是返回全限定域名，必要的话请使用
+   "getfqdn()"。
+
+socket.gethostbyaddr(ip_address)
+
+   返回三元组 "(hostname, aliaslist, ipaddrlist)"，其中 *hostname* 是
+   响应给定 *ip_address* 的主要主机名，*aliaslist* 是相同地址的其他可
+   用主机名的列表（可能为空），而 *ipaddrlist* 是 IPv4/v6 地址列表，包
+   含相同主机名、相同接口的不同地址（很可能仅包含一个地址）。要查询全
+   限定域名，请使用函数 "getfqdn()"。"gethostbyaddr()" 支持 IPv4 和
+   IPv6。
+
+   引发一个 审计事件 "socket.gethostbyaddr"，附带参数 "ip_address"。
+
+socket.getnameinfo(sockaddr, flags)
+
+   将套接字地址 *sockaddr* 转换为二元组 "(host, port)"。*host* 的形式
+   可能是全限定域名，或是由数字表示的地址，具体取决于 *flags* 的设置。
+   同样，*port* 可以包含字符串格式的端口名称或数字格式的端口号。
+
+   对于 IPv6 地址，如果 *sockaddr* 包含有意义的 *scope_id*，则
+   "%scope_id" 会被附加到主机部分。 这种情况通常发生在多播地址上。
+
+   关于 *flags* 的更多信息可参阅 *getnameinfo(3)*。
+
+   引发一个 审计事件 "socket.getnameinfo"，附带参数 "sockaddr"。
+
+socket.getprotobyname(protocolname)
+
+   将 Internet 协议名称（如 "'icmp'" ）转换为常量，该常量适用于
+   "socket()" 函数的第三个（可选）参数。通常只有在 "raw" 模式
+   ("SOCK_RAW") 中打开的套接字才需要使用该常量。在正常的套接字模式下，
+   协议省略或为零时，会自动选择正确的协议。
+
+socket.getservbyname(servicename[, protocolname])
+
+   将 Internet 服务名称和协议名称转换为该服务的端口号。协议名称是可选
+   的，如果提供的话应为 "'tcp'" 或 "'udp'"，否则将匹配出所有协议。
+
+   引发一个 审计事件 "socket.getservbyname"，附带参数 "servicename"、
+   "protocolname"。
+
+socket.getservbyport(port[, protocolname])
+
+   将 Internet 端口号和协议名称转换为该服务的服务名称。协议名称是可选
+   的，如果提供的话应为 "'tcp'" 或 "'udp'"，否则将匹配出所有协议。
+
+   引发一个 审计事件 "socket.getservbyport"，附带参数 "port"、
+   "protocolname"。
+
+socket.ntohl(x)
+
+   将 32 位正整数从网络字节序转换为主机字节序。在主机字节序与网络字节
+   序相同的计算机上，这是一个空操作。字节序不同将执行 4 字节交换操作。
+
+socket.ntohs(x)
+
+   将 16 位正整数从网络字节序转换为主机字节序。在主机字节序与网络字节
+   序相同的计算机上，这是一个空操作。字节序不同将执行 2 字节交换操作。
+
+   3.7 版后已移除: 如果 *x* 不符合 16 位无符号整数，但符合 C 语言的正
+   整数，则它会被静默截断为 16 位无符号整数。此静默截断功能已弃用，未
+   来版本的 Python 将对此抛出异常。
+
+socket.htonl(x)
+
+   将 32 位正整数从主机字节序转换为网络字节序。在主机字节序与网络字节
+   序相同的计算机上，这是一个空操作。字节序不同将执行 4 字节交换操作。
+
+socket.htons(x)
+
+   将 16 位正整数从主机字节序转换为网络字节序。在主机字节序与网络字节
+   序相同的计算机上，这是一个空操作。字节序不同将执行 2 字节交换操作。
+
+   3.7 版后已移除: 如果 *x* 不符合 16 位无符号整数，但符合 C 语言的正
+   整数，则它会被静默截断为 16 位无符号整数。此静默截断功能已弃用，未
+   来版本的 Python 将对此抛出异常。
+
+socket.inet_aton(ip_string)
+
+   将 IPv4 地址从点分十进制字符串格式（如 '123.45.67.89' ）转换为 32
+   位压缩二进制格式，转换后为字节对象，长度为四个字符。与那些使用标准
+   C 库，且需要 "struct in_addr" 类型的对象的程序交换信息时，本函数很
+   有用。 该类型即本函数返回的 32 位压缩二进制的 C 类型。
+
+   "inet_aton()" 也接受句点数少于三的字符串，详情请参阅 Unix 手册
+   *inet(3)*。
+
+   如果传入本函数的 IPv4 地址字符串无效，则抛出 "OSError"。注意，具体
+   什么样的地址有效取决于 "inet_aton()" 的底层 C 实现。
+
+   "inet_aton()" 不支持 IPv6，在 IPv4/v6 双协议栈下应使用
+   "inet_pton()" 来代替。
+
+socket.inet_ntoa(packed_ip)
+
+   将 32 位压缩 IPv4 地址（一个 *类字节对象*，长 4 个字节）转换为标准
+   的点分十进制字符串形式（如 '123.45.67.89' ）。与那些使用标准 C 库，
+   且需要 "struct in_addr" 类型的对象的程序交换信息时，本函数很有用。
+   该类型即本函数参数中的 32 位压缩二进制数据的 C 类型。
+
+   如果传入本函数的字节序列长度不是 4 个字节，则抛出 "OSError"。
+   "inet_ntoa()" 不支持 IPv6，在 IPv4/v6 双协议栈下应使用
+   "inet_ntop()" 来代替。
+
+   在 3.5 版更改: 现在支持可写的 *字节类对象*。
+
+socket.inet_pton(address_family, ip_string)
+
+   将特定地址簇的 IP 地址（字符串）转换为压缩二进制格式。当库或网络协
+   议需要接受 "struct in_addr" 类型的对象（类似 "inet_aton()" ）或
+   "struct in6_addr" 类型的对象时，"inet_pton()" 很有用。
+
+   目前 *address_family* 支持 "AF_INET" 和 "AF_INET6"。如果 IP 地址字
+   符串 *ip_string* 无效，则抛出 "OSError"。注意，具体什么地址有效取决
+   于 *address_family* 的值和 "inet_pton()" 的底层实现。
+
+   可用性： Unix（可能非所有平台都可用）、Windows。
+
+   在 3.4 版更改: 添加了 Windows 支持
+
+socket.inet_ntop(address_family, packed_ip)
+
+   将压缩 IP 地址（一个 *类字节对象*，数个字节长）转换为标准的、特定地
+   址簇的字符串形式（如 "'7.10.0.5'" 或 "'5aef:2b::8'" ）。当库或网络
+   协议返回 "struct in_addr" 类型的对象（类似 "inet_ntoa()" ）或
+   "struct in6_addr" 类型的对象时，"inet_ntop()" 很有用。
+
+   目前 *address_family* 支持 "AF_INET" 和 "AF_INET6"。如果字节对象
+   *packed_ip* 与指定的地址簇长度不符，则抛出 "ValueError"。针对
+   "inet_ntop()" 调用的错误则抛出 "OSError"。
+
+   可用性： Unix（可能非所有平台都可用）、Windows。
+
+   在 3.4 版更改: 添加了 Windows 支持
+
+   在 3.5 版更改: 现在支持可写的 *字节类对象*。
+
+socket.CMSG_LEN(length)
+
+   返回给定 *length* 所关联数据的辅助数据项的总长度（不带尾部填充）。
+   此值通常用作 "recvmsg()" 接收一个辅助数据项的缓冲区大小，但是 **RFC
+   3542** 要求可移植应用程序使用 "CMSG_SPACE()"，以此将尾部填充的空间
+   计入，即使该项在缓冲区的最后。如果 *length* 超出允许范围，则抛出
+   "OverflowError"。
+
+   可用性： 大多数 Unix 平台，其他平台也可能可用。
+
+   3.3 新版功能.
+
+socket.CMSG_SPACE(length)
+
+   返回 "recvmsg()" 所需的缓冲区大小，以接收给定 *length* 所关联数据的
+   辅助数据项，带有尾部填充。接收多个项目所需的缓冲区空间是关联数据长
+   度的 "CMSG_SPACE()" 值的总和。如果 *length* 超出允许范围，则抛出
+   "OverflowError"。
+
+   请注意，某些系统可能支持辅助数据，但不提供本函数。还需注意，如果使
+   用本函数的结果来设置缓冲区大小，可能无法精确限制可接收的辅助数据量
+   ，因为可能会有其他数据写入尾部填充区域。
+
+   可用性： 大多数 Unix 平台，其他平台也可能可用。
+
+   3.3 新版功能.
+
+socket.getdefaulttimeout()
+
+   返回用于新套接字对象的默认超时（以秒为单位的浮点数）。值 "None" 表
+   示新套接字对象没有超时。首次导入 socket 模块时，默认值为 "None"。
+
+socket.setdefaulttimeout(timeout)
+
+   设置用于新套接字对象的默认超时（以秒为单位的浮点数）。首次导入
+   socket 模块时，默认值为 "None"。可能的取值及其各自的含义请参阅
+   "settimeout()"。
+
+socket.sethostname(name)
+
+   将计算机的主机名设置为 *name*。如果权限不足将抛出 "OSError"。
+
+   引发一个 审计事件 "socket.sethostname"，附带参数 "name"。
+
+   Availability: Unix.
+
+   3.3 新版功能.
+
+socket.if_nameindex()
+
+   返回一个列表，包含网络接口（网卡）信息二元组（整数索引，名称字符串
+   ）。系统调用失败则抛出 "OSError"。
+
+   可用性: Unix, Windows。
+
+   3.3 新版功能.
+
+   在 3.8 版更改: 添加了 Windows 支持。
+
+   注解:
+
+     在 Windows 中网络接口在不同上下文中具有不同的名称（所有名称见对应
+     示例）:
+
+     * UUID: "{FB605B73-AAC2-49A6-9A2F-25416AEA0573}"
+
+     * 名称: "ethernet_32770"
+
+     * 友好名称: "vEthernet (nat)"
+
+     * 描述: "Hyper-V Virtual Ethernet Adapter"
+
+     此函数返回列表中第二种形式的名称，在此示例中为 "ethernet_32770"。
+
+socket.if_nametoindex(if_name)
+
+   返回网络接口名称相对应的索引号。如果没有所给名称的接口，则抛出
+   "OSError"。
+
+   可用性: Unix, Windows。
+
+   3.3 新版功能.
+
+   在 3.8 版更改: 添加了 Windows 支持。
+
+   参见: "Interface name" 为 "if_nameindex()" 中所描述的名称。
+
+socket.if_indextoname(if_index)
+
+   返回网络接口索引号相对应的接口名称。如果没有所给索引号的接口，则抛
+   出 "OSError"。
+
+   可用性: Unix, Windows。
+
+   3.3 新版功能.
+
+   在 3.8 版更改: 添加了 Windows 支持。
+
+   参见: "Interface name" 为 "if_nameindex()" 中所描述的名称。
+
+
+套接字对象
+==========
+
+套接字对象具有以下方法。除了 "makefile()"，其他都与套接字专用的 Unix
+系统调用相对应。
+
+在 3.2 版更改: 添加了对 *上下文管理器* 协议的支持。退出上下文管理器与
+调用 "close()" 等效。
+
+socket.accept()
+
+   接受一个连接。此 scoket 必须绑定到一个地址上并且监听连接。返回值是
+   一个 "(conn, address)" 对，其中 *conn* 是一个 *新* 的套接字对象，用
+   于在此连接上收发数据，*address* 是连接另一端的套接字所绑定的地址。
+
+   新创建的套接字是 不可继承的。
+
+   在 3.4 版更改: 该套接字现在是不可继承的。
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.bind(address)
+
+   将套接字绑定到 *address*。套接字必须尚未绑定。（ *address* 的格式取
+   决于地址簇 —— 参见上文）
+
+   引发一个 审计事件 "socket.bind"，附带参数 "self"、"address"。
+
+socket.close()
+
+   将套接字标记为关闭。当 "makefile()" 创建的所有文件对象都关闭时，底
+   层系统资源（如文件描述符）也将关闭。一旦上述情况发生，将来对套接字
+   对象的所有操作都会失败。对端将接收不到任何数据（清空队列数据后）。
+
+   垃圾回收时，套接字会自动关闭，但建议显式 "close()" 它们，或在它们周
+   围使用 "with" 语句。
+
+   在 3.6 版更改: 现在，如果底层的 "close()" 调用出错，会抛出
+   "OSError"。
+
+   注解:
+
+     "close()" 释放与连接相关联的资源，但不一定立即关闭连接。如果需要
+     及时关闭连接，请在调用 "close()" 之前调用 "shutdown()"。
+
+socket.connect(address)
+
+   连接到 *address* 处的远程套接字。（ *address* 的格式取决于地址簇 ——
+   参见上文）
+
+   如果连接被信号中断，则本方法将等待，直到连接完成。如果信号处理程序
+   未抛出异常，且套接字阻塞中或已超时，则在超时后抛出 "socket.timeout"
+   。对于非阻塞套接字，如果连接被信号中断，则本方法将抛出
+   "InterruptedError" 异常（或信号处理程序抛出的异常）。
+
+   引发一个 审计事件 "socket.connect"，附带参数 "self"、"address"。
+
+   在 3.5 版更改: 本方法现在将等待，直到连接完成，而不是在以下情况抛出
+   "InterruptedError" 异常。该情况为，连接被信号中断，信号处理程序未抛
+   出异常，且套接字阻塞中或已超时（具体解释请参阅 **PEP 475** ）。
+
+socket.connect_ex(address)
+
+   类似于 "connect(address)"，但是对于 C 级别的 "connect()" 调用返回的
+   错误，本函数将返回错误指示器，而不是抛出异常（对于其他问题，如“找不
+   到主机”，仍然可以抛出异常）。如果操作成功，则错误指示器为 "0"，否则
+   为 "errno" 变量的值。这对支持如异步连接很有用。
+
+   引发一个 审计事件 "socket.connect"，附带参数 "self"、"address"。
+
+socket.detach()
+
+   将套接字对象置于关闭状态，而底层的文件描述符实际并不关闭。返回该文
+   件描述符，使其可以重新用于其他目的。
+
+   3.2 新版功能.
+
+socket.dup()
+
+   创建套接字的副本。
+
+   新创建的套接字是 不可继承的。
+
+   在 3.4 版更改: 该套接字现在是不可继承的。
+
+socket.fileno()
+
+   返回套接字的文件描述符（一个小整数），失败返回 -1。配合
+   "select.select()" 使用很有用。
+
+   在 Windows 下，此方法返回的小整数在允许使用文件描述符的地方无法使用
+   （如 "os.fdopen()" ）。Unix 无此限制。
+
+socket.get_inheritable()
+
+   获取套接字文件描述符或套接字句柄的 可继承标志 ：如果子进程可以继承
+   套接字则为 "True"，否则为 "False"。
+
+   3.4 新版功能.
+
+socket.getpeername()
+
+   返回套接字连接到的远程地址。举例而言，这可以用于查找远程 IPv4/v6 套
+   接字的端口号。（返回的地址格式取决于地址簇 —— 参见上文。）部分系统
+   不支持此函数。
+
+socket.getsockname()
+
+   返回套接字本身的地址。举例而言，这可以用于查找 IPv4/v6 套接字的端口
+   号。（返回的地址格式取决于地址簇 —— 参见上文。）
+
+socket.getsockopt(level, optname[, buflen])
+
+   返回指定套接字选项的值（参阅 Unix 手册页 *getsockopt(2)* ）。所需的
+   符号常量（ "SO_*" 等）已定义在本模块中。如果未指定 *buflen*，则认为
+   该选项值为整数，由本函数返回该整数值。如果指定 *buflen*，则它定义了
+   用于存放选项值的缓冲区的最大长度，且该缓冲区将作为字节对象返回。对
+   缓冲区的解码工作由调用者自行完成（针对编码为字节串的 C 结构，其解码
+   方法请参阅可选的内置模块 "struct" ）。
+
+socket.getblocking()
+
+   如果套接字处于阻塞模式，返回 "True"，非阻塞模式返回 "False"。
+
+   这相当于检测 "socket.gettimeout() == 0"。
+
+   3.7 新版功能.
+
+socket.gettimeout()
+
+   返回套接字操作相关的超时秒数（浮点数），未设置超时则返回 "None"。它
+   反映最后一次调用 "setblocking()" 或 "settimeout()" 后的设置。
+
+socket.ioctl(control, option)
+
+   平台:
+      Windows
+
+   "ioctl()" 方法是 WSAIoctl 系统接口的有限接口。请参考 Win32 文档 以
+   获取更多信息。
+
+   在其他平台上，可以使用通用的 "fcntl.fcntl()" 和 "fcntl.ioctl()" 函
+   数，它们接受套接字对象作为第一个参数。
+
+   当前仅支持以下控制码： "SIO_RCVALL"、"SIO_KEEPALIVE_VALS" 和
+   "SIO_LOOPBACK_FAST_PATH"。
+
+   在 3.6 版更改: 添加了 "SIO_LOOPBACK_FAST_PATH"。
+
+socket.listen([backlog])
+
+   启动一个服务器用于接受连接。如果指定 *backlog*，则它最低为 0（小于
+   0 会被置为 0），它指定系统允许暂未 accept 的连接数，超过后将拒绝新
+   连接。未指定则自动设为合理的默认值。
+
+   在 3.5 版更改: *backlog* 参数现在是可选的。
+
+socket.makefile(mode='r', buffering=None, *, encoding=None, errors=None, newline=None)
+
+   返回与套接字关联的 *文件对象*。返回的对象的具体类型取决于
+   "makefile()" 的参数。这些参数的解释方式与内置的 "open()" 函数相同，
+   其中 *mode* 的值仅支持 "'r'" （默认），"'w'" 和 "'b'"。
+
+   套接字必须处于阻塞模式，它可以有超时，但是如果发生超时，文件对象的
+   内部缓冲区可能会以不一致的状态结尾。
+
+   关闭 "makefile()" 返回的文件对象不会关闭原始套接字，除非所有其他文
+   件对象都已关闭且在套接字对象上调用了 "socket.close()"。
+
+   注解:
+
+     在 Windows 上，由 "makefile()" 创建的文件类对象无法作为带文件描述
+     符的文件对象使用，如无法作为 "subprocess.Popen()" 的流参数。
+
+socket.recv(bufsize[, flags])
+
+   从套接字接收数据。返回值是一个字节对象，表示接收到的数据。*bufsize*
+   指定一次接收的最大数据量。可选参数 *flags* 的含义请参阅 Unix 手册页
+   *recv(2)*，它默认为零。
+
+   注解:
+
+     为了最佳匹配硬件和网络的实际情况，*bufsize* 的值应为 2 的相对较小
+     的幂，如 4096。
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.recvfrom(bufsize[, flags])
+
+   从套接字接收数据。返回值是一对 "(bytes, address)"，其中 *bytes* 是
+   字节对象，表示接收到的数据，*address* 是发送端套接字的地址。可选参
+   数 *flags* 的含义请参阅 Unix 手册页 *recv(2)*，它默认为零。（
+   *address* 的格式取决于地址簇 —— 参见上文）
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+   在 3.7 版更改: 对于多播 IPv6 地址，*address* 的第一项不会再包含
+   "%scope_id" 部分。 要获得完整的 IPv6 地址请使用 "getnameinfo()"。
+
+socket.recvmsg(bufsize[, ancbufsize[, flags]])
+
+   从套接字接收普通数据（至多 *bufsize* 字节）和辅助数据。*ancbufsize*
+   参数设置用于接收辅助数据的内部缓冲区的大小（以字节为单位），默认为
+   0，表示不接收辅助数据。可以使用 "CMSG_SPACE()" 或 "CMSG_LEN()" 计算
+   辅助数据缓冲区的合适大小，无法放入缓冲区的项目可能会被截断或丢弃。
+   *flags* 参数默认为 0，其含义与 "recv()" 中的相同。
+
+   返回值是一个四元组： "(data, ancdata, msg_flags, address)"。*data*
+   项是一个 "bytes" 对象，用于保存接收到的非辅助数据。*ancdata* 项是零
+   个或多个元组 "(cmsg_level, cmsg_type, cmsg_data)" 组成的列表，表示
+   接收到的辅助数据（控制消息）：*cmsg_level* 和 *cmsg_type* 是分别表
+   示协议级别和协议类型的整数，而 *cmsg_data* 是保存相关数据的 "bytes"
+   对象。*msg_flags* 项由各种标志按位或组成，表示接收消息的情况，详细
+   信息请参阅系统文档。如果接收端套接字断开连接，则 *address* 是发送端
+   套接字的地址（如果有），否则该值无指定。
+
+   某些系统上可以利用 "AF_UNIX" 套接字通过 "sendmsg()" 和 "recvmsg()"
+   在进程之间传递文件描述符。使用此功能时（通常仅限于 "SOCK_STREAM" 套
+   接字），"recvmsg()" 将在其辅助数据中返回以下格式的项
+   "(socket.SOL_SOCKET, socket.SCM_RIGHTS, fds)"，其中 *fds* 是一个
+   "bytes" 对象，是新文件描述符表示为原生 C "int" 类型的二进制数组。如
+   果 "recvmsg()" 在系统调用返回后抛出异常，它将首先关闭此机制接收到的
+   所有文件描述符。
+
+   对于仅接收到一部分的辅助数据项，一些系统没有指示其截断长度。如果某
+   个项目可能超出了缓冲区的末尾，"recvmsg()" 将发出 "RuntimeWarning"，
+   并返回其在缓冲区内的部分，前提是该对象被截断于关联数据开始后。
+
+   在支持 "SCM_RIGHTS" 机制的系统上，下方的函数将最多接收 *maxfds* 个
+   文件描述符，返回消息数据和包含描述符的列表（同时忽略意外情况，如接
+   收到无关的控制消息）。另请参阅 "sendmsg()"。
+
+      import socket, array
+
+      def recv_fds(sock, msglen, maxfds):
+          fds = array.array("i")   # Array of ints
+          msg, ancdata, flags, addr = sock.recvmsg(msglen, socket.CMSG_LEN(maxfds * fds.itemsize))
+          for cmsg_level, cmsg_type, cmsg_data in ancdata:
+              if cmsg_level == socket.SOL_SOCKET and cmsg_type == socket.SCM_RIGHTS:
+                  # Append data, ignoring any truncated integers at the end.
+                  fds.frombytes(cmsg_data[:len(cmsg_data) - (len(cmsg_data) % fds.itemsize)])
+          return msg, list(fds)
+
+   可用性： 大多数 Unix 平台，其他平台也可能可用。
+
+   3.3 新版功能.
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.recvmsg_into(buffers[, ancbufsize[, flags]])
+
+   从套接字接收普通数据和辅助数据，其行为与 "recvmsg()" 相同，但将非辅
+   助数据分散到一系列缓冲区中，而不是返回新的字节对象。*buffers* 参数
+   必须是可迭代对象，它迭代出可供写入的缓冲区（如 "bytearray" 对象），
+   这些缓冲区将被连续的非辅助数据块填充，直到数据全部写完或缓冲区用完
+   为止。在允许使用的缓冲区数量上，操作系统可能会有限制（ "sysconf()"
+   的 "SC_IOV_MAX" 值）。*ancbufsize* 和 *flags* 参数的含义与
+   "recvmsg()" 中的相同。
+
+   返回值为四元组： "(nbytes, ancdata, msg_flags, address)"，其中
+   *nbytes* 是写入缓冲区的非辅助数据的字节总数，而 *ancdata*、
+   *msg_flags* 和 *address* 与 "recvmsg()" 中的相同。
+
+   示例:
+
+      >>> import socket
+      >>> s1, s2 = socket.socketpair()
+      >>> b1 = bytearray(b'----')
+      >>> b2 = bytearray(b'0123456789')
+      >>> b3 = bytearray(b'--------------')
+      >>> s1.send(b'Mary had a little lamb')
+      22
+      >>> s2.recvmsg_into([b1, memoryview(b2)[2:9], b3])
+      (22, [], 0, None)
+      >>> [b1, b2, b3]
+      [bytearray(b'Mary'), bytearray(b'01 had a 9'), bytearray(b'little lamb---')]
+
+   可用性： 大多数 Unix 平台，其他平台也可能可用。
+
+   3.3 新版功能.
+
+socket.recvfrom_into(buffer[, nbytes[, flags]])
+
+   从套接字接收数据，将其写入 *buffer* 而不是创建新的字节串。返回值是
+   一对 "(nbytes, address)"，其中 *nbytes* 是收到的字节数，*address*
+   是发送端套接字的地址。可选参数 *flags* 的含义请参阅 Unix 手册页
+   *recv(2)*，它默认为零。（ *address* 的格式取决于地址簇 —— 参见上文
+   ）
+
+socket.recv_into(buffer[, nbytes[, flags]])
+
+   从套接字接收至多 *nbytes* 个字节，将其写入缓冲区而不是创建新的字节
+   串。如果 *nbytes* 未指定（或指定为 0），则接收至所给缓冲区的最大可
+   用大小。返回接收到的字节数。可选参数 *flags* 的含义请参阅 Unix 手册
+   页 *recv(2)*，它默认为零。
+
+socket.send(bytes[, flags])
+
+   发送数据给套接字。本套接字必须已连接到远程套接字。可选参数 *flags*
+   的含义与上述 "recv()" 中的相同。本方法返回已发送的字节数。应用程序
+   要负责检查所有数据是否已发送，如果仅传输了部分数据，程序需要自行尝
+   试传输其余数据。有关该主题的更多信息，请参考 套接字编程指南。
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.sendall(bytes[, flags])
+
+   发送数据给套接字。本套接字必须已连接到远程套接字。可选参数 *flags*
+   的含义与上述 "recv()" 中的相同。与 "send()" 不同，本方法持续从
+   *bytes* 发送数据，直到所有数据都已发送或发生错误为止。成功后会返回
+   "None"。出错后会抛出一个异常，此时并没有办法确定成功发送了多少数据
+   。
+
+   在 3.5 版更改: 每次成功发送数据后，套接字超时不再重置。现在，套接字
+   超时是发送所有数据的最大总持续时间。
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.sendto(bytes, address)
+socket.sendto(bytes, flags, address)
+
+   发送数据给套接字。本套接字不应连接到远程套接字，而应由 *address* 指
+   定目标套接字。可选参数 *flags* 的含义与上述 "recv()" 中的相同。本方
+   法返回已发送的字节数。（ *address* 的格式取决于地址簇 —— 参见上文。
+   ）
+
+   引发一个 审计事件 "socket.sendto"，附带参数 "self"、"address"。
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.sendmsg(buffers[, ancdata[, flags[, address]]])
+
+   将普通数据和辅助数据发送给套接字，将从一系列缓冲区中收集非辅助数据
+   ，并将其拼接为一条消息。*buffers* 参数指定的非辅助数据应为可迭代的
+   *字节类对象* （如 "bytes" 对象），在允许使用的缓冲区数量上，操作系
+   统可能会有限制（ "sysconf()" 的 "SC_IOV_MAX" 值）。*ancdata* 参数指
+   定的辅助数据（控制消息）应为可迭代对象，迭代出零个或多个
+   "(cmsg_level, cmsg_type, cmsg_data)" 元组，其中 *cmsg_level* 和
+   *cmsg_type* 是分别指定协议级别和协议类型的整数，而 *cmsg_data* 是保
+   存相关数据的字节类对象。请注意，某些系统（特别是没有 "CMSG_SPACE()"
+   的系统）可能每次调用仅支持发送一条控制消息。*flags* 参数默认为 0，
+   与 "send()" 中的含义相同。如果 *address* 指定为除 "None" 以外的值，
+   它将作为消息的目标地址。返回值是已发送的非辅助数据的字节数。
+
+   在支持 "SCM_RIGHTS" 机制的系统上，下方的函数通过一个 "AF_UNIX" 套接
+   字来发送文件描述符列表 *fds*。另请参阅 "recvmsg()"。
+
+      import socket, array
+
+      def send_fds(sock, msg, fds):
+          return sock.sendmsg([msg], [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array("i", fds))])
+
+   可用性： 大多数 Unix 平台，其他平台也可能可用。
+
+   引发一个 审计事件 "socket.sendmsg"，附带参数 "self"、"address"。
+
+   3.3 新版功能.
+
+   在 3.5 版更改: 如果系统调用被中断，但信号处理程序没有触发异常，此方
+   法现在会重试系统调用，而不是触发 "InterruptedError" 异常 (原因详见
+   **PEP 475**)。
+
+socket.sendmsg_afalg([msg], *, op[, iv[, assoclen[, flags]]])
+
+   为 "AF_ALG" 套接字定制的 "sendmsg()" 版本。可为 "AF_ALG" 套接字设置
+   模式、IV、AEAD 关联数据的长度和标志位。
+
+   可用性： Linux >= 2.6.38。
+
+   3.6 新版功能.
+
+socket.send_fds(sock, buffers, fds[, flags[, address]])
+
+   在 "AF_UNIX" 套接字上发送文件描述符列表 *fds*。 *fds* 形参是由文件
+   描述符构成的序列。 请查询 "sendmsg()" 获取这些形参的文档。
+
+   可用性: 支持 "sendmsg()" 和 "SCM_RIGHTS" 机制的 Unix 系统。
+
+   3.9 新版功能.
+
+socket.recv_fds(sock, bufsize, maxfds[, flags])
+
+   接收至多 *maxfds* 个文件描述符。 返回 "(msg, list(fds), flags,
+   addr)"。 请查询 "recvmsg()" 获取这些形参的文档。
+
+   可用性: 支持 "recvmsg()" 和 "SCM_RIGHTS" 机制的 Unix 系统。
+
+   3.9 新版功能.
+
+   注解:
+
+     位于文件描述符列表末尾的任何被截断整数。
+
+socket.sendfile(file, offset=0, count=None)
+
+   使用高性能的 "os.sendfile" 发送文件，直到达到文件的 EOF 为止，返回
+   已发送的字节总数。*file* 必须是一个以二进制模式打开的常规文件对象。
+   如果 "os.sendfile" 不可用（如 Windows）或 *file* 不是常规文件，将使
+   用 "send()" 代替。*offset* 指示从哪里开始读取文件。如果指定了
+   *count*，它确定了要发送的字节总数，而不会持续发送直到达到文件的 EOF
+   。返回时或发生错误时，文件位置将更新，在这种情况下，"file.tell()"
+   可用于确定已发送的字节数。套接字必须为 "SOCK_STREAM" 类型。不支持非
+   阻塞的套接字。
+
+   3.5 新版功能.
+
+socket.set_inheritable(inheritable)
+
+   设置套接字文件描述符或套接字句柄的 可继承标志。
+
+   3.4 新版功能.
+
+socket.setblocking(flag)
+
+   设置套接字为阻塞或非阻塞模式：如果 *flag* 为 false，则将套接字设置
+   为非阻塞，否则设置为阻塞。
+
+   本方法是某些 "settimeout()" 调用的简写：
+
+   * "sock.setblocking(True)" 相当于 "sock.settimeout(None)"
+
+   * "sock.setblocking(False)" 相当于 "sock.settimeout(0.0)"
+
+   在 3.7 版更改: 本方法不再对 "socket.type" 属性设置 "SOCK_NONBLOCK"
+   标志。
+
+socket.settimeout(value)
+
+   为阻塞套接字的操作设置超时。*value* 参数可以是非负浮点数，表示秒，
+   也可以是 "None"。如果赋为一个非零值，那么如果在操作完成前超过了超时
+   时间 *value*，后续的套接字操作将抛出 "timeout" 异常。如果赋为 0，则
+   套接字将处于非阻塞模式。如果指定为 "None"，则套接字将处于阻塞模式。
+
+   更多信息请查阅 关于套接字超时的说明。
+
+   在 3.7 版更改: 本方法不再修改 "socket.type" 属性的 "SOCK_NONBLOCK"
+   标志。
+
+socket.setsockopt(level, optname, value: int)
+
+socket.setsockopt(level, optname, value: buffer)
+
+socket.setsockopt(level, optname, None, optlen: int)
+
+   设置给定套接字选项的值（参阅 Unix 手册页 *setsockopt(2)* ）。所需的
+   符号常量（ "SO_*" 等）已定义在本 "socket" 模块中。该值可以是整数、
+   "None" 或表示缓冲区的 *字节类对象*。在后一种情况下，由调用者确保字
+   节串中包含正确的数据位（关于将 C 结构体编码为字节串的方法，请参阅可
+   选的内置模块 "struct" ）。当 *value* 设置为 "None" 时，必须设置
+   *optlen* 参数。这相当于调用 "setsockopt()" C 函数时使用了
+   "optval=NULL" 和 "optlen=optlen" 参数。
+
+   在 3.5 版更改: 现在支持可写的 *字节类对象*。
+
+   在 3.6 版更改: 添加了 setsockopt(level, optname, None, optlen: int)
+   调用形式。
+
+socket.shutdown(how)
+
+   关闭一半或全部的连接。如果 *how* 为 "SHUT_RD"，则后续不再允许接收。
+   如果 *how* 为 "SHUT_WR"，则后续不再允许发送。如果 *how* 为
+   "SHUT_RDWR"，则后续的发送和接收都不允许。
+
+socket.share(process_id)
+
+   复制套接字，并准备将其与目标进程共享。目标进程必须以 *process_id*
+   形式提供。然后可以利用某种形式的进程间通信，将返回的字节对象传递给
+   目标进程，还可以使用 "fromshare()" 在新进程中重新创建套接字。一旦本
+   方法调用完毕，就可以安全地将套接字关闭，因为操作系统已经为目标进程
+   复制了该套接字。
+
+   可用性: Windows。
+
+   3.3 新版功能.
+
+注意此处没有 "read()" 或 "write()" 方法，请使用不带 *flags* 参数的
+"recv()" 和 "send()" 来替代。
+
+套接字对象还具有以下（只读）属性，这些属性与传入 "socket" 构造函数的值
+相对应。
+
+socket.family
+
+   套接字的协议簇。
+
+socket.type
+
+   套接字的类型。
+
+socket.proto
+
+   套接字的协议。
+
+
+关于套接字超时的说明
+====================
+
+一个套接字对象可以处于以下三种模式之一：阻塞、非阻塞或超时。套接字默认
+以阻塞模式创建，但是可以调用 "setdefaulttimeout()" 来更改。
+
+* 在 *blocking mode* （阻塞模式）中，操作将阻塞，直到操作完成或系统返
+  回错误（如连接超时）。
+
+* 在 *non-blocking mode* （非阻塞模式）中，如果操作无法立即完成，则操
+  作将失败（不幸的是，不同系统返回的错误不同）：位于 "select" 中的函数
+  可用于了解套接字何时以及是否可以读取或写入。
+
+* 在 *timeout mode* （超时模式）下，如果无法在指定的超时内完成操作（抛
+  出 "timeout" 异常），或如果系统返回错误，则操作将失败。
+
+注解:
+
+  在操作系统层面上，*超时模式* 下的套接字在内部都设置为非阻塞模式。同
+  时，阻塞和超时模式在文件描述符和套接字对象之间共享，这些描述符和对象
+  均应指向同一个网络端点。如果，比如你决定使用套接字的 "fileno()"，这
+  一实现细节可能导致明显的结果。
+
+
+超时与 "connect" 方法
+---------------------
+
+"connect()" 操作也受超时设置的约束，通常建议在调用 "connect()" 之前调
+用 "settimeout()"，或将超时参数直接传递给 "create_connection()"。但是
+，无论 Python 套接字超时设置如何，系统网络栈都有可能返回自带的连接超时
+错误。
+
+
+超时与 "accept" 方法
+--------------------
+
+如果 "getdefaulttimeout()" 的值不是 "None"，则 "accept()" 方法返回的套
+接字将继承该超时值。若是 None，返回的套接字行为取决于侦听套接字的设置
+：
+
+* 如果侦听套接字处于 *阻塞模式* 或 *超时模式*，则 "accept()" 返回的套
+  接字处于 *阻塞模式*；
+
+* 如果侦听套接字处于 *非阻塞模式*，那么 "accept()" 返回的套接字是阻塞
+  还是非阻塞取决于操作系统。如果要确保跨平台时的正确行为，建议手动覆盖
+  此设置。
+
+
+示例
+====
+
+以下是 4 个使用 TCP/IP 协议的最小示例程序：一台服务器，它将收到的所有
+数据原样返回（仅服务于一个客户端），还有一个使用该服务器的客户端。注意
+，服务器必须按序执行 "socket()", "bind()", "listen()", "accept()" （可
+能需要重复执行 "accept()" 以服务多个客户端），而客户端仅需要按序执行
+"socket()", "connect()"。还须注意，服务器不在侦听套接字上发送
+"sendall()"/"recv()"，而是在 "accept()" 返回的新套接字上发送。
+
+前两个示例仅支持 IPv4。
+
+   # Echo server program
+   import socket
+
+   HOST = ''                 # Symbolic name meaning all available interfaces
+   PORT = 50007              # Arbitrary non-privileged port
+   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+       s.bind((HOST, PORT))
+       s.listen(1)
+       conn, addr = s.accept()
+       with conn:
+           print('Connected by', addr)
+           while True:
+               data = conn.recv(1024)
+               if not data: break
+               conn.sendall(data)
+
+   # Echo client program
+   import socket
+
+   HOST = 'daring.cwi.nl'    # The remote host
+   PORT = 50007              # The same port as used by the server
+   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+       s.connect((HOST, PORT))
+       s.sendall(b'Hello, world')
+       data = s.recv(1024)
+   print('Received', repr(data))
+
+下两个例子与上两个很像，但是同时支持 IPv4 和 IPv6。 服务端将监听第一个
+可用的地址族（它本应同时监听两个）。 在大多数支持 IPv6 的系统上，IPv6
+将有优先权并且服务端可能不会接受 IPv4 流量。 客户端将尝试连接到作为名
+称解析结果被返回的所有地址，并将流量发送给连接成功的第一个地址。
+
+   # Echo server program
+   import socket
+   import sys
+
+   HOST = None               # Symbolic name meaning all available interfaces
+   PORT = 50007              # Arbitrary non-privileged port
+   s = None
+   for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC,
+                                 socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
+       af, socktype, proto, canonname, sa = res
+       try:
+           s = socket.socket(af, socktype, proto)
+       except OSError as msg:
+           s = None
+           continue
+       try:
+           s.bind(sa)
+           s.listen(1)
+       except OSError as msg:
+           s.close()
+           s = None
+           continue
+       break
+   if s is None:
+       print('could not open socket')
+       sys.exit(1)
+   conn, addr = s.accept()
+   with conn:
+       print('Connected by', addr)
+       while True:
+           data = conn.recv(1024)
+           if not data: break
+           conn.send(data)
+
+   # Echo client program
+   import socket
+   import sys
+
+   HOST = 'daring.cwi.nl'    # The remote host
+   PORT = 50007              # The same port as used by the server
+   s = None
+   for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
+       af, socktype, proto, canonname, sa = res
+       try:
+           s = socket.socket(af, socktype, proto)
+       except OSError as msg:
+           s = None
+           continue
+       try:
+           s.connect(sa)
+       except OSError as msg:
+           s.close()
+           s = None
+           continue
+       break
+   if s is None:
+       print('could not open socket')
+       sys.exit(1)
+   with s:
+       s.sendall(b'Hello, world')
+       data = s.recv(1024)
+   print('Received', repr(data))
+
+下面的例子演示了如何在 Windows 上使用原始套接字编写一个非常简单的网络
+嗅探器。 这个例子需要管理员权限来修改接口:
+
+   import socket
+
+   # the public network interface
+   HOST = socket.gethostbyname(socket.gethostname())
+
+   # create a raw socket and bind it to the public interface
+   s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
+   s.bind((HOST, 0))
+
+   # Include IP headers
+   s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+
+   # receive all packages
+   s.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+
+   # receive a package
+   print(s.recvfrom(65565))
+
+   # disabled promiscuous mode
+   s.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
+
+下面的例子演示了如何使用 socket 接口与采用原始套接字协议的 CAN 网络进
+行通信。 要改为通过广播管理器协议来使用 CAN，则要用以下方式打开一个
+socket:
+
+   socket.socket(socket.AF_CAN, socket.SOCK_DGRAM, socket.CAN_BCM)
+
+在绑定 ("CAN_RAW") 或连接 ("CAN_BCM") socket 之后，你将可以在 socket
+对象上正常使用 "socket.send()" 以及 "socket.recv()" 操作（及同类操作）
+。
+
+最后一个例子可能需要特别的权限:
+
+   import socket
+   import struct
+
+
+   # CAN frame packing/unpacking (see 'struct can_frame' in <linux/can.h>)
+
+   can_frame_fmt = "=IB3x8s"
+   can_frame_size = struct.calcsize(can_frame_fmt)
+
+   def build_can_frame(can_id, data):
+       can_dlc = len(data)
+       data = data.ljust(8, b'\x00')
+       return struct.pack(can_frame_fmt, can_id, can_dlc, data)
+
+   def dissect_can_frame(frame):
+       can_id, can_dlc, data = struct.unpack(can_frame_fmt, frame)
+       return (can_id, can_dlc, data[:can_dlc])
+
+
+   # create a raw socket and bind it to the 'vcan0' interface
+   s = socket.socket(socket.AF_CAN, socket.SOCK_RAW, socket.CAN_RAW)
+   s.bind(('vcan0',))
+
+   while True:
+       cf, addr = s.recvfrom(can_frame_size)
+
+       print('Received: can_id=%x, can_dlc=%x, data=%s' % dissect_can_frame(cf))
+
+       try:
+           s.send(cf)
+       except OSError:
+           print('Error sending CAN frame')
+
+       try:
+           s.send(build_can_frame(0x01, b'\x01\x02\x03'))
+       except OSError:
+           print('Error sending CAN frame')
+
+多次运行一个示例，且每次执行之间等待时间过短，可能导致这个错误:
+
+   OSError: [Errno 98] Address already in use
+
+这是因为前一次运行使套接字处于 "TIME_WAIT" 状态，无法立即重用。
+
+要防止这种情况，需要设置一个 "socket" 标志 "socket.SO_REUSEADDR":
+
+   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+   s.bind((HOST, PORT))
+
+"SO_REUSEADDR" 标志告诉内核将处于 "TIME_WAIT" 状态的本地套接字重新使用
+，而不必等到固有的超时到期。
+
+参见:
+
+  关于套接字编程（C 语言）的介绍，请参阅以下文章：
+
+  * *An Introductory 4.3BSD Interprocess Communication Tutorial*，作者
+    Stuart Sechrest
+
+  * *An Advanced 4.3BSD Interprocess Communication Tutorial*，作者
+    Samuel J.  Leffler et al,
+
+  两篇文章都在 UNIX 开发者手册，补充文档 1（第 PS1:7 和 PS1:8 节）中。
+  那些特定于平台的参考资料，它们包含与套接字有关的各种系统调用，也是套
+  接字语义细节的宝贵信息来源。对于 Unix，请参考手册页。对于 Windows，
+  请参阅 WinSock（或 Winsock 2）规范。如果需要支持 IPv6 的 API，读者可
+  能希望参考 **RFC 3493**，标题为 Basic Socket Interface Extensions
+  for IPv6。

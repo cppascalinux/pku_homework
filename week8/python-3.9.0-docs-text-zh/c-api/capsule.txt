@@ -1,0 +1,129 @@
+Capsule 对象
+************
+
+有关使用这些对象的更多信息请参阅 给扩展模块提供C API。
+
+3.1 新版功能.
+
+PyCapsule
+
+   这个 "PyObject" 的子类型代表一个隐藏的值，适用于需要将隐藏值（作为
+   "void*" 指针）通过 Python 代码传递到其他 C 代码的 C 扩展模块。 它常
+   常被用来让在一个模块中定义的 C 函数指针在其他模块中可用，这样就可以
+   使用常规导入机制来访问在动态加载的模块中定义的 C API。
+
+PyCapsule_Destructor
+
+   Capsule 的析构器回调的类型。 定义如下：
+
+      typedef void (*PyCapsule_Destructor)(PyObject *);
+
+   参阅 "PyCapsule_New()" 来获取 PyCapsule_Destructor 返回值的语义。
+
+int PyCapsule_CheckExact(PyObject *p)
+
+   如果参数是一个 "PyCapsule" 则返回 True
+
+PyObject* PyCapsule_New(void *pointer, const char *name, PyCapsule_Destructor destructor)
+    *Return value: New reference.*
+
+   创建一个封装了 *pointer* 的 "PyCapsule"。 *pointer* 参考可以不为
+   "NULL"。
+
+   在失败时设置一个异常并返回 "NULL"。
+
+   字符串 *name* 可以是 "NULL" 或是一个指向有效的 C 字符串的指针。 如
+   果不为 "NULL"，则此字符串必须比 capsule 长（虽然也允许在
+   *destructor* 中释放它。）
+
+   如果 *destructor* 参数不为 "NULL"，则当它被销毁时将附带 capsule 作
+   为参数来调用。
+
+   如果此 capsule 将被保存为一个模块的属性，则 *name* 应当被指定为
+   "modulename.attributename"。 这将允许其他模块使用
+   "PyCapsule_Import()" 来导入此 capsule。
+
+void* PyCapsule_GetPointer(PyObject *capsule, const char *name)
+
+   提取保存在 capsule 中的 *pointer*。 在失败时设置一个异常并返回
+   "NULL"。
+
+   *name* 形参必须与保存在 capsule 中的名称进行精确比较。 如果保存在
+   capsule 中的名称为 "NULL"，则传入的 *name* 也必须为 "NULL"。 Python
+   会使用 C 函数 "strcmp()" 来比较 capsule 名称。
+
+PyCapsule_Destructor PyCapsule_GetDestructor(PyObject *capsule)
+
+   返回保存在 capsule 中的当前析构器。 在失败时设置一个异常并返回
+   "NULL"。
+
+   capsule 具有 "NULL" 析构器是合法的。 这会使得 "NULL" 返回码有些歧义
+   ；请使用 "PyCapsule_IsValid()" 或 "PyErr_Occurred()" 来消除歧义。
+
+void* PyCapsule_GetContext(PyObject *capsule)
+
+   返回保存在 capsule 中的当前上下文。 在失败时设置一个异常并返回
+   "NULL"。
+
+   capsule 具有 "NULL" 上下文是全法的。 这会使得 "NULL" 返回码有些歧义
+   ；请使用 "PyCapsule_IsValid()" 或 "PyErr_Occurred()" 来消除歧义。
+
+const char* PyCapsule_GetName(PyObject *capsule)
+
+   返回保存在 capsule 中的当前名称。 在失败时设置一个异常并返回 "NULL"
+   。
+
+   capsule 具有 "NULL" 名称是合法的。 这会使得 "NULL" 返回码有些歧义；
+   请使用 "PyCapsule_IsValid()" 或 "PyErr_Occurred()" 来消除歧义。
+
+void* PyCapsule_Import(const char *name, int no_block)
+
+   从一个模块的 capsule 属性导入指向 C 对象的指针。 *name* 形参应当指
+   定属性的完整名称，与 "module.attribute" 中的一致。 保存在 capsule
+   中的 *name* 必须完全匹配此字符串。 如果 *no_block* 为真值，则以无阻
+   塞模式导入模块 (使用 "PyImport_ImportModuleNoBlock()")。 如果
+   *no_block* 为假值，则以传统模式导入模块 (使用
+   "PyImport_ImportModule()")。
+
+   成功时返回 capsule 的内部 *指针*。  在失败时设置一个异常并返回
+   "NULL"。
+
+int PyCapsule_IsValid(PyObject *capsule, const char *name)
+
+   确定 *capsule* 是否是一个有效的。 有效的 capsule 必须不为 "NULL"，
+   传递 "PyCapsule_CheckExact()"，在其中存储一个不为 "NULL" 的指针，并
+   且其内部名称与 *name* 形参相匹配。 （请参阅
+   "PyCapsule_GetPointer()" 了解如何对 capsule 名称进行比较的有关信息
+   。）
+
+   换句话说，如果 "PyCapsule_IsValid()" 返回真值，则任何对访问器（以
+   "PyCapsule_Get()" 开头的任何函数）的调用都保证会成功。
+
+   如果对象有效并且匹配传入的名称则返回非零值。 否则返回 "0"。 此函数
+   一定不会失败。
+
+int PyCapsule_SetContext(PyObject *capsule, void *context)
+
+   将 *capsule* 内部的上下文指针设为 *context*。
+
+   成功时返回 "0"。 失败时返回非零值并设置一个异常。
+
+int PyCapsule_SetDestructor(PyObject *capsule, PyCapsule_Destructor destructor)
+
+   将 *capsule* 内部的析构器设为 *destructor*。
+
+   成功时返回 "0"。 失败时返回非零值并设置一个异常。
+
+int PyCapsule_SetName(PyObject *capsule, const char *name)
+
+   将 *capsule* 内部的名称设为 *name*。 如果不为 "NULL"，则名称的存在
+   期必须比 capsule 更长。 如果之前保存在 capsule 中的 *name* 不为
+   "NULL"，则不会尝试释放它。
+
+   成功时返回 "0"。 失败时返回非零值并设置一个异常。
+
+int PyCapsule_SetPointer(PyObject *capsule, void *pointer)
+
+   将 *capsule* 内部的空指针设为 *pointer*。 指针不可为 "NULL"。
+
+   成功时返回 "0"。 失败时返回非零值并设置一个异常。

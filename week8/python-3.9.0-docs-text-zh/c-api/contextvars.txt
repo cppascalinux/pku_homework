@@ -1,0 +1,125 @@
+上下文变量对象
+**************
+
+注解:
+
+  在 3.7.1 版更改: 在 Python 3.7.1 中，所有上下文变量 C API 的签名被
+  **更改** 为使用 "PyObject" 指针而不是 "PyContext", "PyContextVar" 以
+  及 "PyContextToken"，例如:
+
+     // in 3.7.0:
+     PyContext *PyContext_New(void);
+
+     // in 3.7.1+:
+     PyObject *PyContext_New(void);
+
+  请参阅 bpo-34762 了解详情。
+
+3.7 新版功能.
+
+本节深入介绍了 "contextvars" 模块的公用 C API。
+
+PyContext
+
+   用于表示 "contextvars.Context" 对象的 C 结构体。
+
+PyContextVar
+
+   用于表示 "contextvars.ContextVar" 对象的 C 结构体。
+
+PyContextToken
+
+   用于表示 "contextvars.Token" 对象的 C 结构体。
+
+PyTypeObject PyContext_Type
+
+   表示 *context* 类型的类型对象。
+
+PyTypeObject PyContextVar_Type
+
+   表示 *context variable* 类型的类型对象。
+
+PyTypeObject PyContextToken_Type
+
+   表示 *context variable token* 类型的类型对象。
+
+类型检查宏：
+
+int PyContext_CheckExact(PyObject *o)
+
+   如果 *o* 的类型为 "PyContext_Type" 则返回真值。 *o* 必须不为 "NULL"
+   。 此函数总是会成功执行。
+
+int PyContextVar_CheckExact(PyObject *o)
+
+   如果 *o* 的类型为 "PyContextVar_Type" 则返回真值。 *o* 必须不为
+   "NULL"。 此函数总是会成功执行。
+
+int PyContextToken_CheckExact(PyObject *o)
+
+   如果 *o* 的类型为 "PyContextToken_Type" 则返回真值。 *o* 必须不为
+   "NULL"。 此函数总是会成功执行。
+
+上下文对象管理函数:
+
+PyObject *PyContext_New(void)
+    *Return value: New reference.*
+
+   创建一个新的空上下文对象。 如果发生错误则返回 "NULL"。
+
+PyObject *PyContext_Copy(PyObject *ctx)
+    *Return value: New reference.*
+
+   创建所传入的 *ctx* 上下文对象的浅拷贝。 如果发生错误则返回 "NULL"。
+
+PyObject *PyContext_CopyCurrent(void)
+    *Return value: New reference.*
+
+   创建当前线程上下文的浅拷贝。 如果发生错误则返回 "NULL"。
+
+int PyContext_Enter(PyObject *ctx)
+
+   将 *ctx* 设为当前线程的当前上下文。 成功时返回 "0"，出错时返回 "-1"
+   。
+
+int PyContext_Exit(PyObject *ctx)
+
+   取消激活 *ctx* 上下文并将之前的上下文恢复为当前线程的当前上下文。
+   成功时返回 "0"，出错时返回 "-1"。
+
+上下文变量函数:
+
+PyObject *PyContextVar_New(const char *name, PyObject *def)
+    *Return value: New reference.*
+
+   创建一个新的' ' ContextVar' '对象。形参*name*用于自我检查和调试目的
+   。可选形参*def*为上下文变量指定默认值。如果发生错误，这个函数返回'
+   ' NULL ' '。
+
+int PyContextVar_Get(PyObject *var, PyObject *default_value, PyObject **value)
+
+   获取上下文变量的值。如果在查找过程中发生错误，返回' ' -1 ' '，如果
+   没有发生错误，无论是否找到值，都返回' ' 0 ' '，
+
+   如果找到上下文变量，*value* 将是指向它的指针。 如果上下文变量 *没有
+   * 找到，*value* 将指向：
+
+   * *default_value*，如果非``NULL``;
+
+   * *var* 的默认值，如果不是 "NULL"；
+
+   * "NULL"
+
+   如果找到该值，函数将创建对它的新引用。
+
+PyObject *PyContextVar_Set(PyObject *var, PyObject *value)
+    *Return value: New reference.*
+
+   在当前上下文中将 *var* 的值设为 *value*。 返回指向 "PyObject" 对象
+   的指针，如果发生错误则返回 "NULL"。
+
+int PyContextVar_Reset(PyObject *var, PyObject *token)
+
+   将上下文变量 *var* 的状态重置为它在返回 *token* 的
+   "PyContextVar_Set()" 被调用之前的状态。 此函数成功时返回 "0"，出错
+   时返回 "-1"。

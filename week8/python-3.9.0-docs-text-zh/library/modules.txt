@@ -1,0 +1,67 @@
+导入模块
+********
+
+本章中介绍的模块提供了导入其他Python模块和挂钩以自定义导入过程的新方法
+。
+
+本章描述的完整模块列表如下：
+
+* "zipimport" --- 从 Zip 存档中导入模块
+
+  * zipimporter 对象
+
+  * 示例
+
+* "pkgutil" --- 包扩展工具
+
+* "modulefinder" --- 查找脚本使用的模块
+
+  * "ModuleFinder" 的示例用法
+
+* "runpy" --- Locating and executing Python modules
+
+* "importlib" --- "import" 的实现
+
+  * 概述
+
+  * 函数
+
+  * "importlib.abc" —— 关于导入的抽象基类
+
+  * "importlib.resources" -- 资源
+
+  * "importlib.machinery" -- Importers and path hooks
+
+  * "importlib.util" -- Utility code for importers
+
+  * 示例
+
+    * Importing programmatically
+
+    * Checking if a module can be imported
+
+    * Importing a source file directly
+
+    * Setting up an importer
+
+    * Approximating "importlib.import_module()"
+
+* Using "importlib.metadata"
+
+  * 概述
+
+  * 可用 API
+
+    * Entry points
+
+    * Distribution metadata
+
+    * Distribution versions
+
+    * Distribution files
+
+    * Distribution requirements
+
+  * Distributions
+
+  * Extending the search algorithm
