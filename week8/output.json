@@ -1,0 +1,1475 @@
+{
+	"title": "faq",
+	"zh-title": "Python 常见问题",
+	"level": 1,
+	"content": [
+		{
+			"code": "001",
+			"title": "General Python FAQ",
+			"zh-title": "Python常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "General Information",
+					"zh-title": "一般信息",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "What is Python?",
+							"zh-title": "什么是 Python？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "What is the Python Software Foundation?",
+							"zh-title": "什么是 Python 软件基金会？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "Are there copyright restrictions on the use of Python?",
+							"zh-title": "使用 Python 是否存在版权限制？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "Why was Python created in the first place?",
+							"zh-title": "创造 Python 的最初理由是什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "What is Python good for?",
+							"zh-title": "Python 适合做什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "How does the Python version numbering scheme work?",
+							"zh-title": "Python 版本的编号形式是怎样的？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "How do I obtain a copy of the Python source?",
+							"zh-title": "我应如何获取一份 Python 源代码的副本？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "008",
+							"title": "How do I get documentation on Python?",
+							"zh-title": "我应如何获取 Python 的文档？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "009",
+							"title": "I've never programmed before. Is there a Python tutorial?",
+							"zh-title": "我之前从未接触过编程。 哪里有 Python 的教程？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "010",
+							"title": "Is there a newsgroup or mailing list devoted to Python?",
+							"zh-title": "是否有专门针对 Python 的新闻组或邮件列表？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "011",
+							"title": "How do I get a beta test version of Python?",
+							"zh-title": "我应如何获取 Python 的公开测试版本？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "012",
+							"title": "How do I submit bug reports and patches for Python?",
+							"zh-title": "我应如何为 Python 提交错误报告和补丁？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "013",
+							"title": "Are there any published articles about Python that I can reference?",
+							"zh-title": "是否有任何公开发表的 Python 相关文章可以供我参考引用？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "014",
+							"title": "Are there any books on Python?",
+							"zh-title": "是否有任何 Python 相关的书籍？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "015",
+							"title": "Where in the world is www.python.org located?",
+							"zh-title": "www.python.org 具体位于世界上的哪个地点？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "016",
+							"title": "Why is it called Python?",
+							"zh-title": "为何命名为 Python？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "017",
+							"title": "Do I have to like \"Monty Python's Flying Circus\"?",
+							"zh-title": "我必须喜欢 \"Monty Python 的飞行马戏团\" 吗？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "002",
+					"title": "Python in the real world",
+					"zh-title": "现实世界中的 Python",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How stable is Python?",
+							"zh-title": "Python 有多稳定？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How many people are using Python?",
+							"zh-title": "有多少人在使用 Python？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "Have any significant projects been done in Python?",
+							"zh-title": "有哪些重要的项目是用 Python 开发的？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "What new developments are expected for Python in the future?",
+							"zh-title": "在未来可以期待 Python 将有什么新进展？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "Is it reasonable to propose incompatible changes to Python?",
+							"zh-title": "提议对 Python 加入不兼容的更改是否合理？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "Is Python a good language for beginning programmers?",
+							"zh-title": "Python 是一种对编程初学者友好的语言吗？",
+							"level": 4,
+							"content": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "002",
+			"title": "Programming FAQ",
+			"zh-title": "编程常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "General Questions",
+					"zh-title": "一般问题",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "Is there a source code level debugger with breakpoints, single-stepping, etc.?",
+							"zh-title": "Python 有没有提供断点与单步调试等功能的，源码层次的调试器？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "Are there tools to help find bugs or perform static analysis?",
+							"zh-title": "是否有能帮助寻找漏洞或执行静态分析的工具？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How can I create a stand-alone binary from a Python script?",
+							"zh-title": "我如何能够通过一个 Python 脚本创建一个独立运行的二进制文件？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "Are there coding standards or a style guide for Python programs?",
+							"zh-title": "是否有 Python 程序规范代码标准或风格指南？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "002",
+					"title": "Core Language",
+					"zh-title": "核心语言",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "Why am I getting an UnboundLocalError when the variable has a value?",
+							"zh-title": "当变量有值时，为什么会出现UnboundLocalError？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "What are the rules for local and global variables in Python?",
+							"zh-title": "Python中的局部变量和全局变量有哪些规则？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "Why do lambdas defined in a loop with different values all return the same result?",
+							"zh-title": "为什么在具有不同值的循环中定义的lambdas都返回相同的结果？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "How do I share global variables across modules?",
+							"zh-title": "如何跨模块共享全局变量？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "What are the \"best practices\" for using import in a module?",
+							"zh-title": "导入模块的“最佳实践”是什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "Why are default values shared between objects?",
+							"zh-title": "为什么对象之间会共享默认值？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "How can I pass optional or keyword parameters from one function to another?",
+							"zh-title": "如何将可选参数或关键字参数从一个函数传递到另一个函数？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "008",
+							"title": "What is the difference between arguments and parameters?",
+							"zh-title": "形参和实参之间有什么区别？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "009",
+							"title": "Why did changing list 'y' also change list 'x'?",
+							"zh-title": "为什么更改列表 'y' 也会更改列表 'x'？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "010",
+							"title": "How do I write a function with output parameters (call by reference)?",
+							"zh-title": "如何编写带输出参数的函数（通过引用调用）？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "011",
+							"title": "How do you make a higher order function in Python?",
+							"zh-title": "如何在Python中创建高阶函数？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "012",
+							"title": "How do I copy an object in Python?",
+							"zh-title": "如何在Python中复制对象？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "013",
+							"title": "How can I find the methods or attributes of an object?",
+							"zh-title": "如何找到对象的方法或属性？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "014",
+							"title": "How can my code discover the name of an object?",
+							"zh-title": "我的代码如何才能发现对象的名称？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "015",
+							"title": "What's up with the comma operator's precedence?",
+							"zh-title": "逗号运算符的优先级是什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "016",
+							"title": "Is there an equivalent of C's \"?:\" ternary operator?",
+							"zh-title": "是否有与 C 的 \"?:\" 三目运算符等价的东西？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "017",
+							"title": "Is it possible to write obfuscated one-liners in Python?",
+							"zh-title": "是否可以用Python编写混淆的单行程序?",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "018",
+							"title": "What does the slash(/) in the parameter list of a function mean?",
+							"zh-title": "函数参数列表中的斜杠（/）是什么意思？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "003",
+					"title": "Numbers and strings",
+					"zh-title": "数字和字符串",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I specify hexadecimal and octal integers?",
+							"zh-title": "如何指定十六进制和八进制整数？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "Why does -22 // 10 return -3?",
+							"zh-title": "为什么-22 // 10返回-3？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I convert a string to a number?",
+							"zh-title": "如何将字符串转换为数字？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "How do I convert a number to a string?",
+							"zh-title": "如何将数字转换为字符串？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "How do I modify a string in place?",
+							"zh-title": "如何修改字符串？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "How do I use strings to call functions/methods?",
+							"zh-title": "如何使用字符串调用函数/方法？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "Is there an equivalent to Perl's chomp() for removing trailing newlines from strings?",
+							"zh-title": "是否有与Perl 的chomp() 等效的方法，用于从字符串中删除尾随换行符？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "008",
+							"title": "Is there a scanf() or sscanf() equivalent?",
+							"zh-title": "是否有 scanf() 或 sscanf() 的对应物？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "009",
+							"title": "What does 'UnicodeDecodeError' or 'UnicodeEncodeError' error  mean?",
+							"zh-title": "'UnicodeDecodeError' 或 'UnicodeEncodeError' 错误是什么意思？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "004",
+					"title": "Performance",
+					"zh-title": "性能",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "My program is too slow. How do I speed it up?",
+							"zh-title": "我的程序太慢了。该如何加快速度？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "What is the most efficient way to concatenate many strings together?",
+							"zh-title": "将多个字符串连接在一起的最有效方法是什么？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "005",
+					"title": "Sequences (Tuples/Lists)",
+					"zh-title": "序列（元组/列表）",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I convert between tuples and lists?",
+							"zh-title": "如何在元组和列表之间进行转换？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "What's a negative index?",
+							"zh-title": "什么是负数序号？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I iterate over a sequence in reverse order?",
+							"zh-title": "如何以相反的顺序迭代序列？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "How do you remove duplicates from a list?",
+							"zh-title": "如何从列表中删除重复项？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "How do you remove multiple items from a list",
+							"zh-title": "如何从列表中删除多个项？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "How do you make an array in Python?",
+							"zh-title": "如何在Python中创建数组？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "How do I create a multidimensional list?",
+							"zh-title": "如何创建多维列表？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "008",
+							"title": "How do I apply a method to a sequence of objects?",
+							"zh-title": "如何将方法应用于一系列对象？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "009",
+							"title": "Why does a_tuple[i] += ['item'] raise an exception when the addition works?",
+							"zh-title": "为什么 a_tuple[i] += ['item'] 会在执行加法时引发异常？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "010",
+							"title": "I want to do a complicated sort: can you do a Schwartzian Transform in Python?",
+							"zh-title": "我想做一个复杂的排序：你能用Python做一个Schwartzian变换吗？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "011",
+							"title": "How can I sort one list by values from another list?",
+							"zh-title": "如何按其他列表中的值对一个列表进行排序？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "006",
+					"title": "Objects",
+					"zh-title": "对象",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "What is a class?",
+							"zh-title": "什么是类？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "What is a method?",
+							"zh-title": "什么是方法？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "What is self?",
+							"zh-title": "什么是 self ？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "How do I check if an object is an instance of a given class or of a subclass of it?",
+							"zh-title": "如何检查对象是否为给定类或其子类的一个实例？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "What is delegation?",
+							"zh-title": "什么是委托？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "How do I call a method defined in a base class from a derived class that overrides it?",
+							"zh-title": "如何从覆盖基类的派生类调用基类中定义的方法?",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "How can I organize my code to make it easier to change the base class?",
+							"zh-title": "如何组织代码以便更改基类？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "008",
+							"title": "How do I create static class data and static class methods?",
+							"zh-title": "如何创建静态类数据和静态类方法？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "009",
+							"title": "How can I overload constructors (or methods) in Python?",
+							"zh-title": "如何在Python中重载构造函数（或方法）？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "010",
+							"title": "I try to use __spam and I get an error about _SomeClassName__spam.",
+							"zh-title": "我尝试使用 __spam ，但是得到一个关于 _SomeClassName__spam 的错误信息。",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "011",
+							"title": "My class defines __del__ but it is not called when I delete the object.",
+							"zh-title": "类定义了 __del__ 方法，但是删除对象时没有调用它。",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "012",
+							"title": "How do I get a list of all instances of a given class?",
+							"zh-title": "如何获取给定类的所有实例的列表？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "013",
+							"title": "Why does the result of \"id()\" appear to be not unique?",
+							"zh-title": "为什么 \"id()\" 的结果看起来不是唯一的？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "007",
+					"title": "Modules",
+					"zh-title": "模块",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I create a .pyc file?",
+							"zh-title": "如何创建 .pyc 文件？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How do I find the current module name?",
+							"zh-title": "如何找到当前模块名称？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How can I have modules that mutually import each other?",
+							"zh-title": "如何让模块相互导入？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "__import__('x.y.z') returns <module 'x'>; how do I get z?",
+							"zh-title": "__import__('x.y.z') 返回 <module 'x'>; 如何获取z?",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "When I edit an imported module and reimport it, the changes don't show up.  Why does this happen?",
+							"zh-title": "当我编辑了导入过的模块并重新导入它时，这些变化没有显示出来。为什么会这样？",
+							"level": 4,
+							"content": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "003",
+			"title": "Design and History FAQ",
+			"zh-title": "设计和历史常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "Why does Python use indentation for grouping of statements?",
+					"zh-title": "为什么Python使用缩进来分组语句？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "002",
+					"title": "Why am I getting strange results with simple arithmetic operations?",
+					"zh-title": "为什么简单的算术运算得到奇怪的结果？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "003",
+					"title": "Why are floating-point calculations so inaccurate?",
+					"zh-title": "为什么浮点计算不准确？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "004",
+					"title": "Why are Python strings immutable?",
+					"zh-title": "为什么Python字符串是不可变的？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "005",
+					"title": "Why must 'self' be used explicitly in method definitions and calls?",
+					"zh-title": "为什么必须在方法定义和调用中显式使用“self”？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "006",
+					"title": "Why can't I use an assignment in an expression?",
+					"zh-title": "为什么不能在表达式中赋值？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "007",
+					"title": "Why does Python use methods for some functionality (e.g. list.index()) but functions for other (e.g. len(list))?",
+					"zh-title": "为什么Python对某些功能（例如list.index()）使用方法来实现，而其他功能（例如len(List)）使用函数实现？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "008",
+					"title": "Why is join() a string method instead of a list or tuple method?",
+					"zh-title": "为什么 join()是一个字符串方法而不是列表或元组方法？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "009",
+					"title": "How fast are exceptions?",
+					"zh-title": "异常有多快？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "010",
+					"title": "Why isn't there a switch or case statement in Python?",
+					"zh-title": "为什么Python中没有switch或case语句？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "011",
+					"title": "Can't you emulate threads in the interpreter instead of relying on an OS-specific thread implementation?",
+					"zh-title": "难道不能在解释器中模拟线程，而非得依赖特定于操作系统的线程实现吗？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "012",
+					"title": "Why can't lambda expressions contain statements?",
+					"zh-title": "为什么lambda表达式不能包含语句？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "013",
+					"title": "Can Python be compiled to machine code, C or some other language?",
+					"zh-title": "可以将Python编译为机器代码，C或其他语言吗？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "014",
+					"title": "How does Python manage memory?",
+					"zh-title": "Python如何管理内存？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "015",
+					"title": "Why doesn't CPython use a more traditional garbage collection scheme?",
+					"zh-title": "为什么CPython不使用更传统的垃圾回收方案？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "016",
+					"title": "Why isn't all memory freed when CPython exits?",
+					"zh-title": "CPython退出时为什么不释放所有内存？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "017",
+					"title": "Why are there separate tuple and list data types?",
+					"zh-title": "为什么有单独的元组和列表数据类型？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "018",
+					"title": "How are lists implemented in CPython?",
+					"zh-title": "列表是如何在CPython中实现的？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "019",
+					"title": "How are dictionaries implemented in CPython?",
+					"zh-title": "字典是如何在CPython中实现的？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "020",
+					"title": "Why must dictionary keys be immutable?",
+					"zh-title": "为什么字典key必须是不可变的？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "021",
+					"title": "Why doesn't list.sort() return the sorted list?",
+					"zh-title": "为什么 list.sort() 没有返回排序列表？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "022",
+					"title": "How do you specify and enforce an interface spec in Python?",
+					"zh-title": "如何在Python中指定和实施接口规范？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "023",
+					"title": "Why is there no goto?",
+					"zh-title": "为什么没有goto？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "024",
+					"title": "Why can't raw strings (r-strings) end with a backslash?",
+					"zh-title": "为什么原始字符串（r-strings）不能以反斜杠结尾？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "025",
+					"title": "Why doesn't Python have a \"with\" statement for attribute assignments?",
+					"zh-title": "为什么Python没有属性赋值的“with”语句？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "026",
+					"title": "Why are colons required for the if/while/def/class statements?",
+					"zh-title": "为什么 if/while/def/class语句需要冒号？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "027",
+					"title": "Why does Python allow commas at the end of lists and tuples?",
+					"zh-title": "为什么Python在列表和元组的末尾允许使用逗号？",
+					"level": 3,
+					"content": []
+				}
+			]
+		},
+		{
+			"code": "004",
+			"title": "Library and Extension FAQ",
+			"zh-title": "代码库和插件 FAQ",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "General Library Questions",
+					"zh-title": "通用的代码库问题",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I find a module or application to perform task X?",
+							"zh-title": "如何找到可以用来做 XXX 的模块或应用？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "Where is the math.py (socket.py, regex.py, etc.) source file?",
+							"zh-title": "math.py（socket.py，regex.py 等）的源文件在哪？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I make a Python script executable on Unix?",
+							"zh-title": "在 Unix 中怎样让 Python 脚本可执行？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "Is there a curses/termcap package for Python?",
+							"zh-title": "Python 中有 curses/termcap 包吗？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "Is there an equivalent to C's onexit() in Python?",
+							"zh-title": "Python 中存在类似 C 的 onexit() 函数的东西吗？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "Why don't my signal handlers work?",
+							"zh-title": "为什么我的信号处理函数不能工作？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "002",
+					"title": "Common tasks",
+					"zh-title": "通用任务",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I test a Python program or component?",
+							"zh-title": "怎样测试 Python 程序或组件？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How do I create documentation from doc strings?",
+							"zh-title": "怎样用 docstring 创建文档？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I get a single keypress at a time?",
+							"zh-title": "怎样一次只获取一个按键？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "003",
+					"title": "Threads",
+					"zh-title": "线程相关",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I program using threads?",
+							"zh-title": "程序中怎样使用线程？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "None of my threads seem to run: why?",
+							"zh-title": "我的线程都没有运行，为什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I parcel out work among a bunch of worker threads?",
+							"zh-title": "如何将任务分配给多个工作线程？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "What kinds of global value mutation are thread-safe?",
+							"zh-title": "怎样修改全局变量是线程安全的？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "Can't we get rid of the Global Interpreter Lock?",
+							"zh-title": "不能删除全局解释器锁吗？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "004",
+					"title": "Input and Output",
+					"zh-title": "输入输出",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I delete a file? (And other file questions...)",
+							"zh-title": "怎样删除文件？（以及其他文件相关的问题……）",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How do I copy a file?",
+							"zh-title": "怎样复制文件？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "How do I read (or write) binary data?",
+							"zh-title": "怎样读取（或写入）二进制数据？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "I can't seem to use os.read() on a pipe created with os.popen(); why?",
+							"zh-title": "似乎 os.popen() 创建的管道不能使用 os.read()，这是为什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "How do I access the serial (RS232) port?",
+							"zh-title": "怎样访问（RS232）串口？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "Why doesn't closing sys.stdout (stdin, stderr) really close it?",
+							"zh-title": "为什么关闭 sys.stdout（stdin，stderr）并不会真正关掉它？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "005",
+					"title": "Network/Internet Programming",
+					"zh-title": "网络 / Internet 编程",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "What WWW tools are there for Python?",
+							"zh-title": "Python 中的 WWW 工具是什么？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How can I mimic CGI form submission (METHOD=POST)?",
+							"zh-title": "怎样模拟发送 CGI 表单（METHOD=POST）？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "What module should I use to help with generating HTML?",
+							"zh-title": "生成 HTML 需要使用什么模块？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "How do I send mail from a Python script?",
+							"zh-title": "怎样使用 Python 脚本发送邮件？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "How do I avoid blocking in the connect() method of a socket?",
+							"zh-title": "socket 的 connect() 方法怎样避免阻塞？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "006",
+					"title": "Databases",
+					"zh-title": "数据库",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "Are there any interfaces to database packages in Python?",
+							"zh-title": "Python 中有数据库包的接口吗？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "How do you implement persistent objects in Python?",
+							"zh-title": "在 Python 中如何实现持久化对象？",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "007",
+					"title": "Mathematics and Numerics",
+					"zh-title": "数学和数字",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I generate random numbers in Python?",
+							"zh-title": "Python 中怎样生成随机数？",
+							"level": 4,
+							"content": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "005",
+			"title": "Extending/Embedding FAQ",
+			"zh-title": "扩展/嵌入常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "Can I create my own functions in C?",
+					"zh-title": "可以使用 C 语言创建自己的函数吗？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "002",
+					"title": "Can I create my own functions in C++?",
+					"zh-title": "可以使用 C++ 语言创建自己的函数吗？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "003",
+					"title": "Writing C is hard; are there any alternatives?",
+					"zh-title": "C很难写，有没有其他选择？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "004",
+					"title": "How can I execute arbitrary Python statements from C?",
+					"zh-title": "如何在 C 中执行任意 Python 语句？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "005",
+					"title": "How can I evaluate an arbitrary Python expression from C?",
+					"zh-title": "如何在 C 中对任意 Python 表达式求值？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "006",
+					"title": "How do I extract C values from a Python object?",
+					"zh-title": "如何从Python对象中提取C的值？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "007",
+					"title": "How do I use Py_BuildValue() to create a tuple of arbitrary length?",
+					"zh-title": "如何使用Py_BuildValue()创建任意长度的元组？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "008",
+					"title": "How do I call an object's method from C?",
+					"zh-title": "如何从C调用对象的方法？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "009",
+					"title": "How do I catch the output from PyErr_Print() (or anything that prints to stdout/stderr)?",
+					"zh-title": "如何捕获PyErr_Print()（或打印到stdout / stderr的任何内容）的输出？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "010",
+					"title": "How do I access a module written in Python from C?",
+					"zh-title": "如何从C访问用Python编写的模块？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "011",
+					"title": "How do I interface to C++ objects from Python?",
+					"zh-title": "如何在 Python 中对接 C ++ 对象？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "012",
+					"title": "I added a module using the Setup file and the make fails; why?",
+					"zh-title": "我使用Setup文件添加了一个模块，为什么make失败了？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "013",
+					"title": "How do I debug an extension?",
+					"zh-title": "如何调试扩展？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "014",
+					"title": "I want to compile a Python module on my Linux system, but some files are missing. Why?",
+					"zh-title": "我想在Linux系统上编译一个Python模块，但是缺少一些文件。为什么?",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "015",
+					"title": "How do I tell \"incomplete input\" from \"invalid input\"?",
+					"zh-title": "如何区分“输入不完整”和“输入无效”？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "016",
+					"title": "How do I find undefined g++ symbols __builtin_new or __pure_virtual?",
+					"zh-title": "如何找到未定义的g++符号__builtin_new或__pure_virtual？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "017",
+					"title": "Can I create an object class with some methods implemented in C and others in Python (e.g. through inheritance)?",
+					"zh-title": "能否创建一个对象类，其中部分方法在C中实现，而其他方法在Python中实现（例如通过继承）？",
+					"level": 3,
+					"content": []
+				}
+			]
+		},
+		{
+			"code": "006",
+			"title": "Python on Windows FAQ",
+			"zh-title": "Python在Windows上的常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "How do I run a Python program under Windows?",
+					"zh-title": "我怎样在Windows下运行一个Python程序？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "002",
+					"title": "How do I make Python scripts executable?",
+					"zh-title": "我怎么让 Python 脚本可执行？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "003",
+					"title": "Why does Python sometimes take so long to start?",
+					"zh-title": "为什么有时候 Python 程序会启动缓慢？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "004",
+					"title": "How do I make an executable from a Python script?",
+					"zh-title": "我怎样使用 Python 脚本制作可执行文件？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "005",
+					"title": "Is a \"*.pyd\" file the same as a DLL?",
+					"zh-title": "\"*.pyd\" 文件和 DLL 文件相同吗？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "006",
+					"title": "How can I embed Python into a Windows application?",
+					"zh-title": "我怎样将 Python 嵌入一个 Windows 程序？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "007",
+					"title": "How do I keep editors from inserting tabs into my Python source?",
+					"zh-title": "如何让编辑器不要在我的 Python 源代码中插入 tab ？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "008",
+					"title": "How do I check for a keypress without blocking?",
+					"zh-title": "如何在不阻塞的情况下检查按键？",
+					"level": 3,
+					"content": []
+				}
+			]
+		},
+		{
+			"code": "007",
+			"title": "Graphic User Interface FAQ",
+			"zh-title": "图形用户界面（GUI）常见问题",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "General GUI Questions",
+					"zh-title": "图形界面常见问题",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "002",
+					"title": "What platform-independent GUI toolkits exist for Python?",
+					"zh-title": "Python 是否有平台无关的图形界面工具包？",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "Tkinter",
+							"zh-title": "Tkinter",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "wxWidgets",
+							"zh-title": "wxWidgets",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "Qt",
+							"zh-title": "Qt",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "004",
+							"title": "Gtk+",
+							"zh-title": "Gtk+",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "005",
+							"title": "Kivy",
+							"zh-title": "Kivy",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "006",
+							"title": "FLTK",
+							"zh-title": "FLTK",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "007",
+							"title": "OpenGL",
+							"zh-title": "OpenGL",
+							"level": 4,
+							"content": []
+						}
+					]
+				},
+				{
+					"code": "003",
+					"title": "What platform-specific GUI toolkits exist for Python?",
+					"zh-title": "有哪些Python的GUI工具是某个平台专用的？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "004",
+					"title": "Tkinter questions",
+					"zh-title": "有关Tkinter的问题",
+					"level": 3,
+					"content": [
+						{
+							"code": "001",
+							"title": "How do I freeze Tkinter applications?",
+							"zh-title": "我怎样“冻结”Tkinter程序？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "002",
+							"title": "Can I have Tk events handled while waiting for I/O?",
+							"zh-title": "在等待 I/O 操作时能够处理 Tk 事件吗？",
+							"level": 4,
+							"content": []
+						},
+						{
+							"code": "003",
+							"title": "I can't get key bindings to work in Tkinter: why?",
+							"zh-title": "在Tkinter中键绑定不工作：为什么？",
+							"level": 4,
+							"content": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "008",
+			"title": "\"Why is Python Installed on my Computer?\" FAQ",
+			"zh-title": "“为什么我的电脑上安装了 Python ？”",
+			"level": 2,
+			"content": [
+				{
+					"code": "001",
+					"title": "What is Python?",
+					"zh-title": "什么是Python？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "002",
+					"title": "Why is Python installed on my machine?",
+					"zh-title": "为什么我的电脑上安装了 Python ？",
+					"level": 3,
+					"content": []
+				},
+				{
+					"code": "003",
+					"title": "Can I delete Python?",
+					"zh-title": "我能删除 Python 吗？",
+					"level": 3,
+					"content": []
+				}
+			]
+		}
+	]
+}
