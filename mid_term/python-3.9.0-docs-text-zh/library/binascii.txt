@@ -1,0 +1,173 @@
+"binascii" --- 二进制和 ASCII 码互转
+************************************
+
+======================================================================
+
+"binascii" 模块包含很多在二进制和二进制表示的各种ASCII码之间转换的方法
+。 通常情况不会直接使用这些函数，而是使用像  "uu" ， "base64" ，或
+"binhex" 这样的封装模块。 为了执行效率高，"binascii" 模块含有许多用 C
+写的低级函数，这些底层函数被一些高级模块所使用。
+
+注解:
+
+  "a2b_*" 函数接受只含有 ASCII 码的Unicode 字符串。其他函数只接受 *字
+  节类对象* （例如 "bytes"，"bytearray" 和其他支持缓冲区协议的对象）。
+
+  在 3.3 版更改: ASCII-only unicode strings are now accepted by the
+  "a2b_*" functions.
+
+"binascii" 模块定义了以下函数：
+
+binascii.a2b_uu(string)
+
+   将单行 uu 编码数据转换成二进制数据并返回。uu 编码每行的数据通常包含
+   45 个（二进制）字节，最后一行除外。每行数据后面可能跟有空格。
+
+binascii.b2a_uu(data, *, backtick=False)
+
+   将二进制数据转换为 ASCII 编码字符，返回值是转换后的行数据，包括换行
+   符。 *data* 的长度最多为45。如果 *backtick* 为ture，则零由 "'`'" 而
+   不是空格表示。
+
+   在 3.7 版更改: 增加 *backtick* 形参。
+
+binascii.a2b_base64(string)
+
+   将 base64 数据块转换成二进制并以二进制数据形式返回。一次可以传递多
+   行数据。
+
+binascii.b2a_base64(data, *, newline=True)
+
+   将二进制数据转换为一行用 base64 编码的ASCII字符串。返回值是转换后的
+   行数据，如果 *newline* 为true，则返回值包括换行符。该函数的输出符合
+   ：rfc：*3548*。
+
+   在 3.6 版更改: 增加 *newline* 形参。
+
+binascii.a2b_qp(data, header=False)
+
+   将一个引号可打印的数据块转换成二进制数据并返回。一次可以转换多行。
+   如果可选参数 *header* 存在且为true，则数据中的下划线将被解码成空格
+   。
+
+binascii.b2a_qp(data, quotetabs=False, istext=True, header=False)
+
+   将二进制数据转换为一行或多行带引号可打印编码的ASCII字符串。返回值是
+   转换后的行数据。如果可选参数 *quotetabs* 存在且为真值，则对所有制表
+   符和空格进行编码。如果可选参数 *istext* 存在且为真值，则不对新行进
+   行编码，但将对尾随空格进行编码。如果可选参数 *header* 存在且为true
+   ，则空格将被编码为下划线 **RFC 1522**。如果可选参数 *header* 存在且
+   为假值，则也会对换行符进行编码;不进行换行转换编码可能会破坏二进制数
+   据流。
+
+binascii.a2b_hqx(string)
+
+   将 binhex4 格式的 ASCII 数据不进行 RLE 解压缩直接转换为二进制数据。
+   该字符串应包含完整数量的二进制字节，或者（在binhex4 数据最后部分）
+   剩余位为零。
+
+   3.9 版后已移除.
+
+binascii.rledecode_hqx(data)
+
+   根据 binhex4 标准对数据执行 RLE 解压缩。该算法在一个字节的数据后使
+   用 "0x90" 作为重复指示符，然后计数。计数 "0" 指定字节值 "0x90" 。该
+   例程返回解压缩的数据，输入数据以孤立的重复指示符结束的情况下，将引
+   发 "Incomplete" 异常。
+
+   在 3.2 版更改: 仅接受 bytestring 或 bytearray 对象作为输入。
+
+   3.9 版后已移除.
+
+binascii.rlecode_hqx(data)
+
+   在 *data* 上执行 binhex4 游程编码压缩并返回结果。
+
+   3.9 版后已移除.
+
+binascii.b2a_hqx(data)
+
+   执行 hexbin4 类型二进制到 ASCII 码的转换并返回结果字符串。输入数据
+   应经过 RLE 编码，且数据长度可被3整除（除了最后一个片段）。
+
+   3.9 版后已移除.
+
+binascii.crc_hqx(data, value)
+
+   以 *value* 作为初始 CRC 计算 *data* 的16位 CRC 值，返回其结果。这里
+   使用 CRC-CCITT 生成多项式 *x*^16 + *x*^12 + *x*^5 + 1 ，通常表示为
+   0x1021。该 CRC 被用于 binhex4 格式。
+
+binascii.crc32(data[, value])
+
+   计算 CRC-32 ，从 *value* 的初始 CRC 开始计算 *data* 的32位校验和。
+   默认初始 CRC 为零。该算法与 ZIP 文件校验和一致。由于该算法被设计用
+   作校验和算法，因此不适合用作通用散列算法。使用方法如下：
+
+      print(binascii.crc32(b"hello world"))
+      # Or, in two pieces:
+      crc = binascii.crc32(b"hello")
+      crc = binascii.crc32(b" world", crc)
+      print('crc32 = {:#010x}'.format(crc))
+
+   在 3.0 版更改: 校验结果始终是无符号类型的。要在所有Python版本和平台
+   上生成相同的数值，请使用 "crc32(data) & 0xffffffff" 。
+
+binascii.b2a_hex(data[, sep[, bytes_per_sep=1]])
+binascii.hexlify(data[, sep[, bytes_per_sep=1]])
+
+   返回二进制数据 *data* 的十六进制表示形式。 *data* 的每个字节都被转
+   换为相应的2位十六进制表示形式。因此返回的字节对象的长度是 *data* 的
+   两倍。
+
+   使用："bytes.hex()" 方法也可以方便地实现相似的功能（但仅返回文本字
+   符串）。
+
+   如果指定了 *sep*，它必须为单字符 str 或 bytes 对象。 它将被插入每个
+   *bytes_per_sep* 输入字节之后。 分隔符位置默认从输出的右端开始计数，
+   如果你希望从左端开始计数，请提供一个负的 *bytes_per_sep* 值。
+
+   >>> import binascii
+   >>> binascii.b2a_hex(b'\xb9\x01\xef')
+   b'b901ef'
+   >>> binascii.hexlify(b'\xb9\x01\xef', '-')
+   b'b9-01-ef'
+   >>> binascii.b2a_hex(b'\xb9\x01\xef', b'_', 2)
+   b'b9_01ef'
+   >>> binascii.b2a_hex(b'\xb9\x01\xef', b' ', -2)
+   b'b901 ef'
+
+   在 3.8 版更改: 添加了 *sep* 和 *bytes_per_sep* 形参。
+
+binascii.a2b_hex(hexstr)
+binascii.unhexlify(hexstr)
+
+   返回由十六进制字符串  *hexstr* 表示的二进制数据。此函数功能与
+   "b2a_hex()" 相反。 *hexstr* 必须包含偶数个十六进制数字（可以是大写
+   或小写），否则会引发  "Error" 异常。
+
+   使用："bytes.fromhex()"  类方法也实现相似的功能（仅接受文本字符串参
+   数，不限制其中的空白字符）。
+
+exception binascii.Error
+
+   通常是因为编程错误引发的异常。
+
+exception binascii.Incomplete
+
+   数据不完整引发的异常。通常不是编程错误导致的，可以通过读取更多的数
+   据并再次尝试来处理该异常。
+
+参见:
+
+  模块 "base64"
+     支持在16，32，64，85进制中进行符合 RFC 协议的 base64 样式编码。
+
+  模块 "binhex"
+     支持在 Macintosh 上使用的 binhex 格式。
+
+  模块 "uu"
+     支持在 Unix 上使用的 UU 编码。
+
+  模块 "quopri"
+     支持在 MIME 版本电子邮件中使用引号可打印编码。

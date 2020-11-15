@@ -1,0 +1,107 @@
+Python 语言服务
+***************
+
+Python 提供了许多模块来帮助使用 Python 语言。 这些模块支持标记化、解析
+、语法分析、字节码反汇编以及各种其他工具。
+
+这些模块包括：
+
+* "parser" --- 访问 Python 解析树
+
+  * 创建 ST 对象
+
+  * 转换 ST 对象
+
+  * Queries on ST Objects
+
+  * 异常和错误处理
+
+  * ST 对象
+
+  * 示例: "compile()" 的模拟
+
+* "ast" --- 抽象语法树
+
+  * 抽象文法
+
+  * 节点类
+
+    * 字面值
+
+    * Variables
+
+    * 表达式
+
+      * Subscripting
+
+      * Comprehensions
+
+    * Statements
+
+      * Imports
+
+    * Control flow
+
+    * Function and class definitions
+
+    * Async and await
+
+  * "ast" 中的辅助函数
+
+  * Compiler Flags
+
+  * Command-Line Usage
+
+* "symtable" --- Access to the compiler's symbol tables
+
+  * Generating Symbol Tables
+
+  * Examining Symbol Tables
+
+* "symbol" --- 与 Python 解析树一起使用的常量
+
+* "token" --- 与Python解析树一起使用的常量
+
+* "keyword" --- 检验Python关键字
+
+* "tokenize" --- 对 Python 代码使用的标记解析器
+
+  * 对输入进行解析标记
+
+  * Command-Line Usage
+
+  * 示例
+
+* "tabnanny" --- 模糊缩进检测
+
+* "pyclbr" --- Python 模块浏览器支持
+
+  * Function 对象
+
+  * Class 对象
+
+* "py_compile" --- 编译 Python 源文件
+
+* "compileall" --- Byte-compile Python libraries
+
+  * Command-line use
+
+  * Public functions
+
+* "dis" --- Python 字节码反汇编器
+
+  * 字节码分析
+
+  * 分析函数
+
+  * Python字节码说明
+
+  * 操作码集合
+
+* "pickletools" --- pickle 开发者工具集
+
+  * 命令行语法
+
+    * 命令行选项
+
+  * 编程接口

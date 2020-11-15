@@ -1,0 +1,426 @@
+2to3 - 自动将 Python 2 代码转为 Python 3 代码
+*********************************************
+
+2to3 是一个 Python 程序，它可以读取 Python 2.x 的源代码并使用一系列的
+*修复器* 来将其转换为合法的 Python 3.x 代码。 标准库已包含了丰富的修复
+器，这足以处理几乎所有代码。 不过 2to3 的支持库 "lib2to3" 是一个很灵活
+通用的库，所以还可以编写你自己的 2to3 修复器。
+
+
+使用 2to3
+=========
+
+2to3 通常会作为脚本和 Python 解释器一起安装，你可以在 Python 根目录的
+"Tools/scripts" 文件夹下找到它。
+
+2to3 的基本调用参数是一个需要转换的文件或目录列表。对于目录，会递归地
+寻找其中的 Python 源码。
+
+这里有一个 Python 2.x 的源码文件，"example.py"：
+
+   def greet(name):
+       print "Hello, {0}!".format(name)
+   print "What's your name?"
+   name = raw_input()
+   greet(name)
+
+它可以在命令行中使用 2to3 转换成 Python 3.x 版本的代码：
+
+   $ 2to3 example.py
+
+这个命令会打印出和源文件的区别。通过传入 "-w" 参数，2to3 也可以把需要
+的修改写回到原文件中（除非传入了 "-n" 参数，否则会为原始文件创建一个副
+本）：
+
+   $ 2to3 -w example.py
+
+在转换完成后，"example.py" 看起来像是这样：
+
+   def greet(name):
+       print("Hello, {0}!".format(name))
+   print("What's your name?")
+   name = input()
+   greet(name)
+
+注释和缩进都会在转换过程中保持不变。
+
+默认情况下，2to3 会执行 预定义修复器 的集合。使用 "-l" 参数可以列出所
+有可用的修复器。使用 "-f" 参数可以明确指定需要使用的修复器集合。而使用
+"-x" 参数则可以明确指定不使用的修复器。下面的例子会只使用 "imports" 和
+"has_key" 修复器运行：
+
+   $ 2to3 -f imports -f has_key example.py
+
+这个命令会执行除了 "apply" 之外的所有修复器：
+
+   $ 2to3 -x apply example.py
+
+有一些修复器是需要 *显式指定* 的，它们默认不会执行，必须在命令行中列出
+才会执行。比如下面的例子，除了默认的修复器以外，还会执行 "idioms" 修复
+器：
+
+   $ 2to3 -f all -f idioms example.py
+
+注意这里使用 "all" 来启用所有默认的修复器。
+
+有些情况下 2to3 会找到源码中有一些需要修改，但是无法自动处理的代码。在
+这种情况下，2to3 会在差异处下面打印一个警告信息。你应该定位到相应的代
+码并对其进行修改，以使其兼容 Python 3.x。
+
+2to3 也可以重构 doctests。使用 "-d" 开启这个模式。需要注意*只有*
+doctests 会被重构。这种模式下不需要文件是合法的 Python 代码。举例来说
+，reST 文档中类似 doctests 的示例也可以使用这个选项进行重构。
+
+"-v" 选项可以输出更多转换程序的详细信息。
+
+由于某些 print 语句可被解读为函数调用或是语句，2to3 并不总能读取包含
+print 函数的文件。 当 2to3 检测到存在 "from __future__ import
+print_function" 编译器指令时，会修改其内部语法将 "print()" 解读为函数
+。 这一变动也可以使用 "-p" 旗标手动开启。 使用 "-p" 来为已转换过 print
+语句的代码运行修复器。 也可以使用 "-e" 将 "exec()" 解读为函数。
+
+"-o" 或 "--output-dir" 选项可以指定将转换后的文件写入其他目录中。由于
+这种情况下不会覆写原始文件，所以创建副本文件毫无意义，因此也需要使用
+"-n" 选项来禁用创建副本。
+
+3.2.3 新版功能: 增加了 "-o" 选项。
+
+"-W" 或 "--write-unchanged-files" 选项用来告诉 2to3 始终需要输出文件，
+即使没有任何改动。这在使用 "-o" 参数时十分有用，这样就可以将整个
+Python 源码包完整地转换到另一个目录。这个选项隐含了 "-w" 选项，否则等
+于没有作用。
+
+3.2.3 新版功能: 增加了 "-W" 选项。
+
+"--add-suffix" 选项接受一个字符串，用来作为后缀附加在输出文件名后面的
+后面。由于写入的文件名与原始文件不同，所以没有必要创建副本，因此 "-n"
+选项也是必要的。举个例子：
+
+   $ 2to3 -n -W --add-suffix=3 example.py
+
+这样会把转换后的文件写入 "example.py3" 文件。
+
+3.2.3 新版功能: 增加了 "--add-suffix" 选项。
+
+将整个项目从一个目录转换到另一个目录可以用这样的命令：
+
+   $ 2to3 --output-dir=python3-version/mycode -W -n python2-version/mycode
+
+
+修复器
+======
+
+转换代码的每一个步骤都封装在修复器中。可以使用 "2to3 -l" 来列出可用的
+修复器。之前已经提到，每个修复器都可以独立地打开或是关闭。下面会对各个
+修复器做更详细的描述。
+
+apply
+
+   移除对 "apply()" 的使用，举例来说，"apply(function, *args,
+   **kwargs)" 会被转换成 "function(*args, **kwargs)"。
+
+asserts
+
+   将已弃用的 "unittest" 方法替换为正确的。
+
+   +----------------------------------+--------------------------------------------+
+   | Python 2.x                       | Python 3.x                                 |
+   |==================================|============================================|
+   | "failUnlessEqual(a, b)"          | "assertEqual(a, b)"                        |
+   +----------------------------------+--------------------------------------------+
+   | "assertEquals(a, b)"             | "assertEqual(a, b)"                        |
+   +----------------------------------+--------------------------------------------+
+   | "failIfEqual(a, b)"              | "assertNotEqual(a, b)"                     |
+   +----------------------------------+--------------------------------------------+
+   | "assertNotEquals(a, b)"          | "assertNotEqual(a, b)"                     |
+   +----------------------------------+--------------------------------------------+
+   | "failUnless(a)"                  | "assertTrue(a)"                            |
+   +----------------------------------+--------------------------------------------+
+   | "assert_(a)"                     | "assertTrue(a)"                            |
+   +----------------------------------+--------------------------------------------+
+   | "failIf(a)"                      | "assertFalse(a)"                           |
+   +----------------------------------+--------------------------------------------+
+   | "failUnlessRaises(exc, cal)"     | "assertRaises(exc, cal)"                   |
+   +----------------------------------+--------------------------------------------+
+   | "failUnlessAlmostEqual(a, b)"    | "assertAlmostEqual(a, b)"                  |
+   +----------------------------------+--------------------------------------------+
+   | "assertAlmostEquals(a, b)"       | "assertAlmostEqual(a, b)"                  |
+   +----------------------------------+--------------------------------------------+
+   | "failIfAlmostEqual(a, b)"        | "assertNotAlmostEqual(a, b)"               |
+   +----------------------------------+--------------------------------------------+
+   | "assertNotAlmostEquals(a, b)"    | "assertNotAlmostEqual(a, b)"               |
+   +----------------------------------+--------------------------------------------+
+
+basestring
+
+   将 "basestring" 转换为 "str"。
+
+buffer
+
+   将 "buffer" 转换为 "memoryview"。这个修复器是可选的，因为
+   "memoryview" API 和 "buffer" 很相似，但不完全一样。
+
+dict
+
+   修复字典迭代方法。"dict.iteritems()" 会转换成 "dict.items()"，
+   "dict.iterkeys()" 会转换成 "dict.keys()"，"dict.itervalues()" 会转
+   换成 "dict.values()"。类似的，"dict.viewitems()"，"dict.viewkeys()"
+   和 "dict.viewvalues()" 会分别转换成 "dict.items()"，"dict.keys()"
+   和 "dict.values()"。另外也会将原有的 "dict.items()"，"dict.keys()"
+   和  "dict.values()" 方法调用用 "list" 包装一层。
+
+except
+
+   将 "except X, T" 转换为 "except X as T"。
+
+exec
+
+   将 "exec" 语句转换为 "exec()" 函数调用。
+
+execfile
+
+   移除 "execfile()" 的使用。"execfile()" 的实参会使用 "open()"，
+   "compile()" 和 "exec()" 包装。
+
+exitfunc
+
+   将对 "sys.exitfunc" 的赋值改为使用 "atexit" 模块代替。
+
+filter
+
+   将 "filter()" 函数用 "list" 包装一层。
+
+funcattrs
+
+   修复已经重命名的函数属性。比如 "my_function.func_closure" 会被转换
+   为 "my_function.__closure__"。
+
+future
+
+   移除 "from __future__ import new_feature" 语句。
+
+getcwdu
+
+   将 "os.getcwdu()" 重命名为 "os.getcwd()"。
+
+has_key
+
+   将 "dict.has_key(key)" 转换为 "key in dict"。
+
+idioms
+
+   这是一个可选的修复器，会进行多种转换，将 Python 代码变成更加常见的
+   写法。类似 "type(x) is SomeClass" 和 "type(x) == SomeClass" 的类型
+   对比会被转换成 "isinstance(x, SomeClass)"。"while 1" 转换成 "while
+   True"。这个修复器还会在合适的地方使用 "sorted()" 函数。举个例子，这
+   样的代码块：
+
+      L = list(some_iterable)
+      L.sort()
+
+   会被转换为：
+
+      L = sorted(some_iterable)
+
+import
+
+   检测 sibling imports，并将其转换成相对 import。
+
+imports
+
+   处理标准库模块的重命名。
+
+imports2
+
+   处理标准库中其他模块的重命名。这个修复器由于一些技术上的限制，因此
+   和 "imports" 拆分开了。
+
+input
+
+   将 "input(prompt)" 转换为 "eval(input(prompt))"。
+
+intern
+
+   将 "intern()" 转换为 "sys.intern()"。
+
+isinstance
+
+   修复 "isinstance()" 函数第二个实参中重复的类型。举例来说，
+   "isinstance(x, (int, int))" 会转换为 "isinstance(x, int)",
+   "isinstance(x, (int, float, int))" 会转换为 "isinstance(x, (int,
+   float))"。
+
+itertools_imports
+
+   移除 "itertools.ifilter()"，"itertools.izip()" 以及
+   "itertools.imap()" 的 import。对 "itertools.ifilterfalse()" 的
+   import 也会替换成 "itertools.filterfalse()"。
+
+itertools
+
+   修改 "itertools.ifilter()"，"itertools.izip()" 和
+   "itertools.imap()" 的调用为对应的内建实现。
+   "itertools.ifilterfalse()" 会替换成 "itertools.filterfalse()"。
+
+long
+
+   将 "long" 重命名为 "int"。
+
+map
+
+   用 "list" 包装 "map()"。同时也会将 "map(None, x)" 替换为 "list(x)"
+   。使用 "from future_builtins import map" 禁用这个修复器。
+
+metaclass
+
+   将老的元类语法（类体中的 "__metaclass__ = Meta"）替换为新的（"class
+   X(metaclass=Meta)"）。
+
+methodattrs
+
+   修复老的方法属性名。例如 "meth.im_func" 会被转换为 "meth.__func__"
+   。
+
+ne
+
+   转换老的不等语法，将 "<>" 转为 "!="。
+
+next
+
+   将迭代器的 "next()" 方法调用转为 "next()" 函数。也会将 "next()" 方
+   法重命名为 "__next__()"。
+
+nonzero
+
+   将 "__nonzero__()" 转换为 "__bool__()"。
+
+numliterals
+
+   将八进制字面量转为新的语法。
+
+operator
+
+   将 "operator" 模块中的许多方法调用转为其他的等效函数调用。如果有需
+   要，会添加适当的 "import" 语句，比如 "import collections.abc"。有以
+   下转换映射：
+
+   +------------------------------------+-----------------------------------------------+
+   | Python 2.x                         | Python 3.x                                    |
+   |====================================|===============================================|
+   | "operator.isCallable(obj)"         | "callable(obj)"                               |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.sequenceIncludes(obj)"   | "operator.contains(obj)"                      |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.isSequenceType(obj)"     | "isinstance(obj, collections.abc.Sequence)"   |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.isMappingType(obj)"      | "isinstance(obj, collections.abc.Mapping)"    |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.isNumberType(obj)"       | "isinstance(obj, numbers.Number)"             |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.repeat(obj, n)"          | "operator.mul(obj, n)"                        |
+   +------------------------------------+-----------------------------------------------+
+   | "operator.irepeat(obj, n)"         | "operator.imul(obj, n)"                       |
+   +------------------------------------+-----------------------------------------------+
+
+paren
+
+   在列表生成式中增加必须的括号。例如将 "[x for x in 1, 2]" 转换为 "[x
+   for x in (1, 2)]"。
+
+print
+
+   将 "print" 语句转换为 "print()" 函数。
+
+raise
+
+   将 "raise E, V" 转换为 "raise E(V)"，将 "raise E, V, T" 转换为
+   "raise E(V).with_traceback(T)"。如果 "E" 是元组，这样的转换是不正确
+   的，因为用元组代替异常的做法在 3.0 中已经移除了。
+
+raw_input
+
+   将 "raw_input()" 转换为 "input()"。
+
+reduce
+
+   将 "reduce()" 转换为 "functools.reduce()"。
+
+reload
+
+   将 "reload()" 转换为 "importlib.reload()"。
+
+renames
+
+   将 "sys.maxint" 转换为 "sys.maxsize"。
+
+repr
+
+   将反引号 repr 表达式替换为 "repr()" 函数。
+
+set_literal
+
+   将 "set" 构造函数替换为 set literals 写法。这个修复器是可选的。
+
+standarderror
+
+   将 "StandardError" 重命名为 "Exception"。
+
+sys_exc
+
+   将弃用的 "sys.exc_value"，"sys.exc_type"，"sys.exc_traceback" 替换
+   为 "sys.exc_info()" 的用法。
+
+throw
+
+   修复生成器的 "throw()" 方法的 API 变更。
+
+tuple_params
+
+   移除隐式的元组参数解包。这个修复器会插入临时变量。
+
+types
+
+   修复 "type" 模块中一些成员的移除引起的代码问题。
+
+unicode
+
+   将 "unicode" 重命名为 "str"。
+
+urllib
+
+   将 "urllib" 和 "urllib2" 重命名为 "urllib" 包。
+
+ws_comma
+
+   移除逗号分隔的元素之间多余的空白。这个修复器是可选的。
+
+xrange
+
+   将 "xrange()" 重命名为 "range()"，并用 "list" 包装原有的 "range()"
+   。
+
+xreadlines
+
+   将 "for x in file.xreadlines()" 转换为 "for x in file"。
+
+zip
+
+   用 "list" 包装 "zip()"。如果使用了 "from future_builtins import
+   zip" 的话会禁用。
+
+
+"lib2to3" —— 2to3 支持库
+========================
+
+**源代码：** Lib/lib2to3/
+
+======================================================================
+
+3.10 版后已移除: Python 3.9 将切换到 PEG 解析器 (参见 **PEP 617**)，
+Python 3.10 可能会包含 lib2to3 的 LL(1) 解析器所不能解析的新语法。
+"lib2to3" 模块可能会在未来的 Python 版本中被移出标准库。 请考虑使用第
+三方替代例如 LibCST 或 parso。
+
+注解:
+
+  "lib2to3" API 并不稳定，并可能在未来大幅修改。

@@ -1,0 +1,152 @@
+4. 在苹果系统上使用 Python
+**************************
+
+作者:
+   Bob Savage <bobsavage@mac.com>
+
+运行 Mac OS X 的 Macintosh上 的 Python 原则上与任何其他 Unix 平台上的
+Python 非常相似，但是还有一些额外的功能，例如 IDE 和包管理器，值得一提
+。
+
+
+4.1. 获取和安装 MacPython
+=========================
+
+Mac OS X 10.8 附带 Apple 预安装的 Python 2.7 。 如果你愿意，可以从
+Python 网站（ https://www.python.org ）安装最新版本的 Python 3 。
+Python 的当前“通用二进制”版本可以在 Mac 的新 Intel 和传统 PPC CPU 上本
+地运行。
+
+你安装后得到的东西有：
+
+* 会有一个 "Python 3.9" 文件夹在你的 "Applications" 文件夹中。 在这里
+  你可以找到 IDLE，它是作为官方 Python 发行版标准组成部分的开发环境；
+  以及 PythonLauncher，它负责处理在 Finder 中双击 Python 脚本的操作。
+
+* 框架 "/Library/Frameworks/Python.framework" ，包括 Python 可执行文件
+  和库。安装程序将此位置添加到 shell 路径。 要卸载 MacPython ，你可以
+  简单地移除这三个项目。 Python 可执行文件的符号链接放在
+  /usr/local/bin/ 中。
+
+Apple 提供的 Python 版本分别安装在
+"/System/Library/Frameworks/Python.framework" 和 "/usr/bin/python" 中
+。 你永远不应修改或删除这些内容，因为它们由 Apple 控制并由 Apple 或第
+三方软件使用。 请记住，如果你选择从 python.org 安装较新的 Python 版本
+，那么你的计算机上将安装两个不同但都有用的 Python ，因此你的路径和用法
+与你想要执行的操作一致非常重要。
+
+IDLE 包含一个帮助菜单，允许你访问 Python 文档。 如果您是 Python 的新手
+，你应该开始阅读该文档中的教程介绍。
+
+如果你熟悉其他 Unix 平台上的 Python ，那么你应该阅读有关从 Unix shell
+运行 Python 脚本的部分。
+
+
+4.1.1. 如何运行 Python 脚本
+---------------------------
+
+在 Mac OS X 上开始使用 Python 的最佳方法是通过 IDLE 集成开发环境，参见
+IDE 部分，并在 IDE 运行时使用“帮助”菜单。
+
+如果要从终端窗口命令行或 Finder 运行 Python 脚本，首先需要一个编辑器来
+创建脚本。 Mac OS X 附带了许多标准的 Unix 命令行编辑器，如 **vim** 和
+**emacs** 。 如果你想要一个更 Mac 化的编辑器，那么:program:*BBEdit* 或
+来自 Bare Bones Software 的 **TextWrangler** （参见
+http://www.barebones.com/products/bbedit/index.html ）是不错的选择 ，
+就如 **TextMate`（参见 https://macromates.com/ ）。 其他编辑器包括
+:program:`Gvim** （ http://macvim-dev.github.io/macvim/ ）和
+**Aquamacs** （ http://aquamacs.org/ ）。
+
+要从终端窗口运行脚本，必须确保:file:*/usr/local/bin* 位于 shell 搜索路
+径中。
+
+要从 Finder 运行你的脚本，你有两个选择：
+
+* 把脚本拖拽到 **PythonLauncher**
+
+* 选择 **PythonLauncher** 作为通过 finder Info 窗口打开脚本（或任何
+  .py 脚本）的默认应用程序，然后双击脚本。 **PythonLauncher** 有各种首
+  选项来控制脚本的启动方式。 拖拽方式允许你为一次调用更改这些选项，或
+  使用其“首选项”菜单全局更改内容。
+
+
+4.1.2. 运行有图形界面的脚本
+---------------------------
+
+对于旧版本的 Python ，你需要注意一个 Mac OS X 的怪异之处：与 Aqua 窗口
+管理器通信的程序（换而言之，任何具有图形界面的程序）需要以特殊方式运行
+。 使用 **pythonw** 而不是 **python** 来启动这样的脚本。
+
+对于 Python 3.9，你可以使用 **python** 或者 **pythonw**。
+
+
+4.1.3. 配置
+-----------
+
+OS X 上的 Python 遵循所有标准的 Unix 环境变量，例如 "PYTHONPATH" ，但
+是为 Finder 启动的程序设置这些变量是非标准的，因为 Finder 在启动时不读
+取你的 ".profile" 或 ".cshrc" 。你需要创建一个文件
+"~/.MacOSX/environment.plist" 。 有关详细信息，请参阅 Apple 的技术文档
+QA1067 。
+
+更多关于在 MacPython 中安装 Python 包的信息，参阅 安装额外的 Python 包
+部分。
+
+
+4.2. IDE
+========
+
+MacPython 附带标准的 IDLE 开发环境。 有关使用 IDLE 的详细介绍，请访问
+http://www.hashcollision.org/hkn/python/idle_intro/index.html 。
+
+
+4.3. 安装额外的 Python 包
+=========================
+
+有几个方法可以安装额外的 Python 包：
+
+* 可以通过标准的 Python distutils 模式（ "python setup.py install" ）
+  安装软件包。
+
+* 许多包也可以通过 **setuptools** 扩展或 **pip** 包装器安装，请参阅
+  https://pip.pypa.io/ 。
+
+
+4.4. Mac 上的图形界面编程
+=========================
+
+使用 Python 在 Mac 上构建 GUI 应用程序有多种选择。
+
+*PyObjC* 是一个 Python 到 Apple 的 Objective-C/Cocoa 框架的绑定，这是
+大多数现代 Mac 开发的基础。 有关 PyObjC 的信息，请访问
+https://pypi.org/project/pyobjc/。
+
+标准的 Python GUI 工具包是 "tkinter" ，基于跨平台的 Tk 工具包（
+https://www.tcl.tk ）。 Apple 的 OS X 捆绑了 Aqua 原生版本的 Tk ，最新
+版本可以从 https://www.activestate.com 下载和安装；它也可以从源代码构
+建。
+
+*wxPython* 是另一种流行的跨平台 GUI 工具包，可在 Mac OS X 上本机运行。
+软件包和文档可从 https://www.wxpython.org 获得。
+
+*PyQt* 是另一种流行的跨平台 GUI 工具包，可在 Mac OS X 上本机运行。更多
+信息可在 https://riverbankcomputing.com/software/pyqt/intro 上找到。
+
+
+4.5. 在 Mac 上分发 Python 应用程序
+==================================
+
+在 Mac 上部署独立 Python 应用程序的标准工具是 **py2app** 。有关安装和
+使用 py2app 的更多信息，请访问 http://undefined.org/python/#py2app 。
+
+
+4.6. 其他资源
+=============
+
+MacPython 邮件列表是 Mac 上 Python 用户和开发人员的优秀支持资源：
+
+https://www.python.org/community/sigs/current/pythonmac-sig/
+
+另一个有用的资源是 MacPython wiki ：
+
+https://wiki.python.org/moin/MacPython

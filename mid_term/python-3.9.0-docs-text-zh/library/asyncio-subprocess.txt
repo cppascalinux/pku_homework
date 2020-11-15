@@ -1,0 +1,309 @@
+子进程
+******
+
+**源代码:** Lib/asyncio/subprocess.py, Lib/asyncio/base_subprocess.py
+
+======================================================================
+
+本节介绍了用于创建和管理子进程的高层级 async/await asyncio API。
+
+下面的例子演示了如何用 asyncio 运行一个 shell 命令并获取其结果:
+
+   import asyncio
+
+   async def run(cmd):
+       proc = await asyncio.create_subprocess_shell(
+           cmd,
+           stdout=asyncio.subprocess.PIPE,
+           stderr=asyncio.subprocess.PIPE)
+
+       stdout, stderr = await proc.communicate()
+
+       print(f'[{cmd!r} exited with {proc.returncode}]')
+       if stdout:
+           print(f'[stdout]\n{stdout.decode()}')
+       if stderr:
+           print(f'[stderr]\n{stderr.decode()}')
+
+   asyncio.run(run('ls /zzz'))
+
+将打印:
+
+   ['ls /zzz' exited with 1]
+   [stderr]
+   ls: /zzz: No such file or directory
+
+由于所有 asyncio 子进程函数都是异步的并且 asyncio 提供了许多工具用来配
+合这些函数使用，因此并行地执行和监视多个子进程十分容易。 要修改上面的
+例子来同时运行多个命令确实是非常简单的:
+
+   async def main():
+       await asyncio.gather(
+           run('ls /zzz'),
+           run('sleep 1; echo "hello"'))
+
+   asyncio.run(main())
+
+另请参阅 Examples 小节。
+
+
+创建子进程
+==========
+
+coroutine asyncio.create_subprocess_exec(program, *args, stdin=None, stdout=None, stderr=None, loop=None, limit=None, **kwds)
+
+   创建一个子进程。
+
+   *limit* 参数为 "Process.stdout" 和 "Process.stderr" 设置
+   "StreamReader" 包装器的缓冲区上限（如果将 "subprocess.PIPE" 传给了
+   *stdout* 和 *stderr* 参数）。
+
+   返回一个 "Process" 实例。
+
+   有关其他形参的说明请查阅 "loop.subprocess_exec()" 的文档。
+
+   Deprecated since version 3.8, will be removed in version 3.10:
+   *loop* 形参。
+
+coroutine asyncio.create_subprocess_shell(cmd, stdin=None, stdout=None, stderr=None, loop=None, limit=None, **kwds)
+
+   运行 *cmd* shell 命令。
+
+   *limit* 参数为 "Process.stdout" 和 "Process.stderr" 设置
+   "StreamReader" 包装器的缓冲区上限（如果将 "subprocess.PIPE" 传给了
+   *stdout* 和 *stderr* 参数）。
+
+   返回一个 "Process" 实例。
+
+   有关其他形参的说明请查阅 "loop.subprocess_shell()" 的文档。
+
+   重要:
+
+     应用程序要负责确保正确地转义所有空白字符和特殊字符以防止 shell 注
+     入 漏洞。 "shlex.quote()" 函数可以被用来正确地转义字符串中可以被
+     用来构造 shell 命令的空白字符和特殊 shell 字符。
+
+   Deprecated since version 3.8, will be removed in version 3.10:
+   *loop* 形参。
+
+注解:
+
+  如果使用了 "ProactorEventLoop" 则子进程将在 Windows 中可用。 详情参
+  见 Windows 上的子进程支持。
+
+参见:
+
+  asyncio 还有下列 *低层级* API 可配合子进程使用:
+  "loop.subprocess_exec()", "loop.subprocess_shell()",
+  "loop.connect_read_pipe()", "loop.connect_write_pipe()" 以及 子进程
+  传输 和 子进程协议。
+
+
+常数
+====
+
+asyncio.subprocess.PIPE
+
+   可以被传递给 *stdin*, *stdout* 或 *stderr* 形参。
+
+   如果 *PIPE* 被传递给 *stdin* 参数，则 "Process.stdin" 属性将会指向
+   一个 "StreamWriter" 实例。
+
+   如果 *PIPE* 被传递给 *stdout* 或 *stderr* 参数，则 "Process.stdout"
+   和 "Process.stderr" 属性将会指向 "StreamReader" 实例。
+
+asyncio.subprocess.STDOUT
+
+   可以用作 *stderr* 参数的特殊值，表示标准错误应当被重定向到标准输出
+   。
+
+asyncio.subprocess.DEVNULL
+
+   可以用作 *stdin*, *stdout* 或 *stderr* 参数来处理创建函数的特殊值。
+   它表示将为相应的子进程流使用特殊文件 "os.devnull"。
+
+
+与子进程交互
+============
+
+"create_subprocess_exec()" 和 "create_subprocess_shell()" 函数都返回
+*Process* 类的实例。 *Process* 是一个高层级包装器，它允许与子进程通信
+并监视其完成情况。
+
+class asyncio.subprocess.Process
+
+   一个用于包装 "create_subprocess_exec()" and
+   "create_subprocess_shell()" 函数创建的 OS 进程的对象。
+
+   这个类被设计为具有与 "subprocess.Popen" 类相似的 API，但两者有一些
+   重要的差异:
+
+   * 不同于 Popen，Process 实例没有与 "poll()" 方法等价的方法；
+
+   * "communicate()" 和 "wait()" 方法没有 *timeout* 形参；要使用
+     "wait_for()" 函数；
+
+   * "Process.wait()" 方法是异步的，而 "subprocess.Popen.wait()" 方法
+     则被实现为阻塞型忙循环；
+
+   * *universal_newlines* 形参不被支持。
+
+   这个类 不是线程安全的。
+
+   请参阅  子进程和线程 部分。
+
+   coroutine wait()
+
+      等待子进程终结。
+
+      设置并返回 "returncode" 属性。
+
+      注解:
+
+        当使用 "stdout=PIPE" 或 "stderr=PIPE" 并且子进程产生了足以阻塞
+        OS 管道缓冲区等待接收更多的数据的输出时，此方法会发生死锁。 当
+        使用管道时请使用 "communicate()" 方法来避免这种情况。
+
+   coroutine communicate(input=None)
+
+      与进程交互:
+
+      1. 发送数据到 *stdin* (如果 *input* 不为 "None")；
+
+      2. 从 *stdout* 和 *stderr* 读取数据，直至到达 EOF；
+
+      3. 等待进程终结。
+
+      可选的 *input* 参数为将被发送到子进程的数据 ("bytes" 对象)。
+
+      返回一个元组 "(stdout_data, stderr_data)"。
+
+      如果在将 *input* 写入到 *stdin* 时引发了 "BrokenPipeError" 或
+      "ConnectionResetError" 异常，异常会被忽略。 此条件会在进程先于所
+      有数据被写入到 *stdin* 之前退出时发生。
+
+      如果想要将数据发送到进程的 *stdin*，则创建进程时必须使用
+      "stdin=PIPE"。 类似地，要在结果元组中获得任何不为 "None" 的值，
+      则创建进程时必须使用 "stdout=PIPE" 和/或 "stderr=PIPE" 参数。
+
+      注意，数据读取在内存中是带缓冲的，因此如果数据量过大或不受则不要
+      使用此方法。
+
+   send_signal(signal)
+
+      将信号 *signal* 发送给子进程。
+
+      注解:
+
+        在 Windows 上，"SIGTERM" 是 "terminate()" 的别名。
+        "CTRL_C_EVENT" 和 "CTRL_BREAK_EVENT" 可被发送给创建时设置了
+        *creationflags* 形参且其中包括 "CREATE_NEW_PROCESS_GROUP" 的进
+        程。
+
+   terminate()
+
+      停止子进程。
+
+      在 POSIX 系统中此方法会发送 "signal.SIGTERM" 给子进程。
+
+      在 Windows 上会调用 Win32 API 函数 "TerminateProcess()" 以停止子
+      进程。
+
+   kill()
+
+      杀掉子进程。
+
+      在 POSIX 系统中此方法会发送 "SIGKILL" 给子进程。
+
+      在 Windows 上此方法是 "terminate()" 的别名。
+
+   stdin
+
+      标准输入流 ("StreamWriter") 或者如果进程创建时设置了
+      "stdin=None" 则为 "None"。
+
+   stdout
+
+      标准输出流 ("StreamReader") 或者如果进程创建时设置了
+      "stdout=None" 则为 "None"。
+
+   stderr
+
+      标准错误流 ("StreamReader") 或者如果进程创建时设置了
+      "stderr=None" 则为 "None"。
+
+   警告:
+
+     使用 "communicate()" 方法而非 "process.stdin.write()", "await
+     process.stdout.read()" 或 "await process.stderr.read"。 这可以避
+     免由于流暂停读取或写入并阻塞子进程而导致的死锁。
+
+   pid
+
+      进程标识号（PID）。
+
+      注意对于由Note that for processes created by the
+      "create_subprocess_shell()" 函数所创建的进程，这个属性将是所生成
+      的 shell 的 PID。
+
+   returncode
+
+      当进程退出时返回其代号。
+
+      "None" 值表示进程尚未终止。
+
+      一个负值 "-N" 表示子进程被信号 "N" 中断 (仅 POSIX).
+
+
+子进程和线程
+------------
+
+标准 asyncio 事件循环默认支持从不同线程中运行子进程。
+
+在 Windows 上子进程（默认）只由 "ProactorEventLoop" 提供，
+"SelectorEventLoop" 没有子进程支持。
+
+在 UNIX 上会使用 *child watchers* 来让子进程结束等待，详情请参阅 进程
+监视器。
+
+在 3.8 版更改: UNIX 对于从不同线程中无限制地生成子进程会切换为使用
+"ThreadedChildWatcher"。使用 *不活动的* 当前子监视器生成子进程将引发
+"RuntimeError"。
+
+请注意其他的事件循环实现可能有其本身的限制；请查看它们各自的文档。
+
+参见: asyncio 中的并发和多线程 章节。
+
+
+示例
+----
+
+一个使用 "Process" 类来控制子进程并用 "StreamReader" 类来从其标准输出
+读取信息的示例。
+
+这个子进程是由 "create_subprocess_exec()" 函数创建的:
+
+   import asyncio
+   import sys
+
+   async def get_date():
+       code = 'import datetime; print(datetime.datetime.now())'
+
+       # Create the subprocess; redirect the standard output
+       # into a pipe.
+       proc = await asyncio.create_subprocess_exec(
+           sys.executable, '-c', code,
+           stdout=asyncio.subprocess.PIPE)
+
+       # Read one line of output.
+       data = await proc.stdout.readline()
+       line = data.decode('ascii').rstrip()
+
+       # Wait for the subprocess exit.
+       await proc.wait()
+       return line
+
+   date = asyncio.run(get_date())
+   print(f"Current date: {date}")
+
+另请参阅使用低层级 API 编写的 相同示例。

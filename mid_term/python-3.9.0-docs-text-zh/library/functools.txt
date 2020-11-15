@@ -1,0 +1,571 @@
+"functools" --- 高阶函数和可调用对象上的操作
+********************************************
+
+**源代码:** Lib/functools.py
+
+======================================================================
+
+"functools" 模块应用于高阶函数，即参数或（和）返回值为其他函数的函数。
+通常来说，此模块的功能适用于所有可调用对象。
+
+"functools" 模块定义了以下函数:
+
+@functools.cache(user_function)
+
+   简单轻量级未绑定函数缓存。 有时称为 "memoize"。
+
+   返回值与 "lru_cache(maxsize=None)" 相同，创建一个查找函数参数的字典
+   的简单包装器。 因为它不需要移出旧值，所以比带有大小限制的
+   "lru_cache()" 更小更快。
+
+   例如:
+
+      @cache
+      def factorial(n):
+          return n * factorial(n-1) if n else 1
+
+      >>> factorial(10)      # no previously cached result, makes 11 recursive calls
+      3628800
+      >>> factorial(5)       # just looks up cached value result
+      120
+      >>> factorial(12)      # makes two new recursive calls, the other 10 are cached
+      479001600
+
+   3.9 新版功能.
+
+@functools.cached_property(func)
+
+   将一个类方法转换为特征属性，一次性计算该特征属性的值，然后将其缓存
+   为实例生命周期内的普通属性。 类似于 "property()" 但增加了缓存功能。
+   对于在其他情况下实际不可变的高计算资源消耗的实例特征属性来说该函数
+   非常有用。
+
+   示例:
+
+      class DataSet:
+          def __init__(self, sequence_of_numbers):
+              self._data = sequence_of_numbers
+
+          @cached_property
+          def stdev(self):
+              return statistics.stdev(self._data)
+
+          @cached_property
+          def variance(self):
+              return statistics.variance(self._data)
+
+   注意，这个装饰器会影响 **PEP 412** 键共享字典的操作。 这意味着相应
+   的字典实例可能占用比通常时更多的空间。
+
+   而且，这个装饰器要求每个实例上的 "__dict__" 是可变的映射。 这意味着
+   它将不适用于某些类型，例如元类（因为类型实例上的 "__dict__" 属性是
+   类命名空间的只读代理），以及那些指定了 "__slots__" 但未包括
+   "__dict__" 作为所定义的空位之一的类（因为这样的类根本没有提供
+   "__dict__" 属性）。
+
+   如果可变的映射不可用或者如果想要节省空间的键共享，可以通过在
+   "cache()" 之上堆叠一个 "property()" 来实现类似 "cached_property()"
+   的效果:
+
+      class DataSet:
+          def __init__(self, sequence_of_numbers):
+              self._data = sequence_of_numbers
+
+          @property
+          @cache
+          def stdev(self):
+              return statistics.stdev(self._data)
+
+   3.8 新版功能.
+
+functools.cmp_to_key(func)
+
+   将(旧式的)比较函数转换为新式的 *key function* .  在类似于
+   "sorted()" ， "min()" ， "max()" ， "heapq.nlargest()" ，
+   "heapq.nsmallest()" ， "itertools.groupby()" 等函数的 *key* 参数中
+   使用。此函数主要用作将 Python 2 程序转换至新版的转换工具，以保持对
+   比较函数的兼容。
+
+   比较函数意为一个可调用对象，该对象接受两个参数并比较它们，结果为小
+   于则返回一个负数，相等则返回零，大于则返回一个正数。key function则
+   是一个接受一个参数，并返回另一个用以排序的值的可调用对象。
+
+   示例:
+
+      sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order
+
+   有关排序示例和简要排序教程，请参阅 排序指南 。
+
+   3.2 新版功能.
+
+@functools.lru_cache(user_function)
+@functools.lru_cache(maxsize=128, typed=False)
+
+   一个为函数提供缓存功能的装饰器，缓存 *maxsize* 组传入参数，在下次以
+   相同参数调用时直接返回上一次的结果。用以节约高开销或I/O函数的调用时
+   间。
+
+   由于使用了字典存储缓存，所以该函数的固定参数和关键字参数必须是可哈
+   希的。
+
+   不同模式的参数可能被视为不同从而产生多个缓存项，例如, *f(a=1, b=2)*
+   和 *f(b=2, a=1)* 因其参数顺序不同，可能会被缓存两次。
+
+   如果指定了 *user_function*，它必须是一个可调用对象。 这允许
+   *lru_cache* 装饰器被直接应用于一个用户自定义函数，让 *maxsize* 保持
+   其默认值 128:
+
+      @lru_cache
+      def count_vowels(sentence):
+          sentence = sentence.casefold()
+          return sum(sentence.count(vowel) for vowel in 'aeiou')
+
+   如果 *maxsize* 设为 "None"，LRU 特性将被禁用且缓存可无限增长。
+
+   如果 *typed* 设置为true，不同类型的函数参数将被分别缓存。例如，
+   "f(3)" 和 "f(3.0)" 将被视为不同而分别缓存。
+
+   被包装的函数配有一个 "cache_parameters()" 函数，该函数返回一个新的
+   "dict" 用来显示 *maxsize* 和 *typed* 的值。 这只是出于显示信息的目
+   的。 改变值没有任何效果。
+
+   为了衡量缓存的有效性以便调整 *maxsize* 形参，被装饰的函数带有一个
+   "cache_info()" 函数。当调用 "cache_info()" 函数时，返回一个具名元组
+   ，包含命中次数 *hits*，未命中次数 *misses* ，最大缓存数量 *maxsize*
+   和 当前缓存大小 *currsize*。在多线程环境中，命中数与未命中数是不完
+   全准确的。
+
+   该装饰器也提供了一个用于清理/使缓存失效的函数 "cache_clear()" 。
+
+   原始的未经装饰的函数可以通过 "__wrapped__" 属性访问。它可以用于检查
+   、绕过缓存，或使用不同的缓存再次装饰原始函数。
+
+   LRU（最久未使用算法）缓存 在最近的调用是即将到来的调用的最佳预测值
+   时性能最好（例如，新闻服务器上最热门文章倾向于每天更改）。 缓存的大
+   小限制可确保缓存不会在长期运行进程如网站服务器上无限制地增长。
+
+   一般来说，LRU缓存只在当你想要重用之前计算的结果时使用。因此，用它缓
+   存具有副作用的函数、需要在每次调用时创建不同、易变的对象的函数或者
+   诸如time（）或random（）之类的不纯函数是没有意义的。
+
+   静态 Web 内容的 LRU 缓存示例:
+
+      @lru_cache(maxsize=32)
+      def get_pep(num):
+          'Retrieve text of a Python Enhancement Proposal'
+          resource = 'http://www.python.org/dev/peps/pep-%04d/' % num
+          try:
+              with urllib.request.urlopen(resource) as s:
+                  return s.read()
+          except urllib.error.HTTPError:
+              return 'Not Found'
+
+      >>> for n in 8, 290, 308, 320, 8, 218, 320, 279, 289, 320, 9991:
+      ...     pep = get_pep(n)
+      ...     print(n, len(pep))
+
+      >>> get_pep.cache_info()
+      CacheInfo(hits=3, misses=8, maxsize=32, currsize=8)
+
+   以下是使用缓存通过 动态规划  计算 斐波那契数列  的例子。
+
+      @lru_cache(maxsize=None)
+      def fib(n):
+          if n < 2:
+              return n
+          return fib(n-1) + fib(n-2)
+
+      >>> [fib(n) for n in range(16)]
+      [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+
+      >>> fib.cache_info()
+      CacheInfo(hits=28, misses=16, maxsize=None, currsize=16)
+
+   3.2 新版功能.
+
+   在 3.3 版更改: 添加 *typed* 选项。
+
+   在 3.8 版更改: 添加了 *user_function* 选项。
+
+   3.9 新版功能: 新增函数 "cache_parameters()"
+
+@functools.total_ordering
+
+   给定一个声明一个或多个全比较排序方法的类，这个类装饰器实现剩余的方
+   法。这减轻了指定所有可能的全比较操作的工作。
+
+   此类必须包含以下方法之一："__lt__()" 、"__le__()"、"__gt__()" 或
+   "__ge__()"。另外，此类必须支持 "__eq__()" 方法。
+
+   例如:
+
+      @total_ordering
+      class Student:
+          def _is_valid_operand(self, other):
+              return (hasattr(other, "lastname") and
+                      hasattr(other, "firstname"))
+          def __eq__(self, other):
+              if not self._is_valid_operand(other):
+                  return NotImplemented
+              return ((self.lastname.lower(), self.firstname.lower()) ==
+                      (other.lastname.lower(), other.firstname.lower()))
+          def __lt__(self, other):
+              if not self._is_valid_operand(other):
+                  return NotImplemented
+              return ((self.lastname.lower(), self.firstname.lower()) <
+                      (other.lastname.lower(), other.firstname.lower()))
+
+   注解:
+
+     虽然此装饰器使得创建具有良好行为的完全有序类型变得非常容易，但它
+     *确实* 是以执行速度更缓慢和派生比较方法的堆栈回溯更复杂为代价的。
+     如果性能基准测试表明这是特定应用的瓶颈所在，则改为实现全部六个富
+     比较方法应该会轻松提升速度。
+
+   3.2 新版功能.
+
+   在 3.4 版更改: 现在已支持从未识别类型的下层比较函数返回
+   NotImplemented 异常。
+
+functools.partial(func, /, *args, **keywords)
+
+   返回一个新的 部分对象，当被调用时其行为类似于 *func* 附带位置参数
+   *args* 和关键字参数 *keywords* 被调用。 如果为调用提供了更多的参数
+   ，它们会被附加到 *args*。 如果提供了额外的关键字参数，它们会扩展并
+   重载 *keywords*。 大致等价于:
+
+      def partial(func, /, *args, **keywords):
+          def newfunc(*fargs, **fkeywords):
+              newkeywords = {**keywords, **fkeywords}
+              return func(*args, *fargs, **newkeywords)
+          newfunc.func = func
+          newfunc.args = args
+          newfunc.keywords = keywords
+          return newfunc
+
+   "partial()" 会被“冻结了”一部分函数参数和/或关键字的部分函数应用所使
+   用，从而得到一个具有简化签名的新对象。 例如，"partial()" 可用来创建
+   一个行为类似于 "int()" 函数的可调用对象，其中 *base* 参数默认为二：
+
+   >>> from functools import partial
+   >>> basetwo = partial(int, base=2)
+   >>> basetwo.__doc__ = 'Convert base 2 string to an int.'
+   >>> basetwo('10010')
+   18
+
+class functools.partialmethod(func, /, *args, **keywords)
+
+   返回一个新的 "partialmethod" 描述器，其行为类似 "partial" 但它被设
+   计用作方法定义而非直接用作可调用对象。
+
+   *func* 必须是一个 *descriptor* 或可调用对象（同属两者的对象例如普通
+   函数会被当作描述器来处理）。
+
+   当 *func* 是一个描述器（例如普通 Python 函数, "classmethod()",
+   "staticmethod()", "abstractmethod()" 或其他 "partialmethod" 的实例
+   ）时, 对 "__get__" 的调用会被委托给底层的描述器，并会返回一个适当的
+   部分对象 作为结果。
+
+   当 *func* 是一个非描述器类可调用对象时，则会动态创建一个适当的绑定
+   方法。 当用作方法时其行为类似普通 Python 函数：将会插入 *self* 参数
+   作为第一个位置参数，其位置甚至会处于提供给 "partialmethod" 构造器的
+   *args* 和 *keywords* 之前。
+
+   示例:
+
+      >>> class Cell:
+      ...     def __init__(self):
+      ...         self._alive = False
+      ...     @property
+      ...     def alive(self):
+      ...         return self._alive
+      ...     def set_state(self, state):
+      ...         self._alive = bool(state)
+      ...     set_alive = partialmethod(set_state, True)
+      ...     set_dead = partialmethod(set_state, False)
+      ...
+      >>> c = Cell()
+      >>> c.alive
+      False
+      >>> c.set_alive()
+      >>> c.alive
+      True
+
+   3.4 新版功能.
+
+functools.reduce(function, iterable[, initializer])
+
+   将两个参数的 *function* 从左至右积累地应用到 *iterable* 的条目，以
+   便将该可迭代对象缩减为单一的值。 例如，"reduce(lambda x, y: x+y,
+   [1, 2, 3, 4, 5])" 是计算 "((((1+2)+3)+4)+5)" 的值。 左边的参数 *x*
+   是积累值而右边的参数 *y* 则是来自 *iterable* 的更新值。 如果存在可
+   选项 *initializer*，它会被放在参与计算的可迭代对象的条目之前，并在
+   可迭代对象为空时作为默认值。 如果没有给出 *initializer* 并且
+   *iterable* 仅包含一个条目，则将返回第一项。
+
+   大致相当于：
+
+      def reduce(function, iterable, initializer=None):
+          it = iter(iterable)
+          if initializer is None:
+              value = next(it)
+          else:
+              value = initializer
+          for element in it:
+              value = function(value, element)
+          return value
+
+   请参阅 "itertools.accumulate()" 了解有关可产生所有中间值的迭代器。
+
+@functools.singledispatch
+
+   将一个函数转换为 *单分派* *generic function*。
+
+   要定义一个泛型函数，应使用 "@singledispatch" 装饰器进行装饰。 请注
+   意分派是作用于第一个参数的类型，要相应地创建你的函数:
+
+      >>> from functools import singledispatch
+      >>> @singledispatch
+      ... def fun(arg, verbose=False):
+      ...     if verbose:
+      ...         print("Let me just say,", end=" ")
+      ...     print(arg)
+
+   要将重载的实现添加到函数中，请使用泛型函数的 "register()" 属性。 它
+   是一个装饰器。 对于带有类型标注的函数，该装饰器将自动推断第一个参数
+   的类型:
+
+      >>> @fun.register
+      ... def _(arg: int, verbose=False):
+      ...     if verbose:
+      ...         print("Strength in numbers, eh?", end=" ")
+      ...     print(arg)
+      ...
+      >>> @fun.register
+      ... def _(arg: list, verbose=False):
+      ...     if verbose:
+      ...         print("Enumerate this:")
+      ...     for i, elem in enumerate(arg):
+      ...         print(i, elem)
+
+   对于不使用类型标注的代码，可以将适当的类型参数显式地传给装饰器本身:
+
+      >>> @fun.register(complex)
+      ... def _(arg, verbose=False):
+      ...     if verbose:
+      ...         print("Better than complicated.", end=" ")
+      ...     print(arg.real, arg.imag)
+      ...
+
+   要启用注册 lambda 和现有函数，可以使用函数形式的 "register()" 属性:
+
+      >>> def nothing(arg, verbose=False):
+      ...     print("Nothing.")
+      ...
+      >>> fun.register(type(None), nothing)
+
+   "register()" 属性将返回启用了装饰器堆栈、封存的未装饰函数，并会为每
+   个变量单独创建单元测试:
+
+      >>> @fun.register(float)
+      ... @fun.register(Decimal)
+      ... def fun_num(arg, verbose=False):
+      ...     if verbose:
+      ...         print("Half of your number:", end=" ")
+      ...     print(arg / 2)
+      ...
+      >>> fun_num is fun
+      False
+
+   在调用时，泛型函数会根据第一个参数的类型进行分派:
+
+      >>> fun("Hello, world.")
+      Hello, world.
+      >>> fun("test.", verbose=True)
+      Let me just say, test.
+      >>> fun(42, verbose=True)
+      Strength in numbers, eh? 42
+      >>> fun(['spam', 'spam', 'eggs', 'spam'], verbose=True)
+      Enumerate this:
+      0 spam
+      1 spam
+      2 eggs
+      3 spam
+      >>> fun(None)
+      Nothing.
+      >>> fun(1.23)
+      0.615
+
+   在没有用于特定类型的已注册实现的情况下，则会使用其方法解析顺序来查
+   找更通用的实现。 以 "@singledispatch" 装饰的原始函数将为最基本的
+   "object" 类型进行注册，这意味着它将在找不到更好的实现时被使用。
+
+   如果一个实现注册到了 *abstract base class*，虚拟子类将会被发送到该
+   实现:
+
+      >>> from collections.abc import Mapping
+      >>> @fun.register
+      ... def _(arg: Mapping, verbose=False):
+      ...     if verbose:
+      ...         print("Keys & Values")
+      ...     for key, value in arg.items():
+      ...         print(key, "=>", value)
+      ...
+      >>> fun({"a": "b"})
+      a => b
+
+   要检查泛型函数将为给定类型选择哪个实现，请使用 "dispatch()" 属性:
+
+      >>> fun.dispatch(float)
+      <function fun_num at 0x1035a2840>
+      >>> fun.dispatch(dict)    # note: default implementation
+      <function fun at 0x103fe0000>
+
+   要访问所有忆注册实现，请使用只读的 "registry" 属性:
+
+      >>> fun.registry.keys()
+      dict_keys([<class 'NoneType'>, <class 'int'>, <class 'object'>,
+                <class 'decimal.Decimal'>, <class 'list'>,
+                <class 'float'>])
+      >>> fun.registry[float]
+      <function fun_num at 0x1035a2840>
+      >>> fun.registry[object]
+      <function fun at 0x103fe0000>
+
+   3.4 新版功能.
+
+   在 3.7 版更改: "register()" 属性支持使用类型标注。
+
+class functools.singledispatchmethod(func)
+
+   将一个方法转换为 *单分派* *generic function*。
+
+   要定义一个泛型方法，应使用 "@singledispatchmethod" 装饰器进行装饰。
+   请注意分派是作用于第一个非 self 或非 cls 参数的类型，要相应地创建你
+   的函数:
+
+      class Negator:
+          @singledispatchmethod
+          def neg(self, arg):
+              raise NotImplementedError("Cannot negate a")
+
+          @neg.register
+          def _(self, arg: int):
+              return -arg
+
+          @neg.register
+          def _(self, arg: bool):
+              return not arg
+
+   "@singledispatchmethod" 支持与其他装饰器如 "@classmethod" 相嵌套。
+   请注意如果要允许 "dispatcher.register"，则 "singledispatchmethod"
+   必须是 *最外层* 的装饰器。 下面的示例定义了 "Negator" 类，其中包含
+   绑定到类的 "neg" 方法:
+
+      class Negator:
+          @singledispatchmethod
+          @classmethod
+          def neg(cls, arg):
+              raise NotImplementedError("Cannot negate a")
+
+          @neg.register
+          @classmethod
+          def _(cls, arg: int):
+              return -arg
+
+          @neg.register
+          @classmethod
+          def _(cls, arg: bool):
+              return not arg
+
+   同样的模式也被用于其他类似的装饰器: "staticmethod",
+   "abstractmethod" 等等。
+
+   3.8 新版功能.
+
+functools.update_wrapper(wrapper, wrapped, assigned=WRAPPER_ASSIGNMENTS, updated=WRAPPER_UPDATES)
+
+   更新一个 *wrapper* 函数以使其类似于 *wrapped* 函数。 可选参数为指明
+   原函数的哪些属性要直接被赋值给 wrapper 函数的匹配属性的元组，并且这
+   些 wrapper 函数的属性将使用原函数的对应属性来更新。 这些参数的默认
+   值是模块级常量 "WRAPPER_ASSIGNMENTS" (它将被赋值给 wrapper 函数的
+   "__module__", "__name__", "__qualname__", "__annotations__" 和
+   "__doc__" 即文档字符串) 以及 "WRAPPER_UPDATES" (它将更新 wrapper 函
+   数的 "__dict__" 即实例字典)。
+
+   为了允许出于内省和其他目的访问原始函数（例如绕过 "lru_cache()" 之类
+   的缓存装饰器），此函数会自动为 wrapper 添加一个指向被包装函数的
+   "__wrapped__" 属性。
+
+   此函数的主要目的是在 *decorator* 函数中用来包装被装饰的函数并返回包
+   装器。 如果包装器函数未被更新，则被返回函数的元数据将反映包装器定义
+   而不是原始函数定义，这通常没有什么用处。
+
+   "update_wrapper()" 可以与函数之外的可调用对象一同使用。 在
+   *assigned* 或 *updated* 中命名的任何属性如果不存在于被包装对象则会
+   被忽略（即该函数将不会尝试在包装器函数上设置它们）。 如果包装器函数
+   自身缺少在 *updated* 中命名的任何属性则仍将引发 "AttributeError"。
+
+   3.2 新版功能: 自动添加 "__wrapped__" 属性。
+
+   3.2 新版功能: 默认拷贝 "__annotations__" 属性。
+
+   在 3.2 版更改: 不存在的属性将不再触发 "AttributeError"。
+
+   在 3.4 版更改: "__wrapped__" 属性现在总是指向被包装的函数，即使该函
+   数定义了 "__wrapped__" 属性。 (参见 bpo-17482)
+
+@functools.wraps(wrapped, assigned=WRAPPER_ASSIGNMENTS, updated=WRAPPER_UPDATES)
+
+   这是一个便捷函数，用于在定义包装器函数时发起调用 "update_wrapper()"
+   作为函数装饰器。 它等价于 "partial(update_wrapper, wrapped=wrapped,
+   assigned=assigned, updated=updated)"。 例如:
+
+      >>> from functools import wraps
+      >>> def my_decorator(f):
+      ...     @wraps(f)
+      ...     def wrapper(*args, **kwds):
+      ...         print('Calling decorated function')
+      ...         return f(*args, **kwds)
+      ...     return wrapper
+      ...
+      >>> @my_decorator
+      ... def example():
+      ...     """Docstring"""
+      ...     print('Called example function')
+      ...
+      >>> example()
+      Calling decorated function
+      Called example function
+      >>> example.__name__
+      'example'
+      >>> example.__doc__
+      'Docstring'
+
+   如果不使用这个装饰器工厂函数，则 example 函数的名称将变为
+   "'wrapper'"，并且 "example()" 原本的文档字符串将会丢失。
+
+
+"partial" 对象
+==============
+
+"partial" 对象是由 "partial()" 创建的可调用对象。 它们具有三个只读属性
+：
+
+partial.func
+
+   一个可调用对象或函数。 对 "partial" 对象的调用将被转发给 "func" 并
+   附带新的参数和关键字。
+
+partial.args
+
+   最左边的位置参数将放置在提供给 "partial" 对象调用的位置参数之前。
+
+partial.keywords
+
+   当调用 "partial" 对象时将要提供的关键字参数。
+
+"partial" 对象与 "function" 对象的类似之处在于它们都是可调用、可弱引用
+的对象并可拥有属性。 但两者也存在一些重要的区别。 例如前者不会自动创建
+"__name__" 和 "__doc__" 属性。 而且，在类中定义的 "partial" 对象的行为
+类似于静态方法，并且不会在实例属性查找期间转换为绑定方法。

@@ -1,0 +1,371 @@
+"types" --- 动态类型创建和内置类型名称
+**************************************
+
+**源代码:** Lib/types.py
+
+======================================================================
+
+此模块定义了一些工具函数，用于协助动态创建新的类型。
+
+它还为某些对象类型定义了名称，这些名称由标准 Python 解释器所使用，但并
+不像内置的 "int" 或 "str" 那样对外公开。
+
+最后，它还额外提供了一些类型相关但重要程度不足以作为内置对象的工具类和
+函数。
+
+
+动态类型创建
+============
+
+types.new_class(name, bases=(), kwds=None, exec_body=None)
+
+   使用适当的元类动态地创建一个类对象。
+
+   前三个参数是组成类定义头的部件：类名称，基类 (有序排列)，关键字参数
+   (例如 "metaclass")。
+
+   *exec_body* 参数是一个回调函数，用于填充新创建类的命名空间。 它应当
+   接受类命名空间作为其唯一的参数并使用类内容直接更新命名空间。 如果未
+   提供回调函数，则它就等效于传入 "lambda ns: ns"。
+
+   3.3 新版功能.
+
+types.prepare_class(name, bases=(), kwds=None)
+
+   计算适当的元类并创建类命名空间。
+
+   参数是组成类定义头的部件：类名称，基类 (有序排列) 以及关键字参数 (
+   例如 "metaclass")。
+
+   返回值是一个 3 元组: "metaclass, namespace, kwds"
+
+   *metaclass* 是适当的元类，*namespace* 是预备好的类命名空间而 *kwds*
+   是所传入 *kwds* 参数移除每个 "'metaclass'" 条目后的已更新副本。 如
+   果未传入 *kwds* 参数，这将为一个空字典。
+
+   3.3 新版功能.
+
+   在 3.6 版更改: 所返回元组中 "namespace" 元素的默认值已被改变。 现在
+   当元类没有 "__prepare__" 方法时将会使用一个保留插入顺序的映射。
+
+参见:
+
+  元类
+     这些函数所支持的类创建过程的完整细节
+
+  **PEP 3115** - Python 3000 中的元类
+     引入 "__prepare__" 命名空间钩子
+
+types.resolve_bases(bases)
+
+   动态地解析 MRO 条目，具体描述见 **PEP 560**。
+
+   此函数会在 *bases* 中查找不是 "type" 的实例的项，并返回一个元组，其
+   中每个具有 "__mro_entries__" 方法的此种对象对象将被替换为调用该方法
+   解包后的结果。 如果一个 *bases* 项是 "type" 的实例，或它不具有
+   "__mro_entries__" 方法，则它将不加改变地被包含在返回的元组中。
+
+   3.7 新版功能.
+
+参见: **PEP 560** - 对类型模块和泛型类型的核心支持
+
+
+标准解释器类型
+==============
+
+此模块为许多类型提供了实现 Python 解释器所要求的名称。 它刻意地避免了
+包含某些仅在处理过程中偶然出现的类型，例如 "listiterator" 类型。
+
+此种名称的典型应用如 "isinstance()" 或 "issubclass()" 检测。
+
+如果你要实例化这些类型中的任何一种，请注意其签名在不同 Python 版本之间
+可能出现变化。
+
+以下类型有相应的标准名称定义：
+
+types.FunctionType
+types.LambdaType
+
+   用户自定义函数以及由 "lambda"  表达式所创建函数的类型。
+
+   引发一个 审计事件 "function.__new__"，附带参数 "code"。
+
+   此审计事件只会被函数对象的直接实例化引发，而不会被普通编译所引发。
+
+types.GeneratorType
+
+   *generator* 迭代器对象的类型，由生成器函数创建。
+
+types.CoroutineType
+
+   *coroutine* 对象的类型，由 "async def" 函数创建。
+
+   3.5 新版功能.
+
+types.AsyncGeneratorType
+
+   *asynchronous generator* 迭代器对象的类型，由异步生成器函数创建。
+
+   3.6 新版功能.
+
+class types.CodeType(**kwargs)
+
+   代码对象的类型，例如 "compile()" 的返回值。
+
+   引发 审计事件 "code.__new__" 附带参数 "code", "filename", "name",
+   "argcount", "posonlyargcount", "kwonlyargcount", "nlocals",
+   "stacksize", "flags"。
+
+   请注意被审计的参数可能与初始化代码所要求的名称或位置不相匹配。 审计
+   事件只会被代码对象的直接实例化引发，而不会被普通编译所引发。
+
+   replace(**kwargs)
+
+      返回代码对象的一个副本，使用指定的新字段值。
+
+      3.8 新版功能.
+
+types.CellType
+
+   单元对象的类型：这种对象被用作函数中自由变量的容器。
+
+   3.8 新版功能.
+
+types.MethodType
+
+   用户自定义类实例方法的类型。
+
+types.BuiltinFunctionType
+types.BuiltinMethodType
+
+   内置函数例如 "len()" 或 "sys.exit()" 以及内置类方法的类型。 （这里
+   所说的“内置”是指“以 C 语言编写”。）
+
+types.WrapperDescriptorType
+
+   某些内置数据类型和基类的方法的类型，例如 "object.__init__()" 或
+   "object.__lt__()"。
+
+   3.7 新版功能.
+
+types.MethodWrapperType
+
+   某些内置数据类型和基类的 *绑定* 方法的类型。 例如
+   "object().__str__" 所属的类型。
+
+   3.7 新版功能.
+
+types.MethodDescriptorType
+
+   某些内置数据类型方法例如 "str.join()" 的类型。
+
+   3.7 新版功能.
+
+types.ClassMethodDescriptorType
+
+   某些内置数据类型 *非绑定* 类方法例如 "dict.__dict__['fromkeys']" 的
+   类型。
+
+   3.7 新版功能.
+
+class types.ModuleType(name, doc=None)
+
+   *模块* 的类型。 构造器接受待创建模块的名称及其作为可选项
+   *docstring*。
+
+   注解:
+
+     如果你希望设置各种由导入控制的属性，请使用
+     "importlib.util.module_from_spec()" 来创建一个新模块。
+
+   __doc__
+
+      模块的 *docstring*。 默认为 "None"。
+
+   __loader__
+
+      用于加载模块的 *loader*。 默认为 "None"。
+
+      在 3.4 版更改: 默认为 "None"。 之前该属性为可选项。
+
+   __name__
+
+      模块的名字
+
+   __package__
+
+      一个模块所属的 *package*。 如果模块为最高层级的（即不是任何特定
+      包的组成部分）则该属性应设为 "''"，否则它应设为特定包的名称 (如
+      果模块本身也是一个包则名称可以为 "__name__")。 默认为 "None"。
+
+      在 3.4 版更改: 默认为 "None"。 之前该属性为可选项。
+
+class types.GenericAlias(t_origin, t_args)
+
+   形参化泛型 的类型，例如 "list[int]"。
+
+   "t_origin" 应当是一个非形参化的泛型类，例如 "list", "tuple" 或
+   "dict"。 "t_args" 应当是一个形参化 "t_origin" 的 "tuple" (长度可以
+   为 1):
+
+      >>> from types import GenericAlias
+
+      >>> list[int] == GenericAlias(list, (int,))
+      True
+      >>> dict[str, int] == GenericAlias(dict, (str, int))
+      True
+
+   3.9 新版功能.
+
+class types.TracebackType(tb_next, tb_frame, tb_lasti, tb_lineno)
+
+   回溯对象的类型，例如 "sys.exc_info()[2]" 中的对象。
+
+   请查看 语言参考 了解可用属性和操作的细节，以及动态地创建回溯对象的
+   指南。
+
+types.FrameType
+
+   帧对象的类型，例如 "tb.tb_frame" 中的对象，其中 "tb" 是一个回溯对象
+   。
+
+   请查看 语言参考 了解可用属性和操作的细节。
+
+types.GetSetDescriptorType
+
+   使用 "PyGetSetDef" 在扩展模块中定义的对象的类型，例如
+   "FrameType.f_locals" 或 "array.array.typecode"。 此类型被用作对象属
+   性的描述器；它的目的与 "property" 类型相同，但专门针对在扩展模块中
+   定义的类。
+
+types.MemberDescriptorType
+
+   使用 "PyMemberDef" 在扩展模块中定义的对象的类型，例如
+   "datetime.timedelta.days"。 此类型被用作使用标准转换函数的简单 C 数
+   据成员的描述器；它的目的与 "property" 类型相同，但专门针对在扩展模
+   块中定义的类。
+
+   **CPython implementation detail:** 在 Python 的其它实现中，此类型可
+   能与 "GetSetDescriptorType" 完全相同。
+
+class types.MappingProxyType(mapping)
+
+   一个映射的只读代理。 它提供了对映射条目的动态视图，这意味着当映射发
+   生改变时，视图会反映这些改变。
+
+   3.3 新版功能.
+
+   在 3.9 版更改: 更新为支持 **PEP 584** 所新增的合并 ("|") 运算符，它
+   会简单地委托给下层的映射。
+
+   key in proxy
+
+      如果下层的映射中存在键 *key* 则返回 "True"，否则返回 "False"。
+
+   proxy[key]
+
+      返回下层的映射中以 *key* 为键的项。 如果下层的映射中不存在键
+      *key* 则引发 "KeyError"。
+
+   iter(proxy)
+
+      返回由下层映射的键为元素的迭代器。 这是 "iter(proxy.keys())" 的
+      快捷方式。
+
+   len(proxy)
+
+      返回下层映射中的项数。
+
+   copy()
+
+      返回下层映射的浅拷贝。
+
+   get(key[, default])
+
+      如果 *key* 存在于下层映射中则返回 *key* 的值，否则返回 *default*
+      。 如果 *default* 未给出则默认为 "None"，因而此方法绝不会引发
+      "KeyError"。
+
+   items()
+
+      返回由下层映射的项 ("(键, 值)" 对) 组成的一个新视图。
+
+   keys()
+
+      返回由下层映射的键组成的一个新视图。
+
+   values()
+
+      返回由下层映射的值组成的一个新视图。
+
+   reversed(proxy)
+
+      返回一个包含下层映射的键的反向迭代器。
+
+      3.9 新版功能.
+
+
+附加工具类和函数
+================
+
+class types.SimpleNamespace
+
+   一个简单的 "object" 子类，提供了访问其命名空间的属性，以及一个有意
+   义的 repr。
+
+   不同于 "object"，对于 "SimpleNamespace" 你可以添加和移除属性。 如果
+   一个 "SimpleNamespace" 对象使用关键字参数进行初始化，这些参数会被直
+   接加入下层命名空间。
+
+   此类型大致等价于以下代码:
+
+      class SimpleNamespace:
+          def __init__(self, /, **kwargs):
+              self.__dict__.update(kwargs)
+
+          def __repr__(self):
+              items = (f"{k}={v!r}" for k, v in self.__dict__.items())
+              return "{}({})".format(type(self).__name__, ", ".join(items))
+
+          def __eq__(self, other):
+              return self.__dict__ == other.__dict__
+
+   "SimpleNamespace" 可被用于替代 "class NS: pass"。 但是，对于结构化
+   记录类型则应改用 "namedtuple()"。
+
+   3.3 新版功能.
+
+   在 3.9 版更改: repr 中的属性顺序由字母顺序改为插入顺序 (类似
+   "dict")。
+
+types.DynamicClassAttribute(fget=None, fset=None, fdel=None, doc=None)
+
+   在类上访问 __getattr__ 的路由属性。
+
+   这是一个描述器，用于定义通过实例与通过类访问时具有不同行为的属性。
+   当实例访问时保持正常行为，但当类访问属性时将被路由至类的
+   __getattr__ 方法；这是通过引发 AttributeError 来完成的。
+
+   这允许有在实例上激活的特性属性，同时又有在类上的同名虚拟属性 (一个
+   例子请参见 "enum.Enum")。
+
+   3.4 新版功能.
+
+
+协程工具函数
+============
+
+types.coroutine(gen_func)
+
+   此函数可将 *generator* 函数转换为返回基于生成器的协程的 *coroutine
+   function*。 基于生成器的协程仍然属于 *generator iterator*，但同时又
+   可被视为 *coroutine* 对象兼 *awaitable*。 不过，它没有必要实现
+   "__await__()" 方法。
+
+   如果 *gen_func* 是一个生成器函数，它将被原地修改。
+
+   如果 *gen_func* 不是一个生成器函数，则它会被包装。 如果它返回一个
+   "collections.abc.Generator" 的实例，该实例将被包装在一个
+   *awaitable* 代理对象中。 所有其他对象类型将被原样返回。
+
+   3.5 新版功能.

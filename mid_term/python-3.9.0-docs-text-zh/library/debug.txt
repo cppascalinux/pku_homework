@@ -1,0 +1,103 @@
+调试和分析
+**********
+
+这些库可以帮助你进行 Python 开发：调试器使你能够逐步执行代码，分析堆栈
+帧并设置中断点等等，性能分析器可以运行代码并为你提供执行时间的详细数据
+，使你能够找出你的程序中的瓶颈。 审计事件提供运行时行为的可见性，如果
+没有此工具则需要进行侵入式调试或修补。
+
+* 审计事件表
+
+* "bdb" --- Debugger framework
+
+* "faulthandler" --- Dump the Python traceback
+
+  * Dumping the traceback
+
+  * Fault handler state
+
+  * Dumping the tracebacks after a timeout
+
+  * Dumping the traceback on a user signal
+
+  * Issue with file descriptors
+
+  * 示例
+
+* "pdb" --- Python 的调试器
+
+  * 调试器命令
+
+* Python Profilers 分析器
+
+  * profile分析器简介
+
+  * 实时用户手册
+
+  * "profile" 和 "cProfile" 模块参考
+
+  * "Stats" 类
+
+  * 什么是确定性性能分析？
+
+  * 局限性
+
+  * 准确估量
+
+  * 使用自定义计时器
+
+* "timeit" --- 测量小代码片段的执行时间
+
+  * 基本示例
+
+  * Python 接口
+
+  * 命令行界面
+
+  * 示例
+
+* "trace" --- 跟踪Python语句执行
+
+  * Command-Line Usage
+
+    * Main options
+
+    * Modifiers
+
+    * Filters
+
+  * 编程接口
+
+* "tracemalloc" --- 跟踪内存分配
+
+  * 示例
+
+    * 显示前10项
+
+    * 计算差异
+
+    * Get the traceback of a memory block
+
+    * Pretty top
+
+      * Record the current and peak size of all traced memory blocks
+
+  * API
+
+    * 函数
+
+    * 域过滤器
+
+    * 过滤器
+
+    * Frame
+
+    * 快照
+
+    * 统计
+
+    * StatisticDiff
+
+    * 跟踪
+
+    * 回溯

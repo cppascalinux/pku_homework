@@ -1,0 +1,334 @@
+"calendar" --- 日历相关函数
+***************************
+
+**源代码：** Lib/calendar.py
+
+======================================================================
+
+这个模块让你可以输出像 Unix **cal** 那样的日历，它还提供了其它与日历相
+关的实用函数。 默认情况下，这些日历把星期一当作一周的第一天，星期天为
+一周的最后一天（按照欧洲惯例）。 可以使用 "setfirstweekday()" 方法设置
+一周的第一天为星期天 (6) 或者其它任意一天。 使用整数作为指定日期的参数
+。 更多相关的函数，参见 "datetime" 和 "time" 模块。
+
+在这个模块中定义的函数和类都基于一个理想化的日历，现行公历向过去和未来
+两个方向无限扩展。这与 Dershowitz 和 Reingold 的书 "历法计算" 中所有计
+算的基本日历 -- "proleptic Gregorian" 日历的定义相符合。 ISO 8601标准
+还规定了 0 和 负数年份。0年指公元前1年， -1年指公元前2年，依此类推。
+
+class calendar.Calendar(firstweekday=0)
+
+   创建一个 "Calendar" 对象。 *firstweekday* 是一个整数，用于指定一周
+   的第一天。 "0" 是星期一（默认值），"6" 是星期天。
+
+   "Calendar" 对象提供了一些可被用于准备日历数据格式化的方法。 这个类
+   本身不执行任何格式化操作。 这部分任务应由子类来完成。
+
+   "Calendar" 类的实例有下列方法：
+
+   iterweekdays()
+
+      返回一个迭代器，迭代器的内容为一星期的数字。迭代器的第一个值与
+      "firstweekday" 属性的值一至。
+
+   itermonthdates(year, month)
+
+      返回一个迭代器，迭代器的内容为 *year* 年 *month* 月(1-12)的日期
+      。这个迭代器返回当月的所有日期 ( "datetime.date"  对象)，日期包
+      含了本月头尾用于组成完整一周的日期。
+
+   itermonthdays(year, month)
+
+      返回一个迭代器，迭代器的内容与 "itermonthdates()" 类似，为
+      *year* 年 *month* 月的日期，但不受 "datetime.date" 范围限制。返
+      回的日期为当月每一天的日期对应的天数。对于不在当月的日期，显示为
+      "0"。
+
+   itermonthdays2(year, month)
+
+      返回一个迭代器，迭代器的内容与 "itermonthdates()" 类似为 *year*
+      年 *month* 月的日期，但不受 "datetime.date" 范围的限制。迭代器中
+      的元素为一个由日期和代表星期几的数字组成的的元组。
+
+   itermonthdays3(year, month)
+
+      返回一个迭代器，迭代器的内容与 "itermonthdates()" 类似为 *year*
+      年 *month* 月的日期，但不受 "datetime.date" 范围的限制。迭代器的
+      元素为一个由年，月，日组成的元组。
+
+      3.7 新版功能.
+
+   itermonthdays4(year, month)
+
+      返回一个迭代器，迭代器的内容与 "itermonthdates()" 类似为 *year*
+      年 *month* 月的日期，但不受 "datetime.date" 范围的限制。迭代器的
+      元素为一个由年，月，日和代表星期几的数字组成的元组。
+
+      3.7 新版功能.
+
+   monthdatescalendar(year, month)
+
+      返回一个表示指定年月的周列表。周列表由七个  "datetime.date" 对象
+      组成。
+
+   monthdays2calendar(year, month)
+
+      返回一个表示指定年月的周列表。周列表由七个代表日期的数字和代表周
+      几的数字组成的二元元组。
+
+   monthdayscalendar(year, month)
+
+      返回一个表示指定年月的周列表。周列表由七个代表日期的数字组成。
+
+   yeardatescalendar(year, width=3)
+
+      返回可以用来格式化的指定年月的数据。返回的值是一个列表，列表是月
+      份组成的行。每一行包含了最多 *width* 个月(默认为3)。每个月包含了
+      4到6周，每周包含1--7天。每一天使用 "datetime.date" 对象。
+
+   yeardays2calendar(year, width=3)
+
+      返回可以用来模式化的指定年月的数据(与 "yeardatescalendar()" 类似
+      )。周列表的元素是由表示日期的数字和表示星期几的数字组成的元组。
+      不在这个月的日子为0。
+
+   yeardayscalendar(year, width=3)
+
+      返回可以用来模式化的指定年月的数据(与 "yeardatescalendar()" 类似
+      )。周列表的元素是表示日期的数字。不在这个月的日子为0。
+
+class calendar.TextCalendar(firstweekday=0)
+
+   可以使用这个类生成纯文本日历。
+
+   "TextCalendar" 实例有以下方法：
+
+   formatmonth(theyear, themonth, w=0, l=0)
+
+      返回一个多行字符串来表示指定年月的日历。*w* 为日期的宽度，但始终
+      保持日期居中。*l* 指定了每星期占用的行数。以上这些还依赖于构造器
+      或者 "setfirstweekday()" 方法指定的周的第一天是哪一天。
+
+   prmonth(theyear, themonth, w=0, l=0)
+
+      与 "formatmonth()" 方法一样，返回一个月的日历。
+
+   formatyear(theyear, w=2, l=1, c=6, m=3)
+
+      返回一个多行字符串，这个字符串为一个 *m* 列日历。可选参数 *w*,
+      *l*, 和 *c* 分别表示日期列数， 周的行数， 和月之间的间隔。同样，
+      以上这些还依赖于构造器或者 "setfirstweekday()" 指定哪一天为一周
+      的第一天。日历的第一年由平台依赖于使用的平台。
+
+   pryear(theyear, w=2, l=1, c=6, m=3)
+
+      与 "formatyear()" 方法一样，返回一整年的日历。
+
+class calendar.HTMLCalendar(firstweekday=0)
+
+   可以使用这个类生成 HTML 日历。
+
+   "HTMLCalendar" 实例有以下方法：
+
+   formatmonth(theyear, themonth, withyear=True)
+
+      返回一个 HTML 表格作为指定年月的日历。 *withyear* 为真，则年份将
+      会包含在表头，否则只显示月份。
+
+   formatyear(theyear, width=3)
+
+      返回一个 HTML 表格作为指定年份的日历。 *width* (默认为3) 用于规
+      定每一行显示月份的数量。
+
+   formatyearpage(theyear, width=3, css='calendar.css', encoding=None)
+
+      返回一个完整的 HTML 页面作为指定年份的日历。 *width*(默认为3) 用
+      于规定每一行显示的月份数量。 *css* 为层叠样式表的名字。如果不使
+      用任何层叠样式表，可以使用 "None" 。 *encoding* 为输出页面的编码
+      (默认为系统的默认编码)。
+
+   "HTMLCalendar" 有以下属性，你可以重载它们来自定义应用日历的样式。
+
+   cssclasses
+
+      一个对应星期一到星期天的 CSS class 列表。默认列表为
+
+         cssclasses = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+
+      可以向每天加入其它样式
+
+         cssclasses = ["mon text-bold", "tue", "wed", "thu", "fri", "sat", "sun red"]
+
+      需要注意的是，列表的长度必须为7。
+
+   cssclass_noday
+
+      工作日的 CSS 类在上个月或下个月发生。
+
+      3.7 新版功能.
+
+   cssclasses_weekday_head
+
+      用于标题行中的工作日名称的 CSS 类 列表。默认值与 "cssclasses" 相
+      同。
+
+      3.7 新版功能.
+
+   cssclass_month_head
+
+      月份的头 CSS 类（由 "formatmonthname()" 使用）。默认值为
+      ""month"" 。
+
+      3.7 新版功能.
+
+   cssclass_month
+
+      某个月的月历的 CSS 类（由 "formatmonth()" 使用）。默认值为
+      ""month"" 。
+
+      3.7 新版功能.
+
+   cssclass_year
+
+      某年的年历的 CSS 类（由 "formatyear()" 使用）。默认值为 ""year""
+      。
+
+      3.7 新版功能.
+
+   cssclass_year_head
+
+      年历的·表头 CSS 类（由 "formatyear()" 使用）。默认值为 ""year""
+      。
+
+      3.7 新版功能.
+
+   需要注意的是，尽管上面命名的样式类都是单独出现的(如：
+   "cssclass_month" "cssclass_noday"), 但我们可以使用空格将样式类列表
+   中的多个元素分隔开，例如：
+
+      "text-bold text-red"
+
+   下面是一个如何自定义  "HTMLCalendar" 的示例
+
+      class CustomHTMLCal(calendar.HTMLCalendar):
+          cssclasses = [style + " text-nowrap" for style in
+                        calendar.HTMLCalendar.cssclasses]
+          cssclass_month_head = "text-center month-head"
+          cssclass_month = "text-center month"
+          cssclass_year = "text-italic lead"
+
+class calendar.LocaleTextCalendar(firstweekday=0, locale=None)
+
+   这个子类 "TextCalendar" 可以在构造函数中传递一个语言环境名称，并且
+   返回月份和星期几的名称在特定语言环境中。如果此语言环境包含编码，则
+   包含月份和工作日名称的所有字符串将作为 unicode 返回。
+
+class calendar.LocaleHTMLCalendar(firstweekday=0, locale=None)
+
+   This subclass of "HTMLCalendar" can be passed a locale name in the
+   constructor and will return month and weekday names in the
+   specified locale. If this locale includes an encoding all strings
+   containing month and weekday names will be returned as unicode.
+
+注解:
+
+  这两个类的 "formatweekday()" 和 "formatmonthname()" 方法临时更改dang
+  当前区域至给定 *locale* 。由于当前的区域设置是进程范围的设置，因此它
+  们不是线程安全的。
+
+对于简单的文本日历，这个模块提供了以下方法。
+
+calendar.setfirstweekday(weekday)
+
+   设置每一周的开始("0" 表示星期一，"6" 表示星期天)。calendar还提供了
+   "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
+   和 "SUNDAY" 几个常量方便使用。例如，设置每周的第一天为星期天
+
+      import calendar
+      calendar.setfirstweekday(calendar.SUNDAY)
+
+calendar.firstweekday()
+
+   返回当前设置的每星期的第一天的数值。
+
+calendar.isleap(year)
+
+   如果 *year* 是闰年则返回  "True" ,否则返回 "False"。
+
+calendar.leapdays(y1, y2)
+
+   返回在范围 *y1* 至 *y2* （包含 y1 和 y2 ）之间的闰年的年数，其中
+   *y1* 和 *y2* 是年份。
+
+   此函数适用于跨越一个世纪变化的范围。
+
+calendar.weekday(year, month, day)
+
+   返回某年（ "1970" -- ...），某月（ "1" -- "12" ），某日（ "1" --
+   "31" ）是星期几（ "0" 是星期一）。
+
+calendar.weekheader(n)
+
+   返回一个包含星期几的缩写名的头。 *n* 指定星期几缩写的字符宽度。
+
+calendar.monthrange(year, month)
+
+   返回指定 *年份* 的指定 *月份* 的第一天是星期几和这个月的天数。
+
+calendar.monthcalendar(year, month)
+
+   返回表示一个月的日历的矩阵。 每一行代表一周；此月份外的日子由零表示
+   。 每周从周一开始，除非使用 "setfirstweekday()" 改变设置。
+
+calendar.prmonth(theyear, themonth, w=0, l=0)
+
+   打印由 "month()" 返回的一个月的日历。
+
+calendar.month(theyear, themonth, w=0, l=0)
+
+   使用 "TextCalendar" 类的 "formatmonth()" 以多行字符串形式返回月份日
+   历。
+
+calendar.prcal(year, w=0, l=0, c=6, m=3)
+
+   打印由 "calendar()" 返回的整年的日历。
+
+calendar.calendar(year, w=2, l=1, c=6, m=3)
+
+   使用 "TextCalendar" 类的 "formatyear()" 返回整年的3列的日历以多行字
+   符串的形式。
+
+calendar.timegm(tuple)
+
+   一个不相关但很好用的函数，它接受一个时间元组例如 "time" 模块中的
+   "gmtime()" 函数的返回并返回相应的 Unix 时间戳值，假定 1970 年开始计
+   数， POSIX 编码。实际上， "time.gmtime()" 和 "timegm()" 是彼此相反
+   的。
+
+"calendar" 模块包含以下数据属性：
+
+calendar.day_name
+
+   在当前语言环境下表示星期几的数组。
+
+calendar.day_abbr
+
+   在当前语言环境下表示星期几缩写的数组。
+
+calendar.month_name
+
+   在当前语言环境下表示一年中月份的数组。这遵循一月的月号为 1 的通常惯
+   例，所以它的长度为 13 且 "month_name[0]" 是空字符串。
+
+calendar.month_abbr
+
+   在当前语言环境下表示月份简写的数组。这遵循一月的月号为 1 的通常惯例
+   ，所以它的长度为 13 且 "month_abbr[0]" 是空字符串。
+
+参见:
+
+  模块 "datetime"
+     为日期和时间提供与 "time" 模块相似功能的面向对象接口。
+
+  模块 "time"
+     底层时间相关函数。

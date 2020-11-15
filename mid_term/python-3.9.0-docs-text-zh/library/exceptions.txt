@@ -1,0 +1,658 @@
+内置异常
+********
+
+在 Python 中，所有异常必须为一个派生自 "BaseException" 的类的实例。 在
+带有提及一个特定类的 "except" 子句的 "try" 语句中，该子句也会处理任何
+派生自该类的异常类（但不处理 *它* 所派生出的异常类）。 通过子类化创建
+的两个不相关异常类永远是不等效的，既使它们具有相同的名称。
+
+下面列出的内置异常可通过解释器或内置函数来生成。除非另有说明，它们都会
+具有一个提示导致错误详细原因的“关联值”。 这可以是一个字符串或由多个信
+息项（例如一个错误码和一个解释错误的字符串）组成的元组。 关联值通常会
+作为参数被传递给异常类的构造器。
+
+用户代码可以引发内置异常。 这可被用于测试异常处理程序或报告错误条件，“
+就像” 在解释器引发了相同异常的情况时一样；但是请注意，没有任何机制能防
+止用户代码引发不适当的错误。
+
+内置异常类可以被子类化以定义新的异常；鼓励程序员从 "Exception" 类或它
+的某个子类而不是从 "BaseException" 来派生新的异常。 关于定义异常的更多
+信息可以在 Python 教程的 用户自定义异常 部分查看。
+
+当在 "except" 或 "finally" 子句中引发（或重新引发）异常时，
+"__context__" 会被自动设为所捕获的最后一个异常；如果新的异常未被处理，
+则最终显示的回溯信息将包括原始的异常和最后的异常。
+
+当引发一个新的异常（而不是简单地使用 "raise" 来重新引发当前在处理的异
+常）时，隐式的异常上下文可以通过使用带有 "raise" 的 "from" 来补充一个
+显式的原因:
+
+   raise new_exc from original_exc
+
+跟在 "from" 之后的表达式必须为一个异常或 "None"。 它将在所引发的异常上
+被设置为 "__cause__"。 设置 "__cause__" 还会隐式地将
+"__suppress_context__" 属性设为 "True"，这样使用 "raise new_exc from
+None" 可以有效地将旧异常替换为新异常来显示其目的 (例如将 "KeyError" 转
+换为 "AttributeError")，同时让旧异常在 "__context__" 中保持可用状态以
+便在调试时进行内省。
+
+除了异常本身的回溯以外，默认的回溯还会显示这些串连的异常。 "__cause__"
+中的显式串连异常如果存在将总是显示。 "__context__" 中的隐式串连异常仅
+在 "__cause__" 为 "None" 并且 "__suppress_context__" 为假值时显示。
+
+不论在哪种情况下，异常本身总会在任何串连异常之后显示，以便回溯的最后一
+行总是显示所引发的最后一个异常。
+
+
+基类
+====
+
+下列异常主要被用作其他异常的基类。
+
+exception BaseException
+
+   所有内置异常的基类。 它不应该被用户自定义类直接继承 (这种情况请使用
+   "Exception")。 如果在此类的实例上调用 "str()"，则会返回实例的参数表
+   示，或者当没有参数时返回空字符串。
+
+   args
+
+      传给异常构造器的参数元组。 某些内置异常 (例如 "OSError") 接受特
+      定数量的参数并赋予此元组中的元素特殊的含义，而其他异常通常只接受
+      一个给出错误信息的单独字符串。
+
+   with_traceback(tb)
+
+      此方法将 *tb* 设为异常的新回溯信息并返回该异常对象。 它通常以如
+      下的形式在异常处理程序中使用:
+
+         try:
+             ...
+         except SomeException:
+             tb = sys.exc_info()[2]
+             raise OtherException(...).with_traceback(tb)
+
+exception Exception
+
+   所有内置的非系统退出类异常都派生自此类。 所有用户自定义异常也应当派
+   生自此类。
+
+exception ArithmeticError
+
+   此基类用于派生针对各种算术类错误而引发的内置异常: "OverflowError",
+   "ZeroDivisionError", "FloatingPointError"。
+
+exception BufferError
+
+   当与 缓冲区 相关的操作无法执行时将被引发。
+
+exception LookupError
+
+   此基类用于派生当映射或序列所使用的键或索引无效时引发的异常:
+   "IndexError", "KeyError"。 这可以通过 "codecs.lookup()" 来直接引发
+   。
+
+
+具体异常
+========
+
+以下异常属于经常被引发的异常。
+
+exception AssertionError
+
+   当 "assert" 语句失败时将被引发。
+
+exception AttributeError
+
+   当属性引用 (参见 属性引用) 或赋值失败时将被引发。 （当一个对象根本
+   不支持属性引用或属性赋值时则将引发 "TypeError"。）
+
+exception EOFError
+
+   当 "input()" 函数未读取任何数据即达到文件结束条件 (EOF) 时将被引发
+   。 （另外，"io.IOBase.read()" 和 "io.IOBase.readline()" 方法在遇到
+   EOF 则将返回一个空字符串。）
+
+exception FloatingPointError
+
+   目前未被使用。
+
+exception GeneratorExit
+
+   当一个 *generator* 或 *coroutine* 被关闭时将被引发；参见
+   "generator.close()" 和 "coroutine.close()"。 它直接继承自
+   "BaseException" 而不是 "Exception"，因为从技术上来说它并不是一个错
+   误。
+
+exception ImportError
+
+   当 "import" 语句尝试加载模块遇到麻烦时将被引发。 并且当 "from ...
+   import" 中的 "from list" 存在无法找到的名称时也会被引发。
+
+   "name" 与 "path" 属性可通过对构造器使用仅关键字参数来设定。 设定后
+   它们将分别表示被尝试导入的模块名称与触发异常的任意文件所在路径。
+
+   在 3.3 版更改: 添加了 "name" 与 "path" 属性。
+
+exception ModuleNotFoundError
+
+   "ImportError" 的子类，当一个模块无法被定位时将由 "import" 引发。 当
+   在 "sys.modules" 中找到 "None" 时也会被引发。
+
+   3.6 新版功能.
+
+exception IndexError
+
+   当序列抽取超出范围时将被引发。 （切片索引会被静默截短到允许的范围；
+   如果指定索引不是整数则 "TypeError" 会被引发。）
+
+exception KeyError
+
+   当在现有键集合中找不到指定的映射（字典）键时将被引发。
+
+exception KeyboardInterrupt
+
+   当用户按下中断键 (通常为 "Control-C" 或 "Delete") 时将被引发。 在执
+   行期间，会定期检测中断信号。 该异常继承自 "BaseException" 以确保不
+   会被处理 "Exception" 的代码意外捕获，这样可以避免退出解释器。
+
+exception MemoryError
+
+   当一个操作耗尽内存但情况仍可（通过删除一些对象）进行挽救时将被引发
+   。 关联的值是一个字符串，指明是哪种（内部）操作耗尽了内存。 请注意
+   由于底层的内存管理架构（C 的 "malloc()" 函数），解释器也许并不总是
+   能够从这种情况下完全恢复；但它毕竟可以引发一个异常，这样就能打印出
+   栈回溯信息，以便找出导致问题的失控程序。
+
+exception NameError
+
+   当某个局部或全局名称未找到时将被引发。 此异常仅用于非限定名称。 关
+   联的值是一条错误信息，其中包含未找到的名称。
+
+exception NotImplementedError
+
+   此异常派生自 "RuntimeError"。 在用户自定义的基类中，抽象方法应当在
+   其要求所派生类重载该方法，或是在其要求所开发的类提示具体实现尚待添
+   加时引发此异常。
+
+   注解:
+
+     它不应当用来表示一个运算符或方法根本不能被支持 -- 在此情况下应当
+     让特定运算符 / 方法保持未定义，或者在子类中将其设为 "None"。
+
+   注解:
+
+     "NotImplementedError" 和 "NotImplemented" 不可互换，即使它们有相
+     似的名称和用途。 请参阅 "NotImplemented" 了解有关何时使用它们的详
+     细说明。
+
+exception OSError([arg])
+exception OSError(errno, strerror[, filename[, winerror[, filename2]]])
+
+   此异常在一个系统函数返回系统相关的错误时将被引发，此类错误包括 I/O
+   操作失败例如 "文件未找到" 或 "磁盘已满" 等（不包括非法参数类型或其
+   他偶然性错误）。
+
+   构造器的第二种形式可设置如下所述的相应属性。 如果未指定这些属性则默
+   认为 "None"。 为了能向下兼容，如果传入了三个参数，则 "args" 属性将
+   仅包含由前两个构造器参数组成的 2 元组。
+
+   构造器实际返回的往往是 "OSError" 的某个子类，如下文 OS exceptions
+   中所描述的。 具体的子类取决于最终的 "errno" 值。 此行为仅在直接或通
+   过别名来构造 "OSError" 时发生，并且在子类化时不会被继承。
+
+   errno
+
+      来自于 C 变量 "errno" 的数字错误码。
+
+   winerror
+
+      在 Windows 下，此参数将给出原生的 Windows 错误码。 而 "errno" 属
+      性将是该原生错误码在 POSIX 平台下的近似转换形式。
+
+      在 Windows 下，如果 *winerror* 构造器参数是一个整数，则 "errno"
+      属性会根据 Windows 错误码来确定，而 *errno* 参数会被忽略。 在其
+      他平台上，*winerror* 参数会被忽略，并且 "winerror" 属性将不存在
+      。
+
+   strerror
+
+      操作系统所提供的相应错误信息。 它在 POSIX 平台中由 C 函数
+      "perror()" 来格式化，在 Windows 中则是由 "FormatMessage()"。
+
+   filename
+   filename2
+
+      对于与文件系统路径有关 (例如 "open()" 或 "os.unlink()") 的异常，
+      "filename" 是传给函数的文件名。 对于涉及两个文件系统路径的函数 (
+      例如 "os.rename()")，"filename2" 将是传给函数的第二个文件名。
+
+   在 3.3 版更改: "EnvironmentError", "IOError", "WindowsError",
+   "socket.error", "select.error" 与 "mmap.error" 已被合并到 "OSError"
+   ，构造器可能返回其中一个子类。
+
+   在 3.4 版更改: "filename" 属性现在将是传给函数的原始文件名，而不是
+   经过编码或基于文件系统编码进行解码之后的名称。 此外还添加了
+   *filename2* 构造器参数和属性。
+
+exception OverflowError
+
+   当算术运算的结果大到无法表示时将被引发。 这对整数来说不可能发生（宁
+   可引发 "MemoryError" 也不会放弃尝试）。 但是出于历史原因，有时也会
+   在整数超出要求范围的情况下引发 OverflowError。 因为在 C 中缺少对浮
+   点异常处理的标准化，大多数浮点运算都不会做检查。
+
+exception RecursionError
+
+   此异常派生自 "RuntimeError"。 它会在解释器检测发现超过最大递归深度
+   (参见 "sys.getrecursionlimit()") 时被引发。
+
+   3.5 新版功能: 在此之前将只引发 "RuntimeError"。
+
+exception ReferenceError
+
+   此异常将在使用 "weakref.proxy()" 函数所创建的弱引用来访问该引用的某
+   个已被作为垃圾回收的属性时被引发。 有关弱引用的更多信息请参阅
+   "weakref" 模块。
+
+exception RuntimeError
+
+   当检测到一个不归属于任何其他类别的错误时将被引发。 关联的值是一个指
+   明究竟发生了什么问题的字符串。
+
+exception StopIteration
+
+   由内置函数 "next()" 和 *iterator* 的 "__next__()" 方法所引发，用来
+   表示该迭代器不能产生下一项。
+
+   该异常对象只有一个属性 "value"，它在构造该异常时作为参数给出，默认
+   值为 "None"。
+
+   当一个 *generator* 或 *coroutine* 函数返回时，将引发一个新的
+   "StopIteration" 实例，函数返回的值将被用作异常构造器的 "value" 形参
+   。
+
+   如果某个生成器代码直接或间接地引发了 "StopIteration"，它会被转换为
+   "RuntimeError" (并将 "StopIteration" 保留为导致新异常的原因)。
+
+   在 3.3 版更改: 添加了 "value" 属性及其被生成器函数用作返回值的功能
+   。
+
+   在 3.5 版更改: 引入了通过 "from __future__ import generator_stop"
+   来实现 RuntimeError 转换，参见 **PEP 479**。
+
+   在 3.7 版更改: 默认对所有代码启用 **PEP 479**: 在生成器中引发的
+   "StopIteration" 错误将被转换为 "RuntimeError"。
+
+exception StopAsyncIteration
+
+   必须由一个 *asynchronous iterator* 对象的 "__anext__()" 方法来引发
+   以停止迭代操作。
+
+   3.5 新版功能.
+
+exception SyntaxError
+
+   当解析器遇到语法错误时将被引发。 这可以发生在 "import" 语句，对内置
+   函数 "exec()" 或 "eval()" 的调用，或者读取原始脚本或标准输入（也包
+   括交互模式）的时候。
+
+   该类的实例包含有属性 "filename", "lineno", "offset" 和 "text" 用于
+   方便地访问相应的详细信息。 异常实例的 "str()" 仅返回消息文本。
+
+exception IndentationError
+
+   与不正确的缩进相关的语法错误的基类。 这是 "SyntaxError" 的一个子类
+   。
+
+exception TabError
+
+   当缩进包含对制表符和空格符不一致的使用时将被引发。 这是
+   "IndentationError" 的一个子类。
+
+exception SystemError
+
+   当解释器发现内部错误，但情况看起来尚未严重到要放弃所有希望时将被引
+   发。 关联的值是一个指明发生了什么问题的字符串（表示为低层级的符号）
+   。
+
+   你应当将此问题报告给你所用 Python 解释器的作者或维护人员。 请确认报
+   告 Python 解释器的版本号 ("sys.version"; 它也会在交互式 Python 会话
+   开始时被打印出来)，具体的错误消息（异常所关联的值）以及可能触发该错
+   误的程序源码。
+
+exception SystemExit
+
+   此异常由 "sys.exit()" 函数引发。 它继承自 "BaseException" 而不是
+   "Exception" 以确保不会被处理 "Exception" 的代码意外捕获。 这允许此
+   异常正确地向上传播并导致解释器退出。 如果它未被处理，则 Python 解释
+   器就将退出；不会打印任何栈回溯信息。 构造器接受的可选参数与传递给
+   "sys.exit()" 的相同。 如果该值为一个整数，则它指明系统退出状态码（
+   会传递给 C 的 "exit()" 函数）；如果该值为 "None"，则退出状态码为零
+   ；如果该值为其他类型（例如字符串），则会打印对象的值并将退出状态码
+   设为一。
+
+   对 "sys.exit()" 的调用会被转换为一个异常以便能执行清理处理程序
+   ("try" 语句的 "finally" 子句)，并且使得调试器可以执行一段脚本而不必
+   冒失去控制的风险。 如果绝对确实地需要立即退出（例如在调用
+   "os.fork()" 之后的子进程中）则可使用 "os._exit()".
+
+   code
+
+      传给构造器的退出状态码或错误信息（默认为 "None"。）
+
+exception TypeError
+
+   当一个操作或函数被应用于类型不适当的对象时将被引发。 关联的值是一个
+   字符串，给出有关类型不匹配的详情。
+
+   此异常可以由用户代码引发，以表明尝试对某个对象进行的操作不受支持也
+   不应当受支持。 如果某个对象应当支持给定的操作但尚未提供相应的实现，
+   所要引发的适当异常应为 "NotImplementedError"。
+
+   传入参数的类型错误 (例如在要求 "int" 时却传入了 "list") 应当导致
+   "TypeError"，但传入参数的值错误 (例如传入要求范围之外的数值) 则应当
+   导致 "ValueError"。
+
+exception UnboundLocalError
+
+   当在函数或方法中对某个局部变量进行引用，但该变量并未绑定任何值时将
+   被引发。 此异常是 "NameError" 的一个子类。
+
+exception UnicodeError
+
+   当发生与 Unicode 相关的编码或解码错误时将被引发。 此异常是
+   "ValueError" 的一个子类。
+
+   "UnicodeError" 具有一些描述编码或解码错误的属性。 例如
+   "err.object[err.start:err.end]" 会给出导致编解码器失败的特定无效输
+   入。
+
+   encoding
+
+      引发错误的编码名称。
+
+   reason
+
+      描述特定编解码器错误的字符串。
+
+   object
+
+      编解码器试图要编码或解码的对象。
+
+   start
+
+      "object" 中无效数据的开始位置索引。
+
+   end
+
+      "object" 中无效数据的末尾位置索引（不含）。
+
+exception UnicodeEncodeError
+
+   当在编码过程中发生与 Unicode 相关的错误时将被引发。 此异常是
+   "UnicodeError" 的一个子类。
+
+exception UnicodeDecodeError
+
+   当在解码过程中发生与 Unicode 相关的错误时将被引发。 此异常是
+   "UnicodeError" 的一个子类。
+
+exception UnicodeTranslateError
+
+   在转写过程中发生与 Unicode 相关的错误时将被引发。 此异常是
+   "UnicodeError" 的一个子类。
+
+exception ValueError
+
+   当操作或函数接收到具有正确类型但值不适合的参数，并且情况不能用更精
+   确的异常例如 "IndexError" 来描述时将被引发。
+
+exception ZeroDivisionError
+
+   当除法或取余运算的第二个参数为零时将被引发。 关联的值是一个字符串，
+   指明操作数和运算的类型。
+
+下列异常被保留以与之前的版本相兼容；从 Python 3.3 开始，它们都是
+"OSError" 的别名。
+
+exception EnvironmentError
+
+exception IOError
+
+exception WindowsError
+
+   限在 Windows 中可用。
+
+
+OS 异常
+-------
+
+下列异常均为 "OSError" 的子类，它们将根据系统错误代码被引发。
+
+exception BlockingIOError
+
+   当一个操作会被某个设置为非阻塞操作的对象（例如套接字）所阻塞时将被
+   引发。 对应于 "errno" "EAGAIN", "EALREADY", "EWOULDBLOCK" 和
+   "EINPROGRESS"。
+
+   除了 "OSError" 已有的属性，"BlockingIOError" 还有一个额外属性：
+
+   characters_written
+
+      一个整数，表示在被阻塞前已写入到流的字符数。 当使用来自 "io" 模
+      块的带缓冲 I/O 类时此属性可用。
+
+exception ChildProcessError
+
+   当一个子进程上的操作失败时将被引发。 对应于 "errno" "ECHILD"。
+
+exception ConnectionError
+
+   与连接相关问题的基类。
+
+   其子类有 "BrokenPipeError", "ConnectionAbortedError",
+   "ConnectionRefusedError" 和 "ConnectionResetError"。
+
+exception BrokenPipeError
+
+   "ConnectionError" 的子类，当试图写入另一端已被关闭的管道，或是试图
+   写入已关闭写入的套接字时将被引发。 对应于 "errno" "EPIPE" 和
+   "ESHUTDOWN"。
+
+exception ConnectionAbortedError
+
+   "ConnectionError" 的子类，当连接尝试被对端中止时将被引发。 对应于
+   "errno" "ECONNABORTED"。
+
+exception ConnectionRefusedError
+
+   "ConnectionError" 的子类，当连接尝试被对端拒绝时将被引发。 对应于
+   "errno" "ECONNREFUSED"。
+
+exception ConnectionResetError
+
+   "ConnectionError" 的子类，当连接被对端重置时将被引发。 对应于
+   "errno" "ECONNRESET"。
+
+exception FileExistsError
+
+   当试图创建一个已存在的文件或目录时将被引发。 对应于 "errno"
+   "EEXIST"。
+
+exception FileNotFoundError
+
+   当所请求的文件或目录不存在时将被引发。 对应于 "errno" "ENOENT"。
+
+exception InterruptedError
+
+   当系统调用被输入信号中断时将被引发。 对应于 "errno" "EINTR"。
+
+   在 3.5 版更改: 当系统调用被某个信号中断时，Python 现在会重试系统调
+   用，除非该信号的处理程序引发了其它异常 (原理参见 **PEP 475**) 而不
+   是引发 "InterruptedError"。
+
+exception IsADirectoryError
+
+   当请求对一个目录执行文件操作 (例如 "os.remove()") 将被引发。 对应于
+   "errno" "EISDIR"。
+
+exception NotADirectoryError
+
+   当请求对一个非目录对象执行目录操作 (例如 "os.listdir()") 时将被引发
+   。 对应于 "errno" "ENOTDIR"。
+
+exception PermissionError
+
+   当在没有足够操作权限的情况下试图执行某个操作时将被引发 —— 例如缺少
+   文件系统权限。 对应于 "errno" "EACCES" 和 "EPERM"。
+
+exception ProcessLookupError
+
+   当给定的进程不存在时将被引发。 对应于 "errno" "ESRCH"。
+
+exception TimeoutError
+
+   当一个系统函数发生系统级超时的情况下将被引发。 对应于 "errno"
+   "ETIMEDOUT"。
+
+3.3 新版功能: 添加了以上所有 "OSError" 的子类。
+
+参见: **PEP 3151** - 重写 OS 和 IO 异常的层次结构
+
+
+警告
+====
+
+下列异常被用作警告类别；请参阅 警告类别 文档了解详情。
+
+exception Warning
+
+   警告类别的基类。
+
+exception UserWarning
+
+   用户代码所产生警告的基类。
+
+exception DeprecationWarning
+
+   如果所发出的警告是针对其他 Python 开发者的，则以此作为与已弃用特性
+   相关警告的基类。
+
+   会被默认警告过滤器忽略，在 "__main__" 模块中的情况除外 (**PEP
+   565**)。 启用 Python 开发模式 时会显示此警告。
+
+exception PendingDeprecationWarning
+
+   对于已过时并预计在未来弃用，但目前尚未弃用的特性相关警告的基类。
+
+   这个类很少被使用，因为针对未来可能的弃用发出警告的做法并不常见，而
+   针对当前已有的弃用则推荐使用 "DeprecationWarning"。
+
+   会被默认警告过滤器忽略。 启用 Python 开发模式 时会显示此警告。
+
+exception SyntaxWarning
+
+   与模糊的语法相关的警告的基类。
+
+exception RuntimeWarning
+
+   与模糊的运行时行为相关的警告的基类。
+
+exception FutureWarning
+
+   如果所发出的警告是针对以 Python 所编写应用的最终用户的，则以此作为
+   与已弃用特性相关警告的基类。
+
+exception ImportWarning
+
+   与在模块导入中可能的错误相关的警告的基类。
+
+   会被默认警告过滤器忽略。 启用 Python 开发模式 时会显示此警告。
+
+exception UnicodeWarning
+
+   与 Unicode 相关的警告的基类。
+
+exception BytesWarning
+
+   与 "bytes" 和 "bytearray" 相关的警告的基类。
+
+exception ResourceWarning
+
+   资源使用相关警告的基类。
+
+   会被默认警告过滤器忽略。 启用 Python 开发模式 时会显示此警告。
+
+   3.2 新版功能.
+
+
+异常层次结构
+============
+
+内置异常的类层级结构如下：
+
+   BaseException
+    +-- SystemExit
+    +-- KeyboardInterrupt
+    +-- GeneratorExit
+    +-- Exception
+         +-- StopIteration
+         +-- StopAsyncIteration
+         +-- ArithmeticError
+         |    +-- FloatingPointError
+         |    +-- OverflowError
+         |    +-- ZeroDivisionError
+         +-- AssertionError
+         +-- AttributeError
+         +-- BufferError
+         +-- EOFError
+         +-- ImportError
+         |    +-- ModuleNotFoundError
+         +-- LookupError
+         |    +-- IndexError
+         |    +-- KeyError
+         +-- MemoryError
+         +-- NameError
+         |    +-- UnboundLocalError
+         +-- OSError
+         |    +-- BlockingIOError
+         |    +-- ChildProcessError
+         |    +-- ConnectionError
+         |    |    +-- BrokenPipeError
+         |    |    +-- ConnectionAbortedError
+         |    |    +-- ConnectionRefusedError
+         |    |    +-- ConnectionResetError
+         |    +-- FileExistsError
+         |    +-- FileNotFoundError
+         |    +-- InterruptedError
+         |    +-- IsADirectoryError
+         |    +-- NotADirectoryError
+         |    +-- PermissionError
+         |    +-- ProcessLookupError
+         |    +-- TimeoutError
+         +-- ReferenceError
+         +-- RuntimeError
+         |    +-- NotImplementedError
+         |    +-- RecursionError
+         +-- SyntaxError
+         |    +-- IndentationError
+         |         +-- TabError
+         +-- SystemError
+         +-- TypeError
+         +-- ValueError
+         |    +-- UnicodeError
+         |         +-- UnicodeDecodeError
+         |         +-- UnicodeEncodeError
+         |         +-- UnicodeTranslateError
+         +-- Warning
+              +-- DeprecationWarning
+              +-- PendingDeprecationWarning
+              +-- RuntimeWarning
+              +-- SyntaxWarning
+              +-- UserWarning
+              +-- FutureWarning
+              +-- ImportWarning
+              +-- UnicodeWarning
+              +-- BytesWarning
+              +-- ResourceWarning

@@ -1,0 +1,170 @@
+"aifc" --- 读写 AIFF 和 AIFC 文件
+*********************************
+
+**源代码：** Lib/aifc.py
+
+======================================================================
+
+本模块提供读写 AIFF 和 AIFF-C 文件的支持。AIFF 是音频交换文件格式
+(Audio Interchange File Format)，一种用于在文件中存储数字音频采样的格
+式。AIFF-C 是该格式的更新版本，其中包括压缩音频数据的功能。
+
+音频文件内有许多参数，用于描述音频数据。采样率或帧率是每秒对声音采样的
+次数。通道数表示音频是单声道，双声道还是四声道。每个通道的每个帧包含一
+次采样。采样大小是以字节表示的每次采样的大小。因此，一帧由 "nchannels
+* samplesize" （通道数*采样大小）字节组成，而一秒钟的音频包含
+"nchannels * samplesize * framerate" （通道数*采样大小*帧率）字节。
+
+例如，CD 质量的音频采样大小为 2 字节（16位），使用 2 个声道（立体声）
+，且帧速率为 44,100 帧/秒。这表示帧大小为 4 字节 (2*2)，一秒钟占用
+2*2*44100 字节（176,400 字节）。
+
+"aifc" 模块定义了以下函数：
+
+aifc.open(file, mode=None)
+
+   打开一个 AIFF 或 AIFF-C 文件并返回一个对象实例，该实例具有下方描述
+   的方法。参数 *file* 是文件名称字符串或 *文件对象*。当打开文件用于读
+   取时，*mode* 必须为 "'r'" 或 "'rb'"，当打开文件用于写入时，*mode*
+   必须为 "'w'" 或 "'wb'"。如果该参数省略，则使用 "file.mode" 的值（如
+   果有），否则使用 "'rb'"。当文件用于写入时，文件对象应该支持 seek 操
+   作，除非提前获知写入的采样总数，并使用 "writeframesraw()" 和
+   "setnframes()"。"open()" 函数可以在 "with" 语句中使用。当 "with" 块
+   执行完毕，将调用 "close()" 方法。
+
+   在 3.4 版更改: 支持了 "with" 语句。
+
+当打开文件用于读取时，由 "open()" 返回的对象具有以下几种方法：
+
+aifc.getnchannels()
+
+   返回音频的通道数（单声道为 1，立体声为 2）。
+
+aifc.getsampwidth()
+
+   返回以字节表示的单个采样的大小。
+
+aifc.getframerate()
+
+   返回采样率（每秒的音频帧数）。
+
+aifc.getnframes()
+
+   返回文件中的音频帧总数。
+
+aifc.getcomptype()
+
+   返回一个长度为 4 的字节数组，描述了音频文件中使用的压缩类型。对于
+   AIFF 文件，返回值为 "b'NONE'"。
+
+aifc.getcompname()
+
+   返回一个字节数组，可转换为人类可读的描述，描述的是音频文件中使用的
+   压缩类型。对于 AIFF 文件，返回值为 "b'not compressed'"。
+
+aifc.getparams()
+
+   返回一个 "namedtuple()" "(nchannels, sampwidth, framerate, nframes,
+   comptype, compname)"，与 "get*()" 方法的输出相同。
+
+aifc.getmarkers()
+
+   返回一个列表，包含音频文件中的所有标记。标记由一个 3 元素的元组组成
+   。第一个元素是标记 ID（整数），第二个是标记位置，从数据开头算起的帧
+   数（整数），第三个是标记的名称（字符串）。
+
+aifc.getmark(id)
+
+   根据传入的标记 *id* 返回元组，元组与 "getmarkers()" 中描述的一致。
+
+aifc.readframes(nframes)
+
+   从音频文件读取并返回后续 *nframes* 个帧。返回的数据是一个字符串，包
+   含每个帧所有通道的未压缩采样值。
+
+aifc.rewind()
+
+   倒回读取指针。下一次 "readframes()" 将从头开始。
+
+aifc.setpos(pos)
+
+   移动读取指针到指定的帧上。
+
+aifc.tell()
+
+   返回当前的帧号。
+
+aifc.close()
+
+   关闭 AIFF 文件。调用此方法后，对象将无法再使用。
+
+打开文件用于写入时，"open()" 返回的对象具有上述所有方法，但
+"readframes()" 和 "setpos()" 除外，并额外具备了以下方法。只有调用了
+"set*()" 方法之后，才能调用相应的 "get*()" 方法。在首次调用
+"writeframes()" 或 "writeframesraw()" 之前，必须填写除帧数以外的所有参
+数。
+
+aifc.aiff()
+
+   创建一个 AIFF 文件，默认创建 AIFF-C 文件，除非文件名以 "'.aiff'" 为
+   后缀，在此情况下默认创建 AIFF 文件。
+
+aifc.aifc()
+
+   创建一个 AIFF-C 文件。 默认创建 AIFF-C 文件，除非文件名以 "'.aiff'"
+   为后缀，在此情况下默认创建 AIFF 文件。
+
+aifc.setnchannels(nchannels)
+
+   指明音频文件中的通道数。
+
+aifc.setsampwidth(width)
+
+   指明以字节为单位的音频采样大小。
+
+aifc.setframerate(rate)
+
+   指明以每秒帧数表示的采样频率。
+
+aifc.setnframes(nframes)
+
+   指明要写入到音频文件的帧数。 如果未设定此形参或者未正确设定，则文件
+   需要支持位置查找。
+
+aifc.setcomptype(type, name)
+
+   指明压缩类型。 如果未指明，则音频数据将不会被压缩。 在 AIFF 文件中
+   ，压缩是无法实现的。 name 形参应当为以字节数组表示的人类可读的压缩
+   类型描述，type 形参应当为长度为 4 的字节数组。 目前支持的压缩类型如
+   下: "b'NONE'", "b'ULAW'", "b'ALAW'", "b'G722'"。
+
+aifc.setparams(nchannels, sampwidth, framerate, comptype, compname)
+
+   一次性设置上述所有参数。 该参数是由多个形参组成的元组。 这意味着可
+   以使用 "getparams()" 调用的结果作为 "setparams()" 的参数。
+
+aifc.setmark(id, pos, name)
+
+   添加具有给定 id (大于 0)，以及在给定位置上给定名称的标记。 此方法可
+   在 "close()" 之前的任何时候被调用。
+
+aifc.tell()
+
+   返回输出文件中的当前写入位置。 适用于与 "setmark()" 进行协同配合。
+
+aifc.writeframes(data)
+
+   将数据写入到输出文件。 此方法只能在设置了音频文件形参之后被调用。
+
+   在 3.4 版更改: 现在可接受任意 *bytes-like object*。
+
+aifc.writeframesraw(data)
+
+   类似于 "writeframes()"，不同之处在于音频文件的标头不会被更新。
+
+   在 3.4 版更改: 现在可接受任意 *bytes-like object*。
+
+aifc.close()
+
+   关闭 AIFF 文件。 文件的标头会被更新以反映音频数据的实际大小。 在调
+   用此方法之后，对象将无法再被使用。

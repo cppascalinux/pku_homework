@@ -1,0 +1,644 @@
+"hashlib" --- 安全哈希与消息摘要
+********************************
+
+**源码：** Lib/hashlib.py
+
+======================================================================
+
+这个模块针对不同的安全哈希和消息摘要算法实现了一个通用的接口。包括
+FIPS 的 SHA1, SHA224, SHA256, SHA384, and SHA512 (定义于 FIPS 180-2)
+算法，以及 RSA 的 MD5 算法( 定义于 Internet **RFC 1321**)。术语“安全哈
+希”和“消息摘要”是可互换的，较旧的算法被称为消息摘要，现代术语是安全哈
+希。
+
+注解:
+
+  如果你想找到 adler32 或 crc32 哈希函数，它们在 "zlib" 模块中。
+
+警告:
+
+  有些算法已知存在哈希碰撞弱点，请参考最后的“另请参阅”段。
+
+
+哈希算法
+========
+
+每种类型的 *hash* 都有一个构造器方法。 它们都返回一个具有相同的简单接
+口的 hash 对象。 例如，使用 use "sha256()" 创建一个 SHA-256 hash 对象
+。 你可以使用 "update()" 方法向这个对象输入 *字节类对象* (通常是
+"bytes")。 在任何时候你都可以使用 "digest()" 或 "hexdigest()" 方法获得
+到目前为止输入这个对象的拼接数据的 *digest*。
+
+注解:
+
+  为了更好的多线程性能，在对象创建或者更新时，若数据大于2047字节则
+  Python 的 *GIL* 会被释放。
+
+注解:
+
+  向 "update()" 输入字符串对象是不被支持的，因为哈希基于字节而非字符。
+
+此模块中总是可用的哈希算法构造器有 "sha1()", "sha224()", "sha256()",
+"sha384()", "sha512()", "blake2b()" 和 "blake2s()"。 "md5()" 通常也是
+可用的，但如果你在使用少见的 "FIPS 兼容" 的 Python 编译版本则可能会找
+不到它。 此外还可能有一些附加的算法，具体取决于你的平台上的 Python 所
+使用的 OpenSSL 库。 在大部分平台上可用的还有 "sha3_224()",
+"sha3_256()", "sha3_384()", "sha3_512()", "shake_128()", "shake_256()"
+等等。·
+
+3.6 新版功能: SHA3 (Keccak) 和 SHAKE 构造器 "sha3_224()",
+"sha3_256()", "sha3_384()", "sha3_512()", "shake_128()",
+"shake_256()".
+
+3.6 新版功能: 添加了 "blake2b()" 和 "blake2s()" 。
+
+在 3.9 版更改: 所有 hashlib 的构造器都接受仅限关键字参数
+*usedforsecurity* 且其默认值为 "True"。 设为假值即允许在受限的环境中使
+用不安全且阻塞的哈希算法。 "False" 表示此哈希算法不可用于安全场景，例
+如用作非加密的单向压缩函数。现在 hashlib 会使用 OpenSSL 1.1.1 或更新版
+本的 SHA3 和 SHAKE。
+
+例如，如果想获取字节串 "b'Nobody inspects the spammish repetition'" 的
+摘要:
+
+   >>> import hashlib
+   >>> m = hashlib.sha256()
+   >>> m.update(b"Nobody inspects")
+   >>> m.update(b" the spammish repetition")
+   >>> m.digest()
+   b'\x03\x1e\xdd}Ae\x15\x93\xc5\xfe\\\x00o\xa5u+7\xfd\xdf\xf7\xbcN\x84:\xa6\xaf\x0c\x95\x0fK\x94\x06'
+   >>> m.digest_size
+   32
+   >>> m.block_size
+   64
+
+更简要的写法：
+
+>>> hashlib.sha224(b"Nobody inspects the spammish repetition").hexdigest()
+'a4337bc45a8fc544c03f52dc550cd6e1e87021bc896588bd79e901e2'
+
+hashlib.new(name[, data], *, usedforsecurity=True)
+
+   一个接受所希望的算法对应的字符串 *name* 作为第一个形参的通用构造器
+   。 它还允许访问上面列出的哈希算法以及你的 OpenSSL 库可能提供的任何
+   其他算法。 同名的构造器要比 "new()" 更快所以应当优先使用。
+
+使用 "new()" 并附带由 OpenSSL 所提供了算法:
+
+>>> h = hashlib.new('ripemd160')
+>>> h.update(b"Nobody inspects the spammish repetition")
+>>> h.hexdigest()
+'cc4a5ce1b3df48aec5d22d1f16b894a0b894eccc'
+
+Hashlib 提供下列常量属性：
+
+hashlib.algorithms_guaranteed
+
+   一个集合，其中包含此模块在所有平台上都保证支持的哈希算法的名称。 请
+   注意 'md5' 也在此清单中，虽然某些上游厂商提供了一个怪异的排除了此算
+   法的 "FIPS 兼容" Python 编译版本。
+
+   3.2 新版功能.
+
+hashlib.algorithms_available
+
+   一个集合，其中包含在所运行的 Python 解释器上可用的哈希算法的名称。
+   将这些名称传给 "new()" 时将可被识别。 "algorithms_guaranteed" 将总
+   是它的一个子集。 同样的算法在此集合中可能以不同的名称出现多次（这是
+   OpenSSL 的原因）。
+
+   3.2 新版功能.
+
+下列值会以构造器所返回的哈希对象的常量属性的形式被提供:
+
+hash.digest_size
+
+   以字节表示的结果哈希对象的大小。
+
+hash.block_size
+
+   以字节表示的哈希算法的内部块大小。
+
+hash 对象具有以下属性：
+
+hash.name
+
+   此哈希对象的规范名称，总是为小写形式并且总是可以作为 "new()" 的形参
+   用来创建另一个此类型的哈希对象。
+
+   在 3.4 版更改: 该属性名称自被引入起即存在于 CPython 中，但在 Python
+   3.4 之前并未正式指明，因此可能不存在于某些平台上。
+
+哈希对象具有下列方法:
+
+hash.update(data)
+
+   用 *bytes-like object* 来更新哈希对象。 重复调用相当于单次调用并传
+   入所有参数的拼接结果: "m.update(a); m.update(b)" 等价于
+   "m.update(a+b)"。
+
+   在 3.1 版更改: 当使用 OpenSSL 提供的哈希算法在大于 2047 字节的数据
+   上执行哈希更新时 Python GIL 会被释放以允许其他线程运行。
+
+hash.digest()
+
+   返回当前已传给 "update()" 方法的数据摘要。 这是一个大小为
+   "digest_size" 的字节串对象，字节串中可包含 0 至 255 的完整取值范围
+   。
+
+hash.hexdigest()
+
+   类似于 "digest()" 但摘要会以两倍长度字符串对象的形式返回，其中仅包
+   含十六进制数码。 这可以被用于在电子邮件或其他非二进制环境中安全地交
+   换数据值。
+
+hash.copy()
+
+   返回哈希对象的副本（“克隆”）。 这可被用来高效地计算共享相同初始子串
+   的数据的摘要。
+
+
+SHAKE 可变长度摘要
+==================
+
+"shake_128()" 和 "shake_256()" 算法提供安全的 length_in_bits//2 至 128
+或 256 位可变长度摘要。 为此，它们的摘要需指定一个长度。 SHAKE 算法不
+限制最大长度。
+
+shake.digest(length)
+
+   返回当前已传给 "update()" 方法的数据摘要。 这是一个大小为 *length*
+   的字节串对象，字节串中可包含 0 to 255 的完整取值范围。
+
+shake.hexdigest(length)
+
+   类似于 "digest()" 但摘要会以两倍长度字符串对象的形式返回，其中仅包
+   含十六进制数码。 这可以被用于在电子邮件或其他非二进制环境中安全地交
+   换数据值。
+
+
+密钥派生
+========
+
+密钥派生和密钥延展算法被设计用于安全密码哈希。 "sha1(password)" 这样的
+简单算法无法防御暴力攻击。 好的密码哈希函数必须可以微调、放慢步调，并
+且包含 加盐。
+
+hashlib.pbkdf2_hmac(hash_name, password, salt, iterations, dklen=None)
+
+   此函数提供 PKCS#5 基于密码的密钥派生函数 2。 它使用 HMAC 作为伪随机
+   函数。
+
+   字符串 *hash_name* 是要求用于 HMAC 的哈希摘要算法的名称，例如
+   'sha1' 或 'sha256'。 *password* 和 *salt* 会以字节串缓冲区的形式被
+   解析。 应用和库应当将 *password* 限制在合理长度 (例如 1024)。
+   *salt* 应当为适当来源例如 "os.urandom()" 的大约 16 个或更多的字节串
+   数据。
+
+   *iterations* 数值应当基于哈希算法和算力来选择。 在 2013 年时，建议
+   至少为 100,000 次 SHA-256 迭代。
+
+   *dklen* 为派生密钥的长度。 如果 *dklen* 为 "None" 则会使用哈希算法
+   *hash_name* 的摘要大小，例如 SHA-512 为 64。
+
+   >>> import hashlib
+   >>> dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
+   >>> dk.hex()
+   '0394a2ede332c9a13eb82e9b24631604c31df978b4e2f0fbd2c549944f9d79a5'
+
+   3.4 新版功能.
+
+   注解:
+
+     随同 OpenSSL 提供了一个快速的 *pbkdf2_hmac* 实现。 Python 实现是
+     使用 "hmac" 的内联版本。 它的速度大约要慢上三倍并且不会释放 GIL。
+
+hashlib.scrypt(password, *, salt, n, r, p, maxmem=0, dklen=64)
+
+   此函数提供基于密码加密的密钥派生函数，其定义参见 **RFC 7914**。
+
+   *password* 和 *salt* 必须为 *字节类对象*。 应用和库应当将
+   *password* 限制在合理长度 (例如 1024)。 *salt* 应当为适当来源例如
+   "os.urandom()" 的大约 16 个或更多的字节串数据。
+
+   *n* 为 CPU/内存开销因子，*r* 为块大小，*p* 为并行化因子，*maxmem*
+   为内存限制 (OpenSSL 1.1.0 默认为 32 MiB)。 *dklen* 为派生密钥的长度
+   。
+
+   可用性: OpenSSL 1.1+。
+
+   3.6 新版功能.
+
+
+BLAKE2
+======
+
+BLAKE2 是在 **RFC 7693** 中定义的加密哈希函数，它有两种形式:
+
+* **BLAKE2b**，针对 64 位平台进行优化，并会生成长度介于 1 和 64 字节之
+  间任意大小的摘要。
+
+* **BLAKE2s**，针对 8 至 32 位平台进行优化，并会生成长度介于 1 和 32
+  字节之间任意大小的摘要。
+
+BLAKE2 支持 **keyed mode** (HMAC 的更快速更简单的替代), **salted
+hashing**, **personalization** 和 **tree hashing**.
+
+此模块的哈希对象遵循标准库 "hashlib" 对象的 API。
+
+
+创建哈希对象
+------------
+
+新哈希对象可通过调用构造器函数来创建:
+
+hashlib.blake2b(data=b'', *, digest_size=64, key=b'', salt=b'', person=b'', fanout=1, depth=1, leaf_size=0, node_offset=0, node_depth=0, inner_size=0, last_node=False, usedforsecurity=True)
+
+hashlib.blake2s(data=b'', *, digest_size=32, key=b'', salt=b'', person=b'', fanout=1, depth=1, leaf_size=0, node_offset=0, node_depth=0, inner_size=0, last_node=False, usedforsecurity=True)
+
+这些函数返回用于计算 BLAKE2b 或 BLAKE2s 的相应的哈希对象。 它们接受下
+列可选通用形参:
+
+* *data*: 要哈希的初始数据块，它必须为 *bytes-like object*。 它只能作
+  为位置参数传入。
+
+* *digest_size*: 以字节数表示的输出摘要大小。
+
+* *key*: 用于密钥哈希的密钥（对于 BLAKE2b 最长 64 字节，对于 BLAKE2s
+  最长 32 字节）。
+
+* *salt*: 用于随机哈希的盐值（对于 BLAKE2b 最长 16 字节，对于 BLAKE2s
+  最长 8 字节）。
+
+* *person*: 个性化字符串（对于 BLAKE2b 最长 16 字节，对于 BLAKE2s 最长
+  8 字节）。
+
+下表显示了常规参数的限制（以字节为单位）：
+
++---------+-------------+----------+-----------+-------------+
+| Hash    | 目标长度    | 长度（键 | 长度（盐  | 长度（个人  |
+|         |             | ）       | ）        | ）          |
+|=========|=============|==========|===========|=============|
+| BLAKE2b | 64          | 64       | 16        | 16          |
++---------+-------------+----------+-----------+-------------+
+| BLAKE2s | 32          | 32       | 8         | 8           |
++---------+-------------+----------+-----------+-------------+
+
+注解:
+
+  BLAKE2 规格描述为盐值和个性化形参定义了固定的长度，但是为了方便起见
+  ，此实现接受指定在长度以内的任意大小的字节串。 如果形参长度小于指定
+  值，它将以零值进行填充，因此举例来说，"b'salt'" 和 "b'salt\x00'" 为
+  相同的值 (*key* 的情况则并非如此。)
+
+如下面的模块 constants 所描述，这些是可用的大小取值。
+
+构造器函数还接受下列树形哈希形参:
+
+* *fanout*: 扇出值 (0 至 255，如无限制即为 0，连续模式下为 1)。
+
+* *depth*: 树的最大深度 (1 至 255，如无限制则为 255，连续模式下为 1)。
+
+* *leaf_size*: 叶子的最大字节长度 (0 至 2**32-1，如无限制或在连续模式
+  下则为 0)。
+
+* *node_offset*: 节点偏移量 (对于 BLAKE2b 为 0 至 2**64-1，对于
+  BLAKE2s 为 0 至 2**48-1，对于最左边第一个叶子或在连续模式下则为 0)。
+
+* *node_depth*: 节点深度 (0 至 255，对于叶子或在连续模式下则为 0)。
+
+* *inner_size*: 内部摘要大小 (对于 BLAKE2b 为 0 至 64，对于 BLAKE2s 为
+  0 至 32，连续模式下则为 0)。
+
+* *last_node*: 一个布尔值，指明所处理的节点是否为最后一个 (连续模式下
+  则为 *False*)。
+
+   [图片： Explanation of tree mode parameters.][图片]
+
+请参阅 BLAKE2 规格描述 第 2.10 节获取有关树形哈希的完整说明。
+
+
+常数
+----
+
+blake2b.SALT_SIZE
+
+blake2s.SALT_SIZE
+
+盐值长度（构造器所接受的最大长度）。
+
+blake2b.PERSON_SIZE
+
+blake2s.PERSON_SIZE
+
+个性化字符串长度（构造器所接受的最大长度）。
+
+blake2b.MAX_KEY_SIZE
+
+blake2s.MAX_KEY_SIZE
+
+最大密钥长度。
+
+blake2b.MAX_DIGEST_SIZE
+
+blake2s.MAX_DIGEST_SIZE
+
+哈希函数可输出的最大摘要长度。
+
+
+示例
+----
+
+
+简单哈希
+~~~~~~~~
+
+要计算某个数据的哈希值，你应该首先通过调用适当的构造器函数
+("blake2b()" 或 "blake2s()") 来构造一个哈希对象，然后通过在该对象上调
+用 "update()" 来更新目标数据，最后通过调用 "digest()" (或针对十六进制
+编码字符串的 "hexdigest()") 来获取该对象的摘要。
+
+>>> from hashlib import blake2b
+>>> h = blake2b()
+>>> h.update(b'Hello world')
+>>> h.hexdigest()
+'6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'
+
+作为快捷方式，你可以直接以位置参数的形式向构造器传入第一个数据块来直接
+更新:
+
+>>> from hashlib import blake2b
+>>> blake2b(b'Hello world').hexdigest()
+'6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'
+
+你可以多次调用 "hash.update()" 至你所想要的任意次数以迭代地更新哈希值:
+
+>>> from hashlib import blake2b
+>>> items = [b'Hello', b' ', b'world']
+>>> h = blake2b()
+>>> for item in items:
+...     h.update(item)
+>>> h.hexdigest()
+'6ff843ba685842aa82031d3f53c48b66326df7639a63d128974c5c14f31a0f33343a8c65551134ed1ae0f2b0dd2bb495dc81039e3eeb0aa1bb0388bbeac29183'
+
+
+使用不同的摘要大小
+~~~~~~~~~~~~~~~~~~
+
+BLAKE2 具有可配置的摘要大小，对于 BLAKE2b 最多 64 字节，对于 BLAKE2s
+最多 32 字节。 例如，要使用 BLAKE2b 来替代 SHA-1 而不改变输出大小，我
+们可以让 BLAKE2b 产生 20 个字节的摘要:
+
+>>> from hashlib import blake2b
+>>> h = blake2b(digest_size=20)
+>>> h.update(b'Replacing SHA1 with the more secure function')
+>>> h.hexdigest()
+'d24f26cf8de66472d58d4e1b1774b4c9158b1f4c'
+>>> h.digest_size
+20
+>>> len(h.digest())
+20
+
+不同摘要大小的哈希对象具有完全不同的输出（较短哈希值 *并非* 较长哈希值
+的前缀）；即使输出长度相同，BLAKE2b 和 BLAKE2s 也会产生不同的输出:
+
+>>> from hashlib import blake2b, blake2s
+>>> blake2b(digest_size=10).hexdigest()
+'6fa1d8fcfd719046d762'
+>>> blake2b(digest_size=11).hexdigest()
+'eb6ec15daf9546254f0809'
+>>> blake2s(digest_size=10).hexdigest()
+'1bf21a98c78a1c376ae9'
+>>> blake2s(digest_size=11).hexdigest()
+'567004bf96e4a25773ebf4'
+
+
+密钥哈希
+~~~~~~~~
+
+密钥哈希可被用于身份验证，作为 基于哈希的消息验证代码 (HMAC) 的一种更
+快速更简单的替代。 BLAKE2 可在前缀 MAC 模式下安全地使用，这是由于它从
+BLAKE 所继承的不可区分特性。
+
+这个例子演示了如何使用密钥 "b'pseudorandom key'" 来为 "b'message
+data'" 获取一个（十六进制编码的）128 位验证代码:
+
+   >>> from hashlib import blake2b
+   >>> h = blake2b(key=b'pseudorandom key', digest_size=16)
+   >>> h.update(b'message data')
+   >>> h.hexdigest()
+   '3d363ff7401e02026f4a4687d4863ced'
+
+作为实际的例子，一个 Web 应用可为发送给用户的 cookies 进行对称签名，并
+在之后对其进行验证以确保它们没有被篡改:
+
+   >>> from hashlib import blake2b
+   >>> from hmac import compare_digest
+   >>>
+   >>> SECRET_KEY = b'pseudorandomly generated server secret key'
+   >>> AUTH_SIZE = 16
+   >>>
+   >>> def sign(cookie):
+   ...     h = blake2b(digest_size=AUTH_SIZE, key=SECRET_KEY)
+   ...     h.update(cookie)
+   ...     return h.hexdigest().encode('utf-8')
+   >>>
+   >>> def verify(cookie, sig):
+   ...     good_sig = sign(cookie)
+   ...     return compare_digest(good_sig, sig)
+   >>>
+   >>> cookie = b'user-alice'
+   >>> sig = sign(cookie)
+   >>> print("{0},{1}".format(cookie.decode('utf-8'), sig))
+   user-alice,b'43b3c982cf697e0c5ab22172d1ca7421'
+   >>> verify(cookie, sig)
+   True
+   >>> verify(b'user-bob', sig)
+   False
+   >>> verify(cookie, b'0102030405060708090a0b0c0d0e0f00')
+   False
+
+即使存在原生的密钥哈希模式，BLAKE2 也同样可在 "hmac" 模块的 HMAC 构造
+过程中使用:
+
+   >>> import hmac, hashlib
+   >>> m = hmac.new(b'secret key', digestmod=hashlib.blake2s)
+   >>> m.update(b'message')
+   >>> m.hexdigest()
+   'e3c8102868d28b5ff85fc35dda07329970d1a01e273c37481326fe0c861c8142'
+
+
+随机哈希
+~~~~~~~~
+
+用户可通过设置 *salt* 形参来为哈希函数引入随机化。 随机哈希适用于防止
+对数字签名中使用的哈希函数进行碰撞攻击。
+
+   随机哈希被设计用来处理当一方（消息准备者）要生成由另一方（消息签名
+   者）进行签名的全部或部分消息的情况。 如果消息准备者能够找到加密哈希
+   函数的碰撞现象（即两条消息产生相同的哈希值），则他们就可以准备将产
+   生相同哈希值和数字签名但却具有不同结果的有意义的消息版本（例如向某
+   个账户转入 $1,000,000 而不是 $10）。 加密哈希函数的设计都是以防碰撞
+   性能为其主要目标之一的，但是当前针对加密哈希函数的集中攻击可能导致
+   特定加密哈希函数所提供的防碰撞性能低于预期。 随机哈希为签名者提供了
+   额外的保护，可以降低准备者在数字签名生成过程中使得两条或更多条消息
+   最终产生相同哈希值的可能性 --- 即使为特定哈希函数找到碰撞现象是可行
+   的。 但是，当消息的所有部分均由签名者准备时，使用随机哈希可能降低数
+   字签名所提供的安全性。
+
+   (NIST SP-800-106 "数字签名的随机哈希")
+
+在 BLAKE2 中，盐值会在初始化期间作为对哈希函数的一次性输入而不是对每个
+压缩函数的输入来处理。
+
+警告:
+
+  使用 BLAKE2 或任何其他通用加密哈希函数例如 SHA-256 进行 *加盐哈希* (
+  或纯哈希) 并不适用于哈希密码。 请参阅 BLAKE2 FAQ 了解更多信息。
+
+>>> import os
+>>> from hashlib import blake2b
+>>> msg = b'some message'
+>>> # Calculate the first hash with a random salt.
+>>> salt1 = os.urandom(blake2b.SALT_SIZE)
+>>> h1 = blake2b(salt=salt1)
+>>> h1.update(msg)
+>>> # Calculate the second hash with a different random salt.
+>>> salt2 = os.urandom(blake2b.SALT_SIZE)
+>>> h2 = blake2b(salt=salt2)
+>>> h2.update(msg)
+>>> # The digests are different.
+>>> h1.digest() != h2.digest()
+True
+
+
+个性化
+~~~~~~
+
+出于不同的目的强制让哈希函数为相同的输入生成不同的摘要有时也是有用的。
+正如 Skein 哈希函数的作者所言:
+
+   我们建议所有应用设计者慎重考虑这种做法；我们已看到有许多协议在协议
+   的某一部分中计算出来的哈希值在另一个完全不同的部分中也可以被使用，
+   因为两次哈希计算是针对类似或相关的数据进行的，这样攻击者可以强制应
+   用为相同的输入生成哈希值。 个性化协议中所使用的每个哈希函数将有效地
+   阻止这种类型的攻击。
+
+   (Skein 哈希函数族, p. 21)
+
+BLAKE2 可通过向 *person* 参数传入字节串来进行个性化:
+
+   >>> from hashlib import blake2b
+   >>> FILES_HASH_PERSON = b'MyApp Files Hash'
+   >>> BLOCK_HASH_PERSON = b'MyApp Block Hash'
+   >>> h = blake2b(digest_size=32, person=FILES_HASH_PERSON)
+   >>> h.update(b'the same content')
+   >>> h.hexdigest()
+   '20d9cd024d4fb086aae819a1432dd2466de12947831b75c5a30cf2676095d3b4'
+   >>> h = blake2b(digest_size=32, person=BLOCK_HASH_PERSON)
+   >>> h.update(b'the same content')
+   >>> h.hexdigest()
+   'cf68fb5761b9c44e7878bfb2c4c9aea52264a80b75005e65619778de59f383a3'
+
+个性化配合密钥模式也可被用来从单个密钥派生出多个不同密钥。
+
+>>> from hashlib import blake2s
+>>> from base64 import b64decode, b64encode
+>>> orig_key = b64decode(b'Rm5EPJai72qcK3RGBpW3vPNfZy5OZothY+kHY6h21KM=')
+>>> enc_key = blake2s(key=orig_key, person=b'kEncrypt').digest()
+>>> mac_key = blake2s(key=orig_key, person=b'kMAC').digest()
+>>> print(b64encode(enc_key).decode('utf-8'))
+rbPb15S/Z9t+agffno5wuhB77VbRi6F9Iv2qIxU7WHw=
+>>> print(b64encode(mac_key).decode('utf-8'))
+G9GtHFE1YluXY1zWPlYk1e/nWfu0WSEb0KRcjhDeP/o=
+
+
+树形模式
+~~~~~~~~
+
+以下是对包含两个叶子节点的最小树进行哈希的例子:
+
+     10
+    /  \
+   00  01
+
+这个例子使用 64 字节内部摘要，返回 32 字节最终摘要:
+
+   >>> from hashlib import blake2b
+   >>>
+   >>> FANOUT = 2
+   >>> DEPTH = 2
+   >>> LEAF_SIZE = 4096
+   >>> INNER_SIZE = 64
+   >>>
+   >>> buf = bytearray(6000)
+   >>>
+   >>> # Left leaf
+   ... h00 = blake2b(buf[0:LEAF_SIZE], fanout=FANOUT, depth=DEPTH,
+   ...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,
+   ...               node_offset=0, node_depth=0, last_node=False)
+   >>> # Right leaf
+   ... h01 = blake2b(buf[LEAF_SIZE:], fanout=FANOUT, depth=DEPTH,
+   ...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,
+   ...               node_offset=1, node_depth=0, last_node=True)
+   >>> # Root node
+   ... h10 = blake2b(digest_size=32, fanout=FANOUT, depth=DEPTH,
+   ...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,
+   ...               node_offset=0, node_depth=1, last_node=True)
+   >>> h10.update(h00.digest())
+   >>> h10.update(h01.digest())
+   >>> h10.hexdigest()
+   '3ad2a9b37c6070e374c7a8c508fe20ca86b6ed54e286e93a0318e95e881db5aa'
+
+
+开发人员
+--------
+
+BLAKE2 是由 *Jean-Philippe Aumasson*, *Samuel Neves*, *Zooko
+Wilcox-O'Hearn* 和 *Christian Winnerlein* 基于 *Jean-Philippe
+Aumasson*, *Luca Henzen*, *Willi Meier* 和 *Raphael C.-W. Phan* 所创造
+的 SHA-3 入围方案 BLAKE 进行设计的。
+
+它使用的核心算法来自由 *Daniel J. Bernstein* 所设计的 ChaCha 加密。
+
+stdlib 实现是基于 pyblake2 模块的。 它由 *Dmitry Chestnykh* 在 *Samuel
+Neves* 所编写的 C 实现的基础上编写。 此文档拷贝自 pyblake2 并由
+*Dmitry Chestnykh* 撰写。
+
+C 代码由 *Christian Heimes* 针对 Python 进行了部分的重写。
+
+以下公共领域贡献同时适用于 C 哈希函数实现、扩展代码和本文档:
+
+   在法律许可的范围内，作者已将此软件的全部版权以及关联和邻接权利贡献
+   到全球公共领域。 此软件的发布不附带任何担保。
+
+   你应该已收到此软件附带的 CC0 公共领域专属证书的副本。 如果没有，请
+   参阅 https://creativecommons.org/publicdomain/zero/1.0/。
+
+根据创意分享公共领域贡献 1.0 通用规范，下列人士为此项目的开发提供了帮
+助或对公共领域的修改作出了贡献:
+
+* *Alexandr Sokolovskiy*
+
+参见:
+
+  模块 "hmac"
+     使用哈希运算来生成消息验证代码的模块。
+
+  模块 "base64"
+     针对非二进制环境对二进制哈希值进行编辑的另一种方式。
+
+  https://blake2.net
+     BLAKE2 官方网站
+
+  https://csrc.nist.gov/csrc/media/publications/fips/180/2/archive/20
+  02-08-01/documents/fips180-2.pdf
+     有关安全哈希算法的 FIPS 180-2 出版物。
+
+  https://en.wikipedia.org/wiki/Cryptographic_hash_function#Cryptogra
+  phic_hash_algorithms
+     包含关于哪些算法存在已知问题以及对其使用所造成的影响的信息的
+     Wikipedia 文章。
+
+  https://www.ietf.org/rfc/rfc2898.txt
+     PKCS #5: 基于密码的加密规范描述 2.0 版

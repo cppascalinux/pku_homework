@@ -1,0 +1,191 @@
+元组对象
+********
+
+PyTupleObject
+
+   这个 "PyObject" 的子类型代表一个 Python 的元组对象。
+
+PyTypeObject PyTuple_Type
+
+   "PyTypeObject" 的实例代表一个 Python 元组类型，这与 Python 层面的
+   "tuple" 是相同的对象。
+
+int PyTuple_Check(PyObject *p)
+
+   如果 *p* 是一个元组对象或者元组类型的子类型的实例，则返回真值。
+
+int PyTuple_CheckExact(PyObject *p)
+
+   如果 *p* 是一个元组对象，而不是一个元组类型的子类型实例，则返回真值
+   。
+
+PyObject* PyTuple_New(Py_ssize_t len)
+    *Return value: New reference.*
+
+   成功时返回一个新的元组对象，长度为 *len*，失败时返回``NULL``。
+
+PyObject* PyTuple_Pack(Py_ssize_t n, ...)
+    *Return value: New reference.*
+
+   成功时返回一个新的元组对象，大小为 *n* ，失败时返回 "NULL"。 元组值
+   初始化为指向 Python 对象的后续 *n* 个 C 参数。 "PyTuple_Pack(2, a,
+   b)" 和 "Py_BuildValue("(OO)", a, b)" 相等。
+
+Py_ssize_t PyTuple_Size(PyObject *p)
+
+   获取指向元组对象的指针，并返回该元组的大小。
+
+Py_ssize_t PyTuple_GET_SIZE(PyObject *p)
+
+   返回元组 *p* 的大小，它必须为非 "NULL" 并且指向一个元组；不执行错误
+   检查。
+
+PyObject* PyTuple_GetItem(PyObject *p, Py_ssize_t pos)
+    *Return value: Borrowed reference.*
+
+   返回 *p* 所指向的元组中，位于 *pos* 处的对象。 如果 *pos* 超出界限
+   ，返回 "NULL"，并抛出一个 "IndexError" 异常。
+
+PyObject* PyTuple_GET_ITEM(PyObject *p, Py_ssize_t pos)
+    *Return value: Borrowed reference.*
+
+   类似于 "PyTuple_GetItem()"，但不检查其参数。
+
+PyObject* PyTuple_GetSlice(PyObject *p, Py_ssize_t low, Py_ssize_t high)
+    *Return value: New reference.*
+
+   返回 *p* 所指向的元组的切片，在 *low* 和 *high* 之间，或者在失败时
+   返回 "NULL"。 这等同于 Python 表达式 "p[low:high]"。 不支持从列表末
+   尾索引。
+
+int PyTuple_SetItem(PyObject *p, Py_ssize_t pos, PyObject *o)
+
+   在 *p* 指向的元组的 *pos* 位置插入对对象 *o* 的引用。 成功时返回
+   "0"；如果 *pos* 越界，则返回 "-1"，并抛出一个 "IndexError" 异常。
+
+   注解:
+
+     此函数会“窃取”对 *o* 的引用，并丢弃对元组中已在受影响位置的条目的
+     引用。
+
+void PyTuple_SET_ITEM(PyObject *p, Py_ssize_t pos, PyObject *o)
+
+   类似于 "PyTuple_SetItem()"，但不进行错误检查，并且应该 *只是* 被用
+   来填充全新的元组。
+
+   注解:
+
+     这个宏会“偷走”一个对 *o* 的引用，但与 "PyTuple_SetItem()" 不同，
+     它 *不会* 丢弃对任何被替换项的引用；元组中位于 *pos* 位置的任何引
+     用都将被泄漏。
+
+int _PyTuple_Resize(PyObject **p, Py_ssize_t newsize)
+
+   可以用于调整元组的大小。 *newsize* 将是元组的新长度。 因为元组 *被
+   认为* 是不可变的，所以只有在对象仅有一个引用时，才应该使用它。 如果
+   元组已经被代码的其他部分所引用，请不要使用此项。 元组在最后总是会增
+   长或缩小。 把它看作是销毁旧元组并创建一个新元组，只会更有效。 成功
+   时返回 "0" 。 客户端代码不应假定 "*p" 的结果值将与调用此函数之前的
+   值相同。 如果替换了 "*p" 引用的对象，则原始的 "*p" 将被销毁。 失败
+   时，返回``-1``，将 "*p" 设置为 "NULL"，并引发 "MemoryError" 或者
+   "SystemError"。
+
+
+结构序列对象
+************
+
+结构序列对象是等价于 "namedtuple()" 的 C 对象，即一个序列，其中的条目
+也可以通过属性访问。 要创建结构序列，你首先必须创建特定的结构序列类型
+。
+
+PyTypeObject* PyStructSequence_NewType(PyStructSequence_Desc *desc)
+    *Return value: New reference.*
+
+   根据 *desc* 中的数据创建一个新的结构序列类型，如下所述。 可以使用
+   "PyStructSequence_New()" 创建结果类型的实例。
+
+void PyStructSequence_InitType(PyTypeObject *type, PyStructSequence_Desc *desc)
+
+   从 *desc* 就地初始化结构序列类型 *type*。
+
+int PyStructSequence_InitType2(PyTypeObject *type, PyStructSequence_Desc *desc)
+
+   与 "PyStructSequence_InitType" 相同，但成功时返回 "0" ，失败时返回
+   "-1" 。
+
+   3.4 新版功能.
+
+PyStructSequence_Desc
+
+   包含要创建的结构序列类型的元信息。
+
+   +---------------------+--------------------------------+----------------------------------------+
+   | 域                  | C 类型                         | 意义                                   |
+   |=====================|================================|========================================|
+   | "name"              | "const char *"                 | 结构序列类型的名称                     |
+   +---------------------+--------------------------------+----------------------------------------+
+   | "doc"               | "const char *"                 | 指向要忽略类型的文档字符串或 "NULL" 的 |
+   |                     |                                | 指针                                   |
+   +---------------------+--------------------------------+----------------------------------------+
+   | "fields"            | "PyStructSequence_Field *"     | 指向以 "NULL" 结尾的数组的指针，其字段 |
+   |                     |                                | 名称为新类型                           |
+   +---------------------+--------------------------------+----------------------------------------+
+   | "n_in_sequence"     | "int"                          | Python侧可见的字段数（如果用作元组）   |
+   +---------------------+--------------------------------+----------------------------------------+
+
+PyStructSequence_Field
+
+   描述结构序列的一个字段。 当结构序列被建模为元组时，所有字段的类型都
+   是 "PyObject*"。 在 "PyStructSequence_Desc" 的 "fields" 数组中的索
+   引确定了结构序列描述的是哪个字段。
+
+   +-------------+--------------------+-------------------------------------------+
+   | 域          | C 类型             | 意义                                      |
+   |=============|====================|===========================================|
+   | "name"      | "const char *"     | 字段的名称或 "NULL" ，若要结束命名字段的  |
+   |             |                    | 列表，请设置为                            |
+   |             |                    | "PyStructSequence_UnnamedField" 以保留未  |
+   |             |                    | 命名字段                                  |
+   +-------------+--------------------+-------------------------------------------+
+   | "doc"       | "const char *"     | 要忽略的字段文档字符串或 "NULL"           |
+   +-------------+--------------------+-------------------------------------------+
+
+const char * const PyStructSequence_UnnamedField
+
+   字段名的特殊值将保持未命名状态。
+
+   在 3.9 版更改: 这个类型已从 "char *" 更改。
+
+PyObject* PyStructSequence_New(PyTypeObject *type)
+    *Return value: New reference.*
+
+   创建 *type* 的实例，该实例必须使用 "PyStructSequence_NewType()" 创
+   建。
+
+PyObject* PyStructSequence_GetItem(PyObject *p, Py_ssize_t pos)
+    *Return value: Borrowed reference.*
+
+   返回 *p* 所指向的结构序列中，位于 *pos* 处的对象。不需要进行边界检
+   查。
+
+PyObject* PyStructSequence_GET_ITEM(PyObject *p, Py_ssize_t pos)
+    *Return value: Borrowed reference.*
+
+   "PyStructSequence_GetItem()" 的宏版本。
+
+void PyStructSequence_SetItem(PyObject *p, Py_ssize_t pos, PyObject *o)
+
+   将结构序列 *p* 的索引 *pos* 处的字段设置为值 *o*。 与
+   "PyTuple_SET_ITEM()" 一样，它应该只用于填充全新的实例。
+
+   注解:
+
+     这个函数“窃取”了指向 *o* 的一个引用。
+
+void PyStructSequence_SET_ITEM(PyObject *p, Py_ssize_t *pos, PyObject *o)
+
+   "PyStructSequence_SetItem()" 的宏版本。
+
+   注解:
+
+     这个函数“窃取”了指向 *o* 的一个引用。

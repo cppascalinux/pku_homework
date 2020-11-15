@@ -1,0 +1,33 @@
+"tkinter.messagebox" --- Tkinter 消息提示
+*****************************************
+
+**源代码:** Lib/tkinter/messagebox.py
+
+======================================================================
+
+"tkinter.messagebox" 模块提供了一个模板基类以及多个常用配置的便捷方法
+。 消息框为模式窗口并将基于用户的选择返回 (True, False, OK, None, Yes,
+No) 的一个子集。 常用消息框风格和布局包括但不限于:
+
+   [图片]
+
+class tkinter.messagebox.Message(master=None, **options)
+
+   创建一个默认信息消息框。
+
+**信息消息框**
+
+tkinter.messagebox.showinfo(title=None, message=None, **options)
+
+**警告消息框**
+
+tkinter.messagebox.showwarning(title=None, message=None, **options)
+tkinter.messagebox.showerror(title=None, message=None, **options)
+
+**疑问消息框**
+
+tkinter.messagebox.askquestion(title=None, message=None, **options)
+tkinter.messagebox.askokcancel(title=None, message=None, **options)
+tkinter.messagebox.askretrycancel(title=None, message=None, **options)
+tkinter.messagebox.askyesno(title=None, message=None, **options)
+tkinter.messagebox.askyesnocancel(title=None, message=None, **options)

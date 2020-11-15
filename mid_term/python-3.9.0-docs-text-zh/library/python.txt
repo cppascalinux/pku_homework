@@ -1,0 +1,133 @@
+Python运行时服务
+****************
+
+本章里描述的模块提供了和Python解释器及其环境交互相关的广泛服务。以下是
+综述：
+
+* "sys" --- 系统相关的参数和函数
+
+* "sysconfig" --- Provide access to Python's configuration information
+
+  * 配置变量
+
+  * 安装路径
+
+  * 其他功能
+
+  * Using "sysconfig" as a script
+
+* "builtins" --- 内建对象
+
+* "__main__" --- 顶层脚本环境
+
+* "warnings" --- Warning control
+
+  * 警告类别
+
+  * The Warnings Filter
+
+    * Describing Warning Filters
+
+    * 默认警告过滤器
+
+    * Overriding the default filter
+
+  * 暂时禁止警告
+
+  * 测试警告
+
+  * Updating Code For New Versions of Dependencies
+
+  * Available Functions
+
+  * Available Context Managers
+
+* "dataclasses" --- 数据类
+
+  * 模块级装饰器、类和函数
+
+  * 初始化后处理
+
+  * 类变量
+
+  * 仅初始化变量
+
+  * 冻结的实例
+
+  * 继承
+
+  * 默认工厂函数
+
+  * 可变的默认值
+
+  * 异常
+
+* "contextlib" --- 为 "with"语句上下文提供的工具
+
+  * 工具
+
+  * 例子和配方
+
+    * Supporting a variable number of context managers
+
+    * Catching exceptions from "__enter__" methods
+
+    * Cleaning up in an "__enter__" implementation
+
+    * Replacing any use of "try-finally" and flag variables
+
+    * Using a context manager as a function decorator
+
+  * Single use, reusable and reentrant context managers
+
+    * Reentrant context managers
+
+    * Reusable context managers
+
+* "abc" --- 抽象基类
+
+* "atexit" --- 退出处理器
+
+  * "atexit" 示例
+
+* "traceback" --- 打印或检索堆栈回溯
+
+  * "TracebackException" Objects
+
+  * "StackSummary" Objects
+
+  * "FrameSummary" Objects
+
+  * Traceback Examples
+
+* "__future__" --- Future 语句定义
+
+* "gc" --- 垃圾回收器接口
+
+* "inspect" --- 检查对象
+
+  * 类型和成员
+
+  * Retrieving source code
+
+  * Introspecting callables with the Signature object
+
+  * 类与函数
+
+  * The interpreter stack
+
+  * Fetching attributes statically
+
+  * Current State of Generators and Coroutines
+
+  * Code Objects Bit Flags
+
+  * 命令行界面
+
+* "site" —— 指定域的配置钩子
+
+  * Readline configuration
+
+  * 模块内容
+
+  * 命令行界面

@@ -1,0 +1,834 @@
+"contextlib" --- 为 "with"语句上下文提供的工具
+**********************************************
+
+**源代码** Lib/contextlib.py
+
+======================================================================
+
+此模块为涉及 "with" 语句的常见任务提供了实用的工具。更多信息请参见 上
+下文管理器类型 和 with 语句上下文管理器。
+
+
+工具
+====
+
+提供的函数和类：
+
+class contextlib.AbstractContextManager
+
+   一个为实现了 "object.__enter__()" 与 "object.__exit__()" 的类提供的
+   *abstract base class*。为 "object.__enter__()" 提供的一个默认实现是
+   返回 "self" 而 "object.__exit__()" 是一个默认返回 "None" 的抽象方法
+   。 参见 上下文管理器类型 的定义。
+
+   3.6 新版功能.
+
+class contextlib.AbstractAsyncContextManager
+
+   一个为实现了 "object.__aenter__()" 与 "object.__aexit__()" 的类提供
+   的 *abstract base class*。 为 "object.__aenter__()" 提供的一个默认
+   实现是返回 "self" 而 "object.__aexit__()" 是一个默认返回 "None" 的
+   抽象方法。 参见 异步上下文管理器 的定义。
+
+   3.7 新版功能.
+
+@contextlib.contextmanager
+
+   这个函数是一个 *decorator* ，它可以定义一个支持 "with" 语句上下文管
+   理器的工厂函数， 而不需要创建一个类或区 "__enter__()" 与
+   "__exit__()" 方法。
+
+   尽管许多对象原生支持使用 with 语句，但有些需要被管理的资源并不是上
+   下文管理器，并且没有实现 "close()" 方法而不能使用
+   "contextlib.closing" 。
+
+   下面是一个抽象的示例，展示如何确保正确的资源管理:
+
+      from contextlib import contextmanager
+
+      @contextmanager
+      def managed_resource(*args, **kwds):
+          # Code to acquire resource, e.g.:
+          resource = acquire_resource(*args, **kwds)
+          try:
+              yield resource
+          finally:
+              # Code to release resource, e.g.:
+              release_resource(resource)
+
+      >>> with managed_resource(timeout=3600) as resource:
+      ...     # Resource is released at the end of this block,
+      ...     # even if code in the block raises an exception
+
+   被装饰的函数在被调用时，必须返回一个 *generator* 迭代器。 这个迭代
+   器必须只 yield 一个值出来，这个值会被用在 "with" 语句中，绑定到
+   "as" 后面的变量，如果给定了的话。
+
+   当生成器发生 yield 时，嵌套在 "with" 语句中的语句体会被执行。 语句
+   体执行完毕离开之后，该生成器将被恢复执行。 如果在该语句体中发生了未
+   处理的异常，则该异常会在生成器发生 yield 时重新被引发。 因此，你可
+   以使用 "try"..."except"..."finally" 语句来捕获该异常（如果有的话）
+   ，或确保进行了一些清理。 如果仅出于记录日志或执行某些操作（而非完全
+   抑制异常）的目的捕获了异常，生成器必须重新引发该异常。 否则生成器的
+   上下文管理器将向 "with" 语句指示该异常已经被处理，程序将立即在
+   "with" 语句之后恢复并继续执行。
+
+   "contextmanager()" 使用 "ContextDecorator" 因此它创建的上下文管理器
+   不仅可以用在 "with" 语句中，还可以用作一个装饰器。当它用作一个装饰
+   器时，每一次函数调用时都会隐式创建一个新的生成器实例（这使得
+   "contextmanager()" 创建的上下文管理器满足了支持多次调用以用作装饰器
+   的需求，而非“一次性”的上下文管理器）。
+
+   在 3.2 版更改: "ContextDecorator" 的使用。
+
+@contextlib.asynccontextmanager
+
+   与 "contextmanager()" 类似，但创建的是 asynchronous context manager
+   。
+
+   这个函数是一个 *decorator* ，它可以定义一个支持 "async with" 语句的
+   异步上下文管理器的工厂函数， 而不需要创建一个类或区分
+   "__aenter__()" 与 "__aexit__()" 方法。它必须被作用在一个
+   *asynchronous generator* 函数上
+
+   一个简单的示例：
+
+      from contextlib import asynccontextmanager
+
+      @asynccontextmanager
+      async def get_connection():
+          conn = await acquire_db_connection()
+          try:
+              yield conn
+          finally:
+              await release_db_connection(conn)
+
+      async def get_all_users():
+          async with get_connection() as conn:
+              return conn.query('SELECT ...')
+
+   3.7 新版功能.
+
+contextlib.closing(thing)
+
+   返回一个在语句块执行完成时关闭 *things* 的上下文管理器。这基本上等
+   价于：
+
+      from contextlib import contextmanager
+
+      @contextmanager
+      def closing(thing):
+          try:
+              yield thing
+          finally:
+              thing.close()
+
+   并允许你编写这样的代码：
+
+      from contextlib import closing
+      from urllib.request import urlopen
+
+      with closing(urlopen('http://www.python.org')) as page:
+          for line in page:
+              print(line)
+
+   而无需显式地关闭 "page" 。 即使发生错误，在退出 "with" 语句块时，
+   "page.close()" 也同样会被调用。
+
+contextlib.nullcontext(enter_result=None)
+
+   返回一个从 "__enter__" 返回 *enter_result* 的上下文管理器，除此之外
+   不执行任何操作。它旨在用于可选上下文管理器的一种替代，例如：
+
+      def myfunction(arg, ignore_exceptions=False):
+          if ignore_exceptions:
+              # Use suppress to ignore all exceptions.
+              cm = contextlib.suppress(Exception)
+          else:
+              # Do not ignore any exceptions, cm has no effect.
+              cm = contextlib.nullcontext()
+          with cm:
+              # Do something
+
+   一个使用 *enter_result* 的例子：
+
+      def process_file(file_or_path):
+          if isinstance(file_or_path, str):
+              # If string, open file
+              cm = open(file_or_path)
+          else:
+              # Caller is responsible for closing file
+              cm = nullcontext(file_or_path)
+
+          with cm as file:
+              # Perform processing on the file
+
+   3.7 新版功能.
+
+contextlib.suppress(*exceptions)
+
+   返回一个上下文管理器，如果任何一个指定的异常发生在使用该上下文管理
+   器的 with 语句中，该异常将被它抑制，然后程序将从 with 语句结束后的
+   第一个语句开始恢复执行。
+
+   与完全抑制异常的任何其他机制一样，该上下文管理器应当只用来抑制非常
+   具体的错误，并确保该场景下静默地继续执行程序是通用的正确做法。
+
+   例如:
+
+      from contextlib import suppress
+
+      with suppress(FileNotFoundError):
+          os.remove('somefile.tmp')
+
+      with suppress(FileNotFoundError):
+          os.remove('someotherfile.tmp')
+
+   这段代码等价于：
+
+      try:
+          os.remove('somefile.tmp')
+      except FileNotFoundError:
+          pass
+
+      try:
+          os.remove('someotherfile.tmp')
+      except FileNotFoundError:
+          pass
+
+   该上下文管理器是 reentrant 。
+
+   3.4 新版功能.
+
+contextlib.redirect_stdout(new_target)
+
+   用于将 "sys.stdout" 临时重定向到一个文件或类文件对象的上下文管理器
+   。
+
+   该工具给已有的将输出硬编码写到 stdout 的函数或类提供了额外的灵活性
+   。
+
+   例如， "help()" 通常把输出写到 *sys.stdout* 。你可以通过重定向到一
+   个 "io.StringIO" 来捕获该输出到一个字符串中。
+
+      f = io.StringIO()
+      with redirect_stdout(f):
+          help(pow)
+      s = f.getvalue()
+
+   如果要把 "help()" 的输出写到磁盘上的一个文件，重定向该输出到一个常
+   规文件：
+
+      with open('help.txt', 'w') as f:
+          with redirect_stdout(f):
+              help(pow)
+
+   如果要把 "help()" 的输出写到 *sys.stderr* ：
+
+      with redirect_stdout(sys.stderr):
+          help(pow)
+
+   需要注意的点在于， "sys.stdout" 的全局副作用意味着此上下文管理器不
+   适合在库代码和大多数多线程应用程序中使用。它对子进程的输出没有影响
+   。不过对于许多工具脚本而言，它仍然是一个有用的方法。
+
+   该上下文管理器是 reentrant 。
+
+   3.4 新版功能.
+
+contextlib.redirect_stderr(new_target)
+
+   与 "redirect_stdout()" 类似，不过是将 "sys.stderr" 重定向到一个文件
+   或类文件对象。
+
+   该上下文管理器是 reentrant 。
+
+   3.5 新版功能.
+
+class contextlib.ContextDecorator
+
+   一个使上下文管理器能用作装饰器的基类。
+
+   与往常一样，继承自 "ContextDecorator"  的上下文管理器必须实现
+   "__enter__" 与 "__exit__" 。即使用作装饰器， "__exit__" 依旧会保持
+   可能的异常处理。
+
+   "ContextDecorator" 被用在 "contextmanager()" 中，因此你自然获得了这
+   项功能。
+
+   "ContextDecorator" 的示例:
+
+      from contextlib import ContextDecorator
+
+      class mycontext(ContextDecorator):
+          def __enter__(self):
+              print('Starting')
+              return self
+
+          def __exit__(self, *exc):
+              print('Finishing')
+              return False
+
+      >>> @mycontext()
+      ... def function():
+      ...     print('The bit in the middle')
+      ...
+      >>> function()
+      Starting
+      The bit in the middle
+      Finishing
+
+      >>> with mycontext():
+      ...     print('The bit in the middle')
+      ...
+      Starting
+      The bit in the middle
+      Finishing
+
+   这个改动只是针对如下形式的一个语法糖：
+
+      def f():
+          with cm():
+              # Do stuff
+
+   "ContextDecorator" 使得你可以这样改写：
+
+      @cm()
+      def f():
+          # Do stuff
+
+   这能清楚地表明， "cm" 作用于整个函数，而不仅仅是函数的一部分（同时
+   也能保持不错的缩进层级）。
+
+   现有的上下文管理器即使已经有基类，也可以使用 "ContextDecorator" 作
+   为混合类进行扩展：
+
+      from contextlib import ContextDecorator
+
+      class mycontext(ContextBaseClass, ContextDecorator):
+          def __enter__(self):
+              return self
+
+          def __exit__(self, *exc):
+              return False
+
+   注解:
+
+     由于被装饰的函数必须能够被多次调用，因此对应的上下文管理器必须支
+     持在多个 "with" 语句中使用。如果不是这样，则应当使用原来的具有显
+     式 "with" 语句的形式使用该上下文管理器。
+
+   3.2 新版功能.
+
+class contextlib.ExitStack
+
+   该上下文管理器的设计目标是使得在编码中组合其他上下文管理器和清理函
+   数更加容易，尤其是那些可选的或由输入数据驱动的上下文管理器。
+
+   例如，通过一个如下的 with 语句可以很容易处理一组文件：
+
+      with ExitStack() as stack:
+          files = [stack.enter_context(open(fname)) for fname in filenames]
+          # All opened files will automatically be closed at the end of
+          # the with statement, even if attempts to open files later
+          # in the list raise an exception
+
+   每个实例维护一个注册了一组回调的栈，这些回调在实例关闭时以相反的顺
+   序被调用（显式或隐式地在 "with" 语句的末尾）。请注意，当一个栈实例
+   被垃圾回收时，这些回调将 *不会* 被隐式调用。
+
+   通过使用这个基于栈的模型，那些通过 "__init__" 方法获取资源的上下文
+   管理器（如文件对象）能够被正确处理。
+
+   由于注册的回调函数是按照与注册相反的顺序调用的，因此最终的行为就像
+   多个嵌套的 "with" 语句用在这些注册的回调函数上。这个行为甚至扩展到
+   了异常处理：如果内部的回调函数抑制或替换了异常，则外部回调收到的参
+   数是基于该更新后的状态得到的。
+
+   这是一个相对底层的 API，它负责正确处理栈里回调退出时依次展开的细节
+   。它为相对高层的上下文管理器提供了一个合适的基础，使得它能根据应用
+   程序的需求使用特定方式操作栈。
+
+   3.3 新版功能.
+
+   enter_context(cm)
+
+      Enters a new context manager and adds its "__exit__()" method to
+      the callback stack. The return value is the result of the
+      context manager's own "__enter__()" method.
+
+      These context managers may suppress exceptions just as they
+      normally would if used directly as part of a "with" statement.
+
+   push(exit)
+
+      Adds a context manager's "__exit__()" method to the callback
+      stack.
+
+      As "__enter__" is *not* invoked, this method can be used to
+      cover part of an "__enter__()" implementation with a context
+      manager's own "__exit__()" method.
+
+      If passed an object that is not a context manager, this method
+      assumes it is a callback with the same signature as a context
+      manager's "__exit__()" method and adds it directly to the
+      callback stack.
+
+      By returning true values, these callbacks can suppress
+      exceptions the same way context manager "__exit__()" methods
+      can.
+
+      The passed in object is returned from the function, allowing
+      this method to be used as a function decorator.
+
+   callback(callback, /, *args, **kwds)
+
+      Accepts an arbitrary callback function and arguments and adds it
+      to the callback stack.
+
+      Unlike the other methods, callbacks added this way cannot
+      suppress exceptions (as they are never passed the exception
+      details).
+
+      The passed in callback is returned from the function, allowing
+      this method to be used as a function decorator.
+
+   pop_all()
+
+      Transfers the callback stack to a fresh "ExitStack" instance and
+      returns it. No callbacks are invoked by this operation -
+      instead, they will now be invoked when the new stack is closed
+      (either explicitly or implicitly at the end of a "with"
+      statement).
+
+      For example, a group of files can be opened as an "all or
+      nothing" operation as follows:
+
+         with ExitStack() as stack:
+             files = [stack.enter_context(open(fname)) for fname in filenames]
+             # Hold onto the close method, but don't call it yet.
+             close_files = stack.pop_all().close
+             # If opening any file fails, all previously opened files will be
+             # closed automatically. If all files are opened successfully,
+             # they will remain open even after the with statement ends.
+             # close_files() can then be invoked explicitly to close them all.
+
+   close()
+
+      Immediately unwinds the callback stack, invoking callbacks in
+      the reverse order of registration. For any context managers and
+      exit callbacks registered, the arguments passed in will indicate
+      that no exception occurred.
+
+class contextlib.AsyncExitStack
+
+   An asynchronous context manager, similar to "ExitStack", that
+   supports combining both synchronous and asynchronous context
+   managers, as well as having coroutines for cleanup logic.
+
+   The "close()" method is not implemented, "aclose()" must be used
+   instead.
+
+   enter_async_context(cm)
+
+      Similar to "enter_context()" but expects an asynchronous context
+      manager.
+
+   push_async_exit(exit)
+
+      Similar to "push()" but expects either an asynchronous context
+      manager or a coroutine function.
+
+   push_async_callback(callback, /, *args, **kwds)
+
+      Similar to "callback()" but expects a coroutine function.
+
+   aclose()
+
+      Similar to "close()" but properly handles awaitables.
+
+   Continuing the example for "asynccontextmanager()":
+
+      async with AsyncExitStack() as stack:
+          connections = [await stack.enter_async_context(get_connection())
+              for i in range(5)]
+          # All opened connections will automatically be released at the end of
+          # the async with statement, even if attempts to open a connection
+          # later in the list raise an exception.
+
+   3.7 新版功能.
+
+
+例子和配方
+==========
+
+This section describes some examples and recipes for making effective
+use of the tools provided by "contextlib".
+
+
+Supporting a variable number of context managers
+------------------------------------------------
+
+The primary use case for "ExitStack" is the one given in the class
+documentation: supporting a variable number of context managers and
+other cleanup operations in a single "with" statement. The variability
+may come from the number of context managers needed being driven by
+user input (such as opening a user specified collection of files), or
+from some of the context managers being optional:
+
+   with ExitStack() as stack:
+       for resource in resources:
+           stack.enter_context(resource)
+       if need_special_resource():
+           special = acquire_special_resource()
+           stack.callback(release_special_resource, special)
+       # Perform operations that use the acquired resources
+
+As shown, "ExitStack" also makes it quite easy to use "with"
+statements to manage arbitrary resources that don't natively support
+the context management protocol.
+
+
+Catching exceptions from "__enter__" methods
+--------------------------------------------
+
+It is occasionally desirable to catch exceptions from an "__enter__"
+method implementation, *without* inadvertently catching exceptions
+from the "with" statement body or the context manager's "__exit__"
+method. By using "ExitStack" the steps in the context management
+protocol can be separated slightly in order to allow this:
+
+   stack = ExitStack()
+   try:
+       x = stack.enter_context(cm)
+   except Exception:
+       # handle __enter__ exception
+   else:
+       with stack:
+           # Handle normal case
+
+Actually needing to do this is likely to indicate that the underlying
+API should be providing a direct resource management interface for use
+with "try"/"except"/"finally" statements, but not all APIs are well
+designed in that regard. When a context manager is the only resource
+management API provided, then "ExitStack" can make it easier to handle
+various situations that can't be handled directly in a "with"
+statement.
+
+
+Cleaning up in an "__enter__" implementation
+--------------------------------------------
+
+As noted in the documentation of "ExitStack.push()", this method can
+be useful in cleaning up an already allocated resource if later steps
+in the "__enter__()" implementation fail.
+
+Here's an example of doing this for a context manager that accepts
+resource acquisition and release functions, along with an optional
+validation function, and maps them to the context management protocol:
+
+   from contextlib import contextmanager, AbstractContextManager, ExitStack
+
+   class ResourceManager(AbstractContextManager):
+
+       def __init__(self, acquire_resource, release_resource, check_resource_ok=None):
+           self.acquire_resource = acquire_resource
+           self.release_resource = release_resource
+           if check_resource_ok is None:
+               def check_resource_ok(resource):
+                   return True
+           self.check_resource_ok = check_resource_ok
+
+       @contextmanager
+       def _cleanup_on_error(self):
+           with ExitStack() as stack:
+               stack.push(self)
+               yield
+               # The validation check passed and didn't raise an exception
+               # Accordingly, we want to keep the resource, and pass it
+               # back to our caller
+               stack.pop_all()
+
+       def __enter__(self):
+           resource = self.acquire_resource()
+           with self._cleanup_on_error():
+               if not self.check_resource_ok(resource):
+                   msg = "Failed validation for {!r}"
+                   raise RuntimeError(msg.format(resource))
+           return resource
+
+       def __exit__(self, *exc_details):
+           # We don't need to duplicate any of our resource release logic
+           self.release_resource()
+
+
+Replacing any use of "try-finally" and flag variables
+-----------------------------------------------------
+
+A pattern you will sometimes see is a "try-finally" statement with a
+flag variable to indicate whether or not the body of the "finally"
+clause should be executed. In its simplest form (that can't already be
+handled just by using an "except" clause instead), it looks something
+like this:
+
+   cleanup_needed = True
+   try:
+       result = perform_operation()
+       if result:
+           cleanup_needed = False
+   finally:
+       if cleanup_needed:
+           cleanup_resources()
+
+As with any "try" statement based code, this can cause problems for
+development and review, because the setup code and the cleanup code
+can end up being separated by arbitrarily long sections of code.
+
+"ExitStack" makes it possible to instead register a callback for
+execution at the end of a "with" statement, and then later decide to
+skip executing that callback:
+
+   from contextlib import ExitStack
+
+   with ExitStack() as stack:
+       stack.callback(cleanup_resources)
+       result = perform_operation()
+       if result:
+           stack.pop_all()
+
+This allows the intended cleanup up behaviour to be made explicit up
+front, rather than requiring a separate flag variable.
+
+If a particular application uses this pattern a lot, it can be
+simplified even further by means of a small helper class:
+
+   from contextlib import ExitStack
+
+   class Callback(ExitStack):
+       def __init__(self, callback, /, *args, **kwds):
+           super(Callback, self).__init__()
+           self.callback(callback, *args, **kwds)
+
+       def cancel(self):
+           self.pop_all()
+
+   with Callback(cleanup_resources) as cb:
+       result = perform_operation()
+       if result:
+           cb.cancel()
+
+If the resource cleanup isn't already neatly bundled into a standalone
+function, then it is still possible to use the decorator form of
+"ExitStack.callback()" to declare the resource cleanup in advance:
+
+   from contextlib import ExitStack
+
+   with ExitStack() as stack:
+       @stack.callback
+       def cleanup_resources():
+           ...
+       result = perform_operation()
+       if result:
+           stack.pop_all()
+
+Due to the way the decorator protocol works, a callback function
+declared this way cannot take any parameters. Instead, any resources
+to be released must be accessed as closure variables.
+
+
+Using a context manager as a function decorator
+-----------------------------------------------
+
+"ContextDecorator" makes it possible to use a context manager in both
+an ordinary "with" statement and also as a function decorator.
+
+For example, it is sometimes useful to wrap functions or groups of
+statements with a logger that can track the time of entry and time of
+exit.  Rather than writing both a function decorator and a context
+manager for the task, inheriting from "ContextDecorator" provides both
+capabilities in a single definition:
+
+   from contextlib import ContextDecorator
+   import logging
+
+   logging.basicConfig(level=logging.INFO)
+
+   class track_entry_and_exit(ContextDecorator):
+       def __init__(self, name):
+           self.name = name
+
+       def __enter__(self):
+           logging.info('Entering: %s', self.name)
+
+       def __exit__(self, exc_type, exc, exc_tb):
+           logging.info('Exiting: %s', self.name)
+
+Instances of this class can be used as both a context manager:
+
+   with track_entry_and_exit('widget loader'):
+       print('Some time consuming activity goes here')
+       load_widget()
+
+And also as a function decorator:
+
+   @track_entry_and_exit('widget loader')
+   def activity():
+       print('Some time consuming activity goes here')
+       load_widget()
+
+Note that there is one additional limitation when using context
+managers as function decorators: there's no way to access the return
+value of "__enter__()". If that value is needed, then it is still
+necessary to use an explicit "with" statement.
+
+参见:
+
+  **PEP 343** - "with" 语句
+     Python "with" 语句的规范描述、背景和示例。
+
+
+Single use, reusable and reentrant context managers
+===================================================
+
+Most context managers are written in a way that means they can only be
+used effectively in a "with" statement once. These single use context
+managers must be created afresh each time they're used - attempting to
+use them a second time will trigger an exception or otherwise not work
+correctly.
+
+This common limitation means that it is generally advisable to create
+context managers directly in the header of the "with" statement where
+they are used (as shown in all of the usage examples above).
+
+Files are an example of effectively single use context managers, since
+the first "with" statement will close the file, preventing any further
+IO operations using that file object.
+
+Context managers created using "contextmanager()" are also single use
+context managers, and will complain about the underlying generator
+failing to yield if an attempt is made to use them a second time:
+
+   >>> from contextlib import contextmanager
+   >>> @contextmanager
+   ... def singleuse():
+   ...     print("Before")
+   ...     yield
+   ...     print("After")
+   ...
+   >>> cm = singleuse()
+   >>> with cm:
+   ...     pass
+   ...
+   Before
+   After
+   >>> with cm:
+   ...     pass
+   ...
+   Traceback (most recent call last):
+       ...
+   RuntimeError: generator didn't yield
+
+
+Reentrant context managers
+--------------------------
+
+More sophisticated context managers may be "reentrant". These context
+managers can not only be used in multiple "with" statements, but may
+also be used *inside* a "with" statement that is already using the
+same context manager.
+
+"threading.RLock" is an example of a reentrant context manager, as are
+"suppress()" and "redirect_stdout()". Here's a very simple example of
+reentrant use:
+
+   >>> from contextlib import redirect_stdout
+   >>> from io import StringIO
+   >>> stream = StringIO()
+   >>> write_to_stream = redirect_stdout(stream)
+   >>> with write_to_stream:
+   ...     print("This is written to the stream rather than stdout")
+   ...     with write_to_stream:
+   ...         print("This is also written to the stream")
+   ...
+   >>> print("This is written directly to stdout")
+   This is written directly to stdout
+   >>> print(stream.getvalue())
+   This is written to the stream rather than stdout
+   This is also written to the stream
+
+Real world examples of reentrancy are more likely to involve multiple
+functions calling each other and hence be far more complicated than
+this example.
+
+Note also that being reentrant is *not* the same thing as being thread
+safe. "redirect_stdout()", for example, is definitely not thread safe,
+as it makes a global modification to the system state by binding
+"sys.stdout" to a different stream.
+
+
+Reusable context managers
+-------------------------
+
+Distinct from both single use and reentrant context managers are
+"reusable" context managers (or, to be completely explicit, "reusable,
+but not reentrant" context managers, since reentrant context managers
+are also reusable). These context managers support being used multiple
+times, but will fail (or otherwise not work correctly) if the specific
+context manager instance has already been used in a containing with
+statement.
+
+"threading.Lock" is an example of a reusable, but not reentrant,
+context manager (for a reentrant lock, it is necessary to use
+"threading.RLock" instead).
+
+Another example of a reusable, but not reentrant, context manager is
+"ExitStack", as it invokes *all* currently registered callbacks when
+leaving any with statement, regardless of where those callbacks were
+added:
+
+   >>> from contextlib import ExitStack
+   >>> stack = ExitStack()
+   >>> with stack:
+   ...     stack.callback(print, "Callback: from first context")
+   ...     print("Leaving first context")
+   ...
+   Leaving first context
+   Callback: from first context
+   >>> with stack:
+   ...     stack.callback(print, "Callback: from second context")
+   ...     print("Leaving second context")
+   ...
+   Leaving second context
+   Callback: from second context
+   >>> with stack:
+   ...     stack.callback(print, "Callback: from outer context")
+   ...     with stack:
+   ...         stack.callback(print, "Callback: from inner context")
+   ...         print("Leaving inner context")
+   ...     print("Leaving outer context")
+   ...
+   Leaving inner context
+   Callback: from inner context
+   Callback: from outer context
+   Leaving outer context
+
+As the output from the example shows, reusing a single stack object
+across multiple with statements works correctly, but attempting to
+nest them will cause the stack to be cleared at the end of the
+innermost with statement, which is unlikely to be desirable behaviour.
+
+Using separate "ExitStack" instances instead of reusing a single
+instance avoids that problem:
+
+   >>> from contextlib import ExitStack
+   >>> with ExitStack() as outer_stack:
+   ...     outer_stack.callback(print, "Callback: from outer context")
+   ...     with ExitStack() as inner_stack:
+   ...         inner_stack.callback(print, "Callback: from inner context")
+   ...         print("Leaving inner context")
+   ...     print("Leaving outer context")
+   ...
+   Leaving inner context
+   Callback: from inner context
+   Leaving outer context
+   Callback: from outer context

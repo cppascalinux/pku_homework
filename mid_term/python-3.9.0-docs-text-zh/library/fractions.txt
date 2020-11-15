@@ -1,0 +1,155 @@
+"fractions" --- 分数
+********************
+
+**源代码** Lib/fractions.py
+
+======================================================================
+
+"fractions" 模块支持分数运算。
+
+分数实例可以由一对整数，一个分数，或者一个字符串构建而成。
+
+class fractions.Fraction(numerator=0, denominator=1)
+class fractions.Fraction(other_fraction)
+class fractions.Fraction(float)
+class fractions.Fraction(decimal)
+class fractions.Fraction(string)
+
+   第一个版本要求 *numerator* 和 *denominator* 是 "numbers.Rational"
+   的实例，并返回一个新的 "Fraction" 实例，其值为
+   "numerator/denominator"。 如果 *denominator* 为 "0" 将会引发
+   "ZeroDivisionError"。 第二个版本要求 *other_fraction* 是
+   "numbers.Rational" 的实例，并返回一个 "Fraction" 实例且与传入值相等
+   。 下两个版本接受 "float" 或 "decimal.Decimal" 的实例，并返回一个
+   "Fraction" 实例且与传入值完全相等。 请注意由于二进制浮点数通常存在
+   的问题 (参见 浮点算术：争议和限制)，"Fraction(1.1)" 的参数并不会精
+   确等于 11/10，因此 "Fraction(1.1)" 也 *不会* 返回用户所期望的
+   "Fraction(11, 10)"。 （请参阅下文中 "limit_denominator()" 方法的文
+   档。） 构造器的最后一个版本接受一个字符串或 unicode 实例。 此实例的
+   通常形式为:
+
+      [sign] numerator ['/' denominator]
+
+   其中的可选项 "sign" 可以为 '+' 或 '-' 并且 "numerator" 和
+   "denominator" (如果存在) 是十进制数码的字符串。 此外，"float" 构造
+   器所接受的任何表示一个有限值的字符串也都为 "Fraction" 构造器所接受
+   。 不论哪种形式的输入字符串也都可以带有前缀和/或后缀的空格符。 这里
+   是一些示例:
+
+      >>> from fractions import Fraction
+      >>> Fraction(16, -10)
+      Fraction(-8, 5)
+      >>> Fraction(123)
+      Fraction(123, 1)
+      >>> Fraction()
+      Fraction(0, 1)
+      >>> Fraction('3/7')
+      Fraction(3, 7)
+      >>> Fraction(' -3/7 ')
+      Fraction(-3, 7)
+      >>> Fraction('1.414213 \t\n')
+      Fraction(1414213, 1000000)
+      >>> Fraction('-.125')
+      Fraction(-1, 8)
+      >>> Fraction('7e-6')
+      Fraction(7, 1000000)
+      >>> Fraction(2.25)
+      Fraction(9, 4)
+      >>> Fraction(1.1)
+      Fraction(2476979795053773, 2251799813685248)
+      >>> from decimal import Decimal
+      >>> Fraction(Decimal('1.1'))
+      Fraction(11, 10)
+
+   "Fraction" 类继承自抽象基类 "numbers.Rational"，并实现了该类的所有
+   方法和操作。 "Fraction" 实例是可哈希的，并应当被视为不可变对象。 此
+   外，"Fraction" 还具有以下属性和方法：
+
+   在 3.2 版更改: "Fraction" 构造器现在接受 "float" 和
+   "decimal.Decimal" 实例。
+
+   在 3.9 版更改: 现在会使用 "math.gcd()" 函数来正规化 *numerator* 和
+   *denominator*。 "math.gcd()" 总是返回 "int" 类型。 在之前版本中，
+   GCD 的类型取决于 *numerator* 和 *denominator* 的类型。
+
+   numerator
+
+      最简分数形式的分子。
+
+   denominator
+
+      最简分数形式的分母。
+
+   as_integer_ratio()
+
+      返回由两个整数组成的元组，两数之比等于该分数的值且其分母为正数。
+
+      3.8 新版功能.
+
+   from_float(flt)
+
+      此类方法可构造一个 "Fraction" 来表示 *flt* 的精确值，该参数必须
+      是一个 "float"。 请注意 "Fraction.from_float(0.3)" 的值并不等于
+      "Fraction(3, 10)"。
+
+      注解:
+
+        从 Python 3.2 开始，在构造 "Fraction" 实例时可以直接使用
+        "float"。
+
+   from_decimal(dec)
+
+      此类方法可构造一个 "Fraction" 来表示 *dec* 的精确值，该参数必须
+      是一个 "decimal.Decimal" 实例。
+
+      注解:
+
+        从 Python 3.2 开始，在构造 "Fraction" 实例时可以直接使用
+        "decimal.Decimal" 实例。
+
+   limit_denominator(max_denominator=1000000)
+
+      找到并返回一个 "Fraction" 使得其值最接近 "self" 并且分母不大于
+      max_denominator。 此方法适用于找出给定浮点数的有理数近似值：
+
+      >>> from fractions import Fraction
+      >>> Fraction('3.1415926535897932').limit_denominator(1000)
+      Fraction(355, 113)
+
+      或是用来恢复被表示为一个浮点数的有理数：
+
+      >>> from math import pi, cos
+      >>> Fraction(cos(pi/3))
+      Fraction(4503599627370497, 9007199254740992)
+      >>> Fraction(cos(pi/3)).limit_denominator()
+      Fraction(1, 2)
+      >>> Fraction(1.1).limit_denominator()
+      Fraction(11, 10)
+
+   __floor__()
+
+      返回最大的 "int" "<= self"。 此方法也可通过 "math.floor()" 函数
+      来使用：
+
+      >>> from math import floor
+      >>> floor(Fraction(355, 113))
+      3
+
+   __ceil__()
+
+      返回最小的 "int" ">= self"。 此方法也可通过 "math.ceil()" 函数来
+      使用。
+
+   __round__()
+   __round__(ndigits)
+
+      第一个版本返回一个 "int" 使得其值最接近 "self"，位值为二分之一时
+      只对偶数舍入。第二个版本会将 "self" 舍入到最接近 "Fraction(1,
+      10**ndigits)" 的倍数（如果 "ndigits" 为负值则为逻辑运算），位值
+      为二分之一时同样只对偶数舍入。 此方法也可通过 "round()" 函数来使
+      用。
+
+参见:
+
+  "numbers" 模块
+     构成数字塔的所有抽象基类。

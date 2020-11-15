@@ -1,0 +1,789 @@
+4. 其他流程控制工具
+*******************
+
+除了刚刚介绍过的 "while" 语句，Python 中也会使用其他语言中常见的流程控
+制语句，只是稍有变化。
+
+
+4.1. "if" 语句
+==============
+
+可能最为人所熟知的编程语句就是 "if" 语句了。例如：
+
+   >>> x = int(input("Please enter an integer: "))
+   Please enter an integer: 42
+   >>> if x < 0:
+   ...     x = 0
+   ...     print('Negative changed to zero')
+   ... elif x == 0:
+   ...     print('Zero')
+   ... elif x == 1:
+   ...     print('Single')
+   ... else:
+   ...     print('More')
+   ...
+   More
+
+可以有零个或多个 "elif" 部分，以及一个可选的 "else" 部分。 关键字
+'"elif"' 是 'else if' 的缩写，适合用于避免过多的缩进。 一个 "if" ...
+"elif" ... "elif" ... 序列可以看作是其他语言中的 "switch" 或 "case" 语
+句的替代。
+
+
+4.2. "for" 语句
+===============
+
+Python 中的 "for" 语句与你在 C 或 Pascal 中所用到的有所不同。 Python
+中的 "for" 语句并不总是对算术递增的数值进行迭代（如同 Pascal），或是给
+予用户定义迭代步骤和暂停条件的能力（如同 C），而是对任意序列进行迭代（
+例如列表或字符串），条目的迭代顺序与它们在序列中出现的顺序一致。 例如
+（此处英文为双关语）:
+
+   >>> # Measure some strings:
+   ... words = ['cat', 'window', 'defenestrate']
+   >>> for w in words:
+   ...     print(w, len(w))
+   ...
+   cat 3
+   window 6
+   defenestrate 12
+
+在遍历同一个集合时修改该集合的代码可能很难获得正确的结果。通常，更直接
+的做法是循环遍历该集合的副本或创建新集合：
+
+   # Strategy:  Iterate over a copy
+   for user, status in users.copy().items():
+       if status == 'inactive':
+           del users[user]
+
+   # Strategy:  Create a new collection
+   active_users = {}
+   for user, status in users.items():
+       if status == 'active':
+           active_users[user] = status
+
+
+4.3. "range()" 函数
+===================
+
+如果你确实需要遍历一个数字序列，内置函数 "range()"  会派上用场。它生成
+算术级数:
+
+   >>> for i in range(5):
+   ...     print(i)
+   ...
+   0
+   1
+   2
+   3
+   4
+
+给定的终止数值并不在要生成的序列里；"range(10)" 会生成10个值，并且是以
+合法的索引生成一个长度为10的序列。range也可以以另一个数字开头，或者以
+指定的幅度增加（甚至是负数；有时这也被叫做 '步进'）
+
+   range(5, 10)
+      5, 6, 7, 8, 9
+
+   range(0, 10, 3)
+      0, 3, 6, 9
+
+   range(-10, -100, -30)
+     -10, -40, -70
+
+要以序列的索引来迭代，您可以将 "range()" 和 "len()" 组合如下:
+
+   >>> a = ['Mary', 'had', 'a', 'little', 'lamb']
+   >>> for i in range(len(a)):
+   ...     print(i, a[i])
+   ...
+   0 Mary
+   1 had
+   2 a
+   3 little
+   4 lamb
+
+然而，在大多数这类情况下，使用 "enumerate()" 函数比较方便，请参见 循环
+的技巧 。
+
+如果你只打印 range，会出现奇怪的结果:
+
+   >>> print(range(10))
+   range(0, 10)
+
+"range()" 所返回的对象在许多方面表现得像一个列表，但实际上却并不是。此
+对象会在你迭代它时基于所希望的序列返回连续的项，但它没有真正生成列表，
+这样就能节省空间。
+
+我们称这样对象为 *iterable*，也就是说，适合作为这样的目标对象：函数和
+结构期望从中获取连续的项直到所提供的项全部耗尽。 我们已经看到 "for" 语
+句就是这样一种结构，而接受可迭代对象的函数的一个例子是 "sum()":
+
+   >>> sum(range(4))  # 0 + 1 + 2 + 3
+   6
+
+稍后我们将看到更多返回可迭代对象以及将可迭代对象作为参数的函数。 最后
+，也许你会很好奇如何从一个指定范围内获取一个列表。 以下是解决方案：
+
+   >>> list(range(4))
+   [0, 1, 2, 3]
+
+在 数据结构 章节中，我们将讨论 "list()" 的更多细节。
+
+
+4.4. "break" 和 "continue" 语句，以及循环中的 "else" 子句
+=========================================================
+
+"break" 语句，和 C 中的类似，用于跳出最近的 "for" 或 "while" 循环.
+
+循环语句可能带有 "else" 子句；它会在循环耗尽了可迭代对象 (使用 "for")
+或循环条件变为假值 (使用 "while") 时被执行，但不会在循环被 "break" 语
+句终止时被执行。 以下搜索素数的循环就是这样的一个例子:
+
+   >>> for n in range(2, 10):
+   ...     for x in range(2, n):
+   ...         if n % x == 0:
+   ...             print(n, 'equals', x, '*', n//x)
+   ...             break
+   ...     else:
+   ...         # loop fell through without finding a factor
+   ...         print(n, 'is a prime number')
+   ...
+   2 is a prime number
+   3 is a prime number
+   4 equals 2 * 2
+   5 is a prime number
+   6 equals 2 * 3
+   7 is a prime number
+   8 equals 2 * 4
+   9 equals 3 * 3
+
+（是的，这是正确的代码。仔细看： "else" 子句属于 "for" 循环， **不属于
+** "if" 语句。）
+
+当和循环一起使用时，"else" 子句与 "try" 语句中的 "else" 子句的共同点多
+于 "if" 语句中的同类子句: "try" 语句中的 "else" 子句会在未发生异常时执
+行，而循环中的 "else" 子句则会在未发生 "break" 时执行。 有关 "try" 语
+句和异常的更多信息，请参阅 处理异常。
+
+"continue" 语句也是借鉴自 C 语言，表示继续循环中的下一次迭代:
+
+   >>> for num in range(2, 10):
+   ...     if num % 2 == 0:
+   ...         print("Found an even number", num)
+   ...         continue
+   ...     print("Found an odd number", num)
+   Found an even number 2
+   Found an odd number 3
+   Found an even number 4
+   Found an odd number 5
+   Found an even number 6
+   Found an odd number 7
+   Found an even number 8
+   Found an odd number 9
+
+
+4.5. "pass" 语句
+================
+
+"pass" 语句什么也不做。当语法上需要一个语句，但程序需要什么动作也不做
+时，可以使用它。例如:
+
+   >>> while True:
+   ...     pass  # Busy-wait for keyboard interrupt (Ctrl+C)
+   ...
+
+这通常用于创建最小的类:
+
+   >>> class MyEmptyClass:
+   ...     pass
+   ...
+
+"pass" 的另一个可以使用的场合是在你编写新的代码时作为一个函数或条件子
+句体的占位符，允许你保持在更抽象的层次上进行思考。 "pass" 会被静默地忽
+略:
+
+   >>> def initlog(*args):
+   ...     pass   # Remember to implement this!
+   ...
+
+
+4.6. 定义函数
+=============
+
+我们可以创建一个输出任意范围内 Fibonacci 数列的函数:
+
+   >>> def fib(n):    # write Fibonacci series up to n
+   ...     """Print a Fibonacci series up to n."""
+   ...     a, b = 0, 1
+   ...     while a < n:
+   ...         print(a, end=' ')
+   ...         a, b = b, a+b
+   ...     print()
+   ...
+   >>> # Now call the function we just defined:
+   ... fib(2000)
+   0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597
+
+关键字 "def" 引入一个函数 *定义*。它必须后跟函数名称和带括号的形式参数
+列表。构成函数体的语句从下一行开始，并且必须缩进。
+
+函数体的第一个语句可以（可选的）是字符串文字；这个字符串文字是函数的文
+档字符串或 *docstring* 。（有关文档字符串的更多信息，请参阅  文档字符
+串 部分）有些工具使用文档字符串自动生成在线或印刷文档，或者让用户以交
+互式的形式浏览代码；在你编写的代码中包含文档字符串是一种很好的做法，所
+以要养成习惯。
+
+函数的 *执行* 会引入一个用于函数局部变量的新符号表。 更确切地说，函数
+中所有的变量赋值都将存储在局部符号表中；而变量引用会首先在局部符号表中
+查找，然后是外层函数的局部符号表，再然后是全局符号表，最后是内置名称的
+符号表。 因此，全局变量和外层函数的变量不能在函数内部直接赋值（除非是
+在 "global" 语句中定义的全局变量，或者是在 "nonlocal" 语句中定义的外层
+函数的变量），尽管它们可以被引用。
+
+在函数被调用时，实际参数（实参）会被引入被调用函数的本地符号表中；因此
+，实参是通过 *按值调用* 传递的（其中 *值* 始终是对象 *引用* 而不是对象
+的值）。[1] 当一个函数调用另外一个函数时，将会为该调用创建一个新的本地
+符号表。
+
+函数定义会将函数名称与函数对象在当前符号表中进行关联。 解释器会将该名
+称所指向的对象识别为用户自定义函数。 其他名称也可指向同一个函数对象并
+可被用来访问访函数:
+
+   >>> fib
+   <function fib at 10042ed0>
+   >>> f = fib
+   >>> f(100)
+   0 1 1 2 3 5 8 13 21 34 55 89
+
+如果你学过其他语言，你可能会认为 "fib" 不是函数而是一个过程，因为它并
+不返回值。事实上，即使没有 "return" 语句的函数也会返回一个值，尽管它是
+一个相当无聊的值。这个值称为 "None" （它是内置名称）。一般来说解释器不
+会打印出单独的返回值 "None" ，如果你真想看到它，你可以使用 "print()"
+
+   >>> fib(0)
+   >>> print(fib(0))
+   None
+
+写一个返回斐波那契数列的列表（而不是把它打印出来）的函数，非常简单:
+
+   >>> def fib2(n):  # return Fibonacci series up to n
+   ...     """Return a list containing the Fibonacci series up to n."""
+   ...     result = []
+   ...     a, b = 0, 1
+   ...     while a < n:
+   ...         result.append(a)    # see below
+   ...         a, b = b, a+b
+   ...     return result
+   ...
+   >>> f100 = fib2(100)    # call it
+   >>> f100                # write the result
+   [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+此示例中，像往常一样，演示了一些新的 Python 功能:
+
+* "return" 语句会从函数内部返回一个值。 不带表达式参数的 "return" 会返
+  回 "None"。 函数执行完毕退出也会返回 "None"。
+
+* "result.append(a)" 语句调用了列表对象 "result" 的 *方法* 。方法是“属
+  于”一个对象的函数，它被命名为 "obj.methodname" ，其中 "obj" 是某个对
+  象（也可能是一个表达式）， "methodname" 是由对象类型中定义的方法的名
+  称。不同的类型可以定义不同的方法。不同类型的方法可以有相同的名称而不
+  会引起歧义。（可以使用 *类* 定义自己的对象类型和方法，请参阅 类 ）示
+  例中的方法 "append()" 是为列表对象定义的；它会在列表的最后添加一个新
+  的元素。在这个示例中它相当于 "result = result + [a]" ，但更高效。
+
+
+4.7. 函数定义的更多形式
+=======================
+
+给函数定义有可变数目的参数也是可行的。这里有三种形式，可以组合使用。
+
+
+4.7.1. 参数默认值
+-----------------
+
+最有用的形式是对一个或多个参数指定一个默认值。这样创建的函数，可以用比
+定义时允许的更少的参数调用，比如:
+
+   def ask_ok(prompt, retries=4, reminder='Please try again!'):
+       while True:
+           ok = input(prompt)
+           if ok in ('y', 'ye', 'yes'):
+               return True
+           if ok in ('n', 'no', 'nop', 'nope'):
+               return False
+           retries = retries - 1
+           if retries < 0:
+               raise ValueError('invalid user response')
+           print(reminder)
+
+这个函数可以通过几种方式调用:
+
+* 只给出必需的参数："ask_ok('Do you really want to quit?')"
+
+* 给出一个可选的参数："ask_ok('OK to overwrite the file?', 2)"
+
+* 或者给出所有的参数："ask_ok('OK to overwrite the file?', 2, 'Come
+  on, only yes or no!')"
+
+这个示例还介绍了 "in" 关键字。它可以测试一个序列是否包含某个值。
+
+默认值是在 *定义过程* 中在函数定义处计算的，所以
+
+   i = 5
+
+   def f(arg=i):
+       print(arg)
+
+   i = 6
+   f()
+
+会打印 "5"。
+
+**重要警告：** 默认值只会执行一次。这条规则在默认值为可变对象（列表、
+字典以及大多数类实例）时很重要。比如，下面的函数会存储在后续调用中传递
+给它的参数:
+
+   def f(a, L=[]):
+       L.append(a)
+       return L
+
+   print(f(1))
+   print(f(2))
+   print(f(3))
+
+这将打印出
+
+   [1]
+   [1, 2]
+   [1, 2, 3]
+
+如果你不想要在后续调用之间共享默认值，你可以这样写这个函数:
+
+   def f(a, L=None):
+       if L is None:
+           L = []
+       L.append(a)
+       return L
+
+
+4.7.2. 关键字参数
+-----------------
+
+也可以使用形如 "kwarg=value" 的 *关键字参数* 来调用函数。例如下面的函
+数:
+
+   def parrot(voltage, state='a stiff', action='voom', type='Norwegian Blue'):
+       print("-- This parrot wouldn't", action, end=' ')
+       print("if you put", voltage, "volts through it.")
+       print("-- Lovely plumage, the", type)
+       print("-- It's", state, "!")
+
+接受一个必需的参数（"voltage"）和三个可选的参数（"state", "action"，和
+"type"）。这个函数可以通过下面的任何一种方式调用:
+
+   parrot(1000)                                          # 1 positional argument
+   parrot(voltage=1000)                                  # 1 keyword argument
+   parrot(voltage=1000000, action='VOOOOOM')             # 2 keyword arguments
+   parrot(action='VOOOOOM', voltage=1000000)             # 2 keyword arguments
+   parrot('a million', 'bereft of life', 'jump')         # 3 positional arguments
+   parrot('a thousand', state='pushing up the daisies')  # 1 positional, 1 keyword
+
+但下面的函数调用都是无效的:
+
+   parrot()                     # required argument missing
+   parrot(voltage=5.0, 'dead')  # non-keyword argument after a keyword argument
+   parrot(110, voltage=220)     # duplicate value for the same argument
+   parrot(actor='John Cleese')  # unknown keyword argument
+
+在函数调用中，关键字参数必须跟随在位置参数的后面。传递的所有关键字参数
+必须与函数接受的其中一个参数匹配（比如 "actor" 不是函数 "parrot" 的有
+效参数），它们的顺序并不重要。这也包括非可选参数，（比如
+"parrot(voltage=1000)" 也是有效的）。不能对同一个参数多次赋值。下面是
+一个因为此限制而失败的例子:
+
+   >>> def function(a):
+   ...     pass
+   ...
+   >>> function(0, a=0)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: function() got multiple values for keyword argument 'a'
+
+当存在一个形式为 "**name" 的最后一个形参时，它会接收一个字典 (参见 映
+射类型 --- dict)，其中包含除了与已有形参相对应的关键字参数以外的所有关
+键字参数。 这可以与一个形式为 "*name"，接收一个包含除了与已有形参列表
+以外的位置参数的 元组 的形参 (将在下一小节介绍) 组合使用 ("*name" 必须
+出现在 "**name" 之前。) 例如，如果我们这样定义一个函数:
+
+   def cheeseshop(kind, *arguments, **keywords):
+       print("-- Do you have any", kind, "?")
+       print("-- I'm sorry, we're all out of", kind)
+       for arg in arguments:
+           print(arg)
+       print("-" * 40)
+       for kw in keywords:
+           print(kw, ":", keywords[kw])
+
+它可以像这样调用:
+
+   cheeseshop("Limburger", "It's very runny, sir.",
+              "It's really very, VERY runny, sir.",
+              shopkeeper="Michael Palin",
+              client="John Cleese",
+              sketch="Cheese Shop Sketch")
+
+当然它会打印:
+
+   -- Do you have any Limburger ?
+   -- I'm sorry, we're all out of Limburger
+   It's very runny, sir.
+   It's really very, VERY runny, sir.
+   ----------------------------------------
+   shopkeeper : Michael Palin
+   client : John Cleese
+   sketch : Cheese Shop Sketch
+
+注意打印时关键字参数的顺序保证与调用函数时提供它们的顺序是相匹配的。
+
+
+4.7.3. 特殊参数
+---------------
+
+默认情况下，函数的参数传递形式可以是位置参数或是显式的关键字参数。 为
+了确保可读性和运行效率，限制允许的参数传递形式是有意义的，这样开发者只
+需查看函数定义即可确定参数项是仅按位置、按位置也按关键字，还是仅按关键
+字传递。
+
+函数的定义看起来可以像是这样：
+
+   def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+         -----------    ----------     ----------
+           |             |                  |
+           |        Positional or keyword   |
+           |                                - Keyword only
+            -- Positional only
+
+在这里 "/" 和 "*" 是可选的。 如果使用这些符号则表明可以通过何种形参将
+参数值传递给函数：仅限位置、位置或关键字，以及仅限关键字。 关键字形参
+也被称为命名形参。
+
+
+4.7.3.1. 位置或关键字参数
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+如果函数定义中未使用 "/" 和 "*"，则参数可以按位置或按关键字传递给函数
+。
+
+
+4.7.3.2. 仅限位置参数
+~~~~~~~~~~~~~~~~~~~~~
+
+在这里还可以发现更多细节，特定形参可以被标记为 *仅限位置*。 如果是 *仅
+限位置* 的形参，则其位置是重要的，并且该形参不能作为关键字传入。 仅限
+位置形参要放在 "/" (正斜杠) 之前。 这个 "/" 被用来从逻辑上分隔仅限位置
+形参和其它形参。 如果函数定义中没有 "/"，则表示没有仅限位置形参。
+
+在 "/" 之后的形参可以为 *位置或关键字* 或 *仅限关键字*。
+
+
+4.7.3.3. 仅限关键字参数
+~~~~~~~~~~~~~~~~~~~~~~~
+
+要将形参标记为 *仅限关键字*，即指明该形参必须以关键字参数的形式传入，
+应在参数列表的第一个 *仅限关键字* 形参之前放置一个 "*"。
+
+
+4.7.3.4. 函数示例
+~~~~~~~~~~~~~~~~~
+
+请考虑以下示例函数定义并特别注意 "/" 和 "*" 标记:
+
+   >>> def standard_arg(arg):
+   ...     print(arg)
+   ...
+   >>> def pos_only_arg(arg, /):
+   ...     print(arg)
+   ...
+   >>> def kwd_only_arg(*, arg):
+   ...     print(arg)
+   ...
+   >>> def combined_example(pos_only, /, standard, *, kwd_only):
+   ...     print(pos_only, standard, kwd_only)
+
+第一个函数定义 "standard_arg" 是最常见的形式，对调用方式没有任何限制，
+参数可以按位置也可以按关键字传入:
+
+   >>> standard_arg(2)
+   2
+
+   >>> standard_arg(arg=2)
+   2
+
+第二个函数 "pos_only_arg" 在函数定义中带有 "/"，限制仅使用位置形参。:
+
+   >>> pos_only_arg(1)
+   1
+
+   >>> pos_only_arg(arg=1)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: pos_only_arg() got an unexpected keyword argument 'arg'
+
+第三个函数 "kwd_only_args" 在函数定义中通过 "*" 指明仅允许关键字参数:
+
+   >>> kwd_only_arg(3)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: kwd_only_arg() takes 0 positional arguments but 1 was given
+
+   >>> kwd_only_arg(arg=3)
+   3
+
+而最后一个则在同一函数定义中使用了全部三种调用方式:
+
+   >>> combined_example(1, 2, 3)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: combined_example() takes 2 positional arguments but 3 were given
+
+   >>> combined_example(1, 2, kwd_only=3)
+   1 2 3
+
+   >>> combined_example(1, standard=2, kwd_only=3)
+   1 2 3
+
+   >>> combined_example(pos_only=1, standard=2, kwd_only=3)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: combined_example() got an unexpected keyword argument 'pos_only'
+
+最后，请考虑这个函数定义，它的位置参数 "name"  和 "**kwds" 之间由于存
+在关键字名称 "name" 而可能产生潜在冲突:
+
+   def foo(name, **kwds):
+       return 'name' in kwds
+
+任何调用都不可能让它返回 "True"，因为关键字 "'name'" 将总是绑定到第一
+个形参。 例如:
+
+   >>> foo(1, **{'name': 2})
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: foo() got multiple values for argument 'name'
+   >>>
+
+但使用 "/" (仅限位置参数) 就可能做到，因为它允许 "name" 作为位置参数，
+也允许 "'name'" 作为关键字参数的关键字名称:
+
+   def foo(name, /, **kwds):
+       return 'name' in kwds
+   >>> foo(1, **{'name': 2})
+   True
+
+换句话说，仅限位置形参的名称可以在 "**kwds" 中使用而不产生歧义。
+
+
+4.7.3.5. 概括
+~~~~~~~~~~~~~
+
+用例将确定要在函数定义中使用的参数:
+
+   def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+
+作为指导：
+
+* 如果你希望形参名称对用户来说不可用，则使用仅限位置形参。 这适用于形
+  参名称没有实际意义，以及当你希望强制规定调用时的参数顺序，或是需要同
+  时收受一些位置形参和任意关键字形参等情况。
+
+* 当形参名称有实际意义，以及显式指定形参名称可使函数定义更易理解，或者
+  当你想要防止用户过于依赖传入参数的位置时，则使用仅限关键字形参。
+
+* 对于 API 来说，使用仅限位置形参可以防止形参名称在未来被修改时造成破
+  坏性的 API 变动。
+
+
+4.7.4. 任意的参数列表
+---------------------
+
+最后，最不常用的选项是可以使用任意数量的参数调用函数。这些参数会被包含
+在一个元组里（参见 元组和序列 ）。在可变数量的参数之前，可能会出现零个
+或多个普通参数。:
+
+   def write_multiple_items(file, separator, *args):
+       file.write(separator.join(args))
+
+一般来说，这些 "可变参数" 将在形式参数列表的末尾，因为它们收集传递给函
+数的所有剩余输入参数。出现在 "*args" 参数之后的任何形式参数都是 ‘仅关
+键字参数’，也就是说它们只能作为关键字参数而不能是位置参数。:
+
+   >>> def concat(*args, sep="/"):
+   ...     return sep.join(args)
+   ...
+   >>> concat("earth", "mars", "venus")
+   'earth/mars/venus'
+   >>> concat("earth", "mars", "venus", sep=".")
+   'earth.mars.venus'
+
+
+4.7.5. 解包参数列表
+-------------------
+
+当参数已经在列表或元组中但要为需要单独位置参数的函数调用解包时，会发生
+相反的情况。例如，内置的 "range()" 函数需要单独的 *start* 和 *stop* 参
+数。如果它们不能单独使用，可以使用 "*" 操作符 来编写函数调用以便从列表
+或元组中解包参数:
+
+   >>> list(range(3, 6))            # normal call with separate arguments
+   [3, 4, 5]
+   >>> args = [3, 6]
+   >>> list(range(*args))            # call with arguments unpacked from a list
+   [3, 4, 5]
+
+同样的方式，字典可使用 "**" 操作符 来提供关键字参数:
+
+   >>> def parrot(voltage, state='a stiff', action='voom'):
+   ...     print("-- This parrot wouldn't", action, end=' ')
+   ...     print("if you put", voltage, "volts through it.", end=' ')
+   ...     print("E's", state, "!")
+   ...
+   >>> d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+   >>> parrot(**d)
+   -- This parrot wouldn't VOOM if you put four million volts through it. E's bleedin' demised !
+
+
+4.7.6. Lambda 表达式
+--------------------
+
+可以用 "lambda" 关键字来创建一个小的匿名函数。这个函数返回两个参数的和
+： "lambda a, b: a+b" 。Lambda函数可以在需要函数对象的任何地方使用。它
+们在语法上限于单个表达式。从语义上来说，它们只是正常函数定义的语法糖。
+与嵌套函数定义一样，lambda函数可以引用所包含域的变量:
+
+   >>> def make_incrementor(n):
+   ...     return lambda x: x + n
+   ...
+   >>> f = make_incrementor(42)
+   >>> f(0)
+   42
+   >>> f(1)
+   43
+
+上面的例子使用一个lambda表达式来返回一个函数。另一个用法是传递一个小函
+数作为参数:
+
+   >>> pairs = [(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four')]
+   >>> pairs.sort(key=lambda pair: pair[1])
+   >>> pairs
+   [(4, 'four'), (1, 'one'), (3, 'three'), (2, 'two')]
+
+
+4.7.7. 文档字符串
+-----------------
+
+以下是有关文档字符串的内容和格式的一些约定。
+
+第一行应该是对象目的的简要概述。为简洁起见，它不应显式声明对象的名称或
+类型，因为这些可通过其他方式获得（除非名称恰好是描述函数操作的动词）。
+这一行应以大写字母开头，以句点结尾。
+
+如果文档字符串中有更多行，则第二行应为空白，从而在视觉上将摘要与其余描
+述分开。后面几行应该是一个或多个段落，描述对象的调用约定，它的副作用等
+。
+
+Python 解析器不会从 Python 中删除多行字符串文字的缩进，因此处理文档的
+工具必须在需要时删除缩进。 这是使用以下约定完成的。 文档字符串第一行 *
+之后* 的第一个非空行确定整个文档字符串的缩进量。（我们不能使用第一行，
+因为它通常与字符串的开头引号相邻，因此它的缩进在字符串文字中不明显。）
+然后从字符串的所有行的开头剥离与该缩进 "等效" 的空格。 缩进更少的行不
+应该出现，但是如果它们出现，则应该剥离它们的所有前导空格。 应在转化制
+表符为空格后测试空格的等效性（通常转化为8个空格）。
+
+下面是一个多行文档字符串的例子:
+
+   >>> def my_function():
+   ...     """Do nothing, but document it.
+   ...
+   ...     No, really, it doesn't do anything.
+   ...     """
+   ...     pass
+   ...
+   >>> print(my_function.__doc__)
+   Do nothing, but document it.
+
+       No, really, it doesn't do anything.
+
+
+4.7.8. 函数标注
+---------------
+
+函数标注 是关于用户自定义函数中使用的类型的完全可选元数据信息（有关详
+情请参阅 **PEP 3107** 和 **PEP 484** ）。
+
+*函数标注* 以字典的形式存放在函数的 "__annotations__" 属性中，并且不会
+影响函数的任何其他部分。 形参标注的定义方式是在形参名称后加上冒号，后
+面跟一个表达式，该表达式会被求值为标注的值。 返回值标注的定义方式是加
+上一个组合符号 "->"，后面跟一个表达式，该标注位于形参列表和表示 "def"
+语句结束的冒号之间。 下面的示例有一个位置参数，一个关键字参数以及返回
+值带有相应标注:
+
+   >>> def f(ham: str, eggs: str = 'eggs') -> str:
+   ...     print("Annotations:", f.__annotations__)
+   ...     print("Arguments:", ham, eggs)
+   ...     return ham + ' and ' + eggs
+   ...
+   >>> f('spam')
+   Annotations: {'ham': <class 'str'>, 'return': <class 'str'>, 'eggs': <class 'str'>}
+   Arguments: spam eggs
+   'spam and eggs'
+
+
+4.8. 小插曲：编码风格
+=====================
+
+现在你将要写更长，更复杂的 Python 代码，是时候讨论一下 *代码风格* 了。
+大多数语言都能以不同的风格被编写（或更准确地说，被格式化）；有些比其他
+的更具有可读性。 能让其他人轻松阅读你的代码总是一个好主意，采用一种好
+的编码风格对此有很大帮助。
+
+对于Python，**PEP 8** 已经成为大多数项目所遵循的风格指南；它促进了一种
+非常易读且令人赏心悦目的编码风格。每个Python开发人员都应该在某个时候阅
+读它；以下是为你提取的最重要的几个要点：
+
+* 使用4个空格缩进，不要使用制表符。
+
+  4个空格是一个在小缩进（允许更大的嵌套深度）和大缩进（更容易阅读）的
+  一种很好的折中方案。制表符会引入混乱，最好不要使用它。
+
+* 换行，使一行不超过79个字符。
+
+  这有助于使用小型显示器的用户，并且可以在较大的显示器上并排放置多个代
+  码文件。
+
+* 使用空行分隔函数和类，以及函数内的较大的代码块。
+
+* 如果可能，把注释放到单独的一行。
+
+* 使用文档字符串。
+
+* 在运算符前后和逗号后使用空格，但不能直接在括号内使用： "a = f(1, 2)
+  + g(3, 4)"。
+
+* 以一致的规则为你的类和函数命名；按照惯例应使用 "UpperCamelCase" 来命
+  名类，而以 "lowercase_with_underscores" 来命名函数和方法。 始终应使
+  用 "self" 来命名第一个方法参数 (有关类和方法的更多信息请参阅 初探类)
+  。
+
+* 如果你的代码旨在用于国际环境，请不要使用花哨的编码。Python 默认的
+  UTF-8 或者纯 ASCII 在任何情况下都能有最好的表现。
+
+* 同样，哪怕只有很小的可能，遇到说不同语言的人阅读或维护代码，也不要在
+  标识符中使用非ASCII字符。
+
+-[ 脚注 ]-
+
+[1] 实际上，*通过对象引用调用* 会是一个更好的表述，因为如果传递的是可
+    变对象，则调用者将看到被调用者对其做出的任何更改（插入到列表中的元
+    素）。

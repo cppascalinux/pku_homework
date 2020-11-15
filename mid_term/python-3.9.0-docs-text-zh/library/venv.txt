@@ -1,0 +1,539 @@
+"venv" --- 创建虚拟环境
+***********************
+
+3.3 新版功能.
+
+**源码：** Lib/venv/
+
+======================================================================
+
+"venv" 模块支持使用自己的站点目录创建轻量级“虚拟环境”，可选择与系统站
+点目录隔离。每个虚拟环境都有自己的 Python 二进制文件（与用于创建此环境
+的二进制文件的版本相匹配），并且可以在其站点目录中拥有自己独立的已安装
+Python 软件包集。
+
+有关 Python 虚拟环境的更多信息，请参阅 **PEP 405** 。
+
+参见: Python 打包用户指南：创建和使用虚拟环境
+
+
+创建虚拟环境
+============
+
+通过执行 "venv" 指令来创建一个 虚拟环境:
+
+   python3 -m venv /path/to/new/virtual/environment
+
+运行此命令将创建目标目录（父目录若不存在也将创建），并放置一个
+"pyvenv.cfg" 文件在其中，文件中有一个 "home" 键，它的值指向运行此命令
+的 Python 安装（目标目录的常用名称是 ".venv"）。它还会创建一个 "bin"
+子目录（在 Windows 上是 "Scripts"），其中包含 Python 二进制文件的副本
+或符号链接（视创建环境时使用的平台或参数而定）。它还会创建一个（初始为
+空的） "lib/pythonX.Y/site-packages" 子目录（在 Windows 上是 "Lib
+\site-packages"）。如果指定了一个现有的目录，这个目录就将被重新使用。
+
+3.6 版后已移除: "pyvenv" 是 Python 3.3 和 3.4 中创建虚拟环境的推荐工具
+，不过 在 Python 3.6 中已弃用。
+
+在 3.5 版更改: 现在推荐使用 "venv" 来创建虚拟环境。
+
+在 Windows 上，调用 "venv" 命令如下:
+
+   c:\>c:\Python35\python -m venv c:\path\to\myenv
+
+或者，如果已经为 Python 安装 配置好 "PATH" 和 "PATHEXT" 变量:
+
+   c:\>python -m venv c:\path\to\myenv
+
+本命令如果以 "-h" 参数运行，将显示可用的选项:
+
+   usage: venv [-h] [--system-site-packages] [--symlinks | --copies] [--clear]
+               [--upgrade] [--without-pip] [--prompt PROMPT] [--upgrade-deps]
+               ENV_DIR [ENV_DIR ...]
+
+   Creates virtual Python environments in one or more target directories.
+
+   positional arguments:
+     ENV_DIR               A directory to create the environment in.
+
+   optional arguments:
+     -h, --help            show this help message and exit
+     --system-site-packages
+                           Give the virtual environment access to the system
+                           site-packages dir.
+     --symlinks            Try to use symlinks rather than copies, when symlinks
+                           are not the default for the platform.
+     --copies              Try to use copies rather than symlinks, even when
+                           symlinks are the default for the platform.
+     --clear               Delete the contents of the environment directory if it
+                           already exists, before environment creation.
+     --upgrade             Upgrade the environment directory to use this version
+                           of Python, assuming Python has been upgraded in-place.
+     --without-pip         Skips installing or upgrading pip in the virtual
+                           environment (pip is bootstrapped by default)
+     --prompt PROMPT       Provides an alternative prompt prefix for this
+                           environment.
+     --upgrade-deps        Upgrade core dependencies: pip setuptools to the
+                           latest version in PyPI
+
+   Once an environment has been created, you may wish to activate it, e.g. by
+   sourcing an activate script in its bin directory.
+
+在 3.9 版更改: 添加 "--upgrade-deps" 选项，用于将 pip + setuptools 升
+级到 PyPI 上的最新版本
+
+在 3.4 版更改: 默认安装 pip，并添加 "--without-pip" 和 "--copies" 选项
+
+在 3.4 版更改: 在早期版本中，如果目标目录已存在，将引发错误，除非使用
+了 "--clear" 或 "--upgrade" 选项。
+
+注解:
+
+  虽然 Windows 支持符号链接，但不推荐使用它们。特别注意，在文件资源管
+  理器中双击 "python.exe" 将立即解析符号链接，并忽略虚拟环境。
+
+注解:
+
+  在 Microsoft Windows 上，为了启用 "Activate.ps1" 脚本，可能需要修改
+  用户的执行策略。可以运行以下 PowerShell 命令来执行此操作：PS C:>
+  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+  参阅 About Execution Policies 以获取更多信息。
+
+生成的 "pyvenv.cfg" 文件还包括 "include-system-site-packages" 键，如果
+运行 "venv" 时带有 "--system-site-packages" 选项，则键值为 "true"，否
+则为 "false"。
+
+除非采用 "--without-pip" 选项，否则将会调用 "ensurepip" 将 "pip" 引导
+到虚拟环境中。
+
+可以向 "venv" 传入多个路径，此时将根据给定的选项，在所给的每个路径上创
+建相同的虚拟环境。
+
+创建虚拟环境后，可以使用虚拟环境的二进制目录中的脚本来“激活”该环境。不
+同平台调用的脚本是不同的（须将 *<venv>* 替换为包含虚拟环境的目录路径）
+：
+
++---------------+-------------------+-------------------------------------------+
+| 平台          | Shell             | 用于激活虚拟环境的命令                    |
+|===============|===================|===========================================|
+| POSIX         | bash/zsh          | $ source <venv>/bin/activate              |
++---------------+-------------------+-------------------------------------------+
+|               | fish              | $ source <venv>/bin/activate.fish         |
++---------------+-------------------+-------------------------------------------+
+|               | csh/tcsh          | $ source <venv>/bin/activate.csh          |
++---------------+-------------------+-------------------------------------------+
+|               | PowerShell Core   | $ <venv>/bin/Activate.ps1                 |
++---------------+-------------------+-------------------------------------------+
+| Windows       | cmd.exe           | C:\> <venv>\Scripts\activate.bat          |
++---------------+-------------------+-------------------------------------------+
+|               | PowerShell        | PS C:\> <venv>\Scripts\Activate.ps1       |
++---------------+-------------------+-------------------------------------------+
+
+激活环境不是 *必须* 的，激活只是将虚拟环境的二进制目录添加到搜索路径中
+，这样 "python" 命令将调用虚拟环境的 Python 解释器，可以运行其中已安装
+的脚本，而不必输入其完整路径。但是，安装在虚拟环境中的所有脚本都应在不
+激活的情况下可运行，并自动与虚拟环境的 Python 一起运行。
+
+在 shell 中输入 "deactivate" 可以退出虚拟环境。具体机制取决于不同平台
+，并且是内部实现（通常使用脚本或 shell 函数）。
+
+3.4 新版功能: "fish" 和 "csh" 激活脚本。
+
+3.8 新版功能: 在 POSIX 上安装 PowerShell 激活脚本，以支持 PowerShell
+Core。
+
+注解:
+
+  虚拟环境是一个 Python 环境，安装到其中的 Python 解释器、库和脚本与其
+  他虚拟环境中的内容是隔离的，且（默认）与“系统级” Python（操作系统的
+  一部分）中安装的库是隔离的。虚拟环境是一个目录树，其中包含 Python 可
+  执行文件和其他文件，其他文件指示了这是一个是虚拟环境。常用安装工具如
+  setuptools 和 pip 可以在虚拟环境中按预期工作。换句话说，当虚拟环境被
+  激活，它们就会将 Python 软件包安装到虚拟环境中，无需明确指示。当虚拟
+  环境被激活（即虚拟环境的 Python 解释器正在运行），属性 "sys.prefix"
+  和 "sys.exec_prefix" 指向的是虚拟环境的基础目录，而
+  "sys.base_prefix" 和 "sys.base_exec_prefix" 指向非虚拟环境的 Python
+  安装，即曾用于创建虚拟环境的那个 Python 安装。如果虚拟环境没有被激活
+  ，则 "sys.prefix" 与 "sys.base_prefix" 相同，且 "sys.exec_prefix" 与
+  "sys.base_exec_prefix" 相同（它们均指向非虚拟环境的 Python 安装）。
+  当虚拟环境被激活，所有 "distutils" 配置文件中更改安装路径的选项都会
+  被忽略，以防止无意中将项目安装在虚拟环境之外。在命令行 shell 中工作
+  时，用户可以运行虚拟环境可执行文件目录中的 "activate" 脚本来激活虚拟
+  环境（调用该文件的确切文件名和命令取决于 shell），这会将虚拟环境的可
+  执行文件目录添加到当前 shell 的 "PATH" 环境变量。在其他情况下，无需
+  激活虚拟环境。安装到虚拟环境中的脚本有 "shebang" 行，指向虚拟环境的
+  Python 解释器。这意味着无论 "PATH" 的值如何，脚本都将与该解释器一起
+  运行。在 Windows 上，如果已安装 Python Launcher for Windows，则支持
+  处理 "shebang" 行（此功能在 Python 3.3 中添加，详情请参阅 **PEP
+  397**）。这样，在 Windows 资源管理器中双击已安装的脚本，应该会使用正
+  确的解释器运行该脚本，而在 "PATH" 中无需指向其虚拟环境。
+
+
+API
+===
+
+上述的高级方法使用了一个简单的 API，该 API 提供了一种机制，第三方虚拟
+环境创建者可以根据其需求自定义环境创建过程，该 API 为 "EnvBuilder" 类
+。
+
+class venv.EnvBuilder(system_site_packages=False, clear=False, symlinks=False, upgrade=False, with_pip=False, prompt=None, upgrade_deps=False)
+
+   "EnvBuilder" 类在实例化时接受以下关键字参数：
+
+   * "system_site_packages" -- 一个布尔值，要求系统 Python 的 site-
+     packages 对环境可用（默认为 "False"）。
+
+   * "clear" -- 一个布尔值，如果为 true，则在创建环境前将删除目标目录
+     的现有内容。
+
+   * "symlinks" -- 一个布尔值，指示是否尝试符号链接 Python 二进制文件
+     ，而不是进行复制。
+
+   * "upgrade" -- 一个布尔值，如果为 true，则将使用当前运行的 Python
+     去升级一个现有的环境，这主要在原位置的 Python 更新后使用（默认为
+     "False"）。
+
+   * "with_pip" -- 一个布尔值，如果为 true，则确保在虚拟环境中已安装
+     pip。这使用的是带有 "--default-pip" 选项的 "ensurepip"。
+
+   * "prompt" -- 激活虚拟环境后显示的提示符（默认为 "None"，表示使用环
+     境所在的目录名称）。如果使用了 ""."" 这一特殊字符串，则使用当前目
+     录的基本名称作为提示符。
+
+   * "upgrade_deps" -- 将基本 venv 模块更新为 PyPI 上的最新版本。
+
+   在 3.4 版更改: 添加 "with_pip" 参数
+
+   3.6 新版功能: 添加 "prompt" 参数
+
+   3.9 新版功能: 添加 "upgrade_deps" 参数
+
+   第三方虚拟环境工具的创建者可以自由地将此处提供的 "EnvBuilder" 类作
+   为基类。
+
+   返回的 env-builder 是一个对象，包含一个 "create" 方法：
+
+   create(env_dir)
+
+      指定要建立虚拟环境的目标目录（绝对路径或相对于当前路径）来创建虚
+      拟环境。"create" 方法将在指定目录中创建环境，或者引发对应的异常
+      。
+
+      "EnvBuilder" 类的 "create" 方法定义了可用于定制子类的钩子:
+
+         def create(self, env_dir):
+             """
+             Create a virtualized Python environment in a directory.
+             env_dir is the target directory to create an environment in.
+             """
+             env_dir = os.path.abspath(env_dir)
+             context = self.ensure_directories(env_dir)
+             self.create_configuration(context)
+             self.setup_python(context)
+             self.setup_scripts(context)
+             self.post_setup(context)
+
+      每个方法 "ensure_directories()", "create_configuration()",
+      "setup_python()", "setup_scripts()" 和 "post_setup()" 都可以被重
+      写。
+
+   ensure_directories(env_dir)
+
+      创建环境目录和所有必需的目录，并返回一个上下文对象。该对象只是一
+      个容器，保存属性（如路径），供其他方法使用。允许目录已经存在，如
+      果指定了 "clear" 或 "upgrade" 就允许在现有环境目录上进行操作。
+
+   create_configuration(context)
+
+      在环境中创建 "pyvenv.cfg" 配置文件。
+
+   setup_python(context)
+
+      在环境中创建 Python 可执行文件的拷贝或符号链接。在 POSIX 系统上
+      ，如果给定了可执行文件 "python3.x"，将创建指向该可执行文件的
+      "python" 和 "python3" 符号链接，除非相同名称的文件已经存在。
+
+   setup_scripts(context)
+
+      将适用于平台的激活脚本安装到虚拟环境中。
+
+   upgrade_dependencies(context)
+
+      升级环境中 venv 依赖的核心软件包（当前为 "pip" 和 "setuptools"）
+      。通过在环境中使用 "pip" 可执行文件来完成。
+
+      3.9 新版功能.
+
+   post_setup(context)
+
+      占位方法，可以在第三方实现中重写，用于在虚拟环境中预安装软件包，
+      或是其他创建后要执行的步骤。
+
+   在 3.7.2 版更改: Windows 现在为 "python[w].exe" 使用重定向脚本，而
+   不是复制实际的二进制文件。仅在 3.7.2 中，除非运行的是源码树中的构建
+   ，否则 "setup_python()" 不会执行任何操作。
+
+   在 3.7.3 版更改: Windows 将重定向脚本复制为 "setup_python()" 的一部
+   分而非 "setup_scripts()"。在 3.7.2 中不是这种情况。使用符号链接时，
+   将链接至原始可执行文件。
+
+   此外，"EnvBuilder" 提供了如下实用方法，可以从子类的
+   "setup_scripts()" 或 "post_setup()" 调用，用来将自定义脚本安装到虚
+   拟环境中。
+
+   install_scripts(context, path)
+
+      *path* 是一个目录的路径，该目录应包含子目录 "common", "posix",
+      "nt"，每个子目录存有发往对应环境中 bin 目录的脚本。在下列占位符
+      替换完毕后，将复制 "common" 的内容和与 "os.name" 对应的子目录：
+
+      * "__VENV_DIR__" 会被替换为环境目录的绝对路径。
+
+      * "__VENV_NAME__" 会被替换为环境名称（环境目录的最后一个字段）。
+
+      * "__VENV_PROMPT__" 会被替换为提示符（用括号括起来的环境名称紧跟
+        着一个空格）。
+
+      * "__VENV_BIN_NAME__" 会被替换为 bin 目录的名称（ "bin" 或
+        "Scripts" ）。
+
+      * "__VENV_PYTHON__" 会被替换为环境可执行文件的绝对路径。
+
+      允许目录已存在（用于升级现有环境时）。
+
+有一个方便实用的模块级别的函数:
+
+venv.create(env_dir, system_site_packages=False, clear=False, symlinks=False, with_pip=False, prompt=None)
+
+   通过关键词参数来创建一个 "EnvBuilder"，并且使用 *env_dir* 参数来调
+   用它的 "create()" 方法。
+
+   3.3 新版功能.
+
+   在 3.4 版更改: 添加 "with_pip" 参数
+
+   在 3.6 版更改: 添加 "prompt" 参数
+
+
+一个扩展 "EnvBuilder" 的例子
+============================
+
+下面的脚本展示了如何通过实现一个子类来扩展 "EnvBuilder"。这个子类会安
+装 setuptotols 和 pip 的到被创建的虚拟环境中。
+
+   import os
+   import os.path
+   from subprocess import Popen, PIPE
+   import sys
+   from threading import Thread
+   from urllib.parse import urlparse
+   from urllib.request import urlretrieve
+   import venv
+
+   class ExtendedEnvBuilder(venv.EnvBuilder):
+       """
+       This builder installs setuptools and pip so that you can pip or
+       easy_install other packages into the created virtual environment.
+
+       :param nodist: If true, setuptools and pip are not installed into the
+                      created virtual environment.
+       :param nopip: If true, pip is not installed into the created
+                     virtual environment.
+       :param progress: If setuptools or pip are installed, the progress of the
+                        installation can be monitored by passing a progress
+                        callable. If specified, it is called with two
+                        arguments: a string indicating some progress, and a
+                        context indicating where the string is coming from.
+                        The context argument can have one of three values:
+                        'main', indicating that it is called from virtualize()
+                        itself, and 'stdout' and 'stderr', which are obtained
+                        by reading lines from the output streams of a subprocess
+                        which is used to install the app.
+
+                        If a callable is not specified, default progress
+                        information is output to sys.stderr.
+       """
+
+       def __init__(self, *args, **kwargs):
+           self.nodist = kwargs.pop('nodist', False)
+           self.nopip = kwargs.pop('nopip', False)
+           self.progress = kwargs.pop('progress', None)
+           self.verbose = kwargs.pop('verbose', False)
+           super().__init__(*args, **kwargs)
+
+       def post_setup(self, context):
+           """
+           Set up any packages which need to be pre-installed into the
+           virtual environment being created.
+
+           :param context: The information for the virtual environment
+                           creation request being processed.
+           """
+           os.environ['VIRTUAL_ENV'] = context.env_dir
+           if not self.nodist:
+               self.install_setuptools(context)
+           # Can't install pip without setuptools
+           if not self.nopip and not self.nodist:
+               self.install_pip(context)
+
+       def reader(self, stream, context):
+           """
+           Read lines from a subprocess' output stream and either pass to a progress
+           callable (if specified) or write progress information to sys.stderr.
+           """
+           progress = self.progress
+           while True:
+               s = stream.readline()
+               if not s:
+                   break
+               if progress is not None:
+                   progress(s, context)
+               else:
+                   if not self.verbose:
+                       sys.stderr.write('.')
+                   else:
+                       sys.stderr.write(s.decode('utf-8'))
+                   sys.stderr.flush()
+           stream.close()
+
+       def install_script(self, context, name, url):
+           _, _, path, _, _, _ = urlparse(url)
+           fn = os.path.split(path)[-1]
+           binpath = context.bin_path
+           distpath = os.path.join(binpath, fn)
+           # Download script into the virtual environment's binaries folder
+           urlretrieve(url, distpath)
+           progress = self.progress
+           if self.verbose:
+               term = '\n'
+           else:
+               term = ''
+           if progress is not None:
+               progress('Installing %s ...%s' % (name, term), 'main')
+           else:
+               sys.stderr.write('Installing %s ...%s' % (name, term))
+               sys.stderr.flush()
+           # Install in the virtual environment
+           args = [context.env_exe, fn]
+           p = Popen(args, stdout=PIPE, stderr=PIPE, cwd=binpath)
+           t1 = Thread(target=self.reader, args=(p.stdout, 'stdout'))
+           t1.start()
+           t2 = Thread(target=self.reader, args=(p.stderr, 'stderr'))
+           t2.start()
+           p.wait()
+           t1.join()
+           t2.join()
+           if progress is not None:
+               progress('done.', 'main')
+           else:
+               sys.stderr.write('done.\n')
+           # Clean up - no longer needed
+           os.unlink(distpath)
+
+       def install_setuptools(self, context):
+           """
+           Install setuptools in the virtual environment.
+
+           :param context: The information for the virtual environment
+                           creation request being processed.
+           """
+           url = 'https://bitbucket.org/pypa/setuptools/downloads/ez_setup.py'
+           self.install_script(context, 'setuptools', url)
+           # clear up the setuptools archive which gets downloaded
+           pred = lambda o: o.startswith('setuptools-') and o.endswith('.tar.gz')
+           files = filter(pred, os.listdir(context.bin_path))
+           for f in files:
+               f = os.path.join(context.bin_path, f)
+               os.unlink(f)
+
+       def install_pip(self, context):
+           """
+           Install pip in the virtual environment.
+
+           :param context: The information for the virtual environment
+                           creation request being processed.
+           """
+           url = 'https://raw.github.com/pypa/pip/master/contrib/get-pip.py'
+           self.install_script(context, 'pip', url)
+
+   def main(args=None):
+       compatible = True
+       if sys.version_info < (3, 3):
+           compatible = False
+       elif not hasattr(sys, 'base_prefix'):
+           compatible = False
+       if not compatible:
+           raise ValueError('This script is only for use with '
+                            'Python 3.3 or later')
+       else:
+           import argparse
+
+           parser = argparse.ArgumentParser(prog=__name__,
+                                            description='Creates virtual Python '
+                                                        'environments in one or '
+                                                        'more target '
+                                                        'directories.')
+           parser.add_argument('dirs', metavar='ENV_DIR', nargs='+',
+                               help='A directory in which to create the
+                                    'virtual environment.')
+           parser.add_argument('--no-setuptools', default=False,
+                               action='store_true', dest='nodist',
+                               help="Don't install setuptools or pip in the "
+                                    "virtual environment.")
+           parser.add_argument('--no-pip', default=False,
+                               action='store_true', dest='nopip',
+                               help="Don't install pip in the virtual "
+                                    "environment.")
+           parser.add_argument('--system-site-packages', default=False,
+                               action='store_true', dest='system_site',
+                               help='Give the virtual environment access to the '
+                                    'system site-packages dir.')
+           if os.name == 'nt':
+               use_symlinks = False
+           else:
+               use_symlinks = True
+           parser.add_argument('--symlinks', default=use_symlinks,
+                               action='store_true', dest='symlinks',
+                               help='Try to use symlinks rather than copies, '
+                                    'when symlinks are not the default for '
+                                    'the platform.')
+           parser.add_argument('--clear', default=False, action='store_true',
+                               dest='clear', help='Delete the contents of the '
+                                                  'virtual environment '
+                                                  'directory if it already '
+                                                  'exists, before virtual '
+                                                  'environment creation.')
+           parser.add_argument('--upgrade', default=False, action='store_true',
+                               dest='upgrade', help='Upgrade the virtual '
+                                                    'environment directory to '
+                                                    'use this version of '
+                                                    'Python, assuming Python '
+                                                    'has been upgraded '
+                                                    'in-place.')
+           parser.add_argument('--verbose', default=False, action='store_true',
+                               dest='verbose', help='Display the output '
+                                                  'from the scripts which '
+                                                  'install setuptools and pip.')
+           options = parser.parse_args(args)
+           if options.upgrade and options.clear:
+               raise ValueError('you cannot supply --upgrade and --clear together.')
+           builder = ExtendedEnvBuilder(system_site_packages=options.system_site,
+                                          clear=options.clear,
+                                          symlinks=options.symlinks,
+                                          upgrade=options.upgrade,
+                                          nodist=options.nodist,
+                                          nopip=options.nopip,
+                                          verbose=options.verbose)
+           for d in options.dirs:
+               builder.create(d)
+
+   if __name__ == '__main__':
+       rc = 1
+       try:
+           main()
+           rc = 0
+       except Exception as e:
+           print('Error: %s' % e, file=sys.stderr)
+       sys.exit(rc)
+
+这个脚本同样可以 在线下载。

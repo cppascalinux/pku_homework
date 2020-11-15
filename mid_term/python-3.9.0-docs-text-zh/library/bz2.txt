@@ -1,0 +1,282 @@
+"bz2" --- 对 **bzip2** 压缩算法的支持
+*************************************
+
+**源代码：** Lib/bz2.py
+
+======================================================================
+
+此模块提供了使用 bzip2 压缩算法压缩和解压数据的一套完整的接口。
+
+"bz2" 模块包含：
+
+* 用于读写压缩文件的 "open()" 函数和 "BZ2File" 类。
+
+* 用于增量压缩和解压的 "BZ2Compressor" 和 "BZ2Decompressor" 类。
+
+* 用于一次性压缩和解压的 "compress()" 和 "decompress()" 函数。
+
+此模块中的所有类都能安全地从多个线程访问。
+
+
+文件压缩和解压
+==============
+
+bz2.open(filename, mode='rb', compresslevel=9, encoding=None, errors=None, newline=None)
+
+   以二进制或文本模式打开 bzip2 压缩文件，返回一个 *file object*。
+
+   和 "BZ2File" 的构造函数类似，*filename* 参数可以是一个实际的文件名
+   （"str" 或 "bytes" 对象），或是已有的可供读取或写入的文件对象。
+
+   *mode* 参数可设为二进制模式的 "'r'"、"'rb'"、"'w'"、"'wb'"、"'x'"、
+   "'xb'"、"'a'" 或 "'ab'"，或者文本模式的 "'rt'"、"'wt'"、"'xt'" 或
+   "'at'"。默认是 "'rb'"。
+
+   *compresslevel* 参数是 1 到 9 的整数，和 "BZ2File" 的构造函数一样。
+
+   对于二进制模式，这个函数等价于 "BZ2File" 构造器: "BZ2File(filename,
+   mode, compresslevel=compresslevel)"。 在这种情况下，不可提供
+   *encoding*, *errors* 和 *newline* 参数。
+
+   对于文本模式，将会创建一个 "BZ2File" 对象，并将它包装到一个
+   "io.TextIOWrapper" 实例中，此实例带有指定的编码格式、错误处理行为和
+   行结束符。
+
+   3.3 新版功能.
+
+   在 3.4 版更改: 添加了 "'x'" (单独创建) 模式。
+
+   在 3.6 版更改: 接受一个 *类路径对象*。
+
+class bz2.BZ2File(filename, mode='r', *, compresslevel=9)
+
+   用二进制模式打开 bzip2 压缩文件。
+
+   如果 *filename* 是一个 "str" 或 "bytes" 对象，则打开名称对应的文件
+   目录。 否则的话，*filename* 应当是一个 *file object*，它将被用来读
+   取或写入压缩数据。
+
+   *mode* 参数可以是表示读取的 "'r'" (默认值)，表示覆写的 "'w'"，表示
+   单独创建的 "'x'"，或表示添加的 "'a'"。 这些模式还可分别以 "'rb'",
+   "'wb'", "'xb'" 和 "'ab'" 的等价形式给出。
+
+   如果 *filename* 是一个文件对象（而不是实际的文件名），则 "'w'" 模式
+   并不会截断文件，而是会等价于 "'a'"。
+
+   如果 *mode* 为 "'w'" 或 "'a'"，则 *compresslevel* 可以是 "1" 到 "9"
+   之间的整数，用于指定压缩等级: "1" 产生最低压缩率，而 "9" (默认值)
+   产生最高压缩率。
+
+   如果 *mode* 为 "'r'"，则输入文件可以为多个压缩流的拼接。
+
+   "BZ2File" 提供了 "io.BufferedIOBase" 所指定的所有成员，但
+   "detach()" 和 "truncate()" 除外。 并支持迭代和 "with" 语句。
+
+   "BZ2File" 还提供了以下方法：
+
+   peek([n])
+
+      返回缓冲的数据而不前移文件位置。 至少将返回一个字节的数据（除非
+      为 EOF）。 实际返回的字节数不确定。
+
+      注解:
+
+        虽然调用 "peek()" 不会改变 "BZ2File" 的文件位置，但它可能改变
+        下层文件对象的位置（举例来说如果 "BZ2File" 是通过传入一个文件
+        对象作为 *filename* 的话）。
+
+      3.3 新版功能.
+
+   在 3.1 版更改: 添加了对 "with" 语句的支持。
+
+   在 3.3 版更改: 添加了 "fileno()", "readable()", "seekable()",
+   "writable()", "read1()" 和 "readinto()" 方法。
+
+   在 3.3 版更改: 添加了对 *filename* 使用 *file object* 而非实际文件
+   名的支持。
+
+   在 3.3 版更改: 添加了 "'a'" (append) 模式，以及对读取多数据流文件的
+   支持。
+
+   在 3.4 版更改: 添加了 "'x'" (单独创建) 模式。
+
+   在 3.5 版更改: "read()" 方法现在接受 "None" 作为参数。
+
+   在 3.6 版更改: 接受一个 *类路径对象*。
+
+   在 3.9 版更改: *buffering* 形参已被移除。 它自 Python 3.0 起即被忽
+   略并弃用。 请传入一个打开文件对象来控制文件的打开方式。
+   *compresslevel* 形参成为仅限关键字参数。
+
+
+增量压缩和解压
+==============
+
+class bz2.BZ2Compressor(compresslevel=9)
+
+   创建一个新的压缩器对象。 此对象可被用来执行增量数据压缩。 对于一次
+   性压缩，请改用 "compress()" 函数。
+
+   如果给定 *compresslevel*，它必须为 "1" 至 "9" 之间的整数。 默认值为
+   "9"。
+
+   compress(data)
+
+      向压缩器对象提供数据。 在可能的情况下返回一段已压缩数据，否则返
+      回空字节串。
+
+      当你已结束向压缩器提供数据时，请调用 "flush()" 方法来完成压缩进
+      程。
+
+   flush()
+
+      结束压缩进程，返回内部缓冲中剩余的压缩完成的数据。
+
+      调用此方法之后压缩器对象将不可再被使用。
+
+class bz2.BZ2Decompressor
+
+   创建一个新的解压缩器对象。 此对象可被用来执行增量数据解压缩。 对于
+   一次性解压缩，请改用 "decompress()" 函数。
+
+   注解:
+
+     这个类不会透明地处理包含多个已压缩数据流的输入，这不同于
+     "decompress()" 和 "BZ2File"。 如果你需要通过 "BZ2Decompressor" 来
+     解压缩多个数据流输入，你必须为每个数据流都使用新的解压缩器。
+
+   decompress(data, max_length=-1)
+
+      解压缩 *data* (一个 *bytes-like object*)，返回字节串形式的解压缩
+      数据。 某些 *data* 可以在内部被缓冲，以便用于后续的
+      "decompress()" 调用。 返回的数据应当与之前任何 "decompress()" 调
+      用的输出进行拼接。
+
+      如果 *max_length* 为非负数，将返回至多 *max_length* 个字节的解压
+      缩数据。 如果达到此限制并且可以产生后续输出，则 "needs_input" 属
+      性将被设为 "False"。 在这种情况下，下一次 "decompress()" 调用提
+      供的 *data* 可以为 "b''" 以获取更多的输出。
+
+      如果所有输入数据都已被解压缩并返回（或是因为它少于 *max_length*
+      个字节，或是因为 *max_length* 为负数），则 "needs_input" 属性将
+      被设为 "True"。
+
+      在到达数据流末尾之后再尝试解压缩数据会引发 *EOFError*。 在数据流
+      末尾之后获取的任何数据都会被忽略并存储至 "unused_data" 属性。
+
+      在 3.5 版更改: 添加了 *max_length* 形参。
+
+   eof
+
+      若达到了数据流的末尾标记则为 "True"。
+
+      3.3 新版功能.
+
+   unused_data
+
+      在压缩数据流的末尾之后获取的数据。
+
+      如果在达到数据流末尾之前访问此属性，其值将为 "b''"。
+
+   needs_input
+
+      如果在要求新的未解压缩输入之前 "decompress()" 方法可以提供更多的
+      解压缩数据则为 "False"。
+
+      3.5 新版功能.
+
+
+一次性压缩或解压缩
+==================
+
+bz2.compress(data, compresslevel=9)
+
+   压缩 *data*，此参数为一个 *字节类对象*。
+
+   如果给定 *compresslevel*，它必须为 "1" 至 "9" 之间的整数。 默认值为
+   "9"。
+
+   对于增量压缩，请改用 "BZ2Compressor"。
+
+bz2.decompress(data)
+
+   解压缩 *data*，此参数为一个 *字节类对象*。
+
+   如果 *data* 是多个压缩数据流的拼接，则解压缩所有数据流。
+
+   对于增量解压缩，请改用 "BZ2Decompressor"。
+
+   在 3.3 版更改: 支持了多数据流的输入。
+
+
+用法示例
+========
+
+以下是 "bz2" 模块典型用法的一些示例。
+
+使用 "compress()" 和 "decompress()" 来显示往复式的压缩：
+
+>>> import bz2
+
+>>> data = b"""\
+... Donec rhoncus quis sapien sit amet molestie. Fusce scelerisque vel augue
+... nec ullamcorper. Nam rutrum pretium placerat. Aliquam vel tristique lorem,
+... sit amet cursus ante. In interdum laoreet mi, sit amet ultrices purus
+... pulvinar a. Nam gravida euismod magna, non varius justo tincidunt feugiat.
+... Aliquam pharetra lacus non risus vehicula rutrum. Maecenas aliquam leo
+... felis. Pellentesque semper nunc sit amet nibh ullamcorper, ac elementum
+... dolor luctus. Curabitur lacinia mi ornare consectetur vestibulum."""
+
+>>> c = bz2.compress(data)
+>>> len(data) / len(c)  # Data compression ratio
+1.513595166163142
+
+>>> d = bz2.decompress(c)
+>>> data == d  # Check equality to original object after round-trip
+True
+
+使用 "BZ2Compressor" 进行增量压缩：
+
+>>> import bz2
+
+>>> def gen_data(chunks=10, chunksize=1000):
+...     """Yield incremental blocks of chunksize bytes."""
+...     for _ in range(chunks):
+...         yield b"z" * chunksize
+...
+>>> comp = bz2.BZ2Compressor()
+>>> out = b""
+>>> for chunk in gen_data():
+...     # Provide data to the compressor object
+...     out = out + comp.compress(chunk)
+...
+>>> # Finish the compression process.  Call this once you have
+>>> # finished providing data to the compressor.
+>>> out = out + comp.flush()
+
+上面的示例使用了十分“非随机”的数据流（即 *b"z"* 块数据流）。 随机数据
+的压缩率通常很差，而有序、重复的数据通常会产生很高的压缩率。
+
+用二进制模式写入和读取 bzip2 压缩文件：
+
+>>> import bz2
+
+>>> data = b"""\
+... Donec rhoncus quis sapien sit amet molestie. Fusce scelerisque vel augue
+... nec ullamcorper. Nam rutrum pretium placerat. Aliquam vel tristique lorem,
+... sit amet cursus ante. In interdum laoreet mi, sit amet ultrices purus
+... pulvinar a. Nam gravida euismod magna, non varius justo tincidunt feugiat.
+... Aliquam pharetra lacus non risus vehicula rutrum. Maecenas aliquam leo
+... felis. Pellentesque semper nunc sit amet nibh ullamcorper, ac elementum
+... dolor luctus. Curabitur lacinia mi ornare consectetur vestibulum."""
+
+>>> with bz2.open("myfile.bz2", "wb") as f:
+...     # Write compressed data to file
+...     unused = f.write(data)
+
+>>> with bz2.open("myfile.bz2", "rb") as f:
+...     # Decompress data from file
+...     content = f.read()
+
+>>> content == data  # Check equality to original object after round-trip
+True

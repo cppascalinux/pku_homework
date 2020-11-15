@@ -1,0 +1,266 @@
+整数型对象
+**********
+
+所有整数都使用以任意大小的长整数对象表示。
+
+在出错时，大多数 "PyLong_As*" API返回 "(返回类型)-1" ，无法与一般的数
+字区分开来。请使用 "PyErr_Occurred()" 来区分。
+
+PyLongObject
+
+   表示 Python 整数对象的 "PyObject" 子类型。
+
+PyTypeObject PyLong_Type
+
+   这个 "PyTypeObject" 的实例表示 Python 的整数类型。与Python层中的
+   "int" 相同。
+
+int PyLong_Check(PyObject *p)
+
+   如果参数是 "PyLongObject" 或 "PyLongObject" 的子类型，返回 true 。
+
+int PyLong_CheckExact(PyObject *p)
+
+   如果参数是 "PyLongObject" 但不是 "PyLongObject" 的子类型，返回 true
+   。
+
+PyObject* PyLong_FromLong(long v)
+    *Return value: New reference.*
+
+   由 *v* 返回一个新的 "PyLongObject" 对象，失败时返回 "NULL" 。
+
+   当前的实现维护了一个整数对象数组，包含 "-5" 和 "256" 之间的所有整数
+   对象。当你在这个范围内创建一个 int 时，实际上得到的是一个对已有对象
+   的引用。
+
+PyObject* PyLong_FromUnsignedLong(unsigned long v)
+    *Return value: New reference.*
+
+   由 C "unsigned long" 类型返回一个新的 "PyLongObject" 对象，失败时返
+   回 "NULL" 。
+
+PyObject* PyLong_FromSsize_t(Py_ssize_t v)
+    *Return value: New reference.*
+
+   从 C "Py_ssize_t" 类型返回一个新的 "PyLongObject" 对象，如果失败则
+   返回 "NULL" 。
+
+PyObject* PyLong_FromSize_t(size_t v)
+    *Return value: New reference.*
+
+   从 C "size_t" 返回一个新的 "PyLongObject" 对象，如果失败则返回
+   "NULL" 。
+
+PyObject* PyLong_FromLongLong(long long v)
+    *Return value: New reference.*
+
+   从 C "long long" 返回一个新的 "PyLongObject" 对象，失败时返回
+   "NULL" 。
+
+PyObject* PyLong_FromUnsignedLongLong(unsigned long long v)
+    *Return value: New reference.*
+
+   从 C "unsigned long long" 返回一个新的 "PyLongObject" 对象，失败时
+   返回 "NULL" 。
+
+PyObject* PyLong_FromDouble(double v)
+    *Return value: New reference.*
+
+   从 *v* 的整数部分返回一个新的 "PyLongObject" 对象，如果失败则返回
+   "NULL" 。
+
+PyObject* PyLong_FromString(const char *str, char **pend, int base)
+    *Return value: New reference.*
+
+   根据 *str* 字符串值返回一个新的 "PyLongObject" ，*base* 指定基数。
+   如果 *pend* 不是 "NULL" ， */*pend* 将指向 *str* 中表示这个数字部分
+   的后面的第一个字符。如果 *base* 是 "0" ， *str* 将使用 整型数字面值
+   定义来解释；在这种情况下，一个非零的十进制数中的前导零会引发一个
+   "ValueError" 。如果 *base* 不是 "0" ，它必须在 "2" 和 "36" 之间，包
+   括2和36。基数说明符后以及数字之间的前导空格、单下划线将被忽略。如果
+   没有数字，将引发 "ValueError"。
+
+PyObject* PyLong_FromUnicode(Py_UNICODE *u, Py_ssize_t length, int base)
+    *Return value: New reference.*
+
+   将 Unicode 数字序列转换为 Python 整数值。
+
+   Deprecated since version 3.3, will be removed in version 3.10: Part
+   of the old-style "Py_UNICODE" API; please migrate to using
+   "PyLong_FromUnicodeObject()".
+
+PyObject* PyLong_FromUnicodeObject(PyObject *u, int base)
+    *Return value: New reference.*
+
+   将字符串 *u* 中的 Unicode 数字序列转换为 Python 整数值。
+
+   3.3 新版功能.
+
+PyObject* PyLong_FromVoidPtr(void *p)
+    *Return value: New reference.*
+
+   从指针 *p* 创建一个 Python 整数。可以使用 "PyLong_AsVoidPtr()" 返回
+   的指针值。
+
+long PyLong_AsLong(PyObject *obj)
+
+   返回 *obj* 的 C "long" 表达方式。 如果 *obj* 不是 "PyLongObject" 的
+   实例，先调用它的 "__index__()" 或 "__int__()" 方法(如果有)将其转换
+   为 "PyLongObject" 。
+
+   如果 *obj* 的值溢出了 "long" 的范围，会引发 "OverflowError"。
+
+   发生错误时返回 "-1" 。使用 "PyErr_Occurred()" 来消歧义。
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+long PyLong_AsLongAndOverflow(PyObject *obj, int *overflow)
+
+   返回 *obj* 的 C "long" 表达方式。 如果 *obj* 不是 "PyLongObject" 的
+   实例，先调用它的 "__index__()" 或 "__int__()" 方法(如果有)将其转换
+   为 "PyLongObject" 。
+
+   If the value of *obj* is greater than "LONG_MAX" or less than
+   "LONG_MIN", set **overflow* to "1" or "-1", respectively, and
+   return "-1"; otherwise, set **overflow* to "0".  If any other
+   exception occurs set **overflow* to "0" and return "-1" as usual.
+
+   发生错误时返回 "-1" 。使用 "PyErr_Occurred()" 来消歧义。
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+long long PyLong_AsLongLong(PyObject *obj)
+
+   Return a C "long long" representation of *obj*.  If *obj* is not an
+   instance of "PyLongObject", first call its "__index__()" or
+   "__int__()" method (if present) to convert it to a "PyLongObject".
+
+   Raise "OverflowError" if the value of *obj* is out of range for a
+   "long long".
+
+   发生错误时返回 "-1" 。使用 "PyErr_Occurred()" 来消歧义。
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+long long PyLong_AsLongLongAndOverflow(PyObject *obj, int *overflow)
+
+   Return a C "long long" representation of *obj*.  If *obj* is not an
+   instance of "PyLongObject", first call its "__index__()" or
+   "__int__()" method (if present) to convert it to a "PyLongObject".
+
+   If the value of *obj* is greater than "LLONG_MAX" or less than
+   "LLONG_MIN", set **overflow* to "1" or "-1", respectively, and
+   return "-1"; otherwise, set **overflow* to "0".  If any other
+   exception occurs set **overflow* to "0" and return "-1" as usual.
+
+   发生错误时返回 "-1" 。使用 "PyErr_Occurred()" 来消歧义。
+
+   3.2 新版功能.
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+Py_ssize_t PyLong_AsSsize_t(PyObject *pylong)
+
+   Return a C "Py_ssize_t" representation of *pylong*.  *pylong* must
+   be an instance of "PyLongObject".
+
+   Raise "OverflowError" if the value of *pylong* is out of range for
+   a "Py_ssize_t".
+
+   发生错误时返回 "-1" 。使用 "PyErr_Occurred()" 来消歧义。
+
+unsigned long PyLong_AsUnsignedLong(PyObject *pylong)
+
+   Return a C "unsigned long" representation of *pylong*.  *pylong*
+   must be an instance of "PyLongObject".
+
+   Raise "OverflowError" if the value of *pylong* is out of range for
+   a "unsigned long".
+
+   Returns "(unsigned long)-1" on error. Use "PyErr_Occurred()" to
+   disambiguate.
+
+size_t PyLong_AsSize_t(PyObject *pylong)
+
+   Return a C "size_t" representation of *pylong*.  *pylong* must be
+   an instance of "PyLongObject".
+
+   Raise "OverflowError" if the value of *pylong* is out of range for
+   a "size_t".
+
+   Returns "(size_t)-1" on error. Use "PyErr_Occurred()" to
+   disambiguate.
+
+unsigned long long PyLong_AsUnsignedLongLong(PyObject *pylong)
+
+   Return a C "unsigned long long" representation of *pylong*.
+   *pylong* must be an instance of "PyLongObject".
+
+   Raise "OverflowError" if the value of *pylong* is out of range for
+   an "unsigned long long".
+
+   Returns "(unsigned long long)-1" on error. Use "PyErr_Occurred()"
+   to disambiguate.
+
+   在 3.1 版更改: A negative *pylong* now raises "OverflowError", not
+   "TypeError".
+
+unsigned long PyLong_AsUnsignedLongMask(PyObject *obj)
+
+   Return a C "unsigned long" representation of *obj*.  If *obj* is
+   not an instance of "PyLongObject", first call its "__index__()" or
+   "__int__()" method (if present) to convert it to a "PyLongObject".
+
+   If the value of *obj* is out of range for an "unsigned long",
+   return the reduction of that value modulo "ULONG_MAX + 1".
+
+   Returns "(unsigned long)-1" on error.  Use "PyErr_Occurred()" to
+   disambiguate.
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+unsigned long long PyLong_AsUnsignedLongLongMask(PyObject *obj)
+
+   Return a C "unsigned long long" representation of *obj*.  If *obj*
+   is not an instance of "PyLongObject", first call its "__index__()"
+   or "__int__()" method (if present) to convert it to a
+   "PyLongObject".
+
+   If the value of *obj* is out of range for an "unsigned long long",
+   return the reduction of that value modulo "ULLONG_MAX + 1".
+
+   Returns "(unsigned long long)-1" on error.  Use "PyErr_Occurred()"
+   to disambiguate.
+
+   在 3.8 版更改: 如果可用将使用 "__index__()"。
+
+   3.8 版后已移除: "__int__()" 已被弃用。
+
+double PyLong_AsDouble(PyObject *pylong)
+
+   Return a C "double" representation of *pylong*.  *pylong* must be
+   an instance of "PyLongObject".
+
+   Raise "OverflowError" if the value of *pylong* is out of range for
+   a "double".
+
+   Returns "-1.0" on error.  Use "PyErr_Occurred()" to disambiguate.
+
+void* PyLong_AsVoidPtr(PyObject *pylong)
+
+   Convert a Python integer *pylong* to a C "void" pointer. If
+   *pylong* cannot be converted, an "OverflowError" will be raised.
+   This is only assured to produce a usable "void" pointer for values
+   created with "PyLong_FromVoidPtr()".
+
+   Returns "NULL" on error.  Use "PyErr_Occurred()" to disambiguate.

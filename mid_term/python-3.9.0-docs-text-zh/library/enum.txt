@@ -1,0 +1,1139 @@
+"enum" --- 对枚举的支持
+***********************
+
+3.4 新版功能.
+
+**源代码：** Lib/enum.py
+
+======================================================================
+
+枚举是一组符号名称（枚举成员）的集合，枚举成员应该是唯一的、不可变的。
+在枚举中，可以对成员进行恒等比较，并且枚举本身是可迭代的。
+
+注解:
+
+  枚举成员名称的大小写因为枚举是被用来代表常量的所以我们建议枚举成员名
+  称应使用大写形式，并将在我们的示例中使用此种风格。
+
+
+模块内容
+========
+
+此模块定义了四个枚举类，它们可被用来定义名称和值的不重复集合: "Enum",
+"IntEnum", "Flag" 和 "IntFlag"。 此外还定义了一个装饰器 "unique()" 和
+一个辅助类 "auto"。
+
+class enum.Enum
+
+   此基类用于创建枚举常量。 请参阅 Functional API 小节了解另一种替代性
+   的构建语法。
+
+class enum.IntEnum
+
+   此基类用于创建属于 "int" 的子类的枚举常量。
+
+class enum.IntFlag
+
+   此基类用于创建可使用按位运算符进行组合而不会丢失其 "IntFlag" 成员资
+   格的枚举常量。 "IntFlag" 成员同样也是 "int" 的子类。
+
+class enum.Flag
+
+   此基类用于创建枚举常量 可使用按位运算符进行组合而不会丢失其 "Flag"
+   成员资格的枚举常量。
+
+enum.unique()
+
+      此 Enum 类装饰器可确保只将一个名称绑定到任意一个值。
+
+class enum.auto
+
+   实例会被替换为一个可作为 Enum 成员的适当的值。 默认情况下，初始值从
+   1 开始。
+
+3.6 新版功能: "Flag", "IntFlag", "auto"
+
+
+创建一个 Enum
+=============
+
+枚举是使用 "class" 语法来创建的，这使得它们易于读写。 另一种替代创建方
+法的描述见 Functional API。 要定义一个枚举，可以对 "Enum" 进行如下的子
+类化:
+
+   >>> from enum import Enum
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     GREEN = 2
+   ...     BLUE = 3
+   ...
+
+注解:
+
+  Enum 的成员值成员值可以为任意类型: "int", "str" 等等。 如果具体的值
+  不重要，你可以使用 "auto" 实例，将为你选择适当的值。 但如果你混用
+  "auto" 与其他值则需要小心谨慎。
+
+注解:
+
+  命名法
+
+  * 类 "Color" 是一个 *枚举* (或称 *enum*)
+
+  * 属性 "Color.RED", "Color.GREEN" 等等是 *枚举成员* (或称 *enum 成员
+    *) 并且被用作常量。
+
+  * 枚举成员具有 *名称* 和 *值* ("Color.RED" 的名称为 "RED"，
+    "Color.BLUE" 的值为 "3" 等等。)
+
+注解:
+
+  虽然我们使用 "class" 语法来创建 Enum，但 Enum 并不是普通的 Python 类
+  。 更多细节请参阅 How are Enums different?。
+
+枚举成员具有适合人类阅读的表示形式:
+
+   >>> print(Color.RED)
+   Color.RED
+
+...而它们的 "repr" 包含更多信息:
+
+   >>> print(repr(Color.RED))
+   <Color.RED: 1>
+
+一个枚举成员的 *type* 就是它所从属的枚举:
+
+   >>> type(Color.RED)
+   <enum 'Color'>
+   >>> isinstance(Color.GREEN, Color)
+   True
+   >>>
+
+Enum 的成员还有一个包含其条目名称的特征属性:
+
+   >>> print(Color.RED.name)
+   RED
+
+枚举支持按照定义顺序进行迭代:
+
+   >>> class Shake(Enum):
+   ...     VANILLA = 7
+   ...     CHOCOLATE = 4
+   ...     COOKIES = 9
+   ...     MINT = 3
+   ...
+   >>> for shake in Shake:
+   ...     print(shake)
+   ...
+   Shake.VANILLA
+   Shake.CHOCOLATE
+   Shake.COOKIES
+   Shake.MINT
+
+枚举成员是可哈希的，因此它们可在字典和集合中可用:
+
+   >>> apples = {}
+   >>> apples[Color.RED] = 'red delicious'
+   >>> apples[Color.GREEN] = 'granny smith'
+   >>> apples == {Color.RED: 'red delicious', Color.GREEN: 'granny smith'}
+   True
+
+
+对枚举成员及其属性的程序化访问
+==============================
+
+有时对枚举中的成员进行程序化访问是很有用的（例如在某些场合不能使用
+"Color.RED" 因为在编程时并不知道要指定的确切颜色）。  "Enum" 允许这样
+的访问:
+
+   >>> Color(1)
+   <Color.RED: 1>
+   >>> Color(3)
+   <Color.BLUE: 3>
+
+如果你希望通过 *name* 来访问枚举成员，可使用条目访问:
+
+   >>> Color['RED']
+   <Color.RED: 1>
+   >>> Color['GREEN']
+   <Color.GREEN: 2>
+
+如果你有一个枚举成员并且需要它的 "name" 或 "value":
+
+   >>> member = Color.RED
+   >>> member.name
+   'RED'
+   >>> member.value
+   1
+
+
+复制枚举成员和值
+================
+
+不允许有同名的枚举成员:
+
+   >>> class Shape(Enum):
+   ...     SQUARE = 2
+   ...     SQUARE = 3
+   ...
+   Traceback (most recent call last):
+   ...
+   TypeError: Attempted to reuse key: 'SQUARE'
+
+但是，允许两个枚举成员有相同的值。 假定两个成员 A 和 B 有相同的值（且
+A 先被定义），则 B 就是 A 的一个别名。 按值查找 A 和 B 的值将返回 A。
+按名称查找 B 也将返回 A:
+
+   >>> class Shape(Enum):
+   ...     SQUARE = 2
+   ...     DIAMOND = 1
+   ...     CIRCLE = 3
+   ...     ALIAS_FOR_SQUARE = 2
+   ...
+   >>> Shape.SQUARE
+   <Shape.SQUARE: 2>
+   >>> Shape.ALIAS_FOR_SQUARE
+   <Shape.SQUARE: 2>
+   >>> Shape(2)
+   <Shape.SQUARE: 2>
+
+注解:
+
+  试图创建具有与某个已定义的属性（另一个成员或方法等）相同名称的成员或
+  者试图创建具有相同名称的属性也是不允许的。
+
+
+确保唯一的枚举值
+================
+
+默认情况下，枚举允许有多个名称作为某个相同值的别名。 如果不想要这样的
+行为，可以使用以下装饰器来确保每个值在枚举中只被使用一次:
+
+@enum.unique
+
+专用于枚举的 "class" 装饰器。 它会搜索一个枚举的 "__members__" 并收集
+所找到的任何别名；只要找到任何别名就会引发 "ValueError" 并附带相关细节
+信息:
+
+   >>> from enum import Enum, unique
+   >>> @unique
+   ... class Mistake(Enum):
+   ...     ONE = 1
+   ...     TWO = 2
+   ...     THREE = 3
+   ...     FOUR = 3
+   ...
+   Traceback (most recent call last):
+   ...
+   ValueError: duplicate values found in <enum 'Mistake'>: FOUR -> THREE
+
+
+使用自动设定的值
+================
+
+如果确切的值不重要，你可以使用 "auto":
+
+   >>> from enum import Enum, auto
+   >>> class Color(Enum):
+   ...     RED = auto()
+   ...     BLUE = auto()
+   ...     GREEN = auto()
+   ...
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+值将由 "_generate_next_value_()" 来选择，该函数可以被重载:
+
+   >>> class AutoName(Enum):
+   ...     def _generate_next_value_(name, start, count, last_values):
+   ...         return name
+   ...
+   >>> class Ordinal(AutoName):
+   ...     NORTH = auto()
+   ...     SOUTH = auto()
+   ...     EAST = auto()
+   ...     WEST = auto()
+   ...
+   >>> list(Ordinal)
+   [<Ordinal.NORTH: 'NORTH'>, <Ordinal.SOUTH: 'SOUTH'>, <Ordinal.EAST: 'EAST'>, <Ordinal.WEST: 'WEST'>]
+
+注解:
+
+  默认 "_generate_next_value_()" 方法的目标是提供所给出的最后一个
+  "int" 所在序列的下一个 "int"，但这种行为方式属于实现细节并且可能发生
+  改变。
+
+注解:
+
+  "_generate_next_value_()" 方法定义必须在任何其他成员之前。
+
+
+迭代
+====
+
+对枚举成员的迭代不会给出别名:
+
+   >>> list(Shape)
+   [<Shape.SQUARE: 2>, <Shape.DIAMOND: 1>, <Shape.CIRCLE: 3>]
+
+特殊属性 "__members__" 是一个从名称到成员的只读有序映射。 它包含枚举中
+定义的所有名称，包括别名:
+
+   >>> for name, member in Shape.__members__.items():
+   ...     name, member
+   ...
+   ('SQUARE', <Shape.SQUARE: 2>)
+   ('DIAMOND', <Shape.DIAMOND: 1>)
+   ('CIRCLE', <Shape.CIRCLE: 3>)
+   ('ALIAS_FOR_SQUARE', <Shape.SQUARE: 2>)
+
+"__members__" 属性可被用于对枚举成员进行详细的程序化访问。 例如，找出
+所有别名:
+
+   >>> [name for name, member in Shape.__members__.items() if member.name != name]
+   ['ALIAS_FOR_SQUARE']
+
+
+比较
+====
+
+枚举成员是按标识号进行比较的:
+
+   >>> Color.RED is Color.RED
+   True
+   >>> Color.RED is Color.BLUE
+   False
+   >>> Color.RED is not Color.BLUE
+   True
+
+枚举值之间的排序比较 *不被* 支持。 Enum 成员不属于整数 (另请参阅下文的
+IntEnum):
+
+   >>> Color.RED < Color.BLUE
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: '<' not supported between instances of 'Color' and 'Color'
+
+相等比较的定义如下:
+
+   >>> Color.BLUE == Color.RED
+   False
+   >>> Color.BLUE != Color.RED
+   True
+   >>> Color.BLUE == Color.BLUE
+   True
+
+与非枚举值的比较将总是不相等（同样地，"IntEnum" 被显式设计成不同的行为
+，参见下文）:
+
+   >>> Color.BLUE == 2
+   False
+
+
+允许的枚举成员和属性
+====================
+
+以上示例使用整数作为枚举值。 使用整数相当简洁方便（并由 Functional API
+默认提供），但并不强制要求使用。 在大部分用例中，开发者都关心枚举的实
+际值是什么。 但如果值 *确实* 重要，则枚举可以使用任意的值。
+
+枚举属于 Python 的类，并可具有普通方法和特殊方法。 如果我们有这样一个
+枚举:
+
+   >>> class Mood(Enum):
+   ...     FUNKY = 1
+   ...     HAPPY = 3
+   ...
+   ...     def describe(self):
+   ...         # self is the member here
+   ...         return self.name, self.value
+   ...
+   ...     def __str__(self):
+   ...         return 'my custom str! {0}'.format(self.value)
+   ...
+   ...     @classmethod
+   ...     def favorite_mood(cls):
+   ...         # cls here is the enumeration
+   ...         return cls.HAPPY
+   ...
+
+那么:
+
+   >>> Mood.favorite_mood()
+   <Mood.HAPPY: 3>
+   >>> Mood.HAPPY.describe()
+   ('HAPPY', 3)
+   >>> str(Mood.FUNKY)
+   'my custom str! 1'
+
+对于允许内容的规则如下：以单下划线开头和结尾的名称是由枚举保留而不可使
+用；在枚举中定义的所有其他属性将成为该枚举的成员，例外项则包括特殊方法
+成员 ("__str__()", "__add__()" 等)，描述符 (方法也属于描述符) 以及在
+"_ignore_" 中列出的变量名。
+
+注意：如果你的枚举定义了 "__new__()" 和/或 "__init__()" 那么给予枚举成
+员的任何值都会被传入这些方法。 请参阅示例 Planet。
+
+
+受限的 Enum 子类化
+==================
+
+一个新的 "Enum" 类必须基于一个 Enum 类，至多一个实体数据类型以及出于实
+际需要的任意多个基于 "object" 的 mixin 类。 这些基类的顺序为:
+
+   class EnumName([mix-in, ...,] [data-type,] base-enum):
+       pass
+
+另外，仅当一个枚举未定义任何成员时才允许子类化该枚举。 因此禁止这样的
+写法:
+
+   >>> class MoreColor(Color):
+   ...     PINK = 17
+   ...
+   Traceback (most recent call last):
+   ...
+   TypeError: Cannot extend enumerations
+
+但是允许这样的写法:
+
+   >>> class Foo(Enum):
+   ...     def some_behavior(self):
+   ...         pass
+   ...
+   >>> class Bar(Foo):
+   ...     HAPPY = 1
+   ...     SAD = 2
+   ...
+
+允许子类化定义了成员的枚举将会导致违反类型与实例的某些重要的不可变规则
+。 在另一方面，允许在一组枚举之间共享某些通用行为也是有意义的。 （请参
+阅示例 OrderedEnum 。）
+
+
+封存
+====
+
+枚举可以被封存与解封:
+
+   >>> from test.test_enum import Fruit
+   >>> from pickle import dumps, loads
+   >>> Fruit.TOMATO is loads(dumps(Fruit.TOMATO))
+   True
+
+封存的常规限制同样适用：可封存枚举必须在模块的最高层级中定义，因为解封
+操作要求它们可以从该模块导入。
+
+注解:
+
+  使用 pickle 协议版本 4 可以方便地封存嵌套在其他类中的枚举。
+
+通过在枚举类中定义 "__reduce_ex__()" 可以对 Enum 成员的封存/解封方式进
+行修改。
+
+
+功能性 API
+==========
+
+"Enum" 类属于可调用对象，它提供了以下功能性 API:
+
+   >>> Animal = Enum('Animal', 'ANT BEE CAT DOG')
+   >>> Animal
+   <enum 'Animal'>
+   >>> Animal.ANT
+   <Animal.ANT: 1>
+   >>> Animal.ANT.value
+   1
+   >>> list(Animal)
+   [<Animal.ANT: 1>, <Animal.BEE: 2>, <Animal.CAT: 3>, <Animal.DOG: 4>]
+
+该 API 的主义类似于 "namedtuple"。 调用 "Enum" 的第一个参数是枚举的名
+称。
+
+第二个参数是枚举成员名称的 *来源*。 它可以是一个用空格分隔的名称字符串
+、名称序列、键/值对 2 元组的序列，或者名称到值的映射（例如字典）。 最
+后两种选项使得可以为枚举任意赋值；其他选项会自动以从 1 开始递增的整数
+赋值（使用 "start" 形参可指定不同的起始值）。 返回值是一个派生自
+"Enum" 的新类。 换句话说，以上对 "Animal" 的赋值就等价于:
+
+   >>> class Animal(Enum):
+   ...     ANT = 1
+   ...     BEE = 2
+   ...     CAT = 3
+   ...     DOG = 4
+   ...
+
+默认以 "1" 而以 "0" 作为起始数值的原因在于 "0" 的布尔值为 "False"，但
+所有枚举成员都应被求值为 "True"。
+
+对使用功能性 API 创建的枚举执行封存可能会很麻烦，因为要使用帧堆栈的实
+现细节来尝试并找出枚举是在哪个模块中创建的（例如当你使用了另一个模块中
+的工具函数就可能失败，在 IronPython 或 Jython 上也可能无效）。 解决办
+法是显式地指定模块名称，如下所示:
+
+   >>> Animal = Enum('Animal', 'ANT BEE CAT DOG', module=__name__)
+
+警告:
+
+  如果未提供 "module"，且 Enum 无法确定是哪个模块，新的 Enum 成员将不
+  可被解封；为了让错误尽量靠近源头，封存将被禁用。
+
+新的 pickle 协议版本 4 在某些情况下同样依赖于 "__qualname__" 被设为特
+定位置以便 pickle 能够找到相应的类。 例如，类是否存在于全局作用域的
+SomeData 类中:
+
+   >>> Animal = Enum('Animal', 'ANT BEE CAT DOG', qualname='SomeData.Animal')
+
+完整的签名为:
+
+   Enum(value='NewEnumName', names=<...>, *, module='...', qualname='...', type=<mixed-in class>, start=1)
+
+值:
+   将被新 Enum 类将记录为其名称的数据。
+
+名称:
+   Enum 的成员。 这可以是一个空格或逗号分隔的字符串 (起始值将为 1，除
+   非另行指定):
+
+      'RED GREEN BLUE' | 'RED,GREEN,BLUE' | 'RED, GREEN, BLUE'
+
+   或是一个名称的迭代器:
+
+      ['RED', 'GREEN', 'BLUE']
+
+   或是一个 (名称, 值) 对的迭代器:
+
+      [('CYAN', 4), ('MAGENTA', 5), ('YELLOW', 6)]
+
+   或是一个映射:
+
+      {'CHARTREUSE': 7, 'SEA_GREEN': 11, 'ROSEMARY': 42}
+
+模块:
+   新 Enum 类所在模块的名称。
+
+qualname:
+   新 Enum 类在模块中的具体位置。
+
+类型:
+   要加入新 Enum 类的类型。
+
+start:
+   当只传入名称时要使用的起始数值。
+
+在 3.5 版更改: 增加了 *start* 形参。
+
+
+派生的枚举
+==========
+
+
+IntEnum
+-------
+
+所提供的第一个变种 "Enum" 同时也是 "int" 的一个子类。 "IntEnum" 的成员
+可与整数进行比较；通过扩展，不同类型的整数枚举也可以相互进行比较:
+
+   >>> from enum import IntEnum
+   >>> class Shape(IntEnum):
+   ...     CIRCLE = 1
+   ...     SQUARE = 2
+   ...
+   >>> class Request(IntEnum):
+   ...     POST = 1
+   ...     GET = 2
+   ...
+   >>> Shape == 1
+   False
+   >>> Shape.CIRCLE == 1
+   True
+   >>> Shape.CIRCLE == Request.POST
+   True
+
+不过，它们仍然不可与标准 "Enum" 枚举进行比较:
+
+   >>> class Shape(IntEnum):
+   ...     CIRCLE = 1
+   ...     SQUARE = 2
+   ...
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     GREEN = 2
+   ...
+   >>> Shape.CIRCLE == Color.RED
+   False
+
+"IntEnum" 值在其他方面的行为都如你预期的一样类似于整数:
+
+   >>> int(Shape.CIRCLE)
+   1
+   >>> ['a', 'b', 'c'][Shape.CIRCLE]
+   'b'
+   >>> [i for i in range(Shape.SQUARE)]
+   [0, 1]
+
+
+IntFlag
+-------
+
+所提供的下一个 "Enum" 的变种 "IntFlag" 同样是基于 "int" 的，不同之处在
+于 "IntFlag" 成员可使用按位运算符 (&, |, ^, ~) 进行组合且结果仍然为
+"IntFlag" 成员。 如果，正如名称所表明的，"IntFlag" 成员同时也是 "int"
+的子类，并能在任何使用 "int" 的场合被使用。 "IntFlag" 成员进行除按位运
+算以外的其他运算都将导致失去 "IntFlag" 成员资格。
+
+3.6 新版功能.
+
+示例 "IntFlag" 类:
+
+   >>> from enum import IntFlag
+   >>> class Perm(IntFlag):
+   ...     R = 4
+   ...     W = 2
+   ...     X = 1
+   ...
+   >>> Perm.R | Perm.W
+   <Perm.R|W: 6>
+   >>> Perm.R + Perm.W
+   6
+   >>> RW = Perm.R | Perm.W
+   >>> Perm.R in RW
+   True
+
+对于组合同样可以进行命名:
+
+   >>> class Perm(IntFlag):
+   ...     R = 4
+   ...     W = 2
+   ...     X = 1
+   ...     RWX = 7
+   >>> Perm.RWX
+   <Perm.RWX: 7>
+   >>> ~Perm.RWX
+   <Perm.-8: -8>
+
+"IntFlag" 和 "Enum" 的另一个重要区别在于如果没有设置任何旗标（值为 0）
+，则其布尔值为 "False":
+
+   >>> Perm.R & Perm.X
+   <Perm.0: 0>
+   >>> bool(Perm.R & Perm.X)
+   False
+
+由于 "IntFlag" 成员同时也是 "int" 的子类，因此它们可以相互组合:
+
+   >>> Perm.X | 8
+   <Perm.8|X: 9>
+
+
+Flag
+----
+
+最后一个变种是 "Flag"。 与 "IntFlag" 类似，"Flag" 成员可使用按位运算符
+(&, |, ^, ~) 进行组合，与 "IntFlag" 不同的是它们不可与任何其它 "Flag"
+枚举或 "int" 进行组合或比较。 虽然可以直接指定值，但推荐使用 "auto" 作
+为值以便让 "Flag" 选择适当的值。
+
+3.6 新版功能.
+
+与 "IntFlag" 类似，如果 "Flag" 成员的某种组合导致没有设置任何旗标，则
+其布尔值为 "False":
+
+   >>> from enum import Flag, auto
+   >>> class Color(Flag):
+   ...     RED = auto()
+   ...     BLUE = auto()
+   ...     GREEN = auto()
+   ...
+   >>> Color.RED & Color.GREEN
+   <Color.0: 0>
+   >>> bool(Color.RED & Color.GREEN)
+   False
+
+单个旗标的值应当为二的乘方 (1, 2, 4, 8, ...)，旗标的组合则无此限制:
+
+   >>> class Color(Flag):
+   ...     RED = auto()
+   ...     BLUE = auto()
+   ...     GREEN = auto()
+   ...     WHITE = RED | BLUE | GREEN
+   ...
+   >>> Color.WHITE
+   <Color.WHITE: 7>
+
+对 "no flags set" 条件指定一个名称并不会改变其布尔值:
+
+   >>> class Color(Flag):
+   ...     BLACK = 0
+   ...     RED = auto()
+   ...     BLUE = auto()
+   ...     GREEN = auto()
+   ...
+   >>> Color.BLACK
+   <Color.BLACK: 0>
+   >>> bool(Color.BLACK)
+   False
+
+注解:
+
+  对于大多数新代码，强烈推荐使用 "Enum" 和 "Flag"，因为 "IntEnum" 和
+  "IntFlag" 打破了枚举的某些语义约定（例如可以同整数进行比较，并因而导
+  致此行为被传递给其他无关的枚举）。 "IntEnum" 和 "IntFlag" 的使用应当
+  仅限于 "Enum" 和 "Flag" 无法使用的场合；例如，当使用枚举替代整数常量
+  时，或是与其他系统进行交互操作时。
+
+
+其他事项
+--------
+
+虽然 "IntEnum" 是 "enum" 模块的一部分，但要独立实现也应该相当容易:
+
+   class IntEnum(int, Enum):
+       pass
+
+这里演示了如何定义类似的派生枚举；例如一个混合了 "str" 而不是 "int" 的
+"StrEnum"。
+
+几条规则：
+
+1. 当子类化 "Enum" 时，在基类序列中的混合类型必须出现于 "Enum" 本身之
+   前，如以上 "IntEnum" 的例子所示。
+
+2. 虽然 "Enum" 可以拥有任意类型的成员，不过一旦你混合了附加类型，则所
+   有成员必须为相应类型的值，如在上面的例子中即为 "int"。 此限制不适用
+   于仅添加方法而未指定另一数据类型的混合类。
+
+3. 当混合了另一数据类型时，"value" 属性会 *不同于* 枚举成员自身，但它
+   们仍保持等价且比较结果也相等。
+
+4. %-style formatting:  *%s* 和 *%r* 会分别调用 "Enum" 类的
+   "__str__()" 和 "__repr__()"；其他代码 (例如表示 IntEnum 的 *%i* 或
+   *%h*) 会将枚举成员视为对应的混合类型。
+
+5. 格式化字符串字面值, "str.format()" 和 "format()" 将使用混合类型的
+   "__format__()" 除非在子类中重载了 "__str__()" 或 "__format__()"，在
+   这种情况下将使用被重载的方法或 "Enum" 的方法。 请使用 !s 和 !r 格式
+   代码来强制使用 "Enum" 类的 "__str__()" 和 "__repr__()" 方法。
+
+
+何时使用 "__new__()" 与 "__init__()"
+====================================
+
+当你想要定制 "Enum" 成员的实际值时必须使用 "__new__()"。 任何其他修改
+可以用 "__new__()" 也可以用 "__init__()"，应优先使用 "__init__()"。
+
+举例来说，如果你要向构造器传入多个条目，但只希望将其中一个作为值:
+
+   >>> class Coordinate(bytes, Enum):
+   ...     """
+   ...     Coordinate with binary codes that can be indexed by the int code.
+   ...     """
+   ...     def __new__(cls, value, label, unit):
+   ...         obj = bytes.__new__(cls, [value])
+   ...         obj._value_ = value
+   ...         obj.label = label
+   ...         obj.unit = unit
+   ...         return obj
+   ...     PX = (0, 'P.X', 'km')
+   ...     PY = (1, 'P.Y', 'km')
+   ...     VX = (2, 'V.X', 'km/s')
+   ...     VY = (3, 'V.Y', 'km/s')
+   ...
+
+   >>> print(Coordinate['PY'])
+   Coordinate.PY
+
+   >>> print(Coordinate(3))
+   Coordinate.VY
+
+
+有趣的示例
+==========
+
+虽然 "Enum", "IntEnum", "IntFlag" 和 "Flag" 预期可覆盖大多数应用场景，
+但它们无法覆盖全部。 这里有一些不同类型枚举的方案，它们可以被直接使用
+，或是作为自行创建的参考示例。
+
+
+省略值
+------
+
+在许多应用场景中人们都不关心枚举的实际值是什么。 有几个方式可以定义此
+种类型的简单枚举：
+
+* 使用 "auto" 的实例作为值
+
+* 使用 "object" 的实例作为值
+
+* 使用描述性的字符串作为值
+
+* 使用元组作为值并用自定义的 "__new__()" 以一个 "int" 值来替代该元组
+
+使用以上任何一种方法均可向用户指明值并不重要，并且使人能够添加、移除或
+重排序成员而不必改变其余成员的数值。
+
+无论你选择何种方法，你都应当提供一个 "repr()" 并且它也需要隐藏（不重要
+的）值:
+
+   >>> class NoValue(Enum):
+   ...     def __repr__(self):
+   ...         return '<%s.%s>' % (self.__class__.__name__, self.name)
+   ...
+
+
+使用 "auto"
+~~~~~~~~~~~
+
+使用 "auto" 的形式如下:
+
+   >>> class Color(NoValue):
+   ...     RED = auto()
+   ...     BLUE = auto()
+   ...     GREEN = auto()
+   ...
+   >>> Color.GREEN
+   <Color.GREEN>
+
+
+使用 "object"
+~~~~~~~~~~~~~
+
+使用 "object" 的形式如下:
+
+   >>> class Color(NoValue):
+   ...     RED = object()
+   ...     GREEN = object()
+   ...     BLUE = object()
+   ...
+   >>> Color.GREEN
+   <Color.GREEN>
+
+
+使用描述性字符串
+~~~~~~~~~~~~~~~~
+
+使用字符串作为值的形式如下:
+
+   >>> class Color(NoValue):
+   ...     RED = 'stop'
+   ...     GREEN = 'go'
+   ...     BLUE = 'too fast!'
+   ...
+   >>> Color.GREEN
+   <Color.GREEN>
+   >>> Color.GREEN.value
+   'go'
+
+
+使用自定义的 "__new__()"
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+使用自动编号 "__new__()" 的形式如下:
+
+   >>> class AutoNumber(NoValue):
+   ...     def __new__(cls):
+   ...         value = len(cls.__members__) + 1
+   ...         obj = object.__new__(cls)
+   ...         obj._value_ = value
+   ...         return obj
+   ...
+   >>> class Color(AutoNumber):
+   ...     RED = ()
+   ...     GREEN = ()
+   ...     BLUE = ()
+   ...
+   >>> Color.GREEN
+   <Color.GREEN>
+   >>> Color.GREEN.value
+   2
+
+要实现更通用的 "AutoNumber"，请添加 "*args" 到签名中:
+
+   >>> class AutoNumber(NoValue):
+   ...     def __new__(cls, *args):      # this is the only change from above
+   ...         value = len(cls.__members__) + 1
+   ...         obj = object.__new__(cls)
+   ...         obj._value_ = value
+   ...         return obj
+   ...
+
+这样当你从 "AutoNumber" 继承时你将可以编写你自己的 "__init__" 来处理任
+何附加参数:
+
+   >>> class Swatch(AutoNumber):
+   ...     def __init__(self, pantone='unknown'):
+   ...         self.pantone = pantone
+   ...     AUBURN = '3497'
+   ...     SEA_GREEN = '1246'
+   ...     BLEACHED_CORAL = () # New color, no Pantone code yet!
+   ...
+   >>> Swatch.SEA_GREEN
+   <Swatch.SEA_GREEN: 2>
+   >>> Swatch.SEA_GREEN.pantone
+   '1246'
+   >>> Swatch.BLEACHED_CORAL.pantone
+   'unknown'
+
+注解:
+
+  如果定义了 "__new__()" 则它会在创建 Enum 成员期间被使用；随后它将被
+  Enum 的 "__new__()" 所替换，该方法会在类创建后被用来查找现有成员。
+
+
+OrderedEnum
+-----------
+
+一个有序枚举，它不是基于 "IntEnum"，因此保持了正常的 "Enum" 不变特性（
+例如不可与其他枚举进行比较）:
+
+   >>> class OrderedEnum(Enum):
+   ...     def __ge__(self, other):
+   ...         if self.__class__ is other.__class__:
+   ...             return self.value >= other.value
+   ...         return NotImplemented
+   ...     def __gt__(self, other):
+   ...         if self.__class__ is other.__class__:
+   ...             return self.value > other.value
+   ...         return NotImplemented
+   ...     def __le__(self, other):
+   ...         if self.__class__ is other.__class__:
+   ...             return self.value <= other.value
+   ...         return NotImplemented
+   ...     def __lt__(self, other):
+   ...         if self.__class__ is other.__class__:
+   ...             return self.value < other.value
+   ...         return NotImplemented
+   ...
+   >>> class Grade(OrderedEnum):
+   ...     A = 5
+   ...     B = 4
+   ...     C = 3
+   ...     D = 2
+   ...     F = 1
+   ...
+   >>> Grade.C < Grade.A
+   True
+
+
+DuplicateFreeEnum
+-----------------
+
+如果发现重复的成员名称则将引发错误而不是创建别名:
+
+   >>> class DuplicateFreeEnum(Enum):
+   ...     def __init__(self, *args):
+   ...         cls = self.__class__
+   ...         if any(self.value == e.value for e in cls):
+   ...             a = self.name
+   ...             e = cls(self.value).name
+   ...             raise ValueError(
+   ...                 "aliases not allowed in DuplicateFreeEnum:  %r --> %r"
+   ...                 % (a, e))
+   ...
+   >>> class Color(DuplicateFreeEnum):
+   ...     RED = 1
+   ...     GREEN = 2
+   ...     BLUE = 3
+   ...     GRENE = 2
+   ...
+   Traceback (most recent call last):
+   ...
+   ValueError: aliases not allowed in DuplicateFreeEnum:  'GRENE' --> 'GREEN'
+
+注解:
+
+  这个例子适用于子类化 Enum 来添加或改变禁用别名以及其他行为。 如果需
+  要的改变只是禁用别名，也可以选择使用 "unique()" 装饰器。
+
+
+Planet
+------
+
+如果定义了 "__new__()" 或 "__init__()" 则枚举成员的值将被传给这些方法:
+
+   >>> class Planet(Enum):
+   ...     MERCURY = (3.303e+23, 2.4397e6)
+   ...     VENUS   = (4.869e+24, 6.0518e6)
+   ...     EARTH   = (5.976e+24, 6.37814e6)
+   ...     MARS    = (6.421e+23, 3.3972e6)
+   ...     JUPITER = (1.9e+27,   7.1492e7)
+   ...     SATURN  = (5.688e+26, 6.0268e7)
+   ...     URANUS  = (8.686e+25, 2.5559e7)
+   ...     NEPTUNE = (1.024e+26, 2.4746e7)
+   ...     def __init__(self, mass, radius):
+   ...         self.mass = mass       # in kilograms
+   ...         self.radius = radius   # in meters
+   ...     @property
+   ...     def surface_gravity(self):
+   ...         # universal gravitational constant  (m3 kg-1 s-2)
+   ...         G = 6.67300E-11
+   ...         return G * self.mass / (self.radius * self.radius)
+   ...
+   >>> Planet.EARTH.value
+   (5.976e+24, 6378140.0)
+   >>> Planet.EARTH.surface_gravity
+   9.802652743337129
+
+
+TimePeriod
+----------
+
+一个演示如何使用 "_ignore_" 属性的例子:
+
+   >>> from datetime import timedelta
+   >>> class Period(timedelta, Enum):
+   ...     "different lengths of time"
+   ...     _ignore_ = 'Period i'
+   ...     Period = vars()
+   ...     for i in range(367):
+   ...         Period['day_%d' % i] = i
+   ...
+   >>> list(Period)[:2]
+   [<Period.day_0: datetime.timedelta(0)>, <Period.day_1: datetime.timedelta(days=1)>]
+   >>> list(Period)[-2:]
+   [<Period.day_365: datetime.timedelta(days=365)>, <Period.day_366: datetime.timedelta(days=366)>]
+
+
+各种枚举有何区别？
+==================
+
+枚举具有自定义的元类，它会影响所派生枚举类及其实例（成员）的各个方面。
+
+
+枚举类
+------
+
+"EnumMeta" 元类负责提供 "__contains__()", "__dir__()", "__iter__()" 及
+其他方法以允许用户通过 "Enum" 类来完成一般类做不到的事情，例如
+*list(Color)* 或 *some_enum_var in Color*。 "EnumMeta" 会负责确保最终
+"Enum" 类中的各种其他方法是正确的 (例如 "__new__()",
+"__getnewargs__()", "__str__()" 和 "__repr__()")。
+
+
+枚举成员（即实例）
+------------------
+
+有关枚举成员最有趣的特点是它们都是单例对象。 "EnumMeta" 会在创建
+"Enum" 类本身时将它们全部创建完成，然后准备好一个自定义的 "__new__()"
+，通过只返回现有的成员实例来确保不会再实例化新的对象。
+
+
+细节要点
+--------
+
+
+支持的 "__dunder__" 名称
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+"__members__" 是一个 "member_name":"member" 条目的只读有序映射。 它只
+在类上可用。
+
+如果指定了 "__new__()"，它必须创建并返回枚举成员；相应地设定成员的
+"_value_" 也是一个很好的主意。 一旦所有成员都创建完成它就不会再被使用
+。
+
+
+支持的 "_sunder_" 名称
+~~~~~~~~~~~~~~~~~~~~~~
+
+* "_name_" -- 成员的名称
+
+* "_value_" -- 成员的值；可以在 "__new__" 中设置 / 修改
+
+* "_missing_" -- 当未发现某个值时所使用的查找函数；可被重载
+
+* "_ignore_" -- 一个名称列表，可以为 "list" 或 "str"，它不会被转化为成
+  员，并将从最终类中被移除
+
+* "_order_" -- 用于 Python 2/3 代码以确保成员顺序一致（类属性，在类创
+  建期间会被移除）
+
+* "_generate_next_value_" -- 用于 Functional API 并通过 "auto" 为枚举
+  成员获取适当的值；可被重载
+
+3.6 新版功能: "_missing_", "_order_", "_generate_next_value_"
+
+3.7 新版功能: "_ignore_"
+
+用来帮助 Python 2 / Python 3 代码保持同步提供 "_order_" 属性。 它将与
+枚举的实际顺序进行对照检查，如果两者不匹配则会引发错误:
+
+   >>> class Color(Enum):
+   ...     _order_ = 'RED GREEN BLUE'
+   ...     RED = 1
+   ...     BLUE = 3
+   ...     GREEN = 2
+   ...
+   Traceback (most recent call last):
+   ...
+   TypeError: member order does not match _order_
+
+注解:
+
+  在 Python 2 代码中 "_order_" 属性是必须的，因为定义顺序在被记录之前
+  就会丢失。
+
+
+"Enum" 成员类型
+~~~~~~~~~~~~~~~
+
+"Enum" 成员是其 "Enum" 类的实例，一般通过 "EnumClass.member" 的形式来
+访问。 在特定情况下它们也可通过 "EnumClass.member.member" 的形式来访问
+，但你绝对不应这样做，因为查找可能失败，或者更糟糕地返回你所查找的
+"Enum" 成员以外的对象（这也是成员应使用全大写名称的另一个好理由）:
+
+   >>> class FieldTypes(Enum):
+   ...     name = 0
+   ...     value = 1
+   ...     size = 2
+   ...
+   >>> FieldTypes.value.size
+   <FieldTypes.size: 2>
+   >>> FieldTypes.size.value
+   2
+
+在 3.5 版更改.
+
+
+"Enum" 类和成员的布尔值
+~~~~~~~~~~~~~~~~~~~~~~~
+
+混合了非 "Enum" 类型（例如 "int", "str" 等）的 "Enum" 成员会按所混合类
+型的规则被求值；在其他情况下，所有成员都将被求值为 "True"。 要使你的自
+定义 Enum 的布尔值取决于成员的值，请在你的类中添加以下代码:
+
+   def __bool__(self):
+       return bool(self.value)
+
+"Enum" 类总是会被求值为 "True"。
+
+
+带有方法的 "Enum" 类
+~~~~~~~~~~~~~~~~~~~~
+
+如果你为你的 "Enum" 子类添加了额外的方法，如同上述的 Planet 类一样，这
+些方法将在对成员执行 "dir()" 时显示出来，但对类执行时则不会显示:
+
+   >>> dir(Planet)
+   ['EARTH', 'JUPITER', 'MARS', 'MERCURY', 'NEPTUNE', 'SATURN', 'URANUS', 'VENUS', '__class__', '__doc__', '__members__', '__module__']
+   >>> dir(Planet.EARTH)
+   ['__class__', '__doc__', '__module__', 'name', 'surface_gravity', 'value']
+
+
+组合 "Flag" 的成员
+~~~~~~~~~~~~~~~~~~
+
+如果 Flag 成员的某种组合未被命名，则 "repr()" 将包含所有已命名的旗标和
+值中所有已命名的旗标组合:
+
+   >>> class Color(Flag):
+   ...     RED = auto()
+   ...     GREEN = auto()
+   ...     BLUE = auto()
+   ...     MAGENTA = RED | BLUE
+   ...     YELLOW = RED | GREEN
+   ...     CYAN = GREEN | BLUE
+   ...
+   >>> Color(3)  # named combination
+   <Color.YELLOW: 3>
+   >>> Color(7)      # not named combination
+   <Color.CYAN|MAGENTA|BLUE|YELLOW|GREEN|RED: 7>
