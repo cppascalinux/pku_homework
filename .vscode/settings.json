@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 	"python.pythonPath": "C:\\Users\\20782\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
 	"files.associations": {
 		"cstring": "cpp",
@@ -10,8 +9,4 @@
 		"algorithm": "cpp",
 		"random": "cpp"
 	}
-=======
-	"python.pythonPath": "/usr/bin/python3",
-	"editor.fontSize": 16
->>>>>>> 32658b070aa3515ced027f1a55e0f215a4be280c
 }
