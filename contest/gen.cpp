@@ -15,7 +15,11 @@ int main(int argc,char *argv[])
 	sscanf(argv[3],"%d",&h);
 	printf("%d %d\n",n,m);
 	for(int i=1;i<=n;i++)
-		printf("%d ",rnd()%h+1);
+	{
+		printf("%d",rnd()%h+1);
+		if(i<n)
+			printf(" ");
+	}
 	for(int i=1;i<=m;i++)
 	{
 		int l=rnd()%(n-1)+1,r=rnd()%(n-1)+1;

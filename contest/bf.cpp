@@ -31,8 +31,6 @@ LL cal(int l)
 }
 int main()
 {
-	freopen("stairs.in","r",stdin);
-	freopen("bf.out","w",stdout);
 	scanf("%d%d",&n,&m);
 	for(int i=1;i<=n;i++)
 		scanf("%d",s+i);

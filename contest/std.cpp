@@ -42,8 +42,6 @@ PIL kth(int la,int ra,int l,int r,int k)
 }
 int main()
 {
-	freopen("stairs.in","r",stdin);
-	freopen("stairs.out","w",stdout);
 	scanf("%d%d",&n,&m);
 	for(int i=1;i<=n;i++)
 	{
