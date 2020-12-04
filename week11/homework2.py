@@ -1,10 +1,14 @@
 import random, asyncio
 
+x = 0
+
 async def produce():
-    x = random.randint(20,30)
+    global x 
+    x += 1
     await asyncio.sleep(1)
-    print("Produce")
+    print("Produce %d" % x)
     return x
+
 async def consumer(num):
     count = 0
     while True:
@@ -15,4 +19,4 @@ async def consumer(num):
         if count == num:
             break
 
-asyncio.run(consumer(10)) # available in version >= 3.7
+asyncio.run(consumer(3))
