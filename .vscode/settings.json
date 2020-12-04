@@ -1,5 +1,5 @@
 {
-	"python.pythonPath": "C:\\Users\\20782\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+	"python.pythonPath": "/bin/python",
 	"files.associations": {
 		"cstring": "cpp",
 		"map": "cpp",
